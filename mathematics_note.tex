@@ -1,0 +1,975 @@
+\documentclass[a4paper,11pt]{ltjsarticle}
+% パッケージの読み込み
+\usepackage{luatexja}
+\usepackage{luatexja-fontspec}
+\usepackage{auxhook}
+\usepackage{graphicx}
+\usepackage{adjustbox}
+\usepackage{etoc} % etocパッケージを追加
+
+% 日本語フォントの手動設定
+\setmainjfont[
+    YokoFeatures={JFM=jlreq},
+    TateFeatures={JFM=jlreqv},
+    BoldFont={Hiragino Kaku Gothic ProN W6}, % 太さを具体的に指定
+]{Hiragino Mincho ProN}
+
+\setsansjfont[
+    YokoFeatures={JFM=jlreq},
+    TateFeatures={JFM=jlreqv},
+    BoldFont={Hiragino Kaku Gothic ProN W6}, % 太さを具体的に指定
+]{Hiragino Kaku Gothic ProN}
+
+% 英文フォントの設定
+\setmainfont{Latin Modern Roman}[%
+    BoldFont=lmroman10-bold,%
+    BoldItalicFont=lmroman10-bolditalic,%
+    ItalicFont=lmromanslant10-regular,%
+    SmallCapsFont=lmromancaps10-regular,%
+    SlantedFont=lmromanslant10-regular,%
+    FontFace={sb}{n}{lmromandemi10-regular},%
+    OpticalSize=0
+]
+\setsansfont{Latin Modern Sans}[%
+    BoldFont=lmsans10-bold,%
+    ItalicFont=lmsans10-oblique%
+]
+\setmonofont{Latin Modern Mono}[%
+    BoldFont=lmmonolt10-bold,%
+    ItalicFont=lmmono10-italic%
+]
+
+\renewcommand{\emph}[1]{\textbf{#1}}
+
+% 数学パッケージの読み込み
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{bm}
+\usepackage{ascmac}
+
+% ヘッダーフォントの設定
+\renewcommand{\headfont}{\sffamily\bfseries}
+
+% 括弧
+\usepackage{delimseasy}
+
+% 二段組
+\usepackage{multicol}
+\setlength{\columnseprule}{.5pt} % 中央の線
+
+% 見出しのフォント
+\renewcommand{\headfont}{\sffamily\bfseries}
+
+
+%biblatex
+\usepackage[style=numeric,sorting=none,hyperref=auto]{biblatex}
+\DeclareNameAlias{default}{family-given}
+\renewcommand*{\revsdnamepunct}{\addspace}
+\DeclareDelimFormat{nametitledelim}{\addspace} % 名前とタイトルの間のデリミタをスペースに変更
+
+%連名
+\DeclareDelimFormat{multinamedelim}{\addcomma\space}
+\DeclareDelimFormat{finalnamedelim}{\space and\space}
+\DeclareDelimFormat{andothersdelim}{\space and\space}
+
+
+\DeclareFieldFormat[book]{title}{\normalfont{#1}} % 本のタイトルを通常のフォントで表示
+\addbibresource{bibliography.bib}
+
+% 章の設定
+\usepackage{titlesec}
+\usepackage{picture}
+
+% colors
+\definecolor{myblue}{HTML}{3300CC}
+\definecolor{myred}{HTML}{CC33CC}
+\definecolor{mygreen}{HTML}{005500}
+\definecolor{mynamecolor}{HTML}{5507FF}
+\definecolor{myemailcolor}{HTML}{FF4F02}
+\definecolor{darkbrown}{HTML}{880000}
+\definecolor{dred}{HTML}{DD0000}
+\definecolor{dgreen}{HTML}{005500}
+\definecolor{dblue}{HTML}{000088}
+\definecolor{mypurple}{HTML}{ba55d3} % 追加
+\definecolor{burgundy}{rgb}{0.5, 0.0, 0.13}
+\definecolor{charcoal}{rgb}{0.21, 0.27, 0.31}
+\colorlet{lightmypurple}{mypurple!20!white}
+
+% chapter
+\titleformat{\part}[block]
+{}{}{0pt}{
+  \fontsize{16pt}{16pt}\normalfont\bfseries\filleft
+}[
+  \hrule \large{\filleft\textcolor{myred}{\thepart}} \\
+  \vspace{-6mm}
+]
+
+% section
+\titleformat{\section}[block]
+{}{}{0pt}
+{
+  \colorbox{myred}{\begin{picture}(5,10)\end{picture}}
+  \hspace{0pt}
+  \normalfont \Large\bfseries 
+  \hspace{-4pt}
+}
+[
+\vspace{-4pt}
+\begin{picture}(100,0)
+  \linethickness{1pt}
+  \put(3,14.4){\color{myred}\line(1,0){240}}
+\end{picture}
+\\
+\vspace{-42pt}
+]
+
+% subsection
+\titleformat{\subsection}[block]
+{}{}{0pt}
+{
+  \colorbox{myblue}{\begin{picture}(4,8)\end{picture}}
+  \hspace{0pt} 
+  \normalfont \large\bfseries 
+  \hspace{-4pt}
+}
+[
+  \vspace{-1pt}
+\begin{picture}(100,0)
+  \linethickness{0.9pt}
+  \put(3,13.2){\color{myblue}\line(1,0){216}}
+\end{picture}
+\\
+\vspace{-36pt}
+]
+
+% 数式
+\usepackage{nccmath}
+\usepackage{mathtools}
+\usepackage{empheq} % 数式の囲いに使う
+\usepackage[bbsets]{jkmath} % \Nなどをつかえる
+\usepackage{color}
+
+% 箇条書き
+\usepackage[shortlabels,inline]{enumitem}
+\setlist[description]{font={\bfseries\sffamily}}
+
+% まわりこみ
+\usepackage{wrapfig}
+
+% tcolorbox系
+\usepackage[many]{tcolorbox}
+\tcbuselibrary{breakable,skins,theorems,xparse}
+\newtcolorbox{hosoibox}[1]{colframe=black,colback=white,coltitle=black,colbacktitle=white,boxrule=0.5pt,arc=0mm,enhanced,attach boxed title to top left={xshift=10mm,yshift=-3mm},boxed title style={frame hidden},title=#1}
+
+
+%leftbar環境に注釈が入れられないことを解消する環境．名前は，tcolorboxの[t]とleftbarの組み合わせ
+\newtcolorbox{tbleftline}{blanker,left=5mm,borderline west={1.1mm}{0pt}{black}}
+\newenvironment{tleftbar}{\begin{tbleftline}\setlength{\parindent}{1\zw}}{\end{tbleftline}}
+
+
+% 定理環境などの設定
+% Theorem styles
+\tcbset{mytheo/.style={fonttitle=\gtfamily\sffamily\bfseries\upshape,
+enhanced,colframe=burgundy,colback=burgundy!2!white,colbacktitle=burgundy,
+boxrule=0pt,borderline south={2pt}{-2pt}{burgundy},
+left*=1\zw,right*=1\zw,
+theorem style=standard,
+breakable,sharp corners,
+before skip=16pt,
+after skip=18pt,
+before upper={\setlength{\parindent}{1\zw}},
+before lower={\setlength{\parindent}{1\zw}},
+drop shadow={black!50!white}
+}}
+
+% Theorem
+\newtcbtheorem[number within=subsection]{theorem}{Theorem}%
+{mytheo}{th}
+\newcommand{\thref}[1]{{\bfseries\sffamily Theorem \ref{th:#1}}}
+% Proposition
+\newtcbtheorem[use counter from=theorem]{prop}{Proposition}%
+{mytheo}{pr}
+\newcommand{\prref}[1]{{\bfseries\sffamily Proposition \ref{pr:#1}}}
+% Corollary
+\newtcbtheorem[use counter from=theorem]{cor}{Corollary}%
+{mytheo}{co}
+\newcommand{\coref}[1]{{\bfseries\sffamily Corollary \ref{co:#1}}}
+% Axiom
+\newtcbtheorem[use counter from=theorem]{axiom}{Axiom}%
+{mytheo}{ax}
+\newcommand{\axref}[1]{{\bfseries\sffamily Axiom \ref{ax:#1}}}
+% Definition
+\newtcbtheorem[use counter from=theorem]{definition}{Definition}%
+{mytheo,
+colframe=blue!50!black,colback=blue!50!black!2!white,colbacktitle=blue!50!black,borderline south={2pt}{-2pt}{blue!50!black},}{de}
+\newcommand{\deref}[1]{{\bfseries\sffamily Definition \ref{de:#1}}}
+% Lemma
+\newtcbtheorem[use counter from=theorem]{lemma}{Lemma}%
+{mytheo,
+colframe=green!50!black,colback=green!50!black!2!white,colbacktitle=green!50!black,borderline south={2pt}{-2pt}{green!50!black},}{le}
+\newcommand{\leqqref}[1]{{\bfseries\sffamily Lemma \ref{le:#1}}}
+% Example
+\newtcbtheorem[use counter from=theorem]{example}{Example}%
+{mytheo,
+colframe=myblue!50!black,colback=myblue!50!black!2!white,colbacktitle=myblue!50!black,,borderline south={2pt}{-2pt}{charcoal},}{ex}
+\newcommand{\exref}[1]{{\bfseries\sffamily Example \ref{ex:#1}}}
+% Question
+\newtcbtheorem[use counter from=theorem]{question}{Question}%
+{mytheo,
+colframe=mypurple,colback=mypurple!2!white,colbacktitle=mypurple,borderline south={2pt}{-2pt}{mypurple},}{qu}
+\newcommand{\quref}[1]{{\bfseries\sffamily Question \ref{qu:#1}}}
+
+% その他の設定
+% 囲い枠
+\DeclareTColorBox{simplesquarebox}{ o m O{.5} O{} }% 
+    {empty, left=2mm, right=2mm, top=-1mm, attach boxed title to top left={xshift=1.2\zw},
+    boxed title style={empty,left=-2mm,right=-2mm}, colframe=black, coltitle=black, coltext=black, breakable,  
+    underlay unbroken={\draw[black,line width=#3pt]
+        (title.east) -- (title.east-|frame.east) -- (frame.south east) -- (frame.south west) -- (title.west-|frame.west) -- (title.west); },
+    underlay first={\draw[black,line width=#3pt](title.east) -- (title.east-|frame.east) -- (frame.south east) ;
+        \draw[black,line width=#3pt] (frame.south west) -- (title.west-|frame.west) -- (title.west); },
+    underlay middle={\draw[black,line width=#3pt](frame.north east) -- (frame.south east) ;
+        \draw[black,line width=#3pt](frame.south west) -- (frame.north west) ;},
+    underlay last={\draw[black,line width=#3pt](frame.north east) -- (frame.south east) -- (frame.south west) -- (frame.north west) ;},
+    fonttitle=\gtfamily, IfValueTF={#1}{title=【#2】〈#1〉}{title=【#2】},#4}
+
+% 例題環境
+\newcounter{mondaibangou}
+\newtcolorbox{mondai}[1][]{enhanced,boxrule=0.5mm,
+        top=2pt,left=44pt,right=4pt,bottom=2pt,arc=0mm,
+        colframe=blue!30!gray,
+        boxrule=1pt,
+        underlay={
+        \node[inner sep=1pt,blue!50!black,fill=blue!10!white]at ([xshift=22pt,yshift=-9pt]interior.north west) {\stepcounter{mondaibangou}\bfseries\gtfamily 問題\themondaibangou};},
+        segmentation code={%
+        \draw[dashed] (segmentation.west)--(segmentation.east);
+        \node[inner sep=1pt,blue!50!black,fill=blue!10!white] at ([xshift=22pt,yshift=-8pt]segmentation.south west) {\bfseries\gtfamily 解答};},
+        before upper={\setlength{\parindent}{1\zw}},
+        before lower={\setlength{\parindent}{1\zw}},#1
+}
+
+% 感想環境
+\DeclareTColorBox{kans}{ o m O{3} O{}}%
+{enhanced, colback=white, colframe=white,
+attach boxed title to top left={xshift=1cm,yshift=-\tcboxedtitleheight/2}, fonttitle=\bfseries,varwidth boxed title=0.85\linewidth, coltitle=black, fonttitle=\gtfamily, 
+enlarge top by=2mm, enlarge bottom by=2mm, breakable, sharp corners,
+boxed title style={colback=white,left=0mm,right=0mm}, 
+borderline={.75pt}{#3pt}{black,dotted},
+% underlay settings...
+IfValueTF={#1}{title=【#2】〈#1〉}{title=【#2】},#4}
+
+\usepackage{framed,color}
+
+% 題名付き四角
+\usepackage{ascmac}
+\usepackage{fancybox}
+
+% 図に使うもの
+\usepackage{tikz}
+\usetikzlibrary{intersections,calc,arrows.meta,calendar,shadows.blur}
+\usepackage{tikz-3dplot}
+\usepackage[marginparwidth=0pt,margin=20truemm]{geometry}
+\usepackage{bxpapersize}
+\usepackage[absolute,overlay]{textpos} % 図の配置を好きにする
+
+\usepackage{pgfplots}
+\usepgfplotslibrary{fillbetween}
+\pgfplotsset{compat=1.17}
+
+% footnoteの変更
+\renewcommand\thefootnote{{\dag}\arabic{footnote}}
+\renewcommand{\thempfootnote}{{\dag}\arabic{mpfootnote}}
+\interfootnotelinepenalty=10000
+
+\usepackage{oubraces} % overunderbraces
+
+% underbraceの文字数が多いときのためのadunderbrace
+\usepackage{ifthen}
+\newlength{\wdTempA}
+\newlength{\wdTempB}
+\newcommand{\adunderbrace}[2]{%
+\settowidth{\wdTempA}{$#1$}%
+\settowidth{\wdTempB}{${\scriptstyle #2}$}%
+\ifthenelse{\wdTempA<\wdTempB}{%
+\hspace*{.5\wdTempA}\hspace*{-.5\wdTempB}%
+\underbrace{#1}_{#2}%
+\hspace*{.5\wdTempA}\hspace*{-.5\wdTempB}%
+}{%
+\underbrace{#1}_{#2}%
+}%
+}%
+% 丸付き文字
+\newcommand{\ctext}[1]{\raise0.2ex\hbox{\textcircled{\scriptsize{#1}}}}
+
+\setlength{\abovedisplayskip}{5pt} 
+\setlength{\belowdisplayskip}{3pt}
+% ユーザー定義
+\newcommand{\dash}[1]{#1^\prime}
+\newcommand{\ddash}[1]{#1^{\prime\prime}}
+\newcommand{\dddash}[1]{#1^{\prime\prime\prime}}
+\newcommand{\hodash}[2]{#2^{(#1)}}
+\renewcommand{\labelenumi}{(\arabic{enumi})}% itemを(数字)に変更
+\newcommand{\two}{I\hspace{-1.2pt}I}
+\newcommand{\three}{I\hspace{-1.2pt}I\hspace{-1.2pt}I}
+\DeclareMathOperator{\Ker}{Ker}
+\renewcommand{\proofname}{\textgt{証明}}
+
+\renewcommand{\le}{\leqq}
+\renewcommand{\ge}{\geqq}
+
+\renewcommand{\leq}{\leqq}
+\renewcommand{\geq}{\geqq}
+
+\newcommand\kakko[1]{\noindent\textbf{《#1》}}
+
+% ハイパーリンク用
+\usepackage{url}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\hypersetup{colorlinks=true,citecolor={mypurple!40!black},linkcolor={mypurple!40!black},urlcolor={mypurple!70!black},}
+\usepackage{bookmark}
+
+\everymath{\displaystyle}
+
+\newcommand{\HRule}[1]{\rule{\linewidth}{#1}}
+
+\AtBeginDocument{\RenewCommandCopy\qty\SI}
+
+% 丸付き文字
+\usepackage{docmute}
+
+\everymath{\displaystyle}
+
+\etocsetnexttocdepth{subsection} % 必要に応じて調整
+
+\etocsettocstyle{
+\vskip10pt
+  \noindent
+  \begin{tikzpicture}[x=\textwidth]
+    % 全幅の線を描く
+    \draw[line width=2pt, blur shadow,color=mypurple] (0,0) -- (1,0);
+    % 「目次」のボックスを線の中心に配置
+    \node[
+      draw=mypurple,
+      line width=3pt,
+      fill=white,
+      inner sep=6pt,
+      blur shadow,
+      rounded corners
+    ] at (0.5,0) {\bfseries\Large\textcolor{mypurple}{目次}};
+  \end{tikzpicture}
+  \vskip10pt
+}{
+  \vskip10pt
+  \noindent
+  \begin{tikzpicture}[x=\textwidth]
+    \draw[line width=2pt,blur shadow, color=mypurple] (0,0) -- (1,0);
+  \end{tikzpicture}
+  \vskip20pt
+}
+\makeatother
+
+% 各レベルの目次項目のスタイルを設定
+% `\leftskip` を統一します
+\etocsetstyle{part}
+{\noindent}
+{%
+  \vskip20pt
+  \parindent0pt \leftskip0pt % `part` はインデントなし
+  \etoclink{\bfseries\huge\color{mypurple}\etocname}\par
+  \vskip10pt
+}
+{}
+
+
+\etocsetstyle{section}
+{\noindent}
+{%
+  \vskip10pt
+  \parindent0pt \leftskip0pt % `\leftskip` を part と同じにします
+  \etoclink{\bfseries\Large\color{mypurple}\etocname}%
+  \leaders\hbox to0.5em{\hss.\hss}\hfill
+  \etocpage\par
+  \vskip10pt
+}
+{}
+
+\etocsetstyle{subsection}
+{\noindent}
+{%
+  \parindent0pt \leftskip0pt % `\leftskip` を section と同じにします
+  \etoclink{\bfseries\color{mypurple}\etocname}%
+  \space % 項目の間に半角スペースを挿入
+  (\etocnumber,~p.\etocpage)% 章番号とページ番号の表示
+  \hspace{1em}
+}
+{}
+
+% タイトルセクションをロード
+\usepackage{titletoc}
+
+% タイトルページを定義
+\usepackage{pagecolor} % 背景色を変更するためのパッケージ
+
+\newcommand{\tituloum}[5]{
+  \begin{titlepage}
+    \begin{center}
+        \pagecolor{white} % 背景色を白に設定
+        \color{mypurple} % テキストカラーをmypurpleに設定
+        
+        \vspace*{2\baselineskip}
+        
+        % 横線の色をmypurpleに設定
+        \textcolor{mypurple}{\rule{\textwidth}{1.6pt}}\vspace*{-\baselineskip}\vspace*{2pt}
+        \textcolor{mypurple}{\rule{\textwidth}{0.4pt}}
+        
+        \vspace{0.75\baselineskip}
+        
+        {\huge #1}
+        
+        \vspace{0.75\baselineskip}
+        
+        \textcolor{mypurple}{\rule{\textwidth}{0.4pt}}\vspace*{-\baselineskip}\vspace{3.2pt}
+        \textcolor{mypurple}{\rule{\textwidth}{1.6pt}}
+        
+        \vspace{2\baselineskip}
+        
+        #3
+        
+        \vspace*{3\baselineskip}
+        
+        {\huge #2}
+        
+        \vspace{0.5\baselineskip}
+        
+        \textit{#4}
+        
+        \vfill
+        
+        \vspace{0.3\baselineskip}
+        
+        #5
+        
+    \end{center}
+\end{titlepage}%
+}
+\begin{document}
+
+% タイトルページの呼び出し
+\tituloum{数学のノート}{なまちゃん}{}{}{\today}
+
+%\include{Preambulo/Capa}
+
+\thispagestyle{empty}
+
+\newpage
+\pagenumbering{arabic}
+\pagecolor{white}
+
+% 目次の表示
+\localtableofcontents
+\newpage 
+
+\part*{数学の基本}
+
+\phantomsection
+\section{用語}
+
+\phantomsection
+\subsection{はじめに}
+大学数学を学ぶにあたって，基本的な用語や記法に慣れておくことは重要である．そのことを踏まえた上で，高校で学んだ用語や記法を復習していこう．
+まず，以下の用語についてみていくことにする：
+\begin{itemize}
+	\item 定義
+	\item 命題
+	\item 定理
+	\item 補題・系
+	\item 証明
+\end{itemize}
+\phantomsection
+\subsection{定義}
+
+\emph{定義（definition）}とは，用語の意味を明確に述べたものであり，\textbf{Def}と略記される．同じ事柄について，2つ以上の定義の形式があることもある．次の例を見てみよう：
+
+\begin{example}{「絶対値」の定義}{「絶対値」の定義}
+	$ x \in \mathbb{R}$に対して，$x$の絶対値を$\abs{x}$とかき，次のように定義する：
+	\[
+	\abs{x} \coloneqq \max \{ x , -x \} .
+	\]
+	この定義は以下のような形式で表現してもよい：
+	\[
+	\abs{x} \coloneqq  \sqrt{x^2}.
+	\]
+\end{example}
+
+次に，定義の性質についてみていこう．
+線型代数の講義で学ぶことであるが，逆行列の定義は以下のようになる：
+
+\begin{example}{「逆行列」の定義}{「逆行列」の定義}
+	正方行列$A$に対して，$BA = AB =E$となるような$B$が存在するとき，このような$B$を$A$の逆行列という．
+\end{example}
+
+
+ここで注意するのは \emph{数学では定義は最小限の情報にとどめることが慣習となっている}ということである．たとえば，\exref{「逆行列」の定義}の定義から，以下の命題が成り立ち，その証明は容易である．
+
+\begin{prop}{逆行列の一意性}{逆行列の一意性}
+	正方行列$A$に対して，$A$の逆行列は存在するとすればただひとつである．
+\end{prop}
+
+\begin{tleftbar}
+	\begin{proof}
+	\prref{逆行列の一意性}の証明は，$A$の逆行列が$B$，$C$であるとすると，
+	\[
+		AB=BA=E,\quad AC=CA=E
+	\]
+	が成り立つ．このとき，
+	\[
+		B=BE=B(AC)=(BA)C=EC=C
+	\]
+	が成り立つ．よって，$B=C$であり，逆行列の一意性が示された．
+	\end{proof}
+\end{tleftbar}
+
+このことから，\exref{「逆行列」の定義}でとりあげた逆行列の定義をもっと詳しく
+
+\begin{quote}
+	正方行列$A$に対して，$BA = AB =E$となるような$B$が存在するとき，このような$B$はただひとつで，$B$を$A$の逆行列という．
+	$B$は一意に存在するので，これを$A^{-1}$と記す\footnote{一意に存在することがわかっていないと，$A^{-1}$のような記法で表すことはためらわれる．}．もちろん
+	\[
+		AA^{-1}=A^{-1}A=E.
+	\]
+\end{quote}
+と，「逆行列の一意性を定義に含めてもいいのではないか．」と主張する人がいるかもしれない．
+ただ，数学では「定義は最小限の情報にとどめ，そこから導かれる主張を命題として証明する」という慣習があり，
+なにが「定義」で，なにが「証明すべきこと」であるかはっきりさせることが多い\footnote{ただ，実際はここで取り上げた逆行列の定義も情報過多である．線型代数で学ぶことになるが，$AB=E$と$BA=E$のどちらか片方の式のみで定義していいからである．}．
+
+\phantomsection
+\subsection{命題}
+
+
+\emph{命題（proposition）}とは，真偽が定まっている文を指す\footnote{命題はふたつの意味があり，ここでいう命題は「真偽が決まっている文」というニュアンスを持つ「広い意味での命題」というよりかは「定理・命題・補題」などと並列して表記される「狭い意味での命題」である．「狭い意味での命題」は正しい主張である．
+	たとえば，「$3$以上の自然数$n$に対して$x^n + y^n =z^n$は自然数解を持たない」という「フェルマーの最終定理」は，
+	アンドリュー・ワイルズが証明するまでは「真偽が決まっているがどちらかはわからない」という「広い意味での命題」であったが，
+	証明されたのちに「広い意味での命題」であると同時に「狭い意味での命題」にもなった．}．\textbf{Prop}と略記される．
+このような論理体系を\emph{二値論理}という．
+
+中間として扱われる主張には
+\begin{enumerate}[(1)]
+	\item 定義が曖昧なもの \label{enu:定義が曖昧なもの}
+	\item 意味が曖昧なもの \label{enu:意味が曖昧なもの}
+	\item パラドックス \label{enu:パラドックス}
+\end{enumerate}
+などがある．\ref{enu:定義が曖昧なもの}，\ref{enu:意味が曖昧なもの}についてはのちほど説明するとして，ここでは\ref{enu:パラドックス}について例をあげよう．
+
+\begin{example}{自己言及のパラドックス}{自己言及のパラドックス}
+	次のような主張を考える：
+	\begin{quote}
+		この文は偽である．
+	\end{quote}
+	この主張は，自己言及のパラドックスであり，真偽が決まらない．
+	
+	以下も自己言及のパラドックスの例である：
+	\begin{quote}
+		「この壁に貼り紙をしてはならない」と書かれた貼り紙
+	\end{quote}
+\end{example}
+
+ここまでで，二値論理でとりあげない主張を述べてきたが，そろそろ二値論理で取り扱う主張のお話に戻ろう．
+また，以下では簡単のために，「広い意味での命題」と「狭い意味での命題」のどちらも「命題」と記すと約束する．
+
+
+\begin{example}{命題}{命題}
+    次に示す文は真偽が真の命題である．
+    \begin{enumerate}[(1)]
+        \item 「1+1=2」
+        \item 「円周率は100未満である」
+        \item 「信号の色は3色である」
+        \item 「霞ヶ浦は日本で二番目に面積が大きい湖である」
+    \end{enumerate}
+    また，次に示す文は真偽が偽の命題である．
+    \begin{enumerate}[(a)]
+        \item 「1+1=46」
+        \item 「円周率は3未満である」
+        \item 「信号の色は5色である」
+        \item 「霞ヶ浦は日本で五番目に面積が大きい湖である」
+    \end{enumerate}
+\end{example}
+
+\begin{example}{命題でない文}{命題でない文}
+    次に示す文は命題ではない
+    \begin{enumerate}[(A)]
+    \item 「$1+1$」（なにも主張しておらず，真か偽か判定できない）
+    \item 「霞ヶ浦の面積は大きい」（客観的に大きいか判定できない）
+    \item 「桃はおいしい」（基準が明確でなく，客観的に真か偽か判定できない）
+    \item 「$x^2 > 4$」（$x$に具体的な値を代入しないと真か偽か判定できない）
+    \end{enumerate}
+\end{example}
+
+\phantomsection
+\subsection{定理}
+
+\emph{定理（theorem）}とは，正しいと分かっている数学の主張\footnote{つまり，「狭い意味での命題」のこと．}の中でもとりわけ重要なものを指す．\textbf{Thm}と略記される．
+定理は重要な主張であり，「余弦定理」，「加法定理」，「ハイネ・ボレルの被覆定理」など，固有の名前が与えられているものも存在する．
+
+\begin{example}{三平方の定理}{三平方の定理}
+	三平方の定理の主張は以下のようになる：
+	\begin{quotation}
+    直角三角形の斜辺の長さを$c$とし，他の二辺の長さを$a$，$b$としたとき，
+    \[
+        a^2+b^2=c^2
+    \]
+    が成り立つ．
+\end{quotation}
+\end{example}
+
+\begin{example}{次元定理}{次元定理}
+	次元定理の主張は以下のようになる：
+	\begin{quotation}
+	$A$を$m \times n$実行列とするとき，
+	\[
+	\rank A + \dim (\ker A) =n .
+	\]
+	\end{quotation}
+\end{example}
+
+\phantomsection
+\subsection{補題・系}
+
+\emph{補題（lemma）}とは，定理や命題を示す過程で補助的に使われる命題のことである．\textbf{Lem}と略記される．
+補題は命題の一種である．
+
+\emph{系（corollary）}とは，先に示した定理の主張からただちに得られる命題のことである．\textbf{Cor}と略記される．
+
+補題，系を説明するにあたっては，証明すべき事柄が複数個必要である．その一例をここに示す．
+
+
+\begin{example}{補題}{補題}
+	ユークリッドの補題の主張は以下の通りで，素因数分解の一意性を示すために用いられる：
+	\begin{quote}
+	素数$p$が$ab$を割り切るなら，$p$は$a$と$b$の少なくとも一方を割り切る．
+	\end{quote}
+\end{example}
+
+そして素因数分解の一意性から，次の命題が導かれる．
+
+\begin{example}{自然数の約数の個数}{自然数の約数の個数}
+	自然数$n$の約数の個数$d(n)$は以下の通りで，素因数分解の一意性からただちにわかる．
+	\begin{quote}
+	\[
+	d(n)= (e_1+1)(e_2+1)\dots(e_i+1)
+	\]
+	ただし$n = p_1^{e_1} p_2^{e_2} \dots p_i^{e_1}$とする．
+	\end{quote}
+\end{example}
+
+このことから，以下の系が導かれることは明らかであろう．
+
+\begin{example}{系}{系}
+	自然数$n$の約数の個数$d(n)$が奇数となる必要十分条件は，$n$が完全平方数であることである．
+\end{example}
+
+\phantomsection
+\subsection{証明}
+
+ここまでで，正しいか裏付けられた主張を「命題」，「定理」，「補題・系」などとよぶことをみてきた．
+これらの主張が正しいことを示すプロセスを\emph{証明（proof）}という．
+
+証明は一つの命題にいくつか存在する場合がほとんどであり，たとえば，\exref{三平方の定理}の証明は100通り以上も存在することが知られている．
+
+\begin{example}{証明}{証明}
+辺の長さが$a$と$b$の直角三角形を$4$つ用意する．
+これらの三角形を組み合わせて，辺の長さが$a + b$の正方形を作る．
+このとき，大きな正方形の面積は$(a + b)^2$である．
+
+一方で，大きな正方形は中央に辺の長さが$c$の小さな正方形と、$4$つの三角形で構成されている．
+
+よって，大きな正方形の面積は，小さい正方形の面積と4つの三角形の面積の和に等しい：
+\[
+(a + b)^2 = c^2 + 4 \left( \frac{1}{2}ab \right).
+\]
+この式を整理すると，
+\[
+ (a + b)^2 = c^2 + 2ab
+\]
+であるから，
+\begin{align*}
+& a^2 + 2ab + b^2 = c^2 + 2ab, \\
+& \therefore ~a^2 + b^2 = c^2.
+\end{align*}
+これが証明すべきことであった．\qedhere 
+\begin{center}
+\begin{tikzpicture}[scale=0.75]
+% 辺の長さの定義
+\def\a{3}
+\def\b{4}
+\def\c{5}
+
+% 大きな正方形の描画
+\draw (0,0) rectangle (\a+\b,\a+\b);
+
+% 4つの直角三角形の描画
+%第1の三角形
+\draw (0,0) -- (\b,0) -- (0,\a) -- cycle;
+\draw (0,\a) -- node[midway,above] {$c$} (\b,0);
+
+% 第2の三角形
+\draw (\b,0) -- (\a+\b,0) -- (\a+\b,\b) -- cycle;
+\draw (\a+\b,\b) -- node[midway,above] {$c$} (\b,0);
+
+% 第3の三角形
+\draw (\a+\b,\b) -- (\a+\b,\a+\b) -- (\a,\a+\b) -- cycle;
+\draw (\a,\a+\b) -- node[midway,above] {$c$} (\a+\b,\b);
+
+% 第4の三角形
+\draw (\a, \a+\b) -- (0, \a+\b) -- (0,\a) -- cycle;
+\draw (0,\a) -- node[midway,above] {$c$} (\a, \a+\b);
+
+% 中央の小さな正方形の描画
+\draw (\b,0) -- (\a+\b,\b) -- (\a,\a+\b) -- (0,\a) -- cycle;
+
+% 寸法のラベル
+\draw [<->] (-0.5,0) -- (-0.5,\a) node[midway,left] {$a$};
+\draw [<->] (-0.5,\a) -- (-0.5,\a+\b) node[midway,left] {$b$};
+\draw [<->] (0,-0.5) -- (\b,-0.5) node[midway,below] {$b$};
+\draw [<->] (\b,-0.5) -- (\a+\b,-0.5) node[midway,below] {$a$};
+
+\end{tikzpicture}
+\end{center}
+\end{example}
+
+
+\phantomsection
+\section{記法}
+\phantomsection
+\subsection{論理記号}
+
+	論理記号は，命題を結合するために用いられる記号である．代表的な論理記号を列挙してみよう：
+	\begin{table}[htbp]
+		\centering
+		\caption{論理記号とその意味}
+		\begin{tabular}{c|c}
+		\hline
+		記号 & 意味 \\
+		\hline
+		$\land$ & かつ(論理積) \\
+		$\lor$ & または(論理和) \\
+		$\lnot$ & 否定 \\
+		$\to$ & ならば \\
+		$\Leftrightarrow$ & 必要十分条件 \\
+		\hline
+		\end{tabular}
+		\end{table}
+
+    これらの論理記号を用いて，命題を結合することができる．たとえば，次のような命題を考えてみよう：
+
+\begin{example}{論理記号}{論理記号}
+  $\mathrm{P}$を「$x$は偶数である」とし，$\mathrm{Q}$を「$x$は$3$の倍数である」とする．
+
+  \begin{center}
+  \begin{tabular}{c|l}
+  \hline
+  記号 & 意味 \\
+  \hline \hline
+  $\mathrm{P} \land \mathrm{Q}$ & $x$は偶数であり，かつ$3$の倍数である \\
+  $\mathrm{P} \lor \mathrm{Q}$ &$x$は偶数である，または$3$の倍数である \\
+  $\lnot \mathrm{P}$ & $x$は偶数でない \\
+  \hline
+  \end{tabular}
+\end{center}
+\end{example}
+
+	\phantomsection
+\subsection{集合}
+
+\begin{definition}{集合}{集合}
+    もののあつまりを\emph{集合}という\footnote{公理的集合論の立場では，集合とは「無定義語」であるが，ここで詳しくは触れない．}集合を構成する物を\emph{元}または\emph{要素}といい，集合$A$の元が$a$であることを$a \in A$，$A \ni a$などと表す．
+\end{definition}
+
+集合に関して，いくつか注意点を挙げよう．
+
+\begin{itemize}
+    \item 集合では書き並べる順序が重要でないため，例えば $\{1, 2, 3\} = \{3, 2, 1\}$である．
+    \item 同じ要素が重複して含まれていても，1つの要素として扱われるため，例えば$\{1, 1, 2, 2, 2, 3\} = \{1, 2, 3\}$である．
+    \item 集合の要素には，種類が異なるものを同時に含めることができる．例えば，$\{4, \{3\}\}$では，$4$は数であり，$\{3\}$は集合であるが，集合としての資格がある．
+\end{itemize}
+
+
+\begin{definition}{部分集合}{部分集合}
+	集合$A$の要素はすべて集合$B$の要素でもあるとき，$A$は$B$の\emph{部分集合}であるといい，これを
+	\[
+	A \subset B,\quad B \supset A
+	\]
+	などと表す．
+\end{definition}
+
+\begin{shadebox}
+	よく使う集合
+    \begin{itemize}
+    \item $\mathbb{R}$は実数全体の集合を表している．Real numberの頭文字をとった．
+    \item $\mathbb{N}=\{0,1,2,\cdots \}$は自然数全体の集合を表している．Natural number の頭文字をとった．
+    \item $\mathbb{C}=\{ a+bi \mid a,b \in \mathbb{R}\}$は複素数全体の集合を表している．Complex number の頭文字をとった．
+    \item $\mathbb{Z}=\{0, \pm 1 , \pm 2 , \cdots\}$は整数全体の集合を表している．Zはドイツ語由来である，
+    \item $\mathbb{Q}=\{ a/b \mid   a,b \in \mathbb{Z},b \ne 0 \}$は有理数全体の集合を表している．「商」を表すイタリア語由来である．
+    \end{itemize}
+\end{shadebox}
+
+\begin{example}{}{}
+    \[
+		x \in \mathbb{Q}
+	\]
+	と書くことで，$x$は有理数であることを表す．
+\end{example}
+
+\begin{example}{}{}
+    \[
+		\mathbb{R} \subset \mathbb{C}
+	\]
+	である．つまり，実数全体の集合は複素数全体の集合の部分集合である．
+\end{example}
+
+集合の表記は文脈により省略されることがある．たとえば，以下のような問題があったとする．
+\begin{quotation}
+	2次方程式
+	\[
+	x^2 - 3x -4 =0
+	\]
+	を解け．
+\end{quotation}
+$x$が属する全体集合は定められていないが，この場合だと「$x \in \mathbb{C}$」とされることが多い．
+よってこの方程式の解は$x = -1 , 4$とする場合が多い．
+だが，もちろん$ x \in \mathbb{N}$とするなら，$ -1 \notin \mathbb{N}$なので，この場合の解は$ x= 4$のみである．
+ただ，$x$が属する全体集合は，文脈でわかったり明記されている場合が多いので，あまり心配はいらないと筆者は考える．
+\phantomsection
+\section{言い回し}
+\phantomsection
+\subsection{存在}
+
+
+
+数学の証明において，「存在」は重要な概念である．といっても，あまりこのことを意識したことのない読者の方もいると思うので，この場を借りて具体例をもとに説明を試みることとする．
+
+まず、「最大値・最小値の定理」を考えてみる．この定理は，
+\begin{quotation}
+	$[a,b]$で連続な関数$f$に対して，$f$は$[a,b]$上で最大値と最小値を持つ．
+\end{quotation}
+というものある．
+
+「最大値・最小値が存在するなんて当たり前だ」と思われる読者もいるかもしれない．しかし，本当にそれは自明なのか．
+実際には，関数の連続性や区間の閉有界性といった条件が揃って初めて，最大値や最小値の「存在」を保証できる．この定理を証明するにあたっては，厳密な数学的議論が必要となる．
+
+次に，指数関数を考える際に有理数列$(x_n)_{n \in \mathbb{N}}$を用いる場合の例を見てみよう：
+
+$x \in \mathbb{R}$としたとき，$a^x$を定義するために，
+\[
+	\lim_{n \to \infty} a^{x_n} = a^x
+\]
+
+とするが，この極限が存在することは本当に自明なのか．
+$a^2$や$a^{2/3}$の具体的な値のイメージは思い浮かぶと思うが，たとえば$a^{\pi}$のイメージについてはどうであろうか．
+
+このように，極限の存在を証明するためには，有理数列の収束性など，細かな数学的性質を確認する必要がある．このようにして初めて，指数関数の定義が厳密なものとなるのである．
+
+\subsection{一意性}
+
+数学において「一意性」が重要である場面は多い．読者の中には線型代数の講義で「逆行列の一意性」などに触れた方もいると思われる．なぜ重要であるのか，一つ例を挙げて考えてることとする．
+
+微分積分の講義で習う定理に「平均値の定理」というものがある．
+その主張は
+\begin{quotation}
+	$[a,b]$で連続，$(a,b)$で微分可能な関数$f$に対して，
+	\[
+	\frac{f(b)-f(a)}{b-a}=f'(c)
+	\]
+	をみたす$ c \in (a,b)$が存在する．
+\end{quotation}
+
+というものである．証明はのちに述べるとして，この定理の主張を少し変更してみよう：
+
+\begin{quotation}
+	$[a,b]$で連続，$(a,b)$で微分可能な関数$f$に対して，
+	\[
+	\frac{f(b)-f(a)}{b-a}=f'(c)
+	\]
+	をみたす$ c \in (a,b)$がただひとつ存在する．
+\end{quotation}
+
+ここでは「$c \in (a,b)$が存在する」という主張を「$c \in (a,b)$がただひとつ存在する」というより強い主張に変更した．この主張の真偽は偽である．以下で，このことが問題になる状況を挙げよう．
+
+\begin{wrapfigure}[11]{r}{0.55\textwidth}
+	\centering
+\begin{tikzpicture}
+    \begin{axis}[
+        axis lines=middle,
+        xmin=-1.2, xmax=1.2,
+        ymin=-1.5, ymax=1.5,
+        xtick=\empty, ytick=\empty, % 目盛を消す
+        xlabel={}, ylabel={},       % ラベルを消す
+        samples=200,
+        domain=-1.2:1.2,
+        width=10cm,
+        height=8cm,
+    ]
+    % 関数 f(x) = x^3 のグラフ
+    \addplot [dblue, thick] {x^3};
+
+    % 点 (-1, -1) と (1, 1) を結ぶ割線
+    \addplot [dred, thick] coordinates {(-1, -1) (1, 1)}; 
+
+    % 平均値の定理を満たす点 x = -1/√3 の接線
+    \def\xone{-1/sqrt(3)}
+    \def\yone{(\xone)^3}
+    \addplot [dgreen, dashed] {1*(x - \xone) + \yone};
+
+    % 平均値の定理を満たす点 x = 1/√3 の接線
+    \def\xtwo{1/sqrt(3)}
+    \def\ytwo{(\xtwo)^3}
+    \addplot [dgreen, dashed] {1*(x - \xtwo) + \ytwo};
+
+    % 重要な点をマーク
+    \addplot [only marks, mark=*, mark options={fill=black}] coordinates {(\xone, \yone) (\xtwo, \ytwo)};
+    \addplot [only marks, mark=*, mark options={fill=dred}] coordinates {(-1, -1) (1, 1)}; % 赤い丸に変更
+    \end{axis}
+\end{tikzpicture}
+\end{wrapfigure}
+$f(x)=x^3$という関数を考える．この関数は$[-1,1]$で連続，$(-1,1)$で微分可能である．
+
+このとき，図のように，条件を満たす$c \in (-1,1)$は複数存在するので，「ただひとつ存在する」という主張は偽である．
+さらに言えば，2本より多くこのような接線を引ける場合もある．
+
+このことから，安易に「ただ一つ存在する」などと強い主張をすることは避けるべきであることがわかる．このことは平均値の定理に限らず，中間値の定理なども同様である．
+
+
+\phantomsection
+\subsection{かつ/または}
+
+
+
+数学と日常における「または」の使い方は異なる．以下に例を挙げよう．
+
+\begin{example}{「または」の使用例}{「または」の使用例}
+    \begin{enumerate}[(A)]
+	\item ランチメニューの主食として，米またはパンがついてくる\footnote{この文を「米とパンの両方が食べられる」と解釈してもらっては困る．}．\label{enu:米またはパン}
+	\item 「運転免許を持っていない人」または「18歳未満の人」はレンタカーを借りることができない． \label{enu:運転免許または18歳未満}
+	\end{enumerate}
+\ref{enu:米またはパン}は「どちらか片方のみ」の意味で「または」を使い，\ref{enu:運転免許または18歳未満}は「いずれかが」の意味で「または」を用いている．
+\end{example}
+
+数学では，「または」は「いずれかが」の意味で使われ，「どちらか片方のみ」の意味で使われることはない．
+
+たとえば，$A$，$B$を集合とするとき，
+\[
+x \in A \cup B
+\]
+は「$x$は$A$の元であるか，$B$の元であるか，あるいは両方である」という意味である．
+つまり，「$ x \in A$であり，$x \notin  B$である」あるいは「$ x \notin A$であり，$x \in B$である」といった状況のときにも，$x \in A \cup B$と記す．
+
+\newpage 
+
+
+\cite{nakajima}，\cite{kaneko}を参考にした．
+
+\printbibliography[title=参考文献]
+
+\end{document}
