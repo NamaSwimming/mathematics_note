@@ -508,22 +508,341 @@ IfValueTF={#1}{title=【#2】〈#1〉}{title=【#2】},#4}
 
 \part{数学の基本}
 \phantomsection
-\section{はじめに}
+\section{集合}
+  \phantomsection
+  \subsection{集合の定義と表記法}
 
-大学数学を学ぶにあたって，基本的な用語や記法に慣れておくことは重要である．そのことを踏まえた上で，高校で学んだ用語や記法を復習していこう．
-まず，以下の用語についてみていくことにする：
-\begin{itemize}
-	\item 定義
-	\item 命題
-	\item 定理
-	\item 補題・系
-	\item 証明
-\end{itemize}
+
+  \subsubsection{集合の定義}
+  \begin{definition}{集合}{集合}
+      もののあつまりを\emph{集合}という\footnote{公理的集合論の立場では，集合とは「無定義語」であるが，ここで詳しくは触れない．}集合を構成する物を\emph{元}または\emph{要素}といい，集合$A$の元が$a$であることを$a \in A$，$A \ni a$などと表す．
+  \end{definition}
+  
+  集合に関して，いくつか注意点を挙げよう．
+  
+  \begin{itemize}
+      \item 集合では書き並べる順序が重要でないため，例えば $\{1, 2, 3\} = \{3, 2, 1\}$である．
+      \item 同じ要素が重複して含まれていても，1つの要素として扱われるため，例えば$\{1, 1, 2, 2, 2, 3\} = \{1, 2, 3\}$である．
+      \item 集合の要素には，種類が異なるものを同時に含めることができる．例えば，$\{4, \{3\}\}$では，$4$は数であり，$\{3\}$は集合であるが，集合としての資格がある．
+  \end{itemize}
+  
+  
+  \begin{definition}{部分集合}{部分集合}
+    集合$A$の要素はすべて集合$B$の要素でもあるとき，$A$は$B$の\emph{部分集合}であるといい，これを
+    \[
+    A \subset B,\quad B \supset A
+    \]
+    などと表す．
+  \end{definition}
+
+  \subsubsection{集合の表記}
+  
+
+  \begin{shadebox}
+    よく使う集合
+      \begin{itemize}
+      \item $\mathbb{R}$は実数全体の集合を表している．Real numberの頭文字をとった．
+      \item $\mathbb{N}=\{0,1,2,\cdots \}$は自然数全体の集合を表している．Natural number の頭文字をとった．
+      \item $\mathbb{C}=\{ a+bi \mid a,b \in \mathbb{R}\}$は複素数全体の集合を表している．Complex number の頭文字をとった．
+      \item $\mathbb{Z}=\{0, \pm 1 , \pm 2 , \cdots\}$は整数全体の集合を表している．Zはドイツ語由来である，
+      \item $\mathbb{Q}=\{ a/b \mid   a,b \in \mathbb{Z},b \ne 0 \}$は有理数全体の集合を表している．「商」を表すイタリア語由来である．
+      \end{itemize}
+  \end{shadebox}
+  
+  \begin{example}{}{}
+      \[
+      x \in \mathbb{Q}
+    \]
+    と書くことで，$x$は有理数であることを表す．
+  \end{example}
+  
+  \begin{example}{}{}
+      \[
+      \mathbb{R} \subset \mathbb{C}
+    \]
+    である．つまり，実数全体の集合は複素数全体の集合の部分集合である．
+  \end{example}
+
+  \begin{example}{方程式の解集合}{方程式の解集合}
+    次の方程式を満たす$x$の集合を求めよ．
+    \[
+    x^2 - 4 = 0
+    \]
+    \textbf{解答}：方程式を解くと，$x^2 = 4$より，$x = \pm 2$．したがって，解集合は$\{ -2, 2 \}$である．
+
+    ここで，$x$の範囲を実数全体とすると$\{ -2, 2 \}$であるが，$x \in \mathbb{N}$とすると，$x = 2$のみが解となる．
+\end{example}
+集合の表記は文脈により省略されることがある．たとえば，以下のような問題があったとする．
+\begin{quotation}
+  2次方程式
+  \[
+  x^2 - 3x -4 =0
+  \]
+  を解け．
+\end{quotation}
+$x$が属する全体集合は定められていないが，この場合だと「$x \in \mathbb{C}$」とされることが多い．
+よってこの方程式の解は$x = -1 , 4$とする場合が多い．
+だが，もちろん$ x \in \mathbb{N}$とするなら，$ -1 \notin \mathbb{N}$なので，この場合の解は$ x= 4$のみである．
+ただ，$x$が属する全体集合は，文脈でわかったり明記されている場合が多いので，あまり心配はいらないと筆者は考える．
+
+
+  \phantomsection
+  \subsection{集合の演算}
+  
+  集合に対して，以下のような演算を定義することができる．
+  
+  \begin{definition}{和集合・共通部分・差集合}{}
+      $A$と$B$を集合とするとき，
+      \begin{description}[labelwidth=4em]
+          \item[和集合] $A$または$B$のいずれかに属する要素全体の集合を$A \cup B$と表す．
+          \item[共通部分] $A$と$B$の両方に属する要素全体の集合を$A \cap B$と表す．
+          \item[差集合 ]$A$の要素で$B$に属さないもの全体の集合を$A \setminus B$と表す．
+      \end{description}
+  \end{definition}
+  
+  \begin{example}{集合}{集合}
+      例えば，$A = \{1, 2, 3\}$，$B = \{3, 4, 5\}$とすると，
+      \begin{itemize}
+          \item $A \cup B = \{1, 2, 3, 4, 5\}$
+          \item $A \cap B = \{3\}$
+          \item $A \setminus B = \{1, 2\}$
+      \end{itemize}
+  \end{example}
+  
+
+  
+  集合はしばしば条件を用いて記述される．
+  
+  \begin{description}[labelwidth=4em]
+      \item[列挙形式] $\{ a, b, c \}$のように要素を列挙して表す．
+      \item[条件形式] $\{ x \in \mathbb{N} \mid x \leq 5 \}$のように条件を用いて表す．
+  \end{description}
+  \phantomsection
+  \subsection{量化記号と集合の関係}
+  
+  量化記号と集合の記法は密接に関連している．
+  
+  \begin{example}{}{}
+      \[
+        \forall\, x \in A \, : \, P(x)
+      \]
+      は，「集合$A$のすべての元$x$について，$P(x)$が成り立つ」という意味である．
+  \end{example}
+  
+  \begin{example}{}{}
+      \[
+      \exists \,  x \in A\, : \, P(x)
+      \]
+      は，「集合$A$の元$x$の中に，$P(x)$が成り立つものが存在する」という意味である．
+  \end{example}
+  
+  
+\phantomsection
+\section{論理と証明}
+\subsection{論理}
+\subsubsection{論理記号}
+
+	論理記号は，命題を結合するために用いられる記号である．代表的な論理記号を列挙してみよう：
+	\begin{table}[htbp]
+		\centering
+		\caption{論理記号とその意味}
+		\begin{tabular}{c|c}
+		\hline
+		記号 & 意味 \\
+		\hline
+    $\land$ & かつ（論理積） \\
+    $\lor$ & または（論理和） \\
+    $\lnot$ & 否定 \\
+    $\to$ & ならば（含意） \\
+    $\Leftrightarrow$ & 必要十分条件（同値） \\
+    $\forall$ & 任意の（全称量化） \\
+    $\exists$ & 存在する（存在量化） \\
+		\hline
+		\end{tabular}
+		\end{table}
+
+    これらの論理記号を用いて，命題を結合し，複雑な論理式を構成することができる．特に，量化記号である$\forall$と$\exists$を用いることで，数学的な主張を一般的に表現することができる．
+
+    \subsubsection{量化記号}
+    
+    \begin{itemize}
+        \item $\forall$（全称量化）：$\forall x\, : \, P(x)$は，「任意の$x$について$P(x)$が成り立つ」という意味である．
+        \item $\exists$（存在量化）：$\exists x\, : \, P(x)$は，「ある$x$が存在して$P(x)$が成り立つ」という意味である．
+    \end{itemize}
+    
+    \begin{example}{量化記号の例}{量化記号の例}
+        \begin{itemize}
+            \item $\forall x \in \mathbb{R}\, : \, x^2 \geq 0$\\
+            「任意の実数$x$について，$x^2$は$0$以上である．」
+            \item $\exists x \in \mathbb{Z} \, : \, x^2 = 4$\\
+            「ある整数$x$が存在して，$x^2 = 4$となる．」
+        \end{itemize}
+    \end{example}
+    \subsection{証明}
+
+    \subsubsection{証明とは}
+    数学において，主張が正しいことを示すプロセスを\emph{証明（proof）}という．
+    
+    証明は一つの命題にいくつか存在する場合がほとんどであり，たとえば，\exref{三平方の定理}の証明は100通り以上も存在することが知られている．
+    
+    \begin{example}{証明}{証明}
+    辺の長さが$a$と$b$の直角三角形を$4$つ用意する．
+    これらの三角形を組み合わせて，辺の長さが$a + b$の正方形を作る．
+    このとき，大きな正方形の面積は$(a + b)^2$である．
+    
+    一方で，大きな正方形は中央に辺の長さが$c$の小さな正方形と，$4$つの三角形で構成されている．
+    
+    よって，大きな正方形の面積は，小さい正方形の面積と4つの三角形の面積の和に等しい：
+    \[
+    (a + b)^2 = c^2 + 4 \left( \frac{1}{2}ab \right).
+    \]
+    この式を整理すると，
+    \[
+     (a + b)^2 = c^2 + 2ab
+    \]
+    であるから，
+    \begin{align*}
+    & a^2 + 2ab + b^2 = c^2 + 2ab, \\
+    & \therefore ~a^2 + b^2 = c^2.
+    \end{align*}
+    これが証明すべきことであった．\qedhere 
+    \begin{center}
+    \begin{tikzpicture}[scale=0.75]
+    % 辺の長さの定義
+    \def\a{3}
+    \def\b{4}
+    \def\c{5}
+    
+    % 大きな正方形の描画
+    \draw (0,0) rectangle (\a+\b,\a+\b);
+    
+    % 4つの直角三角形の描画
+    %第1の三角形
+    \draw (0,0) -- (\b,0) -- (0,\a) -- cycle;
+    \draw (0,\a) -- node[midway,above] {$c$} (\b,0);
+    
+    % 第2の三角形
+    \draw (\b,0) -- (\a+\b,0) -- (\a+\b,\b) -- cycle;
+    \draw (\a+\b,\b) -- node[midway,above] {$c$} (\b,0);
+    
+    % 第3の三角形
+    \draw (\a+\b,\b) -- (\a+\b,\a+\b) -- (\a,\a+\b) -- cycle;
+    \draw (\a,\a+\b) -- node[midway,above] {$c$} (\a+\b,\b);
+    
+    % 第4の三角形
+    \draw (\a, \a+\b) -- (0, \a+\b) -- (0,\a) -- cycle;
+    \draw (0,\a) -- node[midway,above] {$c$} (\a, \a+\b);
+    
+    % 中央の小さな正方形の描画
+    \draw (\b,0) -- (\a+\b,\b) -- (\a,\a+\b) -- (0,\a) -- cycle;
+    
+    % 寸法のラベル
+    \draw [<->] (-0.5,0) -- (-0.5,\a) node[midway,left] {$a$};
+    \draw [<->] (-0.5,\a) -- (-0.5,\a+\b) node[midway,left] {$b$};
+    \draw [<->] (0,-0.5) -- (\b,-0.5) node[midway,below] {$b$};
+    \draw [<->] (\b,-0.5) -- (\a+\b,-0.5) node[midway,below] {$a$};
+    
+    \end{tikzpicture}
+    \end{center}
+    \end{example}
+
+    \subsubsection{命題の反証と反例}
+
+    数学において，「すべての$n$に対して$P(n)$が成り立つ」という全称命題を否定するには，\textbf{反例}を一つ示すだけで十分である．これは，全称命題が「すべての場合において成り立つ」ことを主張しているため，一つでも例外があれば命題全体が偽となるからである．
+
+    \begin{example}{反例による反証}{反例による反証}
+        次の命題を考える：
+        \[
+        \forall n \in \mathbb{N}\, : \, \frac{n^3}{24} + 50 \geq n^2.
+        \]
+        この命題が成り立たないことを示すためには，ある$n$について不等式が成立しないことを示せばよい．実際に，$n = 15$のとき，
+        \[
+        \frac{15^3}{24} + 50 = \frac{3375}{24} + 50 \approx 140.625 + 50 = 190.625,
+        \]
+        一方，
+        \[
+        15^2 = 225.
+        \]
+        したがって，
+        \[
+        \frac{15^3}{24} + 50 \approx 190.625 < 225 = 15^2.
+        \]
+        このように，$n = 15$において不等式が成り立たないため，元の命題は偽であることが分かる．
+
+        また，数学において反例を示す際には，その値が命題を否定することを確認すれば十分であり，$n=15$をどのように見つけたかを詳細に説明する必要はない．
+    \end{example}
+
+    \phantomsection
+    \subsubsection{様々な証明法}
+
+    \begin{description}
+        \item[帰納法] \mbox{} \\
+        たとえば数学的帰納法は，数学的な主張が自然数全体に対して成り立つことを示すための証明法である．
+        \item[背理法] \mbox{} \\
+        「$P$が成り立たないと仮定すると矛盾が生じる」という論理的な構造を用いて証明を行う方法である．
+        \item[直接証明] \mbox{} \\
+        「$P$が成り立つことを示す」という形式で証明を行う方法である．
+    \end{description}
+
+    \begin{example}{帰納法}{帰納法}
+        $n$を自然数とする．$n$に対して，$1 + 2 + \cdots + n = \frac{n(n+1)}{2}$が成り立つことを帰納法を用いて示せ．
+        
+        \textbf{解答}：$n=1$のとき，$1 = \frac{1(1+1)}{2}$であるから，$n=1$のとき成り立つ．
+        
+        仮定として，$n=k$のとき$1 + 2 + \cdots + k = \frac{k(k+1)}{2}$が成り立つと仮定する．
+        
+        $n=k+1$のとき，
+        \begin{align*}
+        1 + 2 + \cdots + k + (k+1) &= \frac{k(k+1)}{2} + (k+1) \\
+        &= \frac{k(k+1) + 2(k+1)}{2} \\
+        &= \frac{(k+1)(k+2)}{2}
+        \end{align*}
+        であるから，$n=k+1$のときも成り立つ．よって，任意の自然数$n$に対して$1 + 2 + \cdots + n = \frac{n(n+1)}{2}$が成り立つ．
+      \end{example}
+
+      \begin{example}{背理法}{背理法}
+        $x$を有理数とする．$x^2 = 2$ならば，$x$は有理数であることを示せ．
+        
+        \textbf{解答}：$x$が有理数でないと仮定する．
+        
+        このとき，$x = \frac{a}{b}$と表せる．ただし，$a$と$b$は互いに素である．
+        
+        $x^2 = 2$より，
+        \[
+        \left( \frac{a}{b} \right)^2 = 2 \quad \Rightarrow \quad \frac{a^2}{b^2} = 2 \quad \Rightarrow \quad a^2 = 2b^2
+        \]
+        である．
+        
+        したがって，$a^2$は偶数である．よって，$a$も偶数である．
+        
+        しかし，$a$が偶数であるとすると，$a = 2c$と表せる．
+        
+        このとき，$a^2 = 4c^2$であるから，$a^2$は$4$の倍数である．
+        
+        しかし，$a^2 = 2b^2$であるから，$a^2$は$2$の倍数である．
+        
+        これは矛盾である．よって，$x$は有理数である．
+      \end{example}
+
+      \begin{example}{直接証明}{直接証明}
+        $x$を実数とする．$x^2 = 0$ならば，$x = 0$であることを示せ．
+        
+        \textbf{解答}：$x^2 = 0$とする．
+        
+        このとき，$x^2 = 0$より，$x = 0$または$x = -0$である．
+        
+        しかし，$-0 = 0$であるから，$x = 0$である．
+      \end{example}
+
+
+\section{用語の定義}
 
 \phantomsection
-\section{数学の基礎}
-\subsection{用語}
+\subsection{定義・命題・定理・補題・系}
+
+\phantomsection
 \subsubsection{定義}
+
 \emph{定義（definition）}とは，用語の意味を明確に述べたものであり，\textbf{Def}と略記される．同じ事柄について，2つ以上の定義の形式があることもある．次の例を見てみよう：
 
 \begin{example}{「絶対値」の定義}{「絶対値」の定義}
@@ -758,242 +1077,9 @@ $n$の全ての約数を生成できるため，約数の総数は各$(e_i + 1)$
 \end{tleftbar}
 
 \phantomsection
-\subsubsection{証明}
-ここまでで，正しいか裏付けられた主張を「命題」，「定理」，「補題・系」などとよぶことをみてきた．
-これらの主張が正しいことを示すプロセスを\emph{証明（proof）}という．
-
-証明は一つの命題にいくつか存在する場合がほとんどであり，たとえば，\exref{三平方の定理}の証明は100通り以上も存在することが知られている．
-
-\begin{example}{証明}{証明}
-辺の長さが$a$と$b$の直角三角形を$4$つ用意する．
-これらの三角形を組み合わせて，辺の長さが$a + b$の正方形を作る．
-このとき，大きな正方形の面積は$(a + b)^2$である．
-
-一方で，大きな正方形は中央に辺の長さが$c$の小さな正方形と，$4$つの三角形で構成されている．
-
-よって，大きな正方形の面積は，小さい正方形の面積と4つの三角形の面積の和に等しい：
-\[
-(a + b)^2 = c^2 + 4 \left( \frac{1}{2}ab \right).
-\]
-この式を整理すると，
-\[
- (a + b)^2 = c^2 + 2ab
-\]
-であるから，
-\begin{align*}
-& a^2 + 2ab + b^2 = c^2 + 2ab, \\
-& \therefore ~a^2 + b^2 = c^2.
-\end{align*}
-これが証明すべきことであった．\qedhere 
-\begin{center}
-\begin{tikzpicture}[scale=0.75]
-% 辺の長さの定義
-\def\a{3}
-\def\b{4}
-\def\c{5}
-
-% 大きな正方形の描画
-\draw (0,0) rectangle (\a+\b,\a+\b);
-
-% 4つの直角三角形の描画
-%第1の三角形
-\draw (0,0) -- (\b,0) -- (0,\a) -- cycle;
-\draw (0,\a) -- node[midway,above] {$c$} (\b,0);
-
-% 第2の三角形
-\draw (\b,0) -- (\a+\b,0) -- (\a+\b,\b) -- cycle;
-\draw (\a+\b,\b) -- node[midway,above] {$c$} (\b,0);
-
-% 第3の三角形
-\draw (\a+\b,\b) -- (\a+\b,\a+\b) -- (\a,\a+\b) -- cycle;
-\draw (\a,\a+\b) -- node[midway,above] {$c$} (\a+\b,\b);
-
-% 第4の三角形
-\draw (\a, \a+\b) -- (0, \a+\b) -- (0,\a) -- cycle;
-\draw (0,\a) -- node[midway,above] {$c$} (\a, \a+\b);
-
-% 中央の小さな正方形の描画
-\draw (\b,0) -- (\a+\b,\b) -- (\a,\a+\b) -- (0,\a) -- cycle;
-
-% 寸法のラベル
-\draw [<->] (-0.5,0) -- (-0.5,\a) node[midway,left] {$a$};
-\draw [<->] (-0.5,\a) -- (-0.5,\a+\b) node[midway,left] {$b$};
-\draw [<->] (0,-0.5) -- (\b,-0.5) node[midway,below] {$b$};
-\draw [<->] (\b,-0.5) -- (\a+\b,-0.5) node[midway,below] {$a$};
-
-\end{tikzpicture}
-\end{center}
-\end{example}
+\subsection{数学における言い回し}
 \phantomsection
-\subsection{記法}
-\phantomsection
-\subsubsection{論理記号}
-
-	論理記号は，命題を結合するために用いられる記号である．代表的な論理記号を列挙してみよう：
-	\begin{table}[htbp]
-		\centering
-		\caption{論理記号とその意味}
-		\begin{tabular}{c|c}
-		\hline
-		記号 & 意味 \\
-		\hline
-    $\land$ & かつ（論理積） \\
-    $\lor$ & または（論理和） \\
-    $\lnot$ & 否定 \\
-    $\to$ & ならば（含意） \\
-    $\Leftrightarrow$ & 必要十分条件（同値） \\
-    $\forall$ & 任意の（全称量化） \\
-    $\exists$ & 存在する（存在量化） \\
-		\hline
-		\end{tabular}
-		\end{table}
-
-    これらの論理記号を用いて，命題を結合し，複雑な論理式を構成することができる．特に，量化記号である$\forall$と$\exists$を用いることで，数学的な主張を一般的に表現することができる．
-
-    \subsubsection{量化記号}
-    
-    \begin{itemize}
-        \item $\forall$（全称量化）：$\forall x\, P(x)$は，「任意の$x$について$P(x)$が成り立つ」という意味である．
-        \item $\exists$（存在量化）：$\exists x\, P(x)$は，「ある$x$が存在して$P(x)$が成り立つ」という意味である．
-    \end{itemize}
-    
-    \begin{example}{量化記号の例}{量化記号の例}
-        \begin{itemize}
-            \item $\forall x \in \mathbb{R},\ x^2 \geq 0$\\
-            「任意の実数$x$について，$x^2$は$0$以上である．」
-            \item $\exists x \in \mathbb{Z},\ x^2 = 4$\\
-            「ある整数$x$が存在して，$x^2 = 4$となる．」
-        \end{itemize}
-    \end{example}
-
-	\phantomsection
-  \section{集合}
-  \phantomsection
-  \subsection{集合の記法}
-
-  \begin{definition}{集合}{集合}
-      もののあつまりを\emph{集合}という\footnote{公理的集合論の立場では，集合とは「無定義語」であるが，ここで詳しくは触れない．}集合を構成する物を\emph{元}または\emph{要素}といい，集合$A$の元が$a$であることを$a \in A$，$A \ni a$などと表す．
-  \end{definition}
-  
-  集合に関して，いくつか注意点を挙げよう．
-  
-  \begin{itemize}
-      \item 集合では書き並べる順序が重要でないため，例えば $\{1, 2, 3\} = \{3, 2, 1\}$である．
-      \item 同じ要素が重複して含まれていても，1つの要素として扱われるため，例えば$\{1, 1, 2, 2, 2, 3\} = \{1, 2, 3\}$である．
-      \item 集合の要素には，種類が異なるものを同時に含めることができる．例えば，$\{4, \{3\}\}$では，$4$は数であり，$\{3\}$は集合であるが，集合としての資格がある．
-  \end{itemize}
-  
-  
-  \begin{definition}{部分集合}{部分集合}
-    集合$A$の要素はすべて集合$B$の要素でもあるとき，$A$は$B$の\emph{部分集合}であるといい，これを
-    \[
-    A \subset B,\quad B \supset A
-    \]
-    などと表す．
-  \end{definition}
-  
-  \begin{shadebox}
-    よく使う集合
-      \begin{itemize}
-      \item $\mathbb{R}$は実数全体の集合を表している．Real numberの頭文字をとった．
-      \item $\mathbb{N}=\{0,1,2,\cdots \}$は自然数全体の集合を表している．Natural number の頭文字をとった．
-      \item $\mathbb{C}=\{ a+bi \mid a,b \in \mathbb{R}\}$は複素数全体の集合を表している．Complex number の頭文字をとった．
-      \item $\mathbb{Z}=\{0, \pm 1 , \pm 2 , \cdots\}$は整数全体の集合を表している．Zはドイツ語由来である，
-      \item $\mathbb{Q}=\{ a/b \mid   a,b \in \mathbb{Z},b \ne 0 \}$は有理数全体の集合を表している．「商」を表すイタリア語由来である．
-      \end{itemize}
-  \end{shadebox}
-  
-  \begin{example}{}{}
-      \[
-      x \in \mathbb{Q}
-    \]
-    と書くことで，$x$は有理数であることを表す．
-  \end{example}
-  
-  \begin{example}{}{}
-      \[
-      \mathbb{R} \subset \mathbb{C}
-    \]
-    である．つまり，実数全体の集合は複素数全体の集合の部分集合である．
-  \end{example}
-  \phantomsection
-  \subsection{集合の演算}
-  
-  集合に対して，以下のような演算を定義することができる．
-  
-  \begin{definition}{和集合・共通部分・差集合}{}
-      $A$と$B$を集合とするとき，
-      \begin{description}[labelwidth=4em]
-          \item[和集合] $A$または$B$のいずれかに属する要素全体の集合を$A \cup B$と表す．
-          \item[共通部分] $A$と$B$の両方に属する要素全体の集合を$A \cap B$と表す．
-          \item[差集合 ]$A$の要素で$B$に属さないもの全体の集合を$A \setminus B$と表す．
-      \end{description}
-  \end{definition}
-  
-  \begin{example}{集合}{集合}
-      例えば，$A = \{1, 2, 3\}$，$B = \{3, 4, 5\}$とすると，
-      \begin{itemize}
-          \item $A \cup B = \{1, 2, 3, 4, 5\}$
-          \item $A \cap B = \{3\}$
-          \item $A \setminus B = \{1, 2\}$
-      \end{itemize}
-  \end{example}
-  
-
-  
-  集合はしばしば条件を用いて記述される．
-  
-  \begin{description}[labelwidth=4em]
-      \item[列挙形式] $\{ a, b, c \}$のように要素を列挙して表す．
-      \item[条件形式] $\{ x \in \mathbb{N} \mid x \leq 5 \}$のように条件を用いて表す．
-  \end{description}
-  \phantomsection
-  \subsection{量化記号と集合の関係}
-  
-  量化記号と集合の記法は密接に関連している．
-  
-  \begin{example}{}{}
-      \[
-        \forall\, x \in A \; : \; P(x)
-      \]
-      は，「集合$A$のすべての元$x$について，$P(x)$が成り立つ」という意味である．
-  \end{example}
-  
-  \begin{example}{}{}
-      \[
-      \exists \,  x \in A\; : \; P(x)
-      \]
-      は，「集合$A$の元$x$の中に，$P(x)$が成り立つものが存在する」という意味である．
-  \end{example}
-  
-  \subsection{例題}
-  
-  \begin{example}{方程式の解集合}{方程式の解集合}
-      次の方程式を満たす$x$の集合を求めよ．
-      \[
-      x^2 - 4 = 0
-      \]
-      \textbf{解答}：方程式を解くと，$x^2 = 4$より，$x = \pm 2$．したがって，解集合は$\{ -2, 2 \}$である．
-  
-      ここで，$x$の範囲を実数全体とすると$\{ -2, 2 \}$であるが，$x \in \mathbb{N}$とすると，$x = 2$のみが解となる．
-  \end{example}
-  集合の表記は文脈により省略されることがある．たとえば，以下のような問題があったとする．
-  \begin{quotation}
-    2次方程式
-    \[
-    x^2 - 3x -4 =0
-    \]
-    を解け．
-  \end{quotation}
-  $x$が属する全体集合は定められていないが，この場合だと「$x \in \mathbb{C}$」とされることが多い．
-  よってこの方程式の解は$x = -1 , 4$とする場合が多い．
-  だが，もちろん$ x \in \mathbb{N}$とするなら，$ -1 \notin \mathbb{N}$なので，この場合の解は$ x= 4$のみである．
-  ただ，$x$が属する全体集合は，文脈でわかったり明記されている場合が多いので，あまり心配はいらないと筆者は考える．
-  
-  \phantomsection
-\section{数学における言い回し}
-\phantomsection
-\subsection{存在}
+\subsubsection{存在}
 
 
 
@@ -1020,7 +1106,7 @@ $a^2$や$a^{2/3}$の具体的な値のイメージは思い浮かぶと思うが
 
 このように，極限の存在を証明するためには，有理数列の収束性など，細かな数学的性質を確認する必要がある．このようにして初めて，指数関数の定義が厳密なものとなるのである．
 
-\subsection{一意性}
+\subsubsection{一意性}
 
 数学において「一意性」が重要である場面は多い．読者の中には線型代数の講義で「逆行列の一意性」などに触れた方もいると思われる．なぜ重要であるのか，一つ例を挙げて考えてることとする．
 
@@ -1091,7 +1177,7 @@ $f(x)=x^3$という関数を考える．この関数は$[-1,1]$で連続，$(-1,
 
 
 \phantomsection
-\subsection{かつ/または}
+\subsubsection{かつ/または}
 
 
 
