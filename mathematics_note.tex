@@ -98,23 +98,23 @@
 \definecolor{charcoal}{rgb}{0.21, 0.27, 0.31}
 \colorlet{lightmypurple}{mypurple!20!white}
 
-% chapter
+% chapter (part) with number
 \titleformat{\part}[block]
 {}{}{0pt}{
-  \fontsize{16pt}{16pt}\normalfont\bfseries\filleft
+  \fontsize{16pt}{16pt}\normalfont\bfseries\filleft \thepart\quad
 }[
   \hrule \large{\filleft\textcolor{myred}{\thepart}} \\
   \vspace{-6mm}
 ]
 
-% section
+% section with number
 \titleformat{\section}[block]
 {}{}{0pt}
 {
   \colorbox{myred}{\begin{picture}(5,10)\end{picture}}
   \hspace{0pt}
   \normalfont \Large\bfseries 
-  \hspace{-4pt}
+  \hspace{-4pt} \thesection\quad
 }
 [
 \vspace{-4pt}
@@ -126,14 +126,14 @@
 \vspace{-46pt}
 ]
 
-% subsection
+% subsection with number
 \titleformat{\subsection}[block]
 {}{}{0pt}
 {
   \colorbox{myblue}{\begin{picture}(4,8)\end{picture}}
   \hspace{0pt} 
   \normalfont \large\bfseries 
-  \hspace{-4pt}
+  \hspace{-4pt} \thesubsection\quad
 }
 [
   \vspace{-1pt}
@@ -145,20 +145,20 @@
 \vspace{-42pt}
 ]
 
-% subsubsection
+% subsubsection with number
 \titleformat{\subsubsection}[block]
 {}{}{0pt}
 {
   \colorbox{charcoal}{\begin{picture}(3,6)\end{picture}}
   \hspace{0pt} 
   \normalfont \bfseries 
-  \hspace{-4pt}
+  \hspace{-4pt} \thesubsubsection\quad
 }
 [
   \vspace{-1pt}
 \begin{picture}(100,0)
   \linethickness{0.8pt}
-  \put(3,13.2){\color{charcoal}\line(1,0){160}}
+  \put(3,12.2){\color{charcoal}\line(1,0){160}}
 \end{picture}
 \\
 \vspace{-28pt}
@@ -408,20 +408,19 @@ IfValueTF={#1}{title=【#2】〈#1〉}{title=【#2】},#4}
 {%
   \vskip10pt
   \parindent0pt \leftskip0pt % `\leftskip` を part と同じにします
-  \etoclink{\bfseries\Large\color{mypurple}\etocname}%
+  \etoclink{\bfseries\Large\color{mypurple}\etocnumber~\etocname}%
   \leaders\hbox to0.5em{\hss.\hss}\hfill
   \etocpage\par
   \vskip10pt
 }
 {}
 
-
 \etocsetstyle{subsection}
 {\noindent}
 {%
   \vskip6pt
   \parindent0pt \leftskip0pt % `\leftskip` を part と同じにします
-  \etoclink{\bfseries\large\color{mypurple}\etocname}%
+  \etoclink{\bfseries\large\color{mypurple}\etocnumber~\etocname}%
   \leaders\hbox to0.5em{\hss.\hss}\hfill
   \etocpage\par
   \vskip6pt
@@ -432,9 +431,9 @@ IfValueTF={#1}{title=【#2】〈#1〉}{title=【#2】},#4}
 {\noindent}
 {%
   \parindent0pt \leftskip0pt % `\leftskip` を section と同じにします
-  \etoclink{\bfseries\color{mypurple}\etocname}%
+  \etoclink{\bfseries\color{mypurple}\etocnumber~\etocname}%
   \space % 項目の間に半角スペースを挿入
-  (\etocnumber,~p.\etocpage)% 章番号とページ番号の表示
+  (p.\etocpage)%ページ番号の表示
   \hspace{1em}
 }
 {}
@@ -507,7 +506,7 @@ IfValueTF={#1}{title=【#2】〈#1〉}{title=【#2】},#4}
 \localtableofcontents
 \newpage 
 
-\part*{数学の基本}
+\part{数学の基本}
 \phantomsection
 \section{はじめに}
 
