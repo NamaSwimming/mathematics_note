@@ -391,7 +391,7 @@ IfValueTF={#1}{title=【#2】〈#1〉}{title=【#2】},#4}
 \makeatother
 
 % 各レベルの目次項目のスタイルを設定
-% `\leftskip` を統一します
+% `\leftskip` を階層に応じて設定します
 \etocsetstyle{part}
 {\noindent}
 {%
@@ -402,14 +402,13 @@ IfValueTF={#1}{title=【#2】〈#1〉}{title=【#2】},#4}
 }
 {}
 
-
 \etocsetstyle{section}
 {\noindent}
 {%
   \vskip10pt
-  \parindent0pt \leftskip0pt % `\leftskip` を part と同じにします
-  \etoclink{\bfseries\Large\color{mypurple}\etocnumber~\etocname}%
-  \leaders\hbox to0.5em{\hss.\hss}\hfill
+  \parindent0pt \leftskip5pt % `section` は10ptのインデント
+  \etoclink{\bfseries\LARGE\color{mypurple}\etocnumber~\etocname}%
+  \leaders\hbox to 0.5em{\hss.\hss}\hfill
   \etocpage\par
   \vskip10pt
 }
@@ -419,9 +418,9 @@ IfValueTF={#1}{title=【#2】〈#1〉}{title=【#2】},#4}
 {\noindent}
 {%
   \vskip6pt
-  \parindent0pt \leftskip0pt % `\leftskip` を part と同じにします
+  \parindent0pt \leftskip20pt % `subsection` は20ptのインデント
   \etoclink{\bfseries\large\color{mypurple}\etocnumber~\etocname}%
-  \leaders\hbox to0.5em{\hss.\hss}\hfill
+  \leaders\hbox to 0.5em{\hss.\hss}\hfill
   \etocpage\par
   \vskip6pt
 }
@@ -430,10 +429,10 @@ IfValueTF={#1}{title=【#2】〈#1〉}{title=【#2】},#4}
 \etocsetstyle{subsubsection}
 {\noindent}
 {%
-  \parindent0pt \leftskip0pt % `\leftskip` を section と同じにします
-  \etoclink{\bfseries\color{mypurple}\etocnumber~\etocname}%
+  \parindent0pt \leftskip35pt % `subsubsection` は30ptのインデント
+  \etoclink{\bfseries\normalsize\color{mypurple}\etocnumber~\etocname}%
   \space % 項目の間に半角スペースを挿入
-  (p.\etocpage)%ページ番号の表示
+  (p.\etocpage)% ページ番号の表示
   \hspace{1em}
 }
 {}
@@ -748,7 +747,7 @@ $x$が属する全体集合は定められていないが，この場合だと�
 
     \subsubsection{命題の反証と反例}
 
-    数学において，「すべての$n$に対して$P(n)$が成り立つ」という全称命題を否定するには，\textbf{反例}を一つ示すだけで十分である．これは，全称命題が「すべての場合において成り立つ」ことを主張しているため，一つでも例外があれば命題全体が偽となるからである．
+    数学において，「すべての$n$に対して$P(n)$が成り立つ」という全称命題が偽であることを証明するには，\textbf{反例}を一つ示すだけで十分である．これは，全称命題が「すべての場合において成り立つ」ことを主張しているため，一つでも例外があれば命題全体が偽となるからである．
 
     \begin{example}{反例による反証}{反例による反証}
         次の命題を考える：
