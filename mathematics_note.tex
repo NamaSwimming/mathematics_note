@@ -613,26 +613,110 @@ $x$が属する全体集合は定められていないが，この場合だと�
   
   集合に対して，以下のような演算を定義することができる．
   
-  \begin{definition}{和集合・共通部分・差集合}{}
-      $A$と$B$を集合とするとき，
+  \begin{definition}{共通部分・和集合・差集合・補集合}{共通部分・和集合・差集合・補集合}
+      $A$と$B$を集合とするとき，以下の定義をする．
       \begin{description}[labelwidth=4em]
-          \item[和集合] $A$または$B$のいずれかに属する要素全体の集合を$A \cup B$と表す．
-          \item[共通部分] $A$と$B$の両方に属する要素全体の集合を$A \cap B$と表す．
-          \item[差集合 ]$A$の要素で$B$に属さないもの全体の集合を$A \setminus B$と表す．
+        \item[共通部分] $A$と$B$の両方に属する要素全体の集合を$A \cap B$と表す．
+        \item[和集合] $A$または$B$のいずれかに属する要素全体の集合を$A \cup B$と表す．
+        \item[差集合]$A$の要素で$B$に属さないもの全体の集合を$A \setminus B$と表す．
+        \item[補集合] 全体集合$X$に対して、$A$の補集合を$A^c = X \setminus A$と定義する。
       \end{description}
   \end{definition}
   
   \begin{example}{集合}{集合}
       例えば，$A = \{1, 2, 3\}$，$B = \{3, 4, 5\}$とすると，
-      \begin{itemize}
-          \item $A \cup B = \{1, 2, 3, 4, 5\}$
+      \begin{itemize*}
           \item $A \cap B = \{3\}$
+          \item $A \cup B = \{1, 2, 3, 4, 5\}$
           \item $A \setminus B = \{1, 2\}$
-      \end{itemize}
+          \item $X=\{1,2,3,4,5\}$とすると，$A^c = \{4, 5\}$
+      \end{itemize*}
   \end{example}
   
-
+  \begin{figure}[h]
+    \centering
+    \begin{minipage}{0.45\linewidth}
+      \centering
+      % A∩B のベン図
+      \begin{tikzpicture}
+        % 全体集合の長方形
+        \draw (0,0) rectangle (6,4) node[below left] {$X$};
+        % 集合Aの円
+        \draw (2,2) circle (1.5) node[left] {$A$};
+        % 集合Bの円
+        \draw (4,2) circle (1.5) node[right] {$B$};
+        % 共通部分を塗りつぶす
+        \begin{scope}
+          \clip (2,2) circle (1.5);
+          \fill[gray] (4,2) circle (1.5);
+        \end{scope}
+      \end{tikzpicture}
+      \caption{$A \cap B$ のベン図}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.45\linewidth}
+      \centering
+      % A∪B のベン図
+      \begin{tikzpicture}
+        % 全体集合の長方形
+        \draw (0,0) rectangle (6,4) node[below left] {$X$};
+        % 集合Aの円を塗りつぶす
+        \fill[gray] (2,2) circle (1.5);
+        % 集合Bの円を塗りつぶす
+        \fill[gray] (4,2) circle (1.5);
+        % 集合Aの円の輪郭
+        \draw (2,2) circle (1.5) node[left] {$A$};
+        % 集合Bの円の輪郭
+        \draw (4,2) circle (1.5) node[right] {$B$};
+      \end{tikzpicture}
+      \caption{$A \cup B$ のベン図}
+    \end{minipage}
+  \end{figure}
   
+  \begin{figure}[h]
+    \centering
+    \begin{minipage}{0.45\linewidth}
+      \centering
+      % A - B のベン図
+      \begin{tikzpicture}
+        % 全体集合の長方形
+        \draw (0,0) rectangle (6,4) node[below left] {$X$};
+        % 集合Aの円
+        \draw (2,2) circle (1.5) node[left] {$A$};
+        % 集合Bの円
+        \draw (4,2) circle (1.5) node[right] {$B$};
+        % A - B を塗りつぶす
+        \begin{scope}
+          \clip (2,2) circle (1.5);
+          \fill[gray] (0,0) rectangle (6,4);
+        \end{scope}
+        \begin{scope}
+          \clip (4,2) circle (1.5);
+          \fill[white] (0,0) rectangle (6,4);
+        \end{scope}
+        % 集合Aの円の輪郭
+        \draw (2,2) circle (1.5) node[left] {$A$};
+      \end{tikzpicture}
+      \caption{$A \setminus B$ のベン図}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.45\linewidth}
+      \centering
+      % A^c のベン図
+      \begin{tikzpicture}
+        % 全体集合の長方形を塗りつぶす
+        \fill[gray] (0,0) rectangle (6,4);
+        % 集合Aの円を白で塗りつぶす
+        \fill[white] (2,2) circle (1.5);
+        % 全体集合の枠
+        \draw (0,0) rectangle (6,4) node[below left] {$X$};
+        % 集合Aの円の輪郭
+        \draw (2,2) circle (1.5) node[left] {$A$};
+      \end{tikzpicture}
+      \caption{$A^c$ のベン図}
+    \end{minipage}
+  \end{figure}
+
   集合はしばしば条件を用いて記述される．
   
   \begin{description}[labelwidth=4em]
