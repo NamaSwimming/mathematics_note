@@ -728,26 +728,6 @@ $x$が属する全体集合は定められていないが，この場合だと�
     \{ 1,2,3 \} = \{ n \in \mathbb{N} \mid  n^2 -4n +3 \leqq 0 \}
     \]
   \end{example}
-  \phantomsection
-  \subsection{量化記号と集合の関係}
-  
-  量化記号と集合の記法は密接に関連している．
-  
-  \begin{example}{}{}
-      \[
-        \forall\, x \in A \, : \, P(x)
-      \]
-      は，「集合$A$のすべての元$x$について，$P(x)$が成り立つ」という意味である．
-  \end{example}
-  
-  \begin{example}{}{}
-      \[
-      \exists \,  x \in A\, : \, P(x)
-      \]
-      は，「集合$A$の元$x$の中に，$P(x)$が成り立つものが存在する」という意味である．
-  \end{example}
-  
-  
 \phantomsection
 \section{論理と証明}
 \subsection{論理}
@@ -776,12 +756,21 @@ $x$が属する全体集合は定められていないが，この場合だと�
 
     \subsubsection{量化記号}
     
-    \begin{description}
-        \item [全称量化] \mbox{} \\ 
-        $\forall x\, : \, P(x)$は，「任意の$x$について$P(x)$が成り立つ」という意味である．
-        \item [存在量化] \mbox{} \\
-         $\exists x\, : \, P(x)$は，「ある$x$が存在して$P(x)$が成り立つ」という意味である．
-    \end{description}
+    
+    \begin{definition}{全称命題}{全称命題}
+        \[
+          \forall\, x \, : \, P(x)
+        \]
+        は，「すべての$x$について，$P(x)$が成り立つ」という意味であり，これを\emph{全称命題}という．
+    \end{definition}
+    
+
+    \begin{definition}{存在命題}{存在命題}
+        \[
+        \exists \,  x\, : \, P(x)
+        \]
+        は，「$P(x)$が成り立つような$x$が存在する」という意味であり，これを\emph{存在命題}という．
+    \end{definition}
     
     \begin{example}{量化記号の例}{量化記号の例}
         \begin{itemize}
@@ -791,6 +780,7 @@ $x$が属する全体集合は定められていないが，この場合だと�
             「ある整数$x$が存在して，$x^2 = 4$となる．」
         \end{itemize}
     \end{example}
+
     \subsection{証明}
 
     \subsubsection{証明とは}
