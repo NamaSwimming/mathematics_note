@@ -557,7 +557,7 @@ IfValueTF={#1}{title=【#2】〈#1〉}{title=【#2】},#4}
 \begin{shadebox}
   数を表す集合以外にも，固有の表記が与えられている集合が存在する．
   \begin{itemize}
-  \item $\varnothing$ \footnote{$\emptyset$と表記することもある．}は要素を一つも持たない集合，すなわち\emph{空集合}を表している．
+  \item $\varnothing$ \footnote{空集合は$\emptyset$と表記することもある．ギリシャ文字の$\phi$で代用されることもあるが，本来の空集合の記号はノルウェー語由来である．}は要素を一つも持たない集合，すなわち\emph{空集合}を表している．
   \item $\mathcal{P}(A)$は集合$A$のすべての部分集合からなる集合，すなわち\emph{べき集合}を表している．
  \end{itemize}
 \end{shadebox}
@@ -671,10 +671,9 @@ $x$が属する全体集合は定められていないが，この場合だと�
       \end{tikzpicture}
       \caption{$A \cup B$ のベン図}
     \end{minipage}
-  \end{figure}
-  
-  \begin{figure}[h]
-    \centering
+
+    \vspace{2mm}
+
     \begin{minipage}{0.45\linewidth}
       \centering
       % A - B のベン図
@@ -723,6 +722,12 @@ $x$が属する全体集合は定められていないが，この場合だと�
       \item[列挙形式] $\{ a, b, c \}$のように要素を列挙して表す．
       \item[条件形式] $\{ x \in \mathbb{N} \mid x \leq 5 \}$のように条件を用いて表す．
   \end{description}
+
+  \begin{example}{集合の表記}{集合の表記}
+    \[
+    \{ 1,2,3 \} = \{ n \in \mathbb{N} \mid  n^2 -4n +3 \leqq 0 \}
+    \]
+  \end{example}
   \phantomsection
   \subsection{量化記号と集合の関係}
   
@@ -771,10 +776,12 @@ $x$が属する全体集合は定められていないが，この場合だと�
 
     \subsubsection{量化記号}
     
-    \begin{itemize}
-        \item $\forall$（全称量化）：$\forall x\, : \, P(x)$は，「任意の$x$について$P(x)$が成り立つ」という意味である．
-        \item $\exists$（存在量化）：$\exists x\, : \, P(x)$は，「ある$x$が存在して$P(x)$が成り立つ」という意味である．
-    \end{itemize}
+    \begin{description}
+        \item [全称量化] \mbox{} \\ 
+        $\forall x\, : \, P(x)$は，「任意の$x$について$P(x)$が成り立つ」という意味である．
+        \item [存在量化] \mbox{} \\
+         $\exists x\, : \, P(x)$は，「ある$x$が存在して$P(x)$が成り立つ」という意味である．
+    \end{description}
     
     \begin{example}{量化記号の例}{量化記号の例}
         \begin{itemize}
