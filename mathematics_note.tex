@@ -363,10 +363,10 @@ IfValueTF={#1}{title=【#2】〈#1〉}{title=【#2】},#4}
 
 \etocsetnexttocdepth{subsubsection} % 必要に応じて調整
 
-\etocsettocstyle{
+  \etocsettocstyle{
 \vskip10pt
-  \noindent
-  \begin{tikzpicture}[x=\textwidth]
+  \noindent\hspace*{-\leftskip}%
+  \begin{tikzpicture}[x=\linewidth]
     % 全幅の線を描く
     \draw[line width=2pt, blur shadow,color=mypurple] (0,0) -- (1,0);
     % 「目次」のボックスを線の中心に配置
@@ -382,9 +382,9 @@ IfValueTF={#1}{title=【#2】〈#1〉}{title=【#2】},#4}
   \vskip10pt
 }{
   \vskip10pt
-  \noindent
-  \begin{tikzpicture}[x=\textwidth]
-    \draw[line width=2pt,blur shadow, color=mypurple] (0,0) -- (1,0);
+  \noindent\hspace*{-\leftskip}%
+  \begin{tikzpicture}[x=\linewidth]
+    \draw[line width=2pt, blur shadow, color=mypurple] (0,0) -- (1,0);
   \end{tikzpicture}
   \vskip20pt
 }
@@ -418,7 +418,7 @@ IfValueTF={#1}{title=【#2】〈#1〉}{title=【#2】},#4}
 {\noindent}
 {%
   \vskip6pt
-  \parindent0pt \leftskip20pt % `subsection` は20ptのインデント
+  \parindent0pt \leftskip25pt % `subsection` は20ptのインデント
   \etoclink{\bfseries\large\color{mypurple}\etocnumber~\etocname}%
   \leaders\hbox to 0.5em{\hss.\hss}\hfill
   \etocpage\par
@@ -429,7 +429,7 @@ IfValueTF={#1}{title=【#2】〈#1〉}{title=【#2】},#4}
 \etocsetstyle{subsubsection}
 {\noindent}
 {%
-  \parindent0pt \leftskip35pt % `subsubsection` は30ptのインデント
+  \parindent0pt \leftskip50pt % `subsubsection` は30ptのインデント
   \etoclink{\bfseries\normalsize\color{mypurple}\etocnumber~\etocname}%
   \space % 項目の間に半角スペースを挿入
   (p.\etocpage)% ページ番号の表示
