@@ -516,7 +516,7 @@ IfValueTF={#1}{title=【#2】〈#1〉}{title=【#2】},#4}
 
   現代数学の基礎をなす概念に「集合」や「写像」がある．まず「集合」からみていこう．
   \begin{definition}{集合}{集合}
-      もののあつまりを\emph{集合}という\footnote{公理的集合論の立場では，集合とは「無定義語」であるが，ここで詳しくは触れない．}集合を構成する物を\emph{元}または\emph{要素}といい，集合$A$の元が$a$であることを$a \in A$，$A \ni a$などと表す．
+      もののあつまりを\emph{集合}という\footnote{公理的集合論の立場では，集合とは「無定義語」であるが，ここで詳しくは触れない．}．集合を構成する物を\emph{元}または\emph{要素}といい，集合$A$の元が$a$であることを$a \in A$，$A \ni a$などと表す．
   \end{definition}
   
   集合に関して，いくつか注意点を挙げよう．
@@ -586,14 +586,12 @@ IfValueTF={#1}{title=【#2】〈#1〉}{title=【#2】},#4}
   である．つまり，空集合は全ての集合の部分集合である．
 \end{example}
 
-  \begin{example}{方程式の解集合}{方程式の解集合}
-    次の方程式を満たす$x$の集合を求めよ．
+  \begin{example}{べき集合}{べき集合}
+    $A=\{ 1, 2\}$とすると，
     \[
-    x^2 - 4 = 0
-    \]
-    \textbf{解答}：方程式を解くと，$x^2 = 4$より，$x = \pm 2$．したがって，解集合は$\{ -2, 2 \}$である．
-
-    ここで，$x$の範囲を実数全体とすると$\{ -2, 2 \}$であるが，$x \in \mathbb{N}$とすると，$x = 2$のみが解となる．
+    \mathcal{P}(A) = \{ \varnothing, \{1\}, \{2\}, \{1, 2\}\}
+  \]
+  である．
 \end{example}
 集合の表記は文脈により省略されることがある．たとえば，以下のような問題があったとする．
 \begin{quotation}
@@ -608,6 +606,35 @@ $x$が属する全体集合は定められていないが，この場合だと�
 だが，もちろん$ x \in \mathbb{N}$とするなら，$ -1 \notin \mathbb{N}$なので，この場合の解は$ x= 4$のみである．
 ただ，$x$が属する全体集合は，文脈でわかったり明記されている場合が多いので，あまり心配はいらないと筆者は考える．
 
+
+\begin{prop}{集合の分配律}{集合の分配律}
+  $A$，$B$，$C$を集合とするとき，
+  \begin{align*} 
+    A \cap ( B \cup C) &= (A \cap B) \cup (A \cap C), \\
+    A \cup ( B \cap C) &= (A \cup B) \cap (A \cup C).
+  \end{align*}
+\end{prop}
+
+\begin{tleftbar}
+\begin{proof}
+$ x \in A \cap ( B \cup C)$とすると，$x \in A$かつ$x \in B \cup C$である．$x \in B \cup C$とすると，$x \in B$または$x \in C$である．
+よって，$x \in A$かつ$x \in B$であるとき，$x \in A \cap B$である．また，$x \in A$かつ$x \in C$であるとき，$x \in A \cap C$である．
+これらのことから，$x \in A \cap ( B \cup C)$とすると，$x \in (A \cap B) \cup (A \cap C)$である．
+つまり，
+\[
+A \cap ( B \cup C) \subset (A \cap B) \cup (A \cap C).
+\]
+逆に，$x \in (A \cap B) \cup (A \cap C)$とすると，$x \in A \cap B$または$x \in A \cap C$である．
+$x \in A \cap B$とすると，$x \in A$かつ$x \in B$である．また，$x \in A \cap C$とすると，$x \in A$かつ$x \in C$である．
+よって，$x \in A$かつ$x \in B$または$x \in A$かつ$x \in C$である．これらのことから$x \in A$かつ$x \in B \cup C$である．
+つまり，
+\[
+(A \cap B) \cup (A \cap C) \subset A \cap ( B \cup C).
+\]
+以上の考察により，$A \cap ( B \cup C) = (A \cap B) \cup (A \cap C)$である．
+
+\end{proof}
+\end{tleftbar}
 
   \phantomsection
   \subsection{集合の演算}
