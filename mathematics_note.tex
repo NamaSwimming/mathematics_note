@@ -178,6 +178,14 @@
 % まわりこみ
 \usepackage{wrapfig}
 
+
+% ハイパーリンク用
+\usepackage{url}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\hypersetup{colorlinks=true,citecolor={mypurple!40!black},linkcolor={mypurple!40!black},urlcolor={mypurple!70!black},}
+\usepackage[numbered]{bookmark}
+
 % tcolorbox系
 \usepackage[many]{tcolorbox}
 \tcbuselibrary{breakable,skins,theorems,xparse}
@@ -196,7 +204,9 @@ enhanced,colframe=burgundy,colback=burgundy!2!white,colbacktitle=burgundy,
 boxrule=0pt,borderline south={2pt}{-2pt}{burgundy},
 left*=1\zw,right*=1\zw,
 theorem style=standard,
-breakable,sharp corners,
+breakable,
+hyperref,
+sharp corners,
 before skip=16pt,
 after skip=18pt,
 before upper={\setlength{\parindent}{1\zw}},
@@ -344,12 +354,6 @@ IfValueTF={#1}{title=【#2】〈#1〉}{title=【#2】},#4}
 
 \newcommand\kakko[1]{\noindent\textbf{《#1》}}
 
-% ハイパーリンク用
-\usepackage{url}
-\usepackage{hyperref}
-\usepackage{xcolor}
-\hypersetup{colorlinks=true,citecolor={mypurple!40!black},linkcolor={mypurple!40!black},urlcolor={mypurple!70!black},}
-\usepackage{bookmark}
 
 \everymath{\displaystyle}
 
@@ -506,15 +510,19 @@ IfValueTF={#1}{title=【#2】〈#1〉}{title=【#2】},#4}
 \localtableofcontents
 \newpage 
 
+
+\phantomsection
 \part{数学の基本}
 \phantomsection
 \section{集合}
   \phantomsection
   \subsection{集合の定義と表記法}
 
+  \phantomsection
   \subsubsection{集合の定義}
 
   現代数学の基礎をなす概念に「集合」や「写像」がある．まず「集合」からみていこう．
+  \phantomsection
   \begin{definition}{集合}{集合}
       もののあつまりを\emph{集合}という\footnote{公理的集合論の立場では，集合とは「無定義語」であるが，ここで詳しくは触れない．}．集合を構成する物を\emph{元}または\emph{要素}といい，集合$A$の元が$a$であることを$a \in A$，$A \ni a$などと表す．
   \end{definition}
@@ -530,6 +538,7 @@ IfValueTF={#1}{title=【#2】〈#1〉}{title=【#2】},#4}
   「ある集合の要素を部分的に含んでいる集合」を考えることは，数学において重要な意義を持つ．例えば，ある集合の特定の性質を持つ要素のみを集めた部分集合を考えることで，問題解決や証明において焦点を絞ることができる．
   といっても，現段階で部分集合のイメージを掴むことは難しいので，まず定義を確認して，部分集合の具体的な例はのちほど紹介することにする．
   
+  \phantomsection
   \begin{definition}{部分集合}{部分集合}
     集合$A$の要素はすべて集合$B$の要素でもあるとき，$A$は$B$の\emph{部分集合}であるといい，これを
     \[
@@ -539,6 +548,7 @@ IfValueTF={#1}{title=【#2】〈#1〉}{title=【#2】},#4}
   \end{definition}
 
 
+  \phantomsection
   \subsubsection{集合の表記}
   
   数学を勉強する上で，よく使う集合には固有の記号を与える場合が多い．以下ではよく使う集合の例を挙げよう．
@@ -562,14 +572,16 @@ IfValueTF={#1}{title=【#2】〈#1〉}{title=【#2】},#4}
   \item $\mathcal{P}(A)$は集合$A$のすべての部分集合からなる集合，すなわち\emph{べき集合}を表している．
  \end{itemize}
 \end{shadebox}
-  
+
+\phantomsection
   \begin{example}{}{}
       \[
       x \in \mathbb{Q}
     \]
     と書くことで，$x$は有理数であることを表す．
   \end{example}
-  
+
+  \phantomsection
   \begin{example}{}{}
       \[
       \mathbb{R} \subset \mathbb{C}
@@ -577,7 +589,7 @@ IfValueTF={#1}{title=【#2】〈#1〉}{title=【#2】},#4}
     である．つまり，実数全体の集合は複素数全体の集合の部分集合である．
   \end{example}
 
-
+  \phantomsection
   \begin{example}{}{}
     $A$を集合とするとき，
     \[
@@ -586,6 +598,7 @@ IfValueTF={#1}{title=【#2】〈#1〉}{title=【#2】},#4}
   である．つまり，空集合は全ての集合の部分集合である．
 \end{example}
 
+\phantomsection
   \begin{example}{べき集合}{べき集合}
     $A=\{ 1, 2\}$とすると，
     \[
@@ -606,7 +619,7 @@ $x$が属する全体集合は定められていないが，この場合だと�
 だが，もちろん$ x \in \mathbb{N}$とするなら，$ -1 \notin \mathbb{N}$なので，この場合の解は$ x= 4$のみである．
 ただ，$x$が属する全体集合は，文脈でわかったり明記されている場合が多いので，あまり心配はいらないと筆者は考える．
 
-
+\phantomsection
 \begin{prop}{集合の分配律}{集合の分配律}
   $A$，$B$，$C$を集合とするとき，
   \begin{align*} 
@@ -641,6 +654,7 @@ $x \in A \cap B$とすると，$x \in A$かつ$x \in B$である．また，$x \
   
   集合に対して，以下のような演算を定義することができる．
   
+  \phantomsection
   \begin{definition}{共通部分・和集合・差集合・補集合}{共通部分・和集合・差集合・補集合}
       $A$と$B$を集合とするとき，以下の定義をする．
       \begin{description}[labelwidth=4em]
@@ -651,6 +665,7 @@ $x \in A \cap B$とすると，$x \in A$かつ$x \in B$である．また，$x \
       \end{description}
   \end{definition}
   
+  \phantomsection
   \begin{example}{集合}{集合}
       例えば，$A = \{1, 2, 3\}$，$B = \{3, 4, 5\}$とすると，
       \begin{itemize*}
@@ -751,6 +766,7 @@ $x \in A \cap B$とすると，$x \in A$かつ$x \in B$である．また，$x \
       \item[条件形式] $\{ x \in \mathbb{N} \mid x \leq 5 \}$のように条件を用いて表す．
   \end{description}
 
+  \phantomsection
   \begin{example}{集合の表記}{集合の表記}
     \[
     \{ 1,2,3 \} = \{ n \in \mathbb{N} \mid  n^2 -4n +3 \leqq 0 \}
@@ -758,7 +774,9 @@ $x \in A \cap B$とすると，$x \in A$かつ$x \in B$である．また，$x \
   \end{example}
 \phantomsection
 \section{論理と証明}
+\phantomsection
 \subsection{論理}
+\phantomsection
 \subsubsection{論理記号}
 
 	論理記号は，命題を結合するために用いられる記号である．代表的な論理記号を列挙してみよう：
@@ -782,9 +800,10 @@ $x \in A \cap B$とすると，$x \in A$かつ$x \in B$である．また，$x \
 
     これらの論理記号を用いて，命題を結合し，複雑な論理式を構成することができる．特に，量化記号である$\forall$と$\exists$を用いることで，数学的な主張を一般的に表現することができる．
 
+    \phantomsection
     \subsubsection{量化記号}
     
-    
+    \phantomsection
     \begin{definition}{全称命題}{全称命題}
         \[
           \forall\, x \, : \, P(x)
@@ -792,7 +811,7 @@ $x \in A \cap B$とすると，$x \in A$かつ$x \in B$である．また，$x \
         は，「すべての$x$について，$P(x)$が成り立つ」という意味であり，これを\emph{全称命題}という．
     \end{definition}
     
-
+    \phantomsection
     \begin{definition}{存在命題}{存在命題}
         \[
         \exists \,  x\, : \, P(x)
@@ -800,6 +819,7 @@ $x \in A \cap B$とすると，$x \in A$かつ$x \in B$である．また，$x \
         は，「$P(x)$が成り立つような$x$が存在する」という意味であり，これを\emph{存在命題}という．
     \end{definition}
     
+    \phantomsection
     \begin{example}{量化記号の例}{量化記号の例}
         \begin{itemize}
             \item $\forall x \in \mathbb{R}\, : \, x^2 \geq 0$\\
@@ -809,13 +829,16 @@ $x \in A \cap B$とすると，$x \in A$かつ$x \in B$である．また，$x \
         \end{itemize}
     \end{example}
 
+    \phantomsection
     \subsection{証明}
 
+    \phantomsection
     \subsubsection{証明とは}
     数学において，主張が正しいことを示すプロセスを\emph{証明（proof）}という．
     
     証明は一つの命題にいくつか存在する場合がほとんどであり，たとえば，\exref{三平方の定理}の証明は100通り以上も存在することが知られている．
     
+    \phantomsection
     \begin{example}{証明}{証明}
     辺の長さが$a$と$b$の直角三角形を$4$つ用意する．
     これらの三角形を組み合わせて，辺の長さが$a + b$の正方形を作る．
@@ -877,10 +900,12 @@ $x \in A \cap B$とすると，$x \in A$かつ$x \in B$である．また，$x \
     \end{center}
     \end{example}
 
+    \phantomsection
     \subsubsection{命題の反証と反例}
 
     数学において，「すべての$n$に対して$P(n)$が成り立つ」という全称命題が偽であることを証明するには，\textbf{反例}を一つ示すだけで十分である．これは，全称命題が「すべての場合において成り立つ」ことを主張しているため，一つでも例外があれば命題全体が偽となるからである．
 
+    \phantomsection
     \begin{example}{反例による反証}{反例による反証}
         次の命題を考える：
         \[
@@ -917,6 +942,8 @@ $x \in A \cap B$とすると，$x \in A$かつ$x \in B$である．また，$x \
     \end{description}
     
     以下では，「$n \geq 2$ をみたす任意の自然数について，$2^n > n$である」という命題を3通りのやり方で証明してみよう．
+
+    \phantomsection
     \begin{example}{帰納法}{帰納法}
       \begin{enumerate}[(I)]
       \item $n=2$のとき，
@@ -942,6 +969,7 @@ $x \in A \cap B$とすると，$x \in A$かつ$x \in B$である．また，$x \
       以上の考察と数学的帰納法により，$2^n > n$ は $n \geq 2$をみたすすべての自然数について成り立つ．
       \end{example}
 
+      \phantomsection
       \begin{example}{背理法}{背理法}
        $n \geqq 2$をみたす自然数で $2^n \leqq n$ となるものが存在すると仮定する．
         $2^n$ の正の約数の個数は，指数に $1$ を加えたものなので，$2^n$の正の約数の個数は $n + 1$ 個以上である．
@@ -952,6 +980,7 @@ $x \in A \cap B$とすると，$x \in A$かつ$x \in B$である．また，$x \
         したがって，仮定に矛盾が生じるため，$2^n > n$ が成り立つ．
       \end{example}
 
+      \phantomsection
       \begin{example}{直接証明}{直接証明}
         \[
         2^n = n \int_{1}^{2} x^{n-1} \, dx + 1 
@@ -970,6 +999,7 @@ $x \in A \cap B$とすると，$x \in A$かつ$x \in B$である．また，$x \
       \end{example}
 
 
+      \phantomsection
 \section{用語の定義}
 
 \phantomsection
@@ -980,6 +1010,7 @@ $x \in A \cap B$とすると，$x \in A$かつ$x \in B$である．また，$x \
 
 \emph{定義（definition）}とは，用語の意味を明確に述べたものであり，\textbf{Def}と略記される．同じ事柄について，2つ以上の定義の形式があることもある．次の例を見てみよう：
 
+\phantomsection
 \begin{example}{「絶対値」の定義}{「絶対値」の定義}
 	$ x \in \mathbb{R}$に対して，$x$の絶対値を$\abs{x}$とかき，次のように定義する：
 	\[
@@ -994,6 +1025,7 @@ $x \in A \cap B$とすると，$x \in A$かつ$x \in B$である．また，$x \
 次に，定義の性質についてみていこう．
 線型代数の講義で学ぶことであるが，逆行列の定義は以下のようになる：
 
+\phantomsection
 \begin{example}{「逆行列」の定義}{「逆行列」の定義}
 	正方行列$A$に対して，$BA = AB =E$となるような$B$が存在するとき，このような$B$を$A$の逆行列という．
 \end{example}
@@ -1001,6 +1033,7 @@ $x \in A \cap B$とすると，$x \in A$かつ$x \in B$である．また，$x \
 
 ここで注意するのは \emph{数学では定義は最小限の情報にとどめることが慣習となっている}ということである．たとえば，\exref{「逆行列」の定義}の定義から，以下の命題\footnote{「命題」については，のちほど詳しくみていくとする．ここでは「証明を与えるべきである主張」という理解でよい．}が成り立ち，その証明は容易である．
 
+\phantomsection
 \begin{prop}{逆行列の一意性}{逆行列の一意性}
 	正方行列$A$に対して，$A$の逆行列は存在するとすればただひとつである．
 \end{prop}
@@ -1050,6 +1083,7 @@ $x \in A \cap B$とすると，$x \in A$かつ$x \in B$である．また，$x \
 \end{enumerate}
 などがある．\ref{enu:定義が曖昧なもの}，\ref{enu:意味が曖昧なもの}についてはのちほど説明するとして，ここでは\ref{enu:パラドックス}について例をあげよう．
 
+\phantomsection
 \begin{example}{自己言及のパラドックス}{自己言及のパラドックス}
 	次のような主張を考える：
 	\begin{quote}
@@ -1066,7 +1100,7 @@ $x \in A \cap B$とすると，$x \in A$かつ$x \in B$である．また，$x \
 ここまでで，二値論理でとりあげない主張を述べてきたが，そろそろ二値論理で取り扱う主張のお話に戻ろう．
 また，以下では簡単のために，「広い意味での命題」と「狭い意味での命題」のどちらも「命題」と記すと約束する．
 
-
+\phantomsection
 \begin{example}{命題}{命題}
     次に示す文は真偽が真の命題である．
     \begin{enumerate}[(1)]
@@ -1086,6 +1120,7 @@ $x \in A \cap B$とすると，$x \in A$かつ$x \in B$である．また，$x \
     \end{enumerate}
 \end{example}
 
+\phantomsection
 \begin{example}{命題でない文}{命題でない文}
     次に示す文は命題ではない
     \begin{enumerate}[(A)]
@@ -1107,6 +1142,7 @@ $x \in A \cap B$とすると，$x \in A$かつ$x \in B$である．また，$x \
 定理が重要な主張であるがゆえに，「余弦定理」，「加法定理」，「ハイネ・ボレルの被覆定理」など，固有の名前が与えられているものも存在する．
 その固有の名前は，定理の主張の詳細，もしくは発見者の名前ににちなんで付けられることが多い．例えば，「三平方の定理」や「コーシー・シュワルツの不等式」などである．
 
+\phantomsection
 \begin{example}{三平方の定理}{三平方の定理}
 	三平方の定理の主張は以下のようになる：
 	\begin{quotation}
@@ -1118,6 +1154,7 @@ $x \in A \cap B$とすると，$x \in A$かつ$x \in B$である．また，$x \
 \end{quotation}
 \end{example}
   
+\phantomsection
   \begin{example}{コーシー・シュワルツの不等式}{コーシー・シュワルツの不等式}
   コーシー・シュワルツの不等式は，内積空間における基本的な不等式であり，以下のように表される：
   \begin{quotation}
@@ -1130,7 +1167,7 @@ $x \in A \cap B$とすると，$x \in A$かつ$x \in B$である．また，$x \
   この不等式は解析学や線型代数学など，多くの分野で重要な役割を果たす．
   \end{example}
   
-  
+  \phantomsection
   \begin{example}{微分積分学の基本定理}{微分積分学の基本定理}
   この定理は微分と積分の関係を明らかにするものであり，以下のように述べられる：
   \begin{quotation}
@@ -1155,6 +1192,7 @@ $x \in A \cap B$とすると，$x \in A$かつ$x \in B$である．また，$x \
 
 補題や系を説明するためには，関連するいくつかの命題や定理が必要である．以下に具体的な例を示す．
 
+\phantomsection
 \begin{example}{ユークリッドの補題}{ユークリッドの補題}
 ユークリッドの補題は，整数論における基本的な結果であり，素因数分解の一意性を証明する際に重要な役割を果たす．その主張は以下の通りである：
 
@@ -1176,6 +1214,7 @@ $x \in A \cap B$とすると，$x \in A$かつ$x \in B$である．また，$x \
 
 この補題を用いて，素因数分解の一意性（算術の基本定理）を証明することができる．
 
+\phantomsection
 \begin{example}{自然数の約数の個数}{自然数の約数の個数}
 自然数$n$の正の約数の個数$d(n)$は，$n$の素因数分解に基づいて以下の式で与えられる：
 
@@ -1197,6 +1236,7 @@ $n$の全ての約数を生成できるため，約数の総数は各$(e_i + 1)$
 
 この命題は，素因数分解の一意性から直接的に導かれる結果である．
 
+\phantomsection
 \begin{example}{約数の個数が奇数となる条件}{約数の個数が奇数となる条件}
 自然数$n$の約数の個数$d(n)$が奇数となるための必要十分条件は，$n$が完全平方数であることである．
 \end{example}
@@ -1241,6 +1281,7 @@ $a^2$や$a^{2/3}$の具体的な値のイメージは思い浮かぶと思うが
 
 このように，極限の存在を証明するためには，有理数列の収束性など，細かな数学的性質を確認する必要がある．このようにして初めて，指数関数の定義が厳密なものとなるのである．
 
+\phantomsection
 \subsubsection{一意性}
 
 数学において「一意性」が重要である場面は多い．読者の中には線型代数の講義で「逆行列の一意性」などに触れた方もいると思われる．なぜ重要であるのか，一つ例を挙げて考えてることとする．
@@ -1318,6 +1359,7 @@ $f(x)=x^3$という関数を考える．この関数は$[-1,1]$で連続，$(-1,
 
 数学と日常における「または」の使い方は異なる．以下に例を挙げよう．
 
+\phantomsection
 \begin{example}{「または」の使用例}{「または」の使用例}
     \begin{enumerate}[(A)]
 	\item ランチメニューの主食として，米またはパンがついてくる\footnote{この文を「米とパンの両方が食べられる」と解釈してもらっては困る．}．\label{enu:米またはパン}
