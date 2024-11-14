@@ -653,22 +653,13 @@ $x$が属する全体集合は定められていないが，この場合だと�
       \end{description}
   \end{definition}
   
-  \phantomsection
-  \begin{example}{集合}{集合}
-      例えば，$A = \{1, 2, 3\}$，$B = \{3, 4, 5\}$とすると，
-      \begin{itemize*}
-          \item $A \cap B = \{3\}$
-          \item $A \cup B = \{1, 2, 3, 4, 5\}$
-          \item $A \setminus B = \{1, 2\}$
-          \item $X=\{1,2,3,4,5\}$とすると，$A^c = \{4, 5\}$
-      \end{itemize*}
-  \end{example}
-  
+
   \begin{figure}[h]
     \centering
     \begin{minipage}{0.45\linewidth}
       \centering
       % A∩B のベン図
+      \scalebox{0.8}{
       \begin{tikzpicture}
         % 全体集合の長方形
         \draw (0,0) rectangle (6,4) node[below left] {$X$};
@@ -682,12 +673,14 @@ $x$が属する全体集合は定められていないが，この場合だと�
           \fill[gray] (4,2) circle (1.5);
         \end{scope}
       \end{tikzpicture}
+      }
       \caption{$A \cap B$ のベン図}
     \end{minipage}
     \hfill
     \begin{minipage}{0.45\linewidth}
       \centering
       % A∪B のベン図
+      \scalebox{0.8}{
       \begin{tikzpicture}
         % 全体集合の長方形
         \draw (0,0) rectangle (6,4) node[below left] {$X$};
@@ -700,14 +693,16 @@ $x$が属する全体集合は定められていないが，この場合だと�
         % 集合Bの円の輪郭
         \draw (4,2) circle (1.5) node[right] {$B$};
       \end{tikzpicture}
+      }
       \caption{$A \cup B$ のベン図}
     \end{minipage}
 
-    \vspace{2mm}
+    \vspace{1.5mm}
 
     \begin{minipage}{0.45\linewidth}
       \centering
       % A - B のベン図
+      \scalebox{0.8}{
       \begin{tikzpicture}
         % 全体集合の長方形
         \draw (0,0) rectangle (6,4) node[below left] {$X$};
@@ -727,12 +722,14 @@ $x$が属する全体集合は定められていないが，この場合だと�
         % 集合Aの円の輪郭
         \draw (2,2) circle (1.5) node[left] {$A$};
       \end{tikzpicture}
+      }
       \caption{$A \setminus B$ のベン図}
     \end{minipage}
     \hfill
     \begin{minipage}{0.45\linewidth}
       \centering
       % A^c のベン図
+      \scalebox{0.8}{
       \begin{tikzpicture}
         % 全体集合の長方形を塗りつぶす
         \fill[gray] (0,0) rectangle (6,4);
@@ -743,10 +740,22 @@ $x$が属する全体集合は定められていないが，この場合だと�
         % 集合Aの円の輪郭
         \draw (2,2) circle (1.5) node[left] {$A$};
       \end{tikzpicture}
+      }
       \caption{$A^c$ のベン図}
     \end{minipage}
   \end{figure}
 
+
+  \phantomsection
+  \begin{example}{集合}{集合}
+      例えば，$A = \{1, 2, 3\}$，$B = \{3, 4, 5\}$とすると，
+      \begin{itemize*}
+          \item $A \cap B = \{3\}$
+          \item $A \cup B = \{1, 2, 3, 4, 5\}$
+          \item $A \setminus B = \{1, 2\}$
+          \item $X=\{1,2,3,4,5\}$とすると，$A^c = \{4, 5\}$
+      \end{itemize*}
+  \end{example}
 
   \phantomsection
   \begin{prop}{集合の分配律}{集合の分配律}
