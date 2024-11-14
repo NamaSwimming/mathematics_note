@@ -573,6 +573,8 @@ IfValueTF={#1}{title=【#2】〈#1〉}{title=【#2】},#4}
  \end{itemize}
 \end{shadebox}
 
+
+
 \phantomsection
   \begin{example}{}{}
       \[
@@ -606,6 +608,9 @@ IfValueTF={#1}{title=【#2】〈#1〉}{title=【#2】},#4}
   \]
   である．
 \end{example}
+
+
+
 集合の表記は文脈により省略されることがある．たとえば，以下のような問題があったとする．
 \begin{quotation}
   2次方程式
@@ -619,35 +624,7 @@ $x$が属する全体集合は定められていないが，この場合だと�
 だが，もちろん$ x \in \mathbb{N}$とするなら，$ -1 \notin \mathbb{N}$なので，この場合の解は$ x= 4$のみである．
 ただ，$x$が属する全体集合は，文脈でわかったり明記されている場合が多いので，あまり心配はいらないと筆者は考える．
 
-\phantomsection
-\begin{prop}{集合の分配律}{集合の分配律}
-  $A$，$B$，$C$を集合とするとき，
-  \begin{align*} 
-    A \cap ( B \cup C) &= (A \cap B) \cup (A \cap C), \\
-    A \cup ( B \cap C) &= (A \cup B) \cap (A \cup C).
-  \end{align*}
-\end{prop}
 
-\begin{tleftbar}
-\begin{proof}
-$ x \in A \cap ( B \cup C)$とすると，$x \in A$かつ$x \in B \cup C$である．$x \in B \cup C$とすると，$x \in B$または$x \in C$である．
-よって，$x \in A$かつ$x \in B$であるとき，$x \in A \cap B$である．また，$x \in A$かつ$x \in C$であるとき，$x \in A \cap C$である．
-これらのことから，$x \in A \cap ( B \cup C)$とすると，$x \in (A \cap B) \cup (A \cap C)$である．
-つまり，
-\[
-A \cap ( B \cup C) \subset (A \cap B) \cup (A \cap C).
-\]
-逆に，$x \in (A \cap B) \cup (A \cap C)$とすると，$x \in A \cap B$または$x \in A \cap C$である．
-$x \in A \cap B$とすると，$x \in A$かつ$x \in B$である．また，$x \in A \cap C$とすると，$x \in A$かつ$x \in C$である．
-よって，$x \in A$かつ$x \in B$または$x \in A$かつ$x \in C$である．これらのことから$x \in A$かつ$x \in B \cup C$である．
-つまり，
-\[
-(A \cap B) \cup (A \cap C) \subset A \cap ( B \cup C).
-\]
-以上の考察により，$A \cap ( B \cup C) = (A \cap B) \cup (A \cap C)$である．
-
-\end{proof}
-\end{tleftbar}
 
   \phantomsection
   \subsection{集合の演算}
@@ -759,12 +736,43 @@ $x \in A \cap B$とすると，$x \in A$かつ$x \in B$である．また，$x \
     \end{minipage}
   \end{figure}
 
-  集合はしばしば条件を用いて記述される．
+
+  \phantomsection
+  \begin{prop}{集合の分配律}{集合の分配律}
+    $A$，$B$，$C$を集合とするとき，
+    \begin{align*} 
+      A \cap ( B \cup C) &= (A \cap B) \cup (A \cap C), \\
+      A \cup ( B \cap C) &= (A \cup B) \cap (A \cup C).
+    \end{align*}
+  \end{prop}
   
+  \begin{tleftbar}
+  \begin{proof}
+  $ x \in A \cap ( B \cup C)$とすると，$x \in A$かつ$x \in B \cup C$である．$x \in B \cup C$とすると，$x \in B$または$x \in C$である．
+  よって，$x \in A$かつ$x \in B$であるとき，$x \in A \cap B$である．また，$x \in A$かつ$x \in C$であるとき，$x \in A \cap C$である．
+  これらのことから，$x \in A \cap ( B \cup C)$とすると，$x \in (A \cap B) \cup (A \cap C)$である．
+  つまり，
+  \[
+  A \cap ( B \cup C) \subset (A \cap B) \cup (A \cap C).
+  \]
+  逆に，$x \in (A \cap B) \cup (A \cap C)$とすると，$x \in A \cap B$または$x \in A \cap C$である．
+  $x \in A \cap B$とすると，$x \in A$かつ$x \in B$である．また，$x \in A \cap C$とすると，$x \in A$かつ$x \in C$である．
+  よって，$x \in A$かつ$x \in B$または$x \in A$かつ$x \in C$である．これらのことから$x \in A$かつ$x \in B \cup C$である．
+  つまり，
+  \[
+  (A \cap B) \cup (A \cap C) \subset A \cap ( B \cup C).
+  \]
+  以上の考察により，$A \cap ( B \cup C) = (A \cap B) \cup (A \cap C)$である．
+\end{proof}
+\end{tleftbar}
+  
+集合はしばしば条件を用いて記述される．
+
   \begin{description}[labelwidth=4em]
       \item[列挙形式] $\{ a, b, c \}$のように要素を列挙して表す．
       \item[条件形式] $\{ x \in \mathbb{N} \mid x \leq 5 \}$のように条件を用いて表す．
   \end{description}
+
 
   \phantomsection
   \begin{example}{集合の表記}{集合の表記}
@@ -772,6 +780,9 @@ $x \in A \cap B$とすると，$x \in A$かつ$x \in B$である．また，$x \
     \{ 1,2,3 \} = \{ n \in \mathbb{N} \mid  n^2 -4n +3 \leqq 0 \}
     \]
   \end{example}
+
+  
+  
 \phantomsection
 \section{論理と証明}
 \phantomsection
