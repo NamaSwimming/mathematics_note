@@ -513,525 +513,6 @@ IfValueTF={#1}{title=【#2】〈#1〉}{title=【#2】},#4}
 
 \phantomsection
 \part{数学の基本}
-\phantomsection
-\section{集合}
-  \phantomsection
-  \subsection{集合の定義と表記法}
-
-  \phantomsection
-  \subsubsection{集合の定義}
-
-  現代数学の基礎をなす概念に「集合」や「写像」がある．まず「集合」からみていこう．
-  \phantomsection
-  \begin{definition}{集合}{集合}
-      もののあつまりを\emph{集合}という\footnote{公理的集合論の立場では，集合とは「無定義語」であるが，ここで詳しくは触れない．}．集合を構成するものを\emph{元}または\emph{要素}といい，集合$A$の元が$a$であることを$a \in A$，$A \ni a$などと表す．
-  \end{definition}
-  
-  集合に関して，いくつか注意点を挙げよう．
-  
-  \begin{itemize}
-      \item 集合では書き並べる順序が重要でないため，例えば $\{1, 2, 3\} = \{3, 2, 1\}$である．
-      \item 同じ要素が重複して含まれていても，1つの要素として扱われるため，例えば$\{1, 1, 2, 2, 2, 3\} = \{1, 2, 3\}$である．
-      \item 集合の要素には，種類が異なるものを同時に含めることができる．例えば，$\{4, \{3\}\}$では，$4$は数であり，$\{3\}$は集合であるが，集合としての資格がある．
-  \end{itemize}
-
-  「ある集合の要素を部分的に含んでいる集合」を考えることは，数学において重要な意義を持つ．
-  といっても，現段階で部分集合のイメージを掴むことは難しいので，まず定義を確認して，部分集合の具体的な例はのちほど紹介することにする．
-  
-  \phantomsection
-  \begin{definition}{部分集合}{部分集合}
-    集合$A$の要素がすべて集合$B$の要素でもあるとき，$A$は$B$の\emph{部分集合}であるといい，これを
-    \[
-    A \subset B,\quad B \supset A
-    \]
-    などと表す\footnote{このことを$ A \subseteq B$，$B \supseteq A$とかくこともある．一般に，$A \subset B$，$ B \supset A$と書いた場合には$A=B$の場合を含んで意味をとる．}．
-  \end{definition}
-
-  \begin{definition}{真部分集合}{真部分集合}
-    集合$A$の要素がすべて集合$B$の要素であり，なおかつ$A \ne B$であるとき，$A$は$B$の\emph{真部分集合}であるといい，これを
-    \[
-    A \subsetneq B,\quad B \supsetneq A
-    \]
-    などと表す．
-  \end{definition}
-
-  \phantomsection
-  \subsubsection{集合の表記}
-  
-  数学を勉強する上で，よく使う集合には固有の記号を与える場合が多い．以下ではよく使う集合の例を挙げよう．
-
-  \begin{shadebox}
-    よく使う集合
-      \begin{itemize}
-      \item $\mathbb{R}$は実数全体の集合を表している．Real numberの頭文字をとった．
-      \item $\mathbb{N}=\{0,1,2,\cdots \}$は自然数全体の集合を表している．Natural number の頭文字をとった．
-      \item $\mathbb{C}=\{ a+bi \mid a,b \in \mathbb{R}\}$は複素数全体の集合を表している．Complex number の頭文字をとった．
-      \item $\mathbb{Z}=\{0, \pm 1 , \pm 2 , \cdots\}$は整数全体の集合を表している．Zはドイツ語由来である，
-      \item $\mathbb{Q}=\{ a/b \mid   a,b \in \mathbb{Z},b \ne 0 \}$は有理数全体の集合を表している．「商」を表すイタリア語由来である．
-      \end{itemize}
-  \end{shadebox}
-
-
-\begin{shadebox}
-  数を表す集合以外にも，固有の表記が与えられている集合が存在する．
-  \begin{itemize}
-  \item $\varnothing$ \footnote{空集合は$\emptyset$と表記することもある．ギリシャ文字の$\phi$で代用されることもあるが，本来の空集合の記号はノルウェー語由来である．}は要素を一つも持たない集合，すなわち\emph{空集合}を表している．
-  \item $\mathcal{P}(A)$は集合$A$のすべての部分集合からなる集合，すなわち\emph{べき集合}を表している．
- \end{itemize}
-\end{shadebox}
-
-
-
-\phantomsection
-  \begin{example}{}{}
-      \[
-      x \in \mathbb{Q}
-    \]
-    と書くことで，$x$は有理数であることを表す．
-  \end{example}
-
-  \phantomsection
-  \begin{example}{}{}
-      \[
-      \mathbb{R} \subset \mathbb{C}
-    \]
-    である．つまり，実数全体の集合は複素数全体の集合の部分集合である．
-  \end{example}
-
-  \phantomsection
-  \begin{example}{}{}
-    $A$を集合とするとき，
-    \[
-    \varnothing  \subset A
-  \]
-  である．つまり，空集合は全ての集合の部分集合である．
-\end{example}
-
-\phantomsection
-  \begin{example}{べき集合}{べき集合}
-    $A=\{ 1, 2\}$とすると，
-    \[
-    \mathcal{P}(A) = \{ \varnothing, \{1\}, \{2\}, \{1, 2\}\}
-  \]
-  である．
-\end{example}
-
-
-
-集合の表記は文脈により省略されることがある．たとえば，以下のような問題があったとする．
-\begin{quotation}
-  2次方程式
-  \[
-  x^2 - 3x -4 =0
-  \]
-  を解け．
-\end{quotation}
-$x$が属する全体集合は定められていないが，この場合だと「$x \in \mathbb{C}$」とされることが多い．
-よってこの方程式の解は$x = -1 , 4$とする場合が多い．
-だが，もちろん$ x \in \mathbb{N}$とするなら，$ -1 \notin \mathbb{N}$なので，この場合の解は$ x= 4$のみである．
-ただ，$x$が属する全体集合は，文脈でわかったり明記されている場合が多いので，あまり心配はいらないと筆者は考える．
-
-
-
-  \phantomsection
-  \subsection{集合の演算}
-  
-  集合に対して，以下のような演算を定義することができる．
-  
-  \phantomsection
-  \begin{definition}{共通部分・和集合・差集合・補集合}{共通部分・和集合・差集合・補集合}
-      $A$と$B$を集合とするとき，以下の定義をする．
-      \begin{description}
-        \item[共通部分] \mbox{}\\
-        $A$と$B$の両方に属する要素全体の集合を$A \cap B$と表す．これを``$A$ intersection $B$''と読む．
-        \item[和集合] \mbox{} \\
-        $A$または$B$のいずれかに属する要素全体の集合を$A \cup B$と表す．これを``$A$ union $B$''と読む．
-        \item[差集合]\mbox{}\\
-        $A$の要素で$B$に属さないもの全体の集合を$A \setminus B$と表す．
-        \item[補集合] \mbox{}\\
-        全体集合$X$に対して，$A$の補集合を$A^c = X \setminus A$と表す．これを``$A$ complement''と読む．
-      \end{description}
-  \end{definition}
-  
-
-  \begin{figure}[ht]
-    \centering
-    \begin{minipage}{0.45\linewidth}
-      \centering
-      % A∩B のベン図
-      \scalebox{0.8}{
-      \begin{tikzpicture}
-        % 全体集合の長方形
-        \draw (0,0) rectangle (6,4) node[below left] {$X$};
-        % 集合Aの円
-        \draw (2,2) circle (1.5) node[left] {$A$};
-        % 集合Bの円
-        \draw (4,2) circle (1.5) node[right] {$B$};
-        % 共通部分を塗りつぶす
-        \begin{scope}
-          \clip (2,2) circle (1.5);
-          \fill[gray] (4,2) circle (1.5);
-        \end{scope}
-      \end{tikzpicture}
-      }
-      \caption{$A \cap B$ のベン図}
-    \end{minipage}
-    \hfill
-    \begin{minipage}{0.45\linewidth}
-      \centering
-      % A∪B のベン図
-      \scalebox{0.8}{
-      \begin{tikzpicture}
-        % 全体集合の長方形
-        \draw (0,0) rectangle (6,4) node[below left] {$X$};
-        % 集合Aの円を塗りつぶす
-        \fill[gray] (2,2) circle (1.5);
-        % 集合Bの円を塗りつぶす
-        \fill[gray] (4,2) circle (1.5);
-        % 集合Aの円の輪郭
-        \draw (2,2) circle (1.5) node[left] {$A$};
-        % 集合Bの円の輪郭
-        \draw (4,2) circle (1.5) node[right] {$B$};
-      \end{tikzpicture}
-      }
-      \caption{$A \cup B$ のベン図}
-    \end{minipage}
-
-    \vspace{1.5mm}
-
-    \begin{minipage}{0.45\linewidth}
-      \centering
-      % A - B のベン図
-      \scalebox{0.8}{
-      \begin{tikzpicture}
-        % 全体集合の長方形
-        \draw (0,0) rectangle (6,4) node[below left] {$X$};
-        % 集合Aの円
-        \draw (2,2) circle (1.5) node[left] {$A$};
-        % 集合Bの円
-        \draw (4,2) circle (1.5) node[right] {$B$};
-        % A - B を塗りつぶす
-        \begin{scope}
-          \clip (2,2) circle (1.5);
-          \fill[gray] (0,0) rectangle (6,4);
-        \end{scope}
-        \begin{scope}
-          \clip (4,2) circle (1.5);
-          \fill[white] (0,0) rectangle (6,4);
-        \end{scope}
-        % 集合Aの円の輪郭
-        \draw (2,2) circle (1.5) node[left] {$A$};
-      \end{tikzpicture}
-      }
-      \caption{$A \setminus B$ のベン図}
-    \end{minipage}
-    \hfill
-    \begin{minipage}{0.45\linewidth}
-      \centering
-      % A^c のベン図
-      \scalebox{0.8}{
-      \begin{tikzpicture}
-        % 全体集合の長方形を塗りつぶす
-        \fill[gray] (0,0) rectangle (6,4);
-        % 集合Aの円を白で塗りつぶす
-        \fill[white] (2,2) circle (1.5);
-        % 全体集合の枠
-        \draw (0,0) rectangle (6,4) node[below left] {$X$};
-        % 集合Aの円の輪郭
-        \draw (2,2) circle (1.5) node[left] {$A$};
-      \end{tikzpicture}
-      }
-      \caption{$A^c$ のベン図}
-    \end{minipage}
-  \end{figure}
-
-
-  \phantomsection
-  \begin{example}{集合}{集合}
-      例えば，$A = \{1, 2, 3\}$，$B = \{3, 4, 5\}$とすると，
-      \begin{itemize*}
-          \item $A \cap B = \{3\}$
-          \item $A \cup B = \{1, 2, 3, 4, 5\}$
-          \item $A \setminus B = \{1, 2\}$
-          \item $X=\{1,2,3,4,5\}$とすると，$A^c = \{4, 5\}$
-      \end{itemize*}
-  \end{example}
-
-  \phantomsection
-  \begin{prop}{集合の分配律}{集合の分配律}
-    $A$，$B$，$C$を集合とするとき，
-    \begin{align*} 
-      A \cap ( B \cup C) &= (A \cap B) \cup (A \cap C), \\
-      A \cup ( B \cap C) &= (A \cup B) \cap (A \cup C).
-    \end{align*}
-  \end{prop}
-  
-  \begin{tleftbar}
-  \begin{proof}
-  $ x \in A \cap ( B \cup C)$とすると，$x \in A$かつ$x \in B \cup C$である．$x \in B \cup C$とすると，$x \in B$または$x \in C$である．
-  よって，$x \in A$かつ$x \in B$であるとき，$x \in A \cap B$である．また，$x \in A$かつ$x \in C$であるとき，$x \in A \cap C$である．
-  これらのことから，$x \in A \cap ( B \cup C)$とすると，$x \in (A \cap B) \cup (A \cap C)$である．
-  つまり，
-  \[
-  A \cap ( B \cup C) \subset (A \cap B) \cup (A \cap C).
-  \]
-  逆に，$x \in (A \cap B) \cup (A \cap C)$とすると，$x \in A \cap B$または$x \in A \cap C$である．
-  $x \in A \cap B$とすると，$x \in A$かつ$x \in B$である．また，$x \in A \cap C$とすると，$x \in A$かつ$x \in C$である．
-  よって，$x \in A$かつ$x \in B$または$x \in A$かつ$x \in C$である．これらのことから$x \in A$かつ$x \in B \cup C$である．
-  つまり，
-  \[
-  (A \cap B) \cup (A \cap C) \subset A \cap ( B \cup C).
-  \]
-  以上の考察により，$A \cap ( B \cup C) = (A \cap B) \cup (A \cap C)$である．
-\end{proof}
-\end{tleftbar}
-  
-集合はしばしば条件を用いて記述される．
-
-  \begin{description}[labelwidth=4em]
-      \item[列挙形式] $\{ a, b, c \}$のように要素を列挙して表す．
-      \item[条件形式] $\{ x \in \mathbb{N} \mid x \leq 5 \}$のように条件を用いて表す．
-  \end{description}
-
-
-  \phantomsection
-  \begin{example}{集合の表記}{集合の表記}
-    \[
-    \{ 1,2,3 \} = \{ n \in \mathbb{N} \mid  n^2 -4n +3 \leqq 0 \}
-    \]
-  \end{example}
-
-  
-  
-\phantomsection
-\section{論理と証明}
-\phantomsection
-\subsection{論理}
-\phantomsection
-\subsubsection{論理記号}
-
-	論理記号は，命題を結合するために用いられる記号である．代表的な論理記号を列挙してみよう：
-
-	\begin{table}[ht]
-		\centering
-		\caption{論理記号とその意味}
-		\begin{tabular}{c|c}
-		\hline
-		記号 & 意味 \\
-		\hline
-    $\land$ & かつ（論理積） \\
-    $\lor$ & または（論理和） \\
-    $\lnot$ & 否定 \\
-    $\to$ & ならば（含意） \\
-    $\Leftrightarrow$ & 必要十分条件（同値） \\
-    $\forall$ & 任意の（全称量化） \\
-    $\exists$ & 存在する（存在量化） \\
-		\hline
-		\end{tabular}
-		\end{table}
-
-    これらの論理記号を用いて，命題を結合し，複雑な論理式を構成することができる．特に，量化記号である$\forall$と$\exists$を用いることで，数学的な主張を一般的に表現することができる．
-
-    \phantomsection
-    \subsubsection{量化記号}
-    
-    \phantomsection
-    \begin{definition}{全称命題}{全称命題}
-        \[
-          \forall\, x \, : \, P(x)
-        \]
-        は，「すべての$x$について，$P(x)$が成り立つ」という意味であり，これを\emph{全称命題}という．
-    \end{definition}
-    
-    \phantomsection
-    \begin{definition}{存在命題}{存在命題}
-        \[
-        \exists \,  x\, : \, P(x)
-        \]
-        は，「$P(x)$が成り立つような$x$が存在する」という意味であり，これを\emph{存在命題}という．
-    \end{definition}
-    
-    \phantomsection
-    \begin{example}{量化記号の例}{量化記号の例}
-        \begin{itemize}
-            \item $\forall x \in \mathbb{R}\, : \, x^2 \geq 0$\\
-            「任意の実数$x$について，$x^2$は$0$以上である．」
-            \item $\exists x \in \mathbb{Z} \, : \, x^2 = 4$\\
-            「ある整数$x$が存在して，$x^2 = 4$となる．」
-        \end{itemize}
-    \end{example}
-
-    \phantomsection
-    \subsection{証明}
-
-    \phantomsection
-    \subsubsection{証明とは}
-    数学において，主張が正しいことを示すプロセスを\emph{証明（proof）}という．
-    
-    証明は一つの命題にいくつか存在する場合がほとんどであり，たとえば，\exref{三平方の定理}の証明は100通り以上も存在することが知られている．
-    
-    \phantomsection
-    \begin{example}{証明}{証明}
-    辺の長さが$a$と$b$の直角三角形を$4$つ用意する．
-    これらの三角形を組み合わせて，辺の長さが$a + b$の正方形を作る．
-    このとき，大きな正方形の面積は$(a + b)^2$である．
-    
-    一方で，大きな正方形は中央に辺の長さが$c$の小さな正方形と，$4$つの三角形で構成されている．
-    
-    よって，大きな正方形の面積は，小さい正方形の面積と4つの三角形の面積の和に等しい：
-    \[
-    (a + b)^2 = c^2 + 4 \left( \frac{1}{2}ab \right).
-    \]
-    この式を整理すると，
-    \[
-     (a + b)^2 = c^2 + 2ab
-    \]
-    であるから，
-    \begin{align*}
-    & a^2 + 2ab + b^2 = c^2 + 2ab, \\
-    & \therefore ~a^2 + b^2 = c^2.
-    \end{align*}
-    これが証明すべきことであった．\qed
-    \begin{center}
-    \begin{tikzpicture}[scale=0.75]
-    % 辺の長さの定義
-    \def\a{3}
-    \def\b{4}
-    \def\c{5}
-    
-    % 大きな正方形の描画
-    \draw (0,0) rectangle (\a+\b,\a+\b);
-    
-    % 4つの直角三角形の描画
-    %第1の三角形
-    \draw (0,0) -- (\b,0) -- (0,\a) -- cycle;
-    \draw (0,\a) -- node[midway,above] {$c$} (\b,0);
-    
-    % 第2の三角形
-    \draw (\b,0) -- (\a+\b,0) -- (\a+\b,\b) -- cycle;
-    \draw (\a+\b,\b) -- node[midway,above] {$c$} (\b,0);
-    
-    % 第3の三角形
-    \draw (\a+\b,\b) -- (\a+\b,\a+\b) -- (\a,\a+\b) -- cycle;
-    \draw (\a,\a+\b) -- node[midway,above] {$c$} (\a+\b,\b);
-    
-    % 第4の三角形
-    \draw (\a, \a+\b) -- (0, \a+\b) -- (0,\a) -- cycle;
-    \draw (0,\a) -- node[midway,above] {$c$} (\a, \a+\b);
-    
-    % 中央の小さな正方形の描画
-    \draw (\b,0) -- (\a+\b,\b) -- (\a,\a+\b) -- (0,\a) -- cycle;
-    
-    % 寸法のラベル
-    \draw [<->] (-0.5,0) -- (-0.5,\a) node[midway,left] {$a$};
-    \draw [<->] (-0.5,\a) -- (-0.5,\a+\b) node[midway,left] {$b$};
-    \draw [<->] (0,-0.5) -- (\b,-0.5) node[midway,below] {$b$};
-    \draw [<->] (\b,-0.5) -- (\a+\b,-0.5) node[midway,below] {$a$};
-    
-    \end{tikzpicture}
-    \end{center}
-    \end{example}
-
-    \phantomsection
-    \subsubsection{命題の反証と反例}
-
-    数学において，「すべての$n$に対して$P(n)$が成り立つ」という全称命題が偽であることを証明するには，\textbf{反例}を一つ示すだけで十分である．これは，全称命題が「すべての場合において成り立つ」ことを主張しているため，一つでも例外があれば命題全体が偽となるからである．
-
-    \phantomsection
-    \begin{example}{反例による反証}{反例による反証}
-        次の命題を考える：
-        \[
-        \forall n \in \mathbb{N}\, : \, \frac{n^3}{24} + 84 \geq n^2.
-        \]
-        この命題が成り立たないことを示すためには，ある$n$について不等式が成立しないことを示せばよい．実際に，$n = 15$のとき，
-        \[
-        \frac{15^3}{24} + 84 = \frac{3375}{24} + 84 \approx 140.625 + 84 = 224.625,
-        \]
-        一方，
-        \[
-        15^2 = 225.
-        \]
-        したがって，
-        \[
-        \frac{15^3}{24} + 84 \approx 224.625 < 225 = 15^2.
-        \]
-        このように，$n = 15$において不等式が成り立たないため，元の命題は偽であることが分かる．
-    \end{example}
-
-    また，全称命題が偽であることを証明する際には，「反例をどう見つけたか」ということは明記しない場合が多い．
-    たとえば\exref{反例による反証}の場合に$n=15$を見つけるには，微分法を用いて議論したり様々な方法があるが，そのような「反例を見つけるまでの過程」を説明する必要はなく，「$n=15$の場合に命題が成り立たないこと」のみを証明として書けばよい．
-    
-    \phantomsection
-    \subsubsection{様々な証明法}
-
-    \begin{description}
-        \item[帰納法] \mbox{} \\
-        たとえば数学的帰納法は，数学的な主張が自然数全体に対して成り立つことを示すための証明法である．
-        \item[背理法] \mbox{} \\
-        「$P$が成り立たないと仮定すると矛盾が生じる」という論理的な構造を用いて証明を行う方法である．
-        \item[直接証明] \mbox{} \\
-        「$P$が成り立つことを示す」という形式で証明を行う方法である．
-    \end{description}
-    
-    以下では，「$n \geq 2$ をみたす任意の自然数について，$2^n > n$である」という命題を3通りのやり方で証明してみよう．
-
-    \phantomsection
-    \begin{example}{帰納法}{帰納法}
-      \begin{enumerate}[(I)]
-      \item $n=2$のとき，
-      \[
-      2^2 = 4 > 2
-      \]
-      
-      となり，与えられた不等式は成立する．
-      \item 自然数$k$を$k \geqq 2$を満たすように任意にとる．$2^k > k$ が成り立つと仮定する．このとき，
-      \[
-      2^{k+1} = 2 \cdot 2^k > 2k.
-      \]
-      ここで，$k \geqq 2$であるから，$2k - (k + 1) = k - 1 \geq 1$であるがゆえに，$2k > k + 1$である．
-      
-      したがって，
-      
-      \[
-      2^{k+1} > 2k > k + 1.
-      \]
-      ゆえに，$n=k+1$のときも$2^{k+1} > k + 1$である．\qed 
-      \end{enumerate}
-      
-      以上の考察と数学的帰納法により，$2^n > n$ は $n \geq 2$をみたすすべての自然数について成り立つ．
-      \end{example}
-
-      \phantomsection
-      \begin{example}{背理法}{背理法}
-       $n \geqq 2$をみたす自然数で $2^n \leqq n$ となるものが存在すると仮定する．
-        $2^n$ の正の約数の個数は，指数に $1$ を加えたものなので，$2^n$の正の約数の個数は $n + 1$ 個以上である．
-        しかし，仮定より $2^n \leqq n$ なので，$2^n$ は $n$ 以下の数である．
-
-        これは，$n$ 以下の数が $n + 1$ 個以上の正の約数を持つことを意味するが，これは矛盾である．
-        
-        したがって，仮定に矛盾が生じるため，$2^n > n$ が成り立つ．\qed
-      \end{example}
-
-      \phantomsection
-      \begin{example}{直接証明}{直接証明}
-        \[
-        2^n = n \int_{1}^{2} x^{n-1} \, dx + 1 
-        \]
-        となることはよい．さて，$x \in [1, 2]$ かつ $n \geqq 2$ なので，
-        \[
-        x^{n-1} \geqq x^{1} \geqq 1
-        \]
-        が成り立つ．したがって，
-        \begin{align*}
-        2^n &= n \int_{1}^{2} x^{n-1} \, dx + 1 \\
-        & \geqq  n \int_{1}^{2} \, dx +1 \\
-        & = n+1.
-        \end{align*}
-        これと$n+1 >n$であることを併せると，$n \geqq 2$のとき$2^n > n$である．\qed
-      \end{example}
-
-
-      \phantomsection
 \section{用語の定義}
 
 \phantomsection
@@ -1408,6 +889,526 @@ x \in A \cup B
 \]
 は「$x$は$A$の元であるか，$B$の元であるか，あるいは両方である」という意味である．
 つまり，「$ x \in A$であり，$x \notin  B$である」あるいは「$ x \notin A$であり，$x \in B$である」といった状況のときにも，$x \in A \cup B$と記す．
+%ここまで
+
+  
+\phantomsection
+\section{論理と証明}
+\phantomsection
+\subsection{論理}
+\phantomsection
+\subsubsection{論理記号}
+
+	論理記号は，命題を結合するために用いられる記号である．代表的な論理記号を列挙してみよう：
+
+	\begin{table}[ht]
+		\centering
+		\caption{論理記号とその意味}
+		\begin{tabular}{c|c}
+		\hline
+		記号 & 意味 \\
+		\hline
+    $\land$ & かつ（論理積） \\
+    $\lor$ & または（論理和） \\
+    $\lnot$ & 否定 \\
+    $\to$ & ならば（含意） \\
+    $\Leftrightarrow$ & 必要十分条件（同値） \\
+    $\forall$ & 任意の（全称量化） \\
+    $\exists$ & 存在する（存在量化） \\
+		\hline
+		\end{tabular}
+		\end{table}
+
+    これらの論理記号を用いて，命題を結合し，複雑な論理式を構成することができる．特に，量化記号である$\forall$と$\exists$を用いることで，数学的な主張を一般的に表現することができる．
+
+    \phantomsection
+    \subsubsection{量化記号}
+    
+    \phantomsection
+    \begin{definition}{全称命題}{全称命題}
+        \[
+          \forall\, x \, : \, P(x)
+        \]
+        は，「すべての$x$について，$P(x)$が成り立つ」という意味であり，これを\emph{全称命題}という．
+    \end{definition}
+    
+    \phantomsection
+    \begin{definition}{存在命題}{存在命題}
+        \[
+        \exists \,  x\, : \, P(x)
+        \]
+        は，「$P(x)$が成り立つような$x$が存在する」という意味であり，これを\emph{存在命題}という．
+    \end{definition}
+    
+    \phantomsection
+    \begin{example}{量化記号の例}{量化記号の例}
+        \begin{itemize}
+            \item $\forall x \in \mathbb{R}\, : \, x^2 \geq 0$\\
+            「任意の実数$x$について，$x^2$は$0$以上である．」
+            \item $\exists x \in \mathbb{Z} \, : \, x^2 = 4$\\
+            「ある整数$x$が存在して，$x^2 = 4$となる．」
+        \end{itemize}
+    \end{example}
+
+    \phantomsection
+    \subsection{証明}
+
+    \phantomsection
+    \subsubsection{証明とは}
+    数学において，主張が正しいことを示すプロセスを\emph{証明（proof）}という．
+    
+    証明は一つの命題にいくつか存在する場合がほとんどであり，たとえば，\exref{三平方の定理}の証明は100通り以上も存在することが知られている．
+    
+    \phantomsection
+    \begin{example}{証明}{証明}
+    辺の長さが$a$と$b$の直角三角形を$4$つ用意する．
+    これらの三角形を組み合わせて，辺の長さが$a + b$の正方形を作る．
+    このとき，大きな正方形の面積は$(a + b)^2$である．
+    
+    一方で，大きな正方形は中央に辺の長さが$c$の小さな正方形と，$4$つの三角形で構成されている．
+    
+    よって，大きな正方形の面積は，小さい正方形の面積と4つの三角形の面積の和に等しい：
+    \[
+    (a + b)^2 = c^2 + 4 \left( \frac{1}{2}ab \right).
+    \]
+    この式を整理すると，
+    \[
+     (a + b)^2 = c^2 + 2ab
+    \]
+    であるから，
+    \begin{align*}
+    & a^2 + 2ab + b^2 = c^2 + 2ab, \\
+    & \therefore ~a^2 + b^2 = c^2.
+    \end{align*}
+    これが証明すべきことであった．\qed
+    \begin{center}
+    \begin{tikzpicture}[scale=0.75]
+    % 辺の長さの定義
+    \def\a{3}
+    \def\b{4}
+    \def\c{5}
+    
+    % 大きな正方形の描画
+    \draw (0,0) rectangle (\a+\b,\a+\b);
+    
+    % 4つの直角三角形の描画
+    %第1の三角形
+    \draw (0,0) -- (\b,0) -- (0,\a) -- cycle;
+    \draw (0,\a) -- node[midway,above] {$c$} (\b,0);
+    
+    % 第2の三角形
+    \draw (\b,0) -- (\a+\b,0) -- (\a+\b,\b) -- cycle;
+    \draw (\a+\b,\b) -- node[midway,above] {$c$} (\b,0);
+    
+    % 第3の三角形
+    \draw (\a+\b,\b) -- (\a+\b,\a+\b) -- (\a,\a+\b) -- cycle;
+    \draw (\a,\a+\b) -- node[midway,above] {$c$} (\a+\b,\b);
+    
+    % 第4の三角形
+    \draw (\a, \a+\b) -- (0, \a+\b) -- (0,\a) -- cycle;
+    \draw (0,\a) -- node[midway,above] {$c$} (\a, \a+\b);
+    
+    % 中央の小さな正方形の描画
+    \draw (\b,0) -- (\a+\b,\b) -- (\a,\a+\b) -- (0,\a) -- cycle;
+    
+    % 寸法のラベル
+    \draw [<->] (-0.5,0) -- (-0.5,\a) node[midway,left] {$a$};
+    \draw [<->] (-0.5,\a) -- (-0.5,\a+\b) node[midway,left] {$b$};
+    \draw [<->] (0,-0.5) -- (\b,-0.5) node[midway,below] {$b$};
+    \draw [<->] (\b,-0.5) -- (\a+\b,-0.5) node[midway,below] {$a$};
+    
+    \end{tikzpicture}
+    \end{center}
+    \end{example}
+
+    \phantomsection
+    \subsubsection{命題の反証と反例}
+
+    数学において，「すべての$n$に対して$P(n)$が成り立つ」という全称命題が偽であることを証明するには，\textbf{反例}を一つ示すだけで十分である．これは，全称命題が「すべての場合において成り立つ」ことを主張しているため，一つでも例外があれば命題全体が偽となるからである．
+
+    \phantomsection
+    \begin{example}{反例による反証}{反例による反証}
+        次の命題を考える：
+        \[
+        \forall n \in \mathbb{N}\, : \, \frac{n^3}{24} + 84 \geq n^2.
+        \]
+        この命題が成り立たないことを示すためには，ある$n$について不等式が成立しないことを示せばよい．実際に，$n = 15$のとき，
+        \[
+        \frac{15^3}{24} + 84 = \frac{3375}{24} + 84 \approx 140.625 + 84 = 224.625,
+        \]
+        一方，
+        \[
+        15^2 = 225.
+        \]
+        したがって，
+        \[
+        \frac{15^3}{24} + 84 \approx 224.625 < 225 = 15^2.
+        \]
+        このように，$n = 15$において不等式が成り立たないため，元の命題は偽であることが分かる．
+    \end{example}
+
+    また，全称命題が偽であることを証明する際には，「反例をどう見つけたか」ということは明記しない場合が多い．
+    たとえば\exref{反例による反証}の場合に$n=15$を見つけるには，微分法を用いて議論したり様々な方法があるが，そのような「反例を見つけるまでの過程」を説明する必要はなく，「$n=15$の場合に命題が成り立たないこと」のみを証明として書けばよい．
+    
+    \phantomsection
+    \subsubsection{様々な証明法}
+
+    \begin{description}
+        \item[帰納法] \mbox{} \\
+        たとえば数学的帰納法は，数学的な主張が自然数全体に対して成り立つことを示すための証明法である．
+        \item[背理法] \mbox{} \\
+        「$P$が成り立たないと仮定すると矛盾が生じる」という論理的な構造を用いて証明を行う方法である．
+        \item[直接証明] \mbox{} \\
+        「$P$が成り立つことを示す」という形式で証明を行う方法である．
+    \end{description}
+    
+    以下では，「$n \geq 2$ をみたす任意の自然数について，$2^n > n$である」という命題を3通りのやり方で証明してみよう．
+
+    \phantomsection
+    \begin{example}{帰納法}{帰納法}
+      \begin{enumerate}[(I)]
+      \item $n=2$のとき，
+      \[
+      2^2 = 4 > 2
+      \]
+      
+      となり，与えられた不等式は成立する．
+      \item 自然数$k$を$k \geqq 2$を満たすように任意にとる．$2^k > k$ が成り立つと仮定する．このとき，
+      \[
+      2^{k+1} = 2 \cdot 2^k > 2k.
+      \]
+      ここで，$k \geqq 2$であるから，$2k - (k + 1) = k - 1 \geq 1$であるがゆえに，$2k > k + 1$である．
+      
+      したがって，
+      
+      \[
+      2^{k+1} > 2k > k + 1.
+      \]
+      ゆえに，$n=k+1$のときも$2^{k+1} > k + 1$である．
+      \end{enumerate}
+      
+      以上の考察と数学的帰納法により，$2^n > n$ は $n \geq 2$をみたすすべての自然数について成り立つ．\qed
+      \end{example}
+
+      \phantomsection
+      \begin{example}{背理法}{背理法}
+       $n \geqq 2$をみたす自然数で $2^n \leqq n$ となるものが存在すると仮定する．
+        $2^n$ の正の約数の個数は，指数に $1$ を加えたものなので，$2^n$の正の約数の個数は $n + 1$ 個以上である．
+        しかし，仮定より $2^n \leqq n$ なので，$2^n$ は $n$ 以下の数である．
+
+        これは，$n$ 以下の数が $n + 1$ 個以上の正の約数を持つことを意味するが，これは矛盾である．
+        
+        したがって，仮定に矛盾が生じるため，$2^n > n$ が成り立つ．\qed
+      \end{example}
+
+      \phantomsection
+      \begin{example}{直接証明}{直接証明}
+        \[
+        2^n = n \int_{1}^{2} x^{n-1} \, dx + 1 
+        \]
+        となることはよい．さて，$x \in [1, 2]$ かつ $n \geqq 2$ なので，
+        \[
+        x^{n-1} \geqq x^{1} \geqq 1
+        \]
+        が成り立つ．したがって，
+        \begin{align*}
+        2^n &= n \int_{1}^{2} x^{n-1} \, dx + 1 \\
+        & \geqq  n \int_{1}^{2} \, dx +1 \\
+        & = n+1.
+        \end{align*}
+        これと$n+1 >n$であることを併せると，$n \geqq 2$のとき$2^n > n$である．\qed
+      \end{example}
+      
+      \phantomsection
+      \section{集合}
+        \phantomsection
+        \subsection{集合の定義と表記法}
+      
+        \phantomsection
+        \subsubsection{集合の定義}
+      
+        現代数学の基礎をなす概念に「集合」や「写像」がある．まず「集合」からみていこう．
+        \phantomsection
+        \begin{definition}{集合}{集合}
+            もののあつまりを\emph{集合}という\footnote{公理的集合論の立場では，集合とは「無定義語」であるが，ここで詳しくは触れない．}．集合を構成するものを\emph{元}または\emph{要素}といい，集合$A$の元が$a$であることを$a \in A$，$A \ni a$などと表す．
+        \end{definition}
+        
+        集合に関して，いくつか注意点を挙げよう．
+        
+        \begin{itemize}
+            \item 集合では書き並べる順序が重要でないため，例えば $\{1, 2, 3\} = \{3, 2, 1\}$である．
+            \item 同じ要素が重複して含まれていても，1つの要素として扱われるため，例えば$\{1, 1, 2, 2, 2, 3\} = \{1, 2, 3\}$である．
+            \item 集合の要素には，種類が異なるものを同時に含めることができる．例えば，$\{4, \{3\}\}$では，$4$は数であり，$\{3\}$は集合であるが，集合としての資格がある．
+        \end{itemize}
+      
+        「ある集合の要素を部分的に含んでいる集合」を考えることは，数学において重要な意義を持つ．
+        といっても，現段階で部分集合のイメージを掴むことは難しいので，まず定義を確認して，部分集合の具体的な例はのちほど紹介することにする．
+        
+        \phantomsection
+        \begin{definition}{部分集合}{部分集合}
+          集合$A$の要素がすべて集合$B$の要素でもあるとき，$A$は$B$の\emph{部分集合}であるといい，これを
+          \[
+          A \subset B,\quad B \supset A
+          \]
+          などと表す\footnote{このことを$ A \subseteq B$，$B \supseteq A$とかくこともある．一般に，$A \subset B$，$ B \supset A$と書いた場合には$A=B$の場合を含んで意味をとる．}．
+        \end{definition}
+      
+        \begin{definition}{真部分集合}{真部分集合}
+          集合$A$の要素がすべて集合$B$の要素であり，なおかつ$A \ne B$であるとき，$A$は$B$の\emph{真部分集合}であるといい，これを
+          \[
+          A \subsetneq B,\quad B \supsetneq A
+          \]
+          などと表す．
+        \end{definition}
+      
+        \phantomsection
+        \subsubsection{集合の表記}
+        
+        数学を勉強する上で，よく使う集合には固有の記号を与える場合が多い．以下ではよく使う集合の例を挙げよう．
+      
+        \begin{shadebox}
+          よく使う集合
+            \begin{itemize}
+            \item $\mathbb{R}$は実数全体の集合を表している．Real numberの頭文字をとった．
+            \item $\mathbb{N}=\{0,1,2,\cdots \}$は自然数全体の集合を表している．Natural number の頭文字をとった．
+            \item $\mathbb{C}=\{ a+bi \mid a,b \in \mathbb{R}\}$は複素数全体の集合を表している．Complex number の頭文字をとった．
+            \item $\mathbb{Z}=\{0, \pm 1 , \pm 2 , \cdots\}$は整数全体の集合を表している．Zはドイツ語由来である，
+            \item $\mathbb{Q}=\{ a/b \mid   a,b \in \mathbb{Z},b \ne 0 \}$は有理数全体の集合を表している．「商」を表すイタリア語由来である．
+            \end{itemize}
+        \end{shadebox}
+      
+      
+      \begin{shadebox}
+        数を表す集合以外にも，固有の表記が与えられている集合が存在する．
+        \begin{itemize}
+        \item $\varnothing$ \footnote{空集合は$\emptyset$と表記することもある．ギリシャ文字の$\phi$で代用されることもあるが，本来の空集合の記号はノルウェー語由来である．}は要素を一つも持たない集合，すなわち\emph{空集合}を表している．
+        \item $\mathcal{P}(A)$は集合$A$のすべての部分集合からなる集合，すなわち\emph{べき集合}を表している．
+       \end{itemize}
+      \end{shadebox}
+      
+      
+      
+      \phantomsection
+        \begin{example}{}{}
+            \[
+            x \in \mathbb{Q}
+          \]
+          と書くことで，$x$は有理数であることを表す．
+        \end{example}
+      
+        \phantomsection
+        \begin{example}{}{}
+            \[
+            \mathbb{R} \subset \mathbb{C}
+          \]
+          である．つまり，実数全体の集合は複素数全体の集合の部分集合である．
+        \end{example}
+      
+        \phantomsection
+        \begin{example}{}{}
+          $A$を集合とするとき，
+          \[
+          \varnothing  \subset A
+        \]
+        である．つまり，空集合は全ての集合の部分集合である．
+      \end{example}
+      
+      \phantomsection
+        \begin{example}{べき集合}{べき集合}
+          $A=\{ 1, 2\}$とすると，
+          \[
+          \mathcal{P}(A) = \{ \varnothing, \{1\}, \{2\}, \{1, 2\}\}
+        \]
+        である．
+      \end{example}
+      
+      
+      
+      集合の表記は文脈により省略されることがある．たとえば，以下のような問題があったとする．
+      \begin{quotation}
+        2次方程式
+        \[
+        x^2 - 3x -4 =0
+        \]
+        を解け．
+      \end{quotation}
+      $x$が属する全体集合は定められていないが，この場合だと「$x \in \mathbb{C}$」とされることが多い．
+      よってこの方程式の解は$x = -1 , 4$とする場合が多い．
+      だが，もちろん$ x \in \mathbb{N}$とするなら，$ -1 \notin \mathbb{N}$なので，この場合の解は$ x= 4$のみである．
+      ただ，$x$が属する全体集合は，文脈でわかったり明記されている場合が多いので，あまり心配はいらないと筆者は考える．
+      
+      
+      
+        \phantomsection
+        \subsection{集合の演算}
+        
+        集合に対して，以下のような演算を定義することができる．
+        
+        \phantomsection
+        \begin{definition}{共通部分・和集合・差集合・補集合}{共通部分・和集合・差集合・補集合}
+            $A$と$B$を集合とするとき，以下の定義をする．
+            \begin{description}
+              \item[共通部分] \mbox{}\\
+              $A$と$B$の両方に属する要素全体の集合を$A \cap B$と表す．これを``$A$ intersection $B$''と読む．
+              \item[和集合] \mbox{} \\
+              $A$または$B$のいずれかに属する要素全体の集合を$A \cup B$と表す．これを``$A$ union $B$''と読む．
+              \item[差集合]\mbox{}\\
+              $A$の要素で$B$に属さないもの全体の集合を$A \setminus B$と表す．
+              \item[補集合] \mbox{}\\
+              全体集合$X$に対して，$X \setminus A$は$A$の補集合であり，$A^c$と表す．これを``$A$ complement''と読む．
+            \end{description}
+        \end{definition}
+        
+      
+        \begin{figure}[ht]
+          \centering
+          \begin{minipage}{0.45\linewidth}
+            \centering
+            % A∩B のベン図
+            \scalebox{0.9}{
+            \begin{tikzpicture}
+              % 全体集合の長方形
+              \draw (0,0) rectangle (6,4) node[below left] {$X$};
+              % 集合Aの円
+              \draw (2,2) circle (1.5) node[left] {$A$};
+              % 集合Bの円
+              \draw (4,2) circle (1.5) node[right] {$B$};
+              % 共通部分を塗りつぶす
+              \begin{scope}
+                \clip (2,2) circle (1.5);
+                \fill[gray] (4,2) circle (1.5);
+              \end{scope}
+            \end{tikzpicture}
+            }
+            \caption{$A \cap B$ のベン図}
+          \end{minipage}
+          \hfill
+          \begin{minipage}{0.45\linewidth}
+            \centering
+            % A∪B のベン図
+            \scalebox{0.9}{
+            \begin{tikzpicture}
+              % 全体集合の長方形
+              \draw (0,0) rectangle (6,4) node[below left] {$X$};
+              % 集合Aの円を塗りつぶす
+              \fill[gray] (2,2) circle (1.5);
+              % 集合Bの円を塗りつぶす
+              \fill[gray] (4,2) circle (1.5);
+              % 集合Aの円の輪郭
+              \draw (2,2) circle (1.5) node[left] {$A$};
+              % 集合Bの円の輪郭
+              \draw (4,2) circle (1.5) node[right] {$B$};
+            \end{tikzpicture}
+            }
+            \caption{$A \cup B$ のベン図}
+          \end{minipage}
+      
+          \vspace{2mm}
+      
+          \begin{minipage}{0.45\linewidth}
+            \centering
+            % A - B のベン図
+            \scalebox{0.9}{
+            \begin{tikzpicture}
+              % 全体集合の長方形
+              \draw (0,0) rectangle (6,4) node[below left] {$X$};
+              % 集合Aの円
+              \draw (2,2) circle (1.5) node[left] {$A$};
+              % 集合Bの円
+              \draw (4,2) circle (1.5) node[right] {$B$};
+              % A - B を塗りつぶす
+              \begin{scope}
+                \clip (2,2) circle (1.5);
+                \fill[gray] (0,0) rectangle (6,4);
+              \end{scope}
+              \begin{scope}
+                \clip (4,2) circle (1.5);
+                \fill[white] (0,0) rectangle (6,4);
+              \end{scope}
+              % 集合Aの円の輪郭
+              \draw (2,2) circle (1.5) node[left] {$A$};
+            \end{tikzpicture}
+            }
+            \caption{$A \setminus B$ のベン図}
+          \end{minipage}
+          \hfill
+          \begin{minipage}{0.45\linewidth}
+            \centering
+            % A^c のベン図
+            \scalebox{0.9}{
+            \begin{tikzpicture}
+              % 全体集合の長方形を塗りつぶす
+              \fill[gray] (0,0) rectangle (6,4);
+              % 集合Aの円を白で塗りつぶす
+              \fill[white] (2,2) circle (1.5);
+              % 全体集合の枠
+              \draw (0,0) rectangle (6,4) node[below left] {$X$};
+              % 集合Aの円の輪郭
+              \draw (2,2) circle (1.5) node[left] {$A$};
+            \end{tikzpicture}
+            }
+            \caption{$A^c$ のベン図}
+          \end{minipage}
+        \end{figure}
+      
+      
+        \phantomsection
+        \begin{example}{集合}{集合}
+            例えば，$A = \{1, 2, 3\}$，$B = \{3, 4, 5\}$とすると，
+            \begin{itemize*}
+                \item $A \cap B = \{3\}$
+                \item $A \cup B = \{1, 2, 3, 4, 5\}$
+                \item $A \setminus B = \{1, 2\}$
+                \item $X=\{1,2,3,4,5\}$とすると，$A^c = \{4, 5\}$
+            \end{itemize*}
+        \end{example}
+      
+        \phantomsection
+        \begin{prop}{集合の分配律}{集合の分配律}
+          $A$，$B$，$C$を集合とするとき，
+          \begin{align*} 
+            A \cap ( B \cup C) &= (A \cap B) \cup (A \cap C), \\
+            A \cup ( B \cap C) &= (A \cup B) \cap (A \cup C).
+          \end{align*}
+        \end{prop}
+        
+        \begin{tleftbar}
+        \begin{proof}
+        $ x \in A \cap ( B \cup C)$とすると，$x \in A$かつ$x \in B \cup C$である．$x \in B \cup C$とすると，$x \in B$または$x \in C$である．
+        よって，$x \in A$かつ$x \in B$であるとき，$x \in A \cap B$である．また，$x \in A$かつ$x \in C$であるとき，$x \in A \cap C$である．
+        これらのことから，$x \in A \cap ( B \cup C)$とすると，$x \in (A \cap B) \cup (A \cap C)$である．
+        つまり，
+        \[
+        A \cap ( B \cup C) \subset (A \cap B) \cup (A \cap C).
+        \]
+        逆に，$x \in (A \cap B) \cup (A \cap C)$とすると，$x \in A \cap B$または$x \in A \cap C$である．
+        $x \in A \cap B$とすると，$x \in A$かつ$x \in B$である．また，$x \in A \cap C$とすると，$x \in A$かつ$x \in C$である．
+        よって，$x \in A$かつ$x \in B$または$x \in A$かつ$x \in C$である．これらのことから$x \in A$かつ$x \in B \cup C$である．
+        つまり，
+        \[
+        (A \cap B) \cup (A \cap C) \subset A \cap ( B \cup C).
+        \]
+        以上の考察により，$A \cap ( B \cup C) = (A \cap B) \cup (A \cap C)$である．
+      \end{proof}
+      \end{tleftbar}
+        
+      集合はしばしば条件を用いて記述される．
+      
+        \begin{description}[labelwidth=4em]
+            \item[列挙形式] $\{ a, b, c \}$のように要素を列挙して表す．
+            \item[条件形式] $\{ x \in \mathbb{N} \mid x \leq 5 \}$のように条件を用いて表す．
+        \end{description}
+      
+      
+        \phantomsection
+        \begin{example}{集合の表記}{集合の表記}
+          \[
+          \{ 1,2,3 \} = \{ n \in \mathbb{N} \mid  n^2 -4n +3 \leqq 0 \}
+          \]
+        \end{example}
+      
+        
+
 \newpage 
 
 \cite{nakajima}，\cite{kaneko}を参考にした．
