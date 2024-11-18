@@ -512,7 +512,7 @@ IfValueTF={#1}{title=【#2】〈#1〉}{title=【#2】},#4}
 
 
 \phantomsection
-\part{数学の基本}
+\part*{数学の基本}
 \section{用語の定義}
 
 \phantomsection
@@ -544,7 +544,7 @@ IfValueTF={#1}{title=【#2】〈#1〉}{title=【#2】},#4}
 \end{example}
 
 
-ここで注意するのは \emph{数学では定義は最小限の情報にとどめることが慣習となっている}ということである．たとえば，\exref{「逆行列」の定義}の定義から，以下の命題\footnote{「命題」については，のちほど詳しくみていくとする．ここでは「証明を与えるべきである主張」という理解でよい．}が成り立ち，その証明は容易である．
+ここで注意するのは \emph{数学では定義は最小限の情報にとどめることが慣習となっている}ということである．たとえば，\exref{「逆行列」の定義}から，以下の命題\footnote{「命題」については，のちほど詳しくみていくとする．ここでは「証明を与えるべきである主張」という理解でよい．}が成り立ち，その証明は容易である．
 
 \phantomsection
 \begin{prop}{逆行列の一意性}{逆行列の一意性}
@@ -1098,7 +1098,7 @@ x \in A \cup B
 
         これは，$n$ 以下の数が $n + 1$ 個以上の正の約数を持つことを意味するが，これは矛盾である．
         
-        したがって，仮定に矛盾が生じるため，$2^n > n$ が成り立つ．\qed
+        したがって，先の仮定が誤りであるため，背理法によって$2^n > n$ が成り立つ．\qed
       \end{example}
 
       \phantomsection
@@ -1118,7 +1118,7 @@ x \in A \cup B
         \end{align*}
         これと$n+1 >n$であることを併せると，$n \geqq 2$のとき$2^n > n$である．\qed
       \end{example}
-      
+
       \phantomsection
       \section{集合}
         \phantomsection
@@ -1407,11 +1407,55 @@ x \in A \cup B
           \]
         \end{example}
       
+        \section{写像}
+
+        \subsection{写像の定義と例}
+
+        \subsubsection{写像の定義}
+
+        いままでの数学の学習の過程で「関数」という言葉に出会ったことがある読者もいるかもしれない．
+        そのような経験がある読者は「関数」と言われると，どのようなものが思い浮かぶであろうか．
         
+        ここではまず，「関数」とほぼ同じ意味で使われる「写像」に関して厳密な定義を与えよう\footnote{写像の終集合が$\mathbb{R}$など「数」の集合である場合を「関数」と呼ぶことが多い．}．
+
+        \begin{definition}{写像}{写像}
+          $A$，$B$を集合とする．
+          $f \colon A \to B$が\emph{写像}であるとは，$G$が次の2つの条件を満たすことである．
+          
+          このとき，$ x\in A$にただひとつ対応する$y \in B$を$y=f(x)$とかく．
+          \begin{enumerate}[(I)]
+            \item $G \subset A \times B$である． \label{enum:写像の条件1}
+            \item 任意の$x \in A$に対して，$y \in B$がただひとつ存在し，$(x,y) \in G$となる．\label{enum:写像の条件2}
+          \end{enumerate}
+          ここで，$A$を$f$の\emph{始集合}，$B$を$f$の\emph{終集合}，$G$を$f$の\emph{グラフ}という．
+
+          また，\ref{enum:写像の条件1}，\ref{enum:写像の条件2}を論理式で表すと以下のようになる：
+          \[
+          (G \subset A \times B) \land (\forall x \in A , \, \exists ! y \in B \,:\, ((x, y) \in G)).
+          \]
+        \end{definition}
+
+        以上が写像の厳密な定義である．
+        
+        \subsubsection{写像の例}
+        
+        ここでは直感的な理解を深めるために，具体例を挙げてみよう．
+
+        \begin{example}{自動販売機}{自動販売機}
+          自動販売機には複数のボタンがあり，それぞれが特定の飲み物に対応している\footnote{ボタンをひとつ押しただけで何種類も飲み物が出てくる自動販売機はまずないであろう．少なくとも筆者は知らない．}．
+          
+          集合$A$を自動販売機のボタンの集合，集合$B$を提供される飲み物の集合としよう．各ボタン $a \in A$ に対して，そのボタンを押すと出てくる飲み物を $b \in B$ とする．
+
+          このとき，
+          \[
+          b=f(a)
+          \]
+          とかくと，$f$ は写像の定義を満たす．
+        \end{example}
 
 \newpage 
 
-\cite{nakajima}，\cite{kaneko}を参考にした．
+\cite{nakajima}，\cite{kaneko}，\cite{arai}を参考にした．
 
 \printbibliography[title=参考文献]
 \end{document}
