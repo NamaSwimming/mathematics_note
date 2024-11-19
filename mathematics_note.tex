@@ -1252,13 +1252,13 @@ x \in A \cup B
         \begin{definition}{共通部分・和集合・差集合・補集合}{共通部分・和集合・差集合・補集合}
             $A$と$B$を集合とするとき，以下の定義をする．
             \begin{description}
-              \item[共通部分] \mbox{}\\
+              \item[共通部分\index{きょうつうぶぶん@共通部分}] \mbox{}\\
               $A$と$B$の両方に属する要素全体の集合を$A \cap B$と表す．これを``$A$ intersection $B$''と読む．
-              \item[和集合] \mbox{} \\
+              \item[和集合\index{わしゅうごう@和集合}] \mbox{} \\
               $A$または$B$のいずれかに属する要素全体の集合を$A \cup B$と表す．これを``$A$ union $B$''と読む．
-              \item[差集合]\mbox{}\\
+              \item[差集合\index{さしゅうごう@差集合}]\mbox{}\\
               $A$の要素で$B$に属さないもの全体の集合を$A \setminus B$と表す．
-              \item[補集合] \mbox{}\\
+              \item[補集合\index{ほしゅうごう@補集合}] \mbox{}\\
               全体集合$X$に対して，$X \setminus A$は$A$の補集合であり，$A^c$と表す．これを``$A$ complement''と読む．
             \end{description}
         \end{definition}
@@ -1435,7 +1435,7 @@ x \in A \cup B
 
           また，\ref{enum:写像の条件1}，\ref{enum:写像の条件2}を論理式で表すと以下のようになる：
           \[
-          (G \subset A \times B) \land (\forall x \in A , \, \exists ! y \in B \,:\, ((x, y) \in G)).
+          (G \subset A \times B) \land (\forall x \in A , \, \exists ! y \in B \,:\, (x, y) \in G).
           \]
         \end{definition}
 
@@ -1461,15 +1461,20 @@ x \in A \cup B
 
 \cite{nakajima}，\cite{kaneko}，\cite{arai}を参考にした．
 
+% 参考文献
 \phantomsection
 \setcounter{section}{5}
-
+\titleformat{name=\section,numberless}[block]
+{}{}{0pt}{\normalfont\huge\bfseries}
 \printbibliography[title=参考文献]
 \addcontentsline{toc}{section}{参考文献}
 
+% 索引
 \clearpage
 \setcounter{section}{6}
 \renewcommand{\indexname}{索引}
+\titleformat{name=\section,numberless}[block]
+{}{}{0pt}{\normalfont\huge\bfseries}
 \phantomsection \addcontentsline{toc}{section}{索引}
 \printindex
 
