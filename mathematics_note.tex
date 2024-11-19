@@ -357,6 +357,8 @@ IfValueTF={#1}{title=【#2】〈#1〉}{title=【#2】},#4}
 
 \newcommand\kakko[1]{\noindent\textbf{《#1》}}
 
+\newcommand{\draftnote}[1]{\begin{center}\textbf{\textcolor{red}{執筆中：~#1}}\end{center}}
+
 
 \everymath{\displaystyle}
 
@@ -1419,27 +1421,9 @@ x \in A \cup B
 
         いままでの数学の学習の過程で「関数\index{かんすう@関数}」という言葉に出会ったことがある読者もいるかもしれない．
         そのような経験がある読者は「関数」と言われると，どのようなものが思い浮かぶであろうか．
-        
-        ここではまず，「関数」とほぼ同じ意味で使われる「写像」に関して厳密な定義を与えよう\footnote{写像の終集合が$\mathbb{R}$など「数」の集合である場合を「関数」と呼ぶことが多い．}．
 
-        \begin{definition}{写像}{写像}
-          $A$，$B$を集合とする．
-          $f \colon A \to B$が\emph{写像}\index{しゃぞう@写像}であるとは，$f$が次の2つの条件を満たすことである．
-          
-          このとき，$ x\in A$にただひとつ対応する$y \in B$を$y=f(x)$とかく．
-          \begin{enumerate}[(I)]
-            \item $G \subset A \times B$である． \label{enum:写像の条件1}
-            \item 任意の$x \in A$に対して，$y \in B$がただひとつ存在し，$(x,y) \in G$となる．\label{enum:写像の条件2}
-          \end{enumerate}
-          ここで，$A$を$f$の\emph{始集合}\index{ししゅうごう@始集合}，$B$を$f$の\emph{終集合}\index{しゅうしゅうごう@終集合}，$G$を$f$の\emph{グラフ}\index{グラフ}という．
 
-          また，\ref{enum:写像の条件1}，\ref{enum:写像の条件2}を論理式で表すと以下のようになる：
-          \[
-          (G \subset A \times B) \land (\forall x \in A , \, \exists ! y \in B \,:\, (x, y) \in G).
-          \]
-        \end{definition}
-
-        以上が写像の厳密な定義である．
+        \draftnote{ここに定義を追加予定です}
         
         \subsubsection{写像の例}
         
