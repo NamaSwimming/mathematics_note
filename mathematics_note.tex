@@ -99,14 +99,13 @@
 \definecolor{charcoal}{rgb}{0.21, 0.27, 0.31}
 \colorlet{lightmypurple}{mypurple!20!white}
 
-% chapter (part) with number
-\titleformat{\part}[block]
-{}{}{0pt}{
-  \fontsize{16pt}{16pt}\normalfont\bfseries\filleft \thepart\quad
-}[
-  \hrule \large{\filleft\textcolor{myred}{\thepart}} \\
-  \vspace{-6mm}
-]
+\titleformat{\part}[display]
+  {\normalfont\Huge\bfseries\centering\color{black}}
+  {\partname~\thepart}
+  {20pt}
+  {\titlerule[2pt]\vspace{1pt}\titlerule[1pt]\vspace{1pc}}
+  []
+
 
 % section with number
 \titleformat{\section}[block]
@@ -115,7 +114,7 @@
   \colorbox{myred}{\begin{picture}(8,16)\end{picture}}
   \hspace{0pt}
   \normalfont \huge \bfseries 
-  \hspace{-4pt} \thesection\quad
+  \hspace{-4pt} \thesection\quad 
 }
 [
 \vspace{-10pt}
@@ -124,7 +123,7 @@
   \put(3,15.6){\color{myred}\line(1,0){280}}
 \end{picture}
 \\
-\vspace{-58pt}
+\vspace{-56pt}
 ]
 
 % subsection with number
@@ -143,7 +142,7 @@
   \put(3,13){\color{myblue}\line(1,0){260}}
 \end{picture}
 \\
-\vspace{-44pt}
+\vspace{-42pt}
 ]
 
 % subsubsection with number
