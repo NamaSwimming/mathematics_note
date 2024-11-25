@@ -192,9 +192,19 @@
 
 
 %leftbar環境に注釈が入れられないことを解消する環境．名前は，tcolorboxの[t]とleftbarの組み合わせ
-\newtcolorbox{tbleftline}{blanker,left=5mm,borderline west={1.1mm}{0pt}{black}}
+\newtcolorbox{tbleftline}{blanker,breakable,left=5mm,borderline west={1.1mm}{0pt}{black}}
 \newenvironment{tleftbar}{\begin{tbleftline}\setlength{\parindent}{1\zw}}{\end{tbleftline}}
 
+%dotleftbar環境
+\newtcolorbox{tbdotleftline}{%
+  blanker, left=5mm,breakable,
+  borderline west={1.1mm}{0pt}{draw=black, dotted}
+}
+\newenvironment{dotleftbar}{%
+  \begin{tbdotleftline}\setlength{\parindent}{1\zw}%
+}{%
+  \end{tbdotleftline}%
+}
 
 % 定理環境などの設定
 % Theorem styles
@@ -816,17 +826,108 @@ $n$の全ての約数を生成できるため，約数の総数は各$(e_i + 1)$
 「最大値・最小値が存在するなんて当たり前だ」と思われる読者もいるかもしれない．しかし，本当にそれは自明なのか．
 実際には，関数の連続性や区間の閉有界性といった条件が揃って初めて，最大値や最小値の「存在」を保証できる．この定理を証明するにあたっては，厳密な数学的議論が必要となる．
 
-次に，指数関数を考える際に有理数列$(x_n)_{n \in \mathbb{N}}$を用いる場合の例を見てみよう：
-
-$x \in \mathbb{R}$，$x \coloneqq \lim_{n \to \infty} x_n$としたとき，$a^x$を定義するために，
+次に，以下のような漸化式で定められた数列$(x_n)_{n \in \mathbb{N}}$を考える：
 \[
-	 a^x \coloneqq \lim_{n \to \infty} a^{x_n}
+\begin{cases}
+x_1 =0 ,\\
+x_{n+1}= \sqrt{x_n+2}.
+\end{cases}
 \]
+以下，この数列が収束することを示す．
+\begin{tleftbar}
+\begin{prop}{}{}
+  任意の$n \in \mathbb{N}$に関して
+  \[
+  x_n \leqq x_{n+1} < 2.
+  \]
+\end{prop}
 
-とするが，この極限が存在することは本当に自明なのか．
-$a^2$や$a^{2/3}$の具体的な値のイメージは思い浮かぶと思うが，たとえば$a^{\pi}$のイメージについてはどうであろうか．
+\begin{dotleftbar}
+\begin{proof}
+  数学的帰納法により，$x_n \leqq x_{n+1} < 2$を示す．
+  \begin{enumerate}[(I)]
+    \item \mbox{} \\ \label{proof:存在1}
+    $n=1$のとき，$ x_1 =0$，$x_2= \sqrt{0+2}=\sqrt{2}$なので，$ 0 \leqq \sqrt{2} < 2$により，
+    $x_1 \leqq x_2 < 2$である．
+    \item \mbox{} \\ \label{proof:存在2}
+    $n=k$であるような$k \geqq 2$を任意にとり，$x_k \leqq x_{k+1} < 2$であると仮定する．
 
-このように，極限の存在を証明するためには，$a^{x_n}$の収束性など，細かな数学的性質を確認する必要がある．このようにして初めて，指数関数の定義が厳密なものとなるのである．
+    このとき，$x_{k+1} < 2$により$ x_{k+1}+2 < 4$なので，
+    \[
+    x_{k+2}=\sqrt{x_{k+1} + 2} < 2
+    \]
+    である．
+
+    また，$x_k \leqq x_{k+1}$により，$x_k +2  \leqq x_{k+1}+2$であるから，
+    \[
+    x_{k+1}= \sqrt{x_k +2} \leqq \sqrt{x_{k+1}+2}=x_{k+2}.
+    \]
+    よって，$n=k+1$の場合にも成り立つ．
+  \end{enumerate}
+  以上\ref{proof:存在1}，\ref{proof:存在2}により，任意の$n \in \mathbb{N}$について
+  \[
+  x_n \leqq x_{n+1} < 2
+  \]
+  である．
+\end{proof}
+\end{dotleftbar}
+
+
+\begin{prop}{}{}
+  $(x_n)_{n \in \mathbb{N}}$は$ 0<  x \leqq 2$なる極限$x$に収束する．
+\end{prop}
+
+\begin{dotleftbar}
+\begin{proof}
+先の命題により，任意の$n \in \mathbb{N}$について，$ x_n \leqq x_{n+1} <2$なので，
+数列$(x_n)_{n \in mathbb{N}}$は単調に増加し，上に有界である．
+
+よって
+\[
+x \coloneqq \sup \{ x_n \mid n \in \mathbb{N} \}
+\]
+が存在し，$x \leqq  2$である．
+
+$ x>0$は明らかであるから，以上の考察によりこの命題が証明された．
+\end{proof}
+\end{dotleftbar}
+
+ここまでで，$(x_n)_{n \in \mathbb{N}}$の極限値の存在が確認されたので，先の漸化式について，
+\[
+x=\sqrt{x+2}
+\]
+とする．これを解くと$ x= -1,2$であるが，$x>0$により$x=2$である．
+
+以上の考察により，数列$(x_n)_{n \in \mathbb{N}}$は収束する．\qed 
+\end{tleftbar}
+
+ここまで考察して，ようやく数列$(x_n)_{n \in \mathbb{N}}$が収束することを確認できた．
+この例では「極限値の存在」を確認する意味がわからない読者もいるかもしれないので，もう一つ例を挙げよう．
+
+
+以下のような漸化式で定められた数列$(y_n)_{n \in \mathbb{N}}$を考える：
+\[
+\begin{cases}
+y_1 =1 ,\\
+y_{n+1}= 2y_n +2.
+\end{cases}
+\]
+この数列の極限値が存在すると仮定して，それを$y$とおこう．
+\begin{tleftbar}
+与えられた漸化式により，
+\begin{align*} 
+  & y = 2y +2, \\
+  & y = -2.
+\end{align*}
+しかし，
+\[
+\lim_{n \to \infty} y_n = \infty
+\]
+なので，$y=-2$は誤りである．
+\end{tleftbar}
+
+このように，数列の極限が存在することを確認しないと，誤った結論に到達することがある．この例から分かるように，存在を確認することは重要なことであるのだ．
+
 
 \phantomsection
 \subsubsection{一意性}
