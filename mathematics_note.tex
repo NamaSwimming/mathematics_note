@@ -1700,15 +1700,163 @@ x \in A \cup B
           とかくと，$f$ は写像の定義を満たす．
         \end{example}
 
-        \begin{example}{キーボードと文字}{キーボードと文字} 
-          集合$A$をキーボード上のキーの集合，集合$B$をスクリーンに表示される文字の集合とする．
-          各キー$a \in A$に対して，それを押すとスクリーンに表示される文字を$b \in B$とする．
-          このとき，
-        \[
-        b=f(a)
-        \]
-          と考えると，キーに対して特定の文字が対応するので，$f$は写像の定義を満たす．
-        \end{example}
+
+\subsubsection{単射\index{たんしゃ@単射}}
+
+\begin{definition}{単射}{単射}
+写像$f$が$A$から$B$への単射であるとは，異なる要素$a_1, a_2 \in A$に対して，$f(a_1) \ne f(a_2)$が成り立つことである\footnote{この条件は，先の定義の対偶を考えると「$f(a_1) =f(a_2)$ならば$a_1=a_2$が成り立つ」とも言い換えられる．}．
+\end{definition}
+
+集合 $A = \{1, 2, 3\}$，$B = \{a, b, c, d\}$ を考え，写像 $f$ を以下のように定義する．
+\[
+f(1) = a, \quad f(2) = b, \quad f(3) = c.
+\]
+
+\begin{figure}[h]
+  \centering
+  \begin{tikzpicture}
+      % Aの集合
+      \draw[fill=cyan!20, draw=cyan] (-2,0) ellipse (1.5cm and 2cm);
+      \node at (-2,2.2) {$A$};
+      
+      % Bの集合
+      \draw[fill=cyan!20, draw=cyan] (3,0) ellipse (1.5cm and 2cm);
+      \node at (3,2.2) {$B$};
+      
+      % Aの要素
+      \fill (-2,1) circle (2pt);
+      \node[left] at (-2,1) {$1$};
+      
+      \fill (-2,0) circle (2pt);
+      \node[left] at (-2,0) {$2$};
+      
+      \fill (-2,-1) circle (2pt);
+      \node[left] at (-2,-1) {$3$};
+      
+      % Bの要素
+      \fill (3,1.5) circle (2pt);
+      \node[right] at (3,1.5) {$a$};
+      
+      \fill (3,0.5) circle (2pt);
+      \node[right] at (3,0.5) {$b$};
+      
+      \fill (3,-0.5) circle (2pt);
+      \node[right] at (3,-0.5) {$c$};
+      
+      \fill (3,-1.5) circle (2pt);
+      \node[right] at (3,-1.5) {$d$};
+      
+      % 矢印（写像）
+      \draw[->, thin] (-2,1) to[bend left=20] (3,1.5); % 1をaに対応
+      \draw[->, thin] (-2,0) to[bend left=10] (3,0.5); % 2をbに対応
+      \draw[->, thin] (-2,-1) to[bend right=0] (3,-0.5); % 3をcに対応
+  \end{tikzpicture}
+  \caption{単射の例}
+\end{figure}
+
+この$f$は単射だが，全射でない．
+
+\subsubsection{全射\index{ぜんしゃ@全射}}
+
+\begin{definition}{全射}{全射}
+写像$f$が$A$から$B$への全射であるとは，任意の$b \in B$に対して，ある$a \in A$が存在して，$f(a) = b$が成り立つことである．
+\end{definition}
+
+集合 $A = \{1, 2, 3\}$，$B = \{a, b\}$ を考え，写像 $f$ を以下のように定義する．
+\[
+f(1) = a, \quad f(2) = a, \quad f(3) = b.
+\]
+
+\begin{figure}[h]
+  \centering
+  \begin{tikzpicture}
+      % Aの集合
+      \draw[fill=cyan!20, draw=cyan] (-2,0) ellipse (1.5cm and 2cm);
+      \node at (-2,2.2) {$A$};
+      
+      % Bの集合
+      \draw[fill=cyan!20, draw=cyan] (3,0) ellipse (1.5cm and 1cm);
+      \node at (3,1.7) {$B$};
+      
+      % Aの要素
+      \fill (-2,1) circle (2pt);
+      \node[left] at (-2,1) {$1$};
+      
+      \fill (-2,0) circle (2pt);
+      \node[left] at (-2,0) {$2$};
+      
+      \fill (-2,-1) circle (2pt);
+      \node[left] at (-2,-1) {$3$};
+      
+      % Bの要素
+      \fill (3,0.5) circle (2pt);
+      \node[right] at (3,0.5) {$a$};
+      
+      \fill (3,-0.5) circle (2pt);
+      \node[right] at (3,-0.5) {$b$};
+      
+      % 矢印（写像）
+      \draw[->, thin] (-2,1) to[bend left=20] (3,0.5); % 1をaに対応
+      \draw[->, thin] (-2,0) to[bend left=10] (3,0.5); % 2をaに対応
+      \draw[->, thin] (-2,-1) to[bend right=0] (3,-0.5); % 3をbに対応
+  \end{tikzpicture}
+  \caption{全射の例}
+\end{figure}
+
+この$f$は全射だが，単射でない．
+
+\subsubsection{全単射\index{ぜんたんしゃ@全単射}}
+
+\begin{definition}{全単射}{全単射}
+写像$f$が$A$から$B$への全単射であるとは，$f$が単射かつ全射であることである．
+\end{definition}
+
+集合 $A = \{1, 2, 3\}$，$B = \{a, b, c\}$ を考え，写像 $f$ を以下のように定義する．
+\[
+f(1) = a, \quad f(2) = b, \quad f(3) = c.
+\]
+
+
+\begin{figure}[h]
+  \centering
+  \begin{tikzpicture}
+      % Aの集合
+      \draw[fill=cyan!20, draw=cyan] (-2,0) ellipse (1.5cm and 2cm);
+      \node at (-2,2.2) {$A$};
+      
+      % Bの集合
+      \draw[fill=cyan!20, draw=cyan] (3,0) ellipse (1.5cm and 2cm);
+      \node at (3,2.2) {$B$};
+      
+      % Aの要素
+      \fill (-2,1) circle (2pt);
+      \node[left] at (-2,1) {$1$};
+      
+      \fill (-2,0) circle (2pt);
+      \node[left] at (-2,0) {$2$};
+      
+      \fill (-2,-1) circle (2pt);
+      \node[left] at (-2,-1) {$3$};
+      
+      % Bの要素
+      \fill (3,1) circle (2pt);
+      \node[right] at (3,1) {$a$};
+      
+      \fill (3,0) circle (2pt);
+      \node[right] at (3,0) {$b$};
+      
+      \fill (3,-1) circle (2pt);
+      \node[right] at (3,-1) {$c$};
+      
+      % 矢印（写像）
+      \draw[->, thin] (-2,1) to[bend left=20] (3,1); % 1をaに対応
+      \draw[->, thin] (-2,0) to[bend left=0] (3,0); % 2をbに対応
+      \draw[->, thin] (-2,-1) to[bend right=20] (3,-1); % 3をcに対応
+  \end{tikzpicture}
+  \caption{全単射の例}
+\end{figure}
+
+この $f$ は単射かつ全射，すなわち全単射である．
 
 \newpage 
 
