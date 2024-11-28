@@ -1139,7 +1139,7 @@ x \in A \cup B
 
     \phantomsection
     \subsubsection{証明とは}
-    数学において，主張が正しいことを示すプロセスを\emph{証明（proof）}\index{しょうめい@証明}という．
+    数学において，主張が正しいことを示すプロセスを\emph{証明}\index{しょうめい@証明}（\emph{proof}）という．
     
     先の例で，命題・定理・補題・系は証明されるべきものであるが，定義は一般に「証明すべきこと」でないことに注意したい．
     しかし，例えば「\exref{「絶対値」の定義}において$\abs{x} \coloneqq \max \{ x, -x \}$を仮定して$\abs{x} = \sqrt{x^2}$を導く」
@@ -1737,24 +1737,24 @@ x \in A \cup B
             \node[left] at (-5,-1) {$3$};
 
             % Bの要素
-            \fill (5,1) circle (2pt);
-            \node[right] at (5,1) {$a$};
+            \fill (5,0.5) circle (2pt);
+            \node[right] at (5,0.5) {$a$};
             
-            \fill (5,0) circle (2pt);
-            \node[right] at (5,0) {$b$};
+            \fill (5,-0.5) circle (2pt);
+            \node[right] at (5,-0.5) {$b$};
             
             
             % 矢印（写像）
-            \draw[->, thin] (-5,1) to[bend left=20] (5,1); % 1をaに対応
-            \draw[->, thin] (-5,0) to[bend left=0] (5,0); % 2をbに対応
-            \draw[->, thin] (-5,-1) to[bend left=20] (5,1); % 3をaに対応
+            \draw[->, thin] (-5,1) to[bend left=20] (5,0.5); % 1をaに対応
+            \draw[->, thin] (-5,0) to[bend left=0] (5,-0.5); % 2をbに対応
+            \draw[->, thin] (-5,-1) to[bend left=20] (5,0.5); % 3をaに対応
             
             % A'の集合（濃い青色）
             \draw[fill=blue!50, opacity=0.5] (-5,0) ellipse (1.0cm and 1.7cm);
             \node at (-6.5,0.5) {$A'$};
             
             % 像 f(A')（濃い赤色）
-            \draw[fill=red!50, opacity=0.5] (5,0.5) ellipse (0.7cm and 1.1cm);
+            \draw[fill=red!50, opacity=0.5] (5,0) ellipse (0.7cm and 1.1cm);
             \node at (6.5,0.5) {$f(A')$};
         \end{tikzpicture}
         \caption{像}
@@ -2031,6 +2031,49 @@ f(1) = c, \quad f(2) = b, \quad f(3) = a.
 
 この $f$ は単射かつ全射，すなわち全単射である．
 
+\begin{example}{学籍番号と学生}{学籍番号と学生}
+  あるクラスの学生とその学籍番号の対応を考える．
+  集合 $A$ を学生の集合，集合 $B$ を学籍番号の集合とする．
+  ここでは，
+  \[
+  A = \{\text{Alice}, \text{Bob}, \text{Charlie}\}, \quad
+  B = \{\text{2024001}, \text{2024002}, \text{2024003}\}.
+  \]
+  とする．
+
+  そして，学生 $a \in A$ に対して学籍番号 $b \in B$ を一意的に割り当てる規則 $f$ を次のように定義する．
+  \[
+  f(\text{Alice}) = \text{2024001}, \quad
+  f(\text{Bob}) = \text{2024002}, \quad
+  f(\text{Charlie}) = \text{2024003}.
+  \]
+  
+  この写像 $f$ は$f$ は単射かつ全射，すなわち全単射である．
+\end{example}
+
+\begin{example}{単射・全射・全単射}{単射・全射・全単射}
+  \begin{enumerate}[(A)]
+    \item 
+  \[
+  f \colon [0,\infty) \ni x \mapsto x^2  \in \mathbb{R}
+  \]
+  は単射であるが全射でない．
+  \item 
+\[ 
+g \colon \mathbb{R} \ni x \mapsto x^3 -3x^2 -9 \in \mathbb{R}
+\]
+は全射であるが単射でない．
+\item 
+\[ 
+h  \colon \mathbb{R} \ni x \mapsto  2 \sin x \in  \mathbb{R} 
+\]
+は全射でも単射でもない．しかし，
+\[ 
+h’  \colon [-\pi/2 , \pi/2 ]  \ni x \mapsto  2 \sin  x  \in [-2,2]
+\]
+は全単射である．
+  \end{enumerate}
+\end{example}
 \clearpage 
 
 \cite{nakajima}，\cite{kaneko}，\cite{arai}を参考にした．
