@@ -1269,9 +1269,6 @@ x \in A \cup B
     など，異なる定義の同値性を示す場面では，定義が「証明すべきもの」となる．このことから，どの定義を採用しているか明確にすることが重要であることがわかる．
 
     証明は一つの命題にいくつか存在する場合がほとんどであり，たとえば，\exref{三平方の定理}の証明は100通り以上も存在することが知られている．
-    \begin{mycolumn}
-    証明を記述する際には，文末に$\square$や$\blacksquare$を記すことが一般的である．そのほかに``Q.E.D.''\footnote{quod erat demonstrandumの略で，ラテン語で「証明されるべきことでありつづけたこと」という意味である．}などの表現も用いられる．
-    \end{mycolumn}
     \phantomsection
     \begin{example}{証明}{証明}
     辺の長さが$a$と$b$の直角三角形を$4$つ用意する．
@@ -1280,19 +1277,14 @@ x \in A \cup B
     
     一方で，大きな正方形は中央に辺の長さが$c$の小さな正方形と，$4$つの三角形で構成されている．
     
-    よって，大きな正方形の面積は，小さい正方形の面積と4つの三角形の面積の和に等しい：
+    よって，大きな正方形の面積は，小さい正方形の面積と4つの三角形の面積の和に等しい．ゆえに
     \[
-    (a + b)^2 = c^2 + 4 \left( \frac{1}{2}ab \right).
+    (a + b)^2 = c^2 + 4 \left( \frac{1}{2}ab \right), \quad \therefore ~(a + b)^2 = c^2 + 2ab.
     \]
-    この式を整理すると，
+    これにより，
     \[
-     (a + b)^2 = c^2 + 2ab
+    a^2 + 2ab + b^2 = c^2 + 2ab, \quad \therefore ~a^2 + b^2 = c^2.
     \]
-    であるから，
-    \begin{align*}
-    & a^2 + 2ab + b^2 = c^2 + 2ab, \\
-    & \therefore ~a^2 + b^2 = c^2.
-    \end{align*}
     これが証明すべきことであった．\qed
     \begin{center}
     \begin{tikzpicture}[scale=0.75]
@@ -1333,7 +1325,10 @@ x \in A \cup B
     \end{tikzpicture}
     \end{center}
     \end{example}
-
+    \begin{mycolumn}
+      証明を記述する際には，文末に$\square$や$\blacksquare$を記すことが一般的である．そのほかに``Q.E.D.''\footnote{quod erat demonstrandumの略で，ラテン語で「証明されるべきことでありつづけたこと」という意味である．}などの表現も用いられる．
+      \end{mycolumn}
+      
     \phantomsection
     \subsubsection{命題の反証と反例}
 
