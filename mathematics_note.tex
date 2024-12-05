@@ -272,6 +272,75 @@ colframe=mypurple,colback=mypurple!2!white,colbacktitle=mypurple,borderline sout
     underlay last={\draw[black,line width=#3pt](frame.north east) -- (frame.south east) -- (frame.south west) -- (frame.north west) ;},
     fonttitle=\gtfamily, IfValueTF={#1}{title=【#2】〈#1〉}{title=【#2】},#4}
 
+    % 新しいカウンターを定義
+    
+    \newcounter{mycolumn}
+    \colorlet{colexam}{red!75!black}
+    
+    \newtcolorbox[use counter=mycolumn]{mycolumn}{%
+      empty,
+      title={Column \themycolumn},
+      attach boxed title to top left,
+      boxed title style={
+        empty,
+        size=minimal,
+        toprule=2pt,
+        top=4pt,
+        left=1cm, % タイトルを右に移動
+        overlay={
+          % タイトルの上の線を削除
+          % \draw[colexam,line width=2pt]
+          %   ([yshift=-1pt]frame.north west) -- ([yshift=-1pt]frame.north east);
+        }
+      },
+      coltitle=colexam,
+      fonttitle=\Large\bfseries,
+      before=\par\medskip\noindent,
+      parbox=false,
+      boxsep=0pt,
+      left=5mm, % 左のマージンを増やしてタイトルを右に移動
+      right=3mm,
+      top=4pt,
+      breakable,
+      pad at break*=0mm,
+      vfill before first,
+      overlay unbroken={
+        \draw[colexam,line width=1.5pt]
+          ([xshift=-0.5pt,yshift=10pt]frame.north east)
+          -- ([xshift=-0.5pt]frame.south east);
+        \draw[colexam,line width=1.5pt]
+          ([xshift=-1pt,yshift=10pt]frame.north west)
+          -- ([xshift=-1pt]frame.south west);
+      },
+      overlay first={
+        \draw[colexam,line width=1.5pt]
+          ([xshift=-0.5pt,yshift=10pt]frame.north east)
+          -- ([xshift=-0.5pt]frame.south east);
+        \draw[colexam,line width=1.5pt]
+          ([xshift=-1pt,yshift=10pt]frame.north west)
+          -- ([xshift=-1pt]frame.south west);
+      },
+      overlay middle={
+        \draw[colexam,line width=1.5pt]
+          ([xshift=-0.5pt,yshift=10pt]frame.north east)
+          -- ([xshift=-0.5pt]frame.south east);
+        \draw[colexam,line width=1pt]
+          ([xshift=-1pt,yshift=10pt]frame.north west)
+          -- ([xshift=-1pt]frame.south west);
+      },
+      overlay last={
+        \draw[colexam,line width=1.5pt]
+          ([xshift=-0.5pt,yshift=10pt]frame.north east)
+          -- ([xshift=-0.5pt]frame.south east);
+        \draw[colexam,line width=1.5pt]
+          ([xshift=-1pt,yshift=10pt]frame.north west)
+          -- ([xshift=-1pt]frame.south west);
+      },%
+    }
+    
+    
+
+
 % 例題環境
 \newcounter{mondaibangou}
 \newtcolorbox{mondai}[1][]{enhanced,boxrule=0.5mm,
@@ -1830,6 +1899,11 @@ x \in A \cup B
           
           \index{ぎゃくぞう@逆像}
           \end{definition}
+
+          \begin{mycolumn}
+          \deref{逆像}て定義した逆像は「写像」ではなく，あくまで「集合」であることに注意したい．
+          逆像と紛らわしい単語に「逆写像」があるが，逆写像は$f$が全単射であるときに定義される写像である．その一方で，逆像は$f$が全単射でなくても定義される．
+          \end{mycolumn}
 
 
       \begin{figure}[h]
