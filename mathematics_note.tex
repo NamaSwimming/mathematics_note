@@ -272,14 +272,12 @@ colframe=mypurple,colback=mypurple!2!white,colbacktitle=mypurple,borderline sout
     underlay last={\draw[black,line width=#3pt](frame.north east) -- (frame.south east) -- (frame.south west) -- (frame.north west) ;},
     fonttitle=\gtfamily, IfValueTF={#1}{title=【#2】〈#1〉}{title=【#2】},#4}
 
-    % 新しいカウンターを定義
-    
-    \newcounter{mycolumn}
+
     \colorlet{colexam}{red!75!black}
     
-    \newtcolorbox[use counter=mycolumn]{mycolumn}{%
+    \newtcolorbox[auto counter,number format=\Roman]{mycolumn}{
       empty,
-      title={Column \themycolumn},
+      title={\bfseries\sffamily Column \thetcbcounter}, % カウンタをローマ数字で表示
       attach boxed title to top left,
       boxed title style={
         empty,
@@ -305,34 +303,34 @@ colframe=mypurple,colback=mypurple!2!white,colbacktitle=mypurple,borderline sout
       pad at break*=0mm,
       vfill before first,
       overlay unbroken={
-        \draw[colexam,line width=1.5pt]
+        \draw[colexam,line width=2pt]
           ([xshift=-0.5pt,yshift=10pt]frame.north east)
           -- ([xshift=-0.5pt]frame.south east);
-        \draw[colexam,line width=1.5pt]
+        \draw[colexam,line width=2pt]
           ([xshift=-1pt,yshift=10pt]frame.north west)
           -- ([xshift=-1pt]frame.south west);
       },
       overlay first={
-        \draw[colexam,line width=1.5pt]
+        \draw[colexam,line width=2pt]
           ([xshift=-0.5pt,yshift=10pt]frame.north east)
           -- ([xshift=-0.5pt]frame.south east);
-        \draw[colexam,line width=1.5pt]
+        \draw[colexam,line width=2pt]
           ([xshift=-1pt,yshift=10pt]frame.north west)
           -- ([xshift=-1pt]frame.south west);
       },
       overlay middle={
-        \draw[colexam,line width=1.5pt]
+        \draw[colexam,line width=2pt]
           ([xshift=-0.5pt,yshift=10pt]frame.north east)
           -- ([xshift=-0.5pt]frame.south east);
-        \draw[colexam,line width=1pt]
+        \draw[colexam,line width=2pt]
           ([xshift=-1pt,yshift=10pt]frame.north west)
           -- ([xshift=-1pt]frame.south west);
       },
       overlay last={
-        \draw[colexam,line width=1.5pt]
+        \draw[colexam,line width=2pt]
           ([xshift=-0.5pt,yshift=10pt]frame.north east)
           -- ([xshift=-0.5pt]frame.south east);
-        \draw[colexam,line width=1.5pt]
+        \draw[colexam,line width=2pt]
           ([xshift=-1pt,yshift=10pt]frame.north west)
           -- ([xshift=-1pt]frame.south west);
       },%
