@@ -692,7 +692,7 @@ DNAとは，デオキシリボ核酸の略で，生物の遺伝情報を担う�
     \item 「$1+1$」（なにも主張しておらず，真か偽か判定できない）
     \item 「霞ヶ浦の面積は大きい」（客観的に大きいか判定できない）
     \item 「桃はおいしい」（基準が明確でなく，客観的に真か偽か判定できない）
-    \item 「$x^2 > 4$」（$x$に具体的な値を代入しないと真か偽か判定できない）
+    \item 「$x^2 > 4$」（$x$に具体的な値を代入しないと真か偽か判定できない）\label{enu:命題でない文4}
     \end{enumerate}
 \end{example}
 
@@ -1082,7 +1082,7 @@ x \in A \cup B
 \phantomsection
 \subsection{論理}
 \phantomsection
-\subsubsection{命題論理}
+\subsubsection{命題論理\index{めいだいろんり@命題論理}}
 
 	命題論理では，命題を結合するために記号を用いる．代表的な論理記号を列挙してみよう：
 
@@ -1098,8 +1098,6 @@ x \in A \cup B
     $\lnot$ & 否定\index{ひてい@否定} \\
     $\to$ & ならば（含意\index{がんい@含意}） \\
     $\Leftrightarrow$ & 必要十分条件（同値）\index{どうち@同値} \\
-    $\forall$ & 任意の（全称量化\index{ぜんしょうりょうか@全称量化}） \\
-    $\exists$ & 存在する（存在量化\index{そんざいりょうか@存在量化}） \\
 		\hline
 		\end{tabular}
 		\end{table}
@@ -1107,7 +1105,16 @@ x \in A \cup B
     これらの論理記号を用いて，命題を結合し，複雑な論理式を構成することができる．
 
     \phantomsection
-    \subsubsection{述語論理}
+    \subsubsection{述語論理\index{じゅつごろんり@述語論理}}
+
+    \exref{命題でない文}の\ref{enu:命題でない文4}において，「$x^2 >4$」という文について考えた．この文は命題ではないが，たとえば$x=3$を代入したときは真，$x=0$を代入したときは偽である．
+    つまり，$x$になにかしら値を代入すると，この文は真偽が決まり，命題となるのである．
+    
+    このような「値が決まっていない変数を含み，変数に何かを代入すると真偽が判定できる」という性質を持つ文を\emph{述語}\index{じゅつご@述語}という．
+    そして，述語を用いて命題を表現する論理を\emph{述語論理}\index{じゅつごろんり@述語論理}という．
+
+
+    述語論理においてはいくつかの記号を用いる．次の表で確認しよう：
 
     \begin{table}[ht] 
       \centering 
@@ -1122,8 +1129,11 @@ x \in A \cup B
       \end{tabular} 
       \end{table}
     
+      これらの記号を用いて，述語を命題にすることができる．$\forall$と$\exists$をまとめて\emph{量化子}\index{りょうかし@量化子}とよぶ．
+
     \phantomsection
     \begin{definition}{全称命題}{全称命題}
+      $P(x)$を述語とする．
         \[
           \forall\, x \, : \, P(x)
         \]
@@ -1132,10 +1142,11 @@ x \in A \cup B
     
     \phantomsection
     \begin{definition}{存在命題}{存在命題}
+      $Q(x)$を述語とする．
         \[
-        \exists \,  x\, : \, P(x)
+        \exists \,  x\, : \, Q(x)
         \]
-        は，「$P(x)$が成り立つような$x$が存在する」という意味であり，これを\emph{存在命題}\index{そんざいめいだい@存在命題}という．
+        は，「$Q(x)$が成り立つような$x$が存在する」という意味であり，これを\emph{存在命題}\index{そんざいめいだい@存在命題}という．
     \end{definition}
     
     \phantomsection
