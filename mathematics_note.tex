@@ -1120,6 +1120,14 @@ x \in A \cup B
 つまり，「$ x \in A$であり，$x \notin  B$である」あるいは「$ x \notin A$であり，$x \in B$である」といった状況のときにも，$x \in A \cup B$と記す．
 %ここまで
 
+\subsubsection{任意の/すべての}
+
+数学において，「任意の\index{にんいの@任意の}」と「すべての\index{すべての@すべての}」はニュアンスが異なる．
+英語では，「任意の」は``for any''，「すべての」は``for all''に相当する．
+``for any''のニュアンスは「複数の対象があり，その中のどの一つをとっても」という意味であり，``for all''は「対象全体を見て，すべてのものが」という意味である．
+
+このことからわかるように，「任意の」を「すべての」で置き換える場合には，このようなニュアンスの違いに注意しなければならない．
+
 \subsubsection{簡単のため\index{かんたんのため@簡単のため}}
 
 「簡単にするために」のほうがしっくりくる方もおられるかもしれないが，これは``For simplicity''の訳で，
@@ -1142,6 +1150,27 @@ x \in A \cup B
   \item $G$が群であることから，$G \ne \varnothing$が従う\footnote{群であれば単位元が存在することは群の定義からわかる．そのため群は空集合でない．}．\label{enu:群の例}
 \end{enumerate}
 \end{example}
+
+\subsubsection{嬉しい\index{うれしい@嬉しい}}
+
+日常では，「嬉しい」という言葉は「喜びを感じる」という意味で使われることが多いが，数学の文脈では「都合がよい」，「議論が楽になる」という意味でたびたび使われる．
+
+\begin{example}{「嬉しい」の使用例}{「嬉しい」の使用例}
+        \[
+        \int_{\alpha}^{\beta} (x-\alpha)(x-\beta)\, dx = -\frac{(\beta-\alpha)^3}{6}
+        \]
+        であることを示したい．このときに
+        \[
+          \int_{\alpha}^{\beta} (x-\alpha)(x-\beta)\, dx = \int_{\alpha}^{\beta}  (x-\alpha)\{(x-\alpha) - (\beta-\alpha)\} \, dx
+        \]
+        と変形してなにが嬉しいかというと，
+        \begin{align*} 
+          \int_{\alpha}^{\beta}  (x-\alpha)\{(x-\alpha) - (\beta-\alpha)\} \, dx & = \int_{\alpha}^{\beta} \{  (x-\alpha)^2 -(\beta-\alpha)(x-\alpha) \} \, dx \\
+          & = \Biggl [ \frac{(x-\alpha)^3}{3} - \frac{(\beta-\alpha)(x-\alpha)^2}{2} \Biggr ]_{\alpha}^{\beta} \\
+          & = - \frac{1}{6} (\beta-\alpha)^3
+        \end{align*}
+        というふうに，簡単に計算できるからである．
+  \end{example}
 
 
 \newpage 
@@ -1240,9 +1269,9 @@ x \in A \cup B
     など，異なる定義の同値性を示す場面では，定義が「証明すべきもの」となる．このことから，どの定義を採用しているか明確にすることが重要であることがわかる．
 
     証明は一つの命題にいくつか存在する場合がほとんどであり，たとえば，\exref{三平方の定理}の証明は100通り以上も存在することが知られている．
-    
+    \begin{mycolumn}
     証明を記述する際には，文末に$\square$や$\blacksquare$を記すことが一般的である．そのほかに``Q.E.D.''\footnote{quod erat demonstrandumの略で，ラテン語で「証明されるべきことでありつづけたこと」という意味である．}などの表現も用いられる．
-    
+    \end{mycolumn}
     \phantomsection
     \begin{example}{証明}{証明}
     辺の長さが$a$と$b$の直角三角形を$4$つ用意する．
@@ -1443,9 +1472,11 @@ x \in A \cup B
             と表す．
         \end{definition}
 
+        \begin{mycolumn}
         \deref{集合の相等}を考える意義がぴんとこない読者もいるかもしれない．
         だが，たとえば$\pi$，$\int_{0}^{1} \frac{4}{1+x^2} \, dx$，$4 \sum_{n=0}^{\infty} \frac{(-1)^n}{2n+1}$は異なる表現であるが，すべて円周率を表している．
         このような例からわかるように，「相等」を考えることは数学的な主張を正確に表現するために重要なことなのだ．
+        \end{mycolumn}
 
         \phantomsection
         \begin{definition}{部分集合}{部分集合}
@@ -1697,9 +1728,11 @@ x \in A \cup B
         \end{proof}
       \end{tleftbar}
 
+      \begin{mycolumn}
         ここで「なぜ交換法則を考えるのか」という疑問が生じるかもしれない．当たり前に成り立つことだと思える読者もいるかもしれないが，よく考えてみると「実数の減法」や「関数（写像）の合成」，「行列の積」など，
         数学において一般に交換法則が成り立たないものは数多く存在する．集合に対して交換法則を考える意義はそこにあるのである．
-      
+      \end{mycolumn}
+
         \subsubsection{集合の分配律}
 
         \phantomsection
