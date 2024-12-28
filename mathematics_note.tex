@@ -1199,6 +1199,52 @@ $f(x)=x^3$という関数を考える．この関数は$[-1,1]$で連続，$(-1,
 \end{table}
 
 これらの論理記号を用いて，命題を結合し，複雑な論理式を構成することができる．
+以下に，基本的な命題の真理値表を載せよう．
+
+\begin{table}[htbp]
+  \begin{center}
+    \begin{tabular}{c}
+
+      \begin{minipage}{0.3\hsize}
+        \begin{center}
+          \caption{論理和（積）の真理値表}
+          \label{fig:論理和（積）の真理値表}
+          \begin{tabular}{|c|c|c|c|} \hline
+            $P$           & $Q$          & $P \land Q$   & $P \lor Q$    \\ \hline
+            $\mathrm{T}$  & $\mathrm{T}$ & $\mathrm{T}$  & $\mathrm{T}$  \\ \hline
+            $\mathrm{T} $ & $\mathrm{F}$ & $\mathrm{F}$  & $\mathrm{T}$  \\ \hline
+            $\mathrm{F} $ & $\mathrm{T}$ & $\mathrm{F} $ & $\mathrm{T}$  \\  \hline
+            $\mathrm{F}$  & $\mathrm{F}$ & $\mathrm{F}$  & $\mathrm{F} $ \\ \hline
+          \end{tabular}
+        \end{center}
+      \end{minipage}
+
+      \begin{minipage}{0.3\hsize}
+        \begin{center}
+          \caption{否定命題の真理値表}
+          \label{fig:否定命題の真理値表}
+          \begin{tabular}{|c|c|} \hline
+            $P $         & $\lnot P$    \\ \hline
+            $\mathrm{T}$ & $\mathrm{F}$ \\ \hline
+            $\mathrm{F}$ & $\mathrm{T}$ \\\hline
+          \end{tabular}
+        \end{center}
+      \end{minipage}
+
+      \begin{minipage}{0.3\hsize}
+        \begin{center}
+          \caption{恒真命題と矛盾命題の真理値表}
+          \label{fig:恒真命題と矛盾命題の真理値表}
+          \begin{tabular}{|c|c|c|c|} \hline
+            $ P$          & $\lnot P$     & $ P \lor \lnot P $ & $P \land \lnot P$ \\ \hline
+            $\mathrm{T} $ & $\mathrm{F} $ & $\mathrm{T}$       & $\mathrm{F}$      \\ \hline
+            $\mathrm{F} $ & $\mathrm{T}$  & $\mathrm{T}$       & $\mathrm{F}$      \\\hline
+          \end{tabular}
+        \end{center}
+      \end{minipage}
+    \end{tabular}
+  \end{center}
+\end{table}
 
 \phantomsection
 \subsubsection{述語論理\index{じゅつごろんり@述語論理}}
