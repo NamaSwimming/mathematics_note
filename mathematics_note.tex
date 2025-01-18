@@ -423,6 +423,7 @@ IfValueTF={#1}{title=【#2】〈#1〉}{title=【#2】},#4}
 \newcommand{\three}{I\hspace{-1.2pt}I\hspace{-1.2pt}I}
 \DeclareMathOperator{\Ker}{Ker}
 \renewcommand{\proofname}{\textgt{証明}}
+\renewcommand{\qed}{\unskip\nobreak\quad\qedsymbol}
 
 \renewcommand{\le}{\leqq}
 \renewcommand{\ge}{\geqq}
@@ -1095,8 +1096,6 @@ $f(x)=x^3$という関数を考える．この関数は$[-1,1]$で連続，$(-1,
 \phantomsection
 \subsubsection{かつ・または}
 
-
-
 数学において，「かつ」は日常とほとんど同じ意味で使われるが，「または」の使い方は日常とは異なる．以下に例を挙げよう．
 
 \phantomsection
@@ -1170,6 +1169,34 @@ $f(x)=x^3$という関数を考える．この関数は$[-1,1]$で連続，$(-1,
   というふうに，簡単に計算できるからである．
 \end{example}
 
+
+
+\subsubsection{おさえる\index{おさえる}・評価\index{ひょうか@評価}する}
+
+数学の文脈では「おさえる」という言葉は，ある数$M$を，別の数 $K$を用いて，$K<M$という形で表すことを指す．
+より詳しく「上からおさえる」と表すこともある．
+
+また，数学の文脈で「評価」という言葉は，ある数$M$を不等式で表し，その数がどの程度の大きさであるかを示すことを指す．
+たとえば，$ 1 < M <4$と表すことは「$M$を$1$より大きく$4$より小さいと評価する」ということを指す．
+さらに，上記の$M$を$ 2< M <3$と表すことができる場合は，後者の表現のほうが「評価が厳しい」ということができる．
+
+\begin{example}{「おさえる」と「評価する」の使用例}{「おさえる」と「評価する」の使用例}
+  \begin{enumerate}[(A)]
+    \item 数列$(a_n)_{n \in \mathbb{N}}$を $ a_n <M$と上からおさえる．
+    \item $e$の値を$2.7 < e < 2.8$と評価する．
+  \end{enumerate}
+\end{example}
+
+
+\subsubsection{特徴づけ\index{とくちょうづけ@特徴づけ}}
+
+数学の文脈では，「特徴づけ」という言葉がよく使われる．これは，ある対象が持つ性質を使ってその対象をただひとつと特定することを指す．
+
+\begin{example}{「特徴づけ」の使用例}{「特徴づけ」の使用例}
+  \begin{enumerate}[(A)]
+    \item 実数の連続性の公理は，実数の集合を特徴づけるものである\footnote{この言葉の意味がよくわからない読者は，解析学の教科書を参照してみることを推奨する．}．
+  \end{enumerate}
+\end{example}
 
 \newpage
 
@@ -1313,6 +1340,12 @@ $f(x)=x^3$という関数を考える．この関数は$[-1,1]$で連続，$(-1,
 など，異なる定義の同値性を示す場面では，定義が「証明すべきもの」となる．このことから，どの定義を採用しているか明確にすることが重要であることがわかる．
 
 証明は一つの命題にいくつか存在する場合がほとんどであり，たとえば，\exref{三平方の定理}の証明は100通り以上も存在することが知られている．
+
+
+\begin{mycolumn}
+  証明を記述する際には，文末に$\square$や$\blacksquare$を記すことが一般的である．そのほかに``Q.E.D.''\footnote{quod erat demonstrandumの略で，ラテン語で「証明されるべきことでありつづけたこと」という意味である．}などの表現も用いられる．
+\end{mycolumn}
+
 \phantomsection
 \begin{example}{証明}{証明}
   辺の長さが$a$と$b$の直角三角形を$4$つ用意する．
@@ -1369,9 +1402,6 @@ $f(x)=x^3$という関数を考える．この関数は$[-1,1]$で連続，$(-1,
     \end{tikzpicture}
   \end{center}
 \end{example}
-\begin{mycolumn}
-  証明を記述する際には，文末に$\square$や$\blacksquare$を記すことが一般的である．そのほかに``Q.E.D.''\footnote{quod erat demonstrandumの略で，ラテン語で「証明されるべきことでありつづけたこと」という意味である．}などの表現も用いられる．
-\end{mycolumn}
 
 \phantomsection
 \subsubsection{命題の反証と反例}
