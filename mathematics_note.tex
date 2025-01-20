@@ -187,9 +187,9 @@
 
 % tcolorbox系
 \usepackage[many]{tcolorbox}
-\tcbuselibrary{breakable,skins,theorems,xparse}
+\tcbuselibrary{breakable,skins,theorems,xparse,hooks}
 \newtcolorbox{hosoibox}[1]{colframe=black,colback=white,coltitle=black,colbacktitle=white,boxrule=0.5pt,arc=0mm,enhanced,attach boxed title to top left={xshift=10mm,yshift=-3mm},boxed title style={frame hidden},title=#1}
-
+\usepackage{lipsum}
 
 %leftbar環境に注釈が入れられないことを解消する環境．名前は，tcolorboxの[t]とleftbarの組み合わせ
 \newtcolorbox{tbleftline}{blanker,breakable,left=5mm,borderline west={1.1mm}{0pt}{black}}
@@ -1088,7 +1088,7 @@ IfValueTF={#1}{title=【#2】〈#1〉}{title=【#2】},#4}
 $f(x)=x^3$という関数を考える．この関数は$[-1,1]$で連続，$(-1,1)$で微分可能である．
 
 このとき，図のように，条件を満たす$c \in (-1,1)$は複数存在するので，「ただひとつ存在する」という主張は偽である．
-さらに言えば，2本より多くこのような接線を引ける場合もある．
+さらに言えば，2本より多くこのような接線を引ける場合もある\footnote{確認してみよ．}．
 
 このことから，安易に「ただ一つ存在する」などと強い主張をすることは避けるべきであることがわかる．このことは平均値の定理に限らず，中間値の定理なども同様である．
 
@@ -1340,14 +1340,12 @@ $f(x)=x^3$という関数を考える．この関数は$[-1,1]$で連続，$(-1,
 など，異なる定義の同値性を示す場面では，定義が「証明すべきもの」となる．このことから，どの定義を採用しているか明確にすることが重要であることがわかる．
 
 証明は一つの命題にいくつか存在する場合がほとんどであり，たとえば，\exref{三平方の定理}の証明は100通り以上も存在することが知られている．
-
-
-\begin{mycolumn}
-  証明を記述する際には，文末に$\square$や$\blacksquare$を記すことが一般的である．そのほかに``Q.E.D.''\footnote{quod erat demonstrandumの略で，ラテン語で「証明されるべきことでありつづけたこと」という意味である．}などの表現も用いられる．
-\end{mycolumn}
-
 \phantomsection
-\begin{example}{証明}{証明}
+\begin{example}[sidebyside, % sidebysideオプションを局所的に有効化
+    lefthand width=7cm, % 図の幅を指定
+    righthand width=7cm, % テキストの幅を調整
+    sidebyside gap=5mm, % 図とテキスト間のスペース
+  ]{証明}{証明}
   辺の長さが$a$と$b$の直角三角形を$4$つ用意する．
   これらの三角形を組み合わせて，辺の長さが$a + b$の正方形を作る．
   このとき，大きな正方形の面積は$(a + b)^2$である．
@@ -1363,45 +1361,50 @@ $f(x)=x^3$という関数を考える．この関数は$[-1,1]$で連続，$(-1,
     a^2 + 2ab + b^2 = c^2 + 2ab, \quad \therefore ~a^2 + b^2 = c^2.
   \]
   これが証明すべきことであった．\qed
-  \begin{center}
-    \begin{tikzpicture}[scale=0.75]
-      % 辺の長さの定義
-      \def\a{3}
-      \def\b{4}
-      \def\c{5}
+  \tcblower
+  % 左側に表示する図
+  \begin{tikzpicture}[scale=0.75]
+    % 辺の長さの定義
+    \def\a{3}
+    \def\b{4}
+    \def\c{5}
 
-      % 大きな正方形の描画
-      \draw (0,0) rectangle (\a+\b,\a+\b);
+    % 大きな正方形の描画
+    \draw (0,0) rectangle (\a+\b,\a+\b);
 
-      % 4つの直角三角形の描画
-      %第1の三角形
-      \draw (0,0) -- (\b,0) -- (0,\a) -- cycle;
-      \draw (0,\a) -- node[midway,above] {$c$} (\b,0);
+    % 4つの直角三角形の描画
+    % 第1の三角形
+    \draw (0,0) -- (\b,0) -- (0,\a) -- cycle;
+    \draw (0,\a) -- node[midway,above] {$c$} (\b,0);
 
-      % 第2の三角形
-      \draw (\b,0) -- (\a+\b,0) -- (\a+\b,\b) -- cycle;
-      \draw (\a+\b,\b) -- node[midway,above] {$c$} (\b,0);
+    % 第2の三角形
+    \draw (\b,0) -- (\a+\b,0) -- (\a+\b,\b) -- cycle;
+    \draw (\a+\b,\b) -- node[midway,above] {$c$} (\b,0);
 
-      % 第3の三角形
-      \draw (\a+\b,\b) -- (\a+\b,\a+\b) -- (\a,\a+\b) -- cycle;
-      \draw (\a,\a+\b) -- node[midway,above] {$c$} (\a+\b,\b);
+    % 第3の三角形
+    \draw (\a+\b,\b) -- (\a+\b,\a+\b) -- (\a,\a+\b) -- cycle;
+    \draw (\a,\a+\b) -- node[midway,above] {$c$} (\a+\b,\b);
 
-      % 第4の三角形
-      \draw (\a, \a+\b) -- (0, \a+\b) -- (0,\a) -- cycle;
-      \draw (0,\a) -- node[midway,above] {$c$} (\a, \a+\b);
+    % 第4の三角形
+    \draw (\a, \a+\b) -- (0, \a+\b) -- (0,\a) -- cycle;
+    \draw (0,\a) -- node[midway,above] {$c$} (\a, \a+\b);
 
-      % 中央の小さな正方形の描画
-      \draw (\b,0) -- (\a+\b,\b) -- (\a,\a+\b) -- (0,\a) -- cycle;
+    % 中央の小さな正方形の描画
+    \draw (\b,0) -- (\a+\b,\b) -- (\a,\a+\b) -- (0,\a) -- cycle;
 
-      % 寸法のラベル
-      \draw [<->] (-0.5,0) -- (-0.5,\a) node[midway,left] {$a$};
-      \draw [<->] (-0.5,\a) -- (-0.5,\a+\b) node[midway,left] {$b$};
-      \draw [<->] (0,-0.5) -- (\b,-0.5) node[midway,below] {$b$};
-      \draw [<->] (\b,-0.5) -- (\a+\b,-0.5) node[midway,below] {$a$};
+    % 寸法のラベル
+    \draw [<->] (-0.5,0) -- (-0.5,\a) node[midway,left] {$a$};
+    \draw [<->] (-0.5,\a) -- (-0.5,\a+\b) node[midway,left] {$b$};
+    \draw [<->] (0,-0.5) -- (\b,-0.5) node[midway,below] {$b$};
+    \draw [<->] (\b,-0.5) -- (\a+\b,-0.5) node[midway,below] {$a$};
 
-    \end{tikzpicture}
-  \end{center}
+  \end{tikzpicture}
 \end{example}
+
+
+\begin{mycolumn}
+  証明を記述する際には，文末に$\square$や$\blacksquare$を記すことが一般的である．そのほかに``Q.E.D.''\footnote{quod erat demonstrandumの略で，ラテン語で「証明されるべきことでありつづけたこと」という意味である．}などの表現も用いられる．
+\end{mycolumn}
 
 \phantomsection
 \subsubsection{命題の反証と反例}
