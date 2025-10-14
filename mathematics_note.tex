@@ -602,55 +602,60 @@ IfValueTF={#1}{title=【#2】〈#1〉}{title=【#2】},#4}
 % タイトルページを定義
 \usepackage{pagecolor} % 背景色を変更するためのパッケージ
 
-\newcommand{\tituloum}[5]{
+% タイトルページ（Apple風：白地・黒字＋薄灰のヘアライン）
+% 依存: xcolor, tikz（既に読み込んでいればOK）
+% 配色は appleInk / appleInkGray / appleLine を利用
+\newcommand{\tituloum}[5]{%
   \begin{titlepage}
+    \thispagestyle{empty}%
+    \pagecolor{white}% タイトル面は純白
+    \color{appleInk}% 文字は黒系
+
+    \vspace*{1.8\baselineskip}%
+
     \begin{center}
-        \pagecolor{white} % 背景色を白に設定
-        \color{appleInk} % テキストカラーをappleInkに設定
-        
-        \vspace*{2\baselineskip}
+      % --- Eyebrow（小さな上部ラベル：シリーズ名など） ---
+      {\small\sffamily\bfseries\color{appleGray} #3\par}
 
-        % 横線の色をappleInkに設定
-        \textcolor{appleInk}{\rule{\textwidth}{1.6pt}}\vspace*{-\baselineskip}\vspace*{2pt}
-        \textcolor{appleInk}{\rule{\textwidth}{0.4pt}}
-        
-        \vspace{0.75\baselineskip}
-        
-        {\huge #1}
-        
-        \vspace{0.75\baselineskip}
+      \vspace{0.75\baselineskip}
 
-        \textcolor{appleInk}{\rule{\textwidth}{0.4pt}}\vspace*{-\baselineskip}\vspace{3.2pt}
-        \textcolor{appleInk}{\rule{\textwidth}{1.6pt}}
+      % --- Hero Title（主タイトル） ---
+      % 和文でも潰れにくいようサンセリフ＋太字。行送りはやや広め。
+      {\fontsize{34pt}{40pt}\selectfont\sffamily\bfseries #1\par}
 
-        \vspace{2\baselineskip}
-        
-        #3
-        
-        \vspace*{3\baselineskip}
-        
-        {\huge #2}
-        
-        \vspace{0.5\baselineskip}
-        
-        \textit{#4}
-        
-        \vfill
-        
-        \vspace{0.3\baselineskip}
-        
-        #5
-        
+      \vspace{0.7\baselineskip}
+
+      % --- Hairline（Apple風の細い区切り線：中央 66% 幅） ---
+      \begin{tikzpicture}[x=\linewidth, y=1pt]
+        \draw[line cap=round, line width=0.8pt, color=appleLine] (0.17,0) -- (0.83,0);
+      \end{tikzpicture}
+
+      % --- サブコピー（淡色で） ---
+      \vspace{0.9\baselineskip}
+      {\large\sffamily\itshape\color{appleInkGray} #4\par}
+
+      \vfill
+
+      \begin{flushright}
+      % --- 著者・日付/版情報（下部ブロック） ---
+      {\normalsize\sffamily\bfseries #2\par}
+      \vspace{0.35\baselineskip}
+      {\footnotesize\sffamily\color{appleGray} #5\par}
+      \end{flushright}
     \end{center}
-\end{titlepage}%
+
+  \end{titlepage}%
+  % ※本文で applePaper 等の地色を使う場合は、必要に応じてここで戻してください。
+  % \pagecolor{applePaper}
 }
+
 
 \setcounter{secnumdepth}{3}
 
 \begin{document}
 
 % タイトルページの呼び出し
-\tituloum{数学のノート}{なまちゃん}{}{}{\today}
+\tituloum{数学のノート}{Namachan}{}{}{\today}
 
 %\include{Preambulo/Capa}
 
