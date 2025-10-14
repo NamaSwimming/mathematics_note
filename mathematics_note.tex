@@ -100,70 +100,114 @@
 \definecolor{charcoal}{rgb}{0.21, 0.27, 0.31}
 \colorlet{lightmypurple}{mypurple!20!white}
 
+
+% --- Base (Neutrals) ---
+\definecolor{applePaper}{HTML}{F5F5F7} % ペーパー/セクション背景（明るい灰）
+\definecolor{appleCard} {HTML}{FFFFFF} % 白カード
+\definecolor{appleInk}  {HTML}{1D1D1F} % 本文インク（ほぼ黒）
+\definecolor{appleInkGray}{HTML}{37373A} % Ink寄りのダークグレイ（要求により必須）
+\definecolor{appleLine} {HTML}{D2D2D7} % 区切り線（Appleの薄い線）
+\definecolor{appleGrayLight}{HTML}{E5E5EA} % 薄い灰（背景の差別化）
+\definecolor{appleGray}     {HTML}{8E8E93} % 中間灰（注釈や副次情報）
+\definecolor{appleGrayDark} {HTML}{3A3A3C} % 濃い灰（強めのUI線）
+\definecolor{appleBlack}    {HTML}{1D1D1F} % 黒系のエイリアス
+
+% --- Accents (Blue / Indigo / Purple / Magenta) ---
+\definecolor{appleBlue600}{HTML}{0071E3} % Appleのボタン系ブルー
+\definecolor{appleBlue500}{HTML}{0A84FF} % iOS System Blue
+\definecolor{appleBlue300}{HTML}{64D2FF} % 薄いブルー（図形の塗りやハイライト）
+\definecolor{appleIndigo}  {HTML}{5E5CE6} % iOS System Indigo
+\definecolor{applePurple}  {HTML}{BF5AF2} % iOS System Purple（鮮やかな紫）
+\definecolor{applePurpleDark}{HTML}{8E43E7} % 濃い紫（強調用）
+\definecolor{appleMagenta} {HTML}{D6006D} % 赤紫（強調・リンク代替）
+\definecolor{applePink}    {HTML}{FF2D55} % ピンク寄り赤紫（軽いアクセント）
+\definecolor{appleOrange}  {HTML}{C76A00} % Dark Amber（白地でも視認性◎）
+\definecolor{appleRed}     {HTML}{C92A2A} % Dark Red（物理の強調・白地でも視認性◎）
+
+
+% --- 既存色名 → Apple調へのエイリアス（既存TikZコード互換） ---
+\colorlet{Ink}{appleInk}                   % 既存 'Ink' を本文インクに
+\colorlet{darkgray2}{appleGrayLight}       % 既存 'darkgray2' を薄い灰に
+\colorlet{appleBlue}{appleBlue600}         % 後方互換のため残す（定義名そのまま）
+\colorlet{appleLineDark}{appleGrayDark}    % 濃い線を統一
+
+% --- ドキュメントで参照される補助色（必要なら継続使用） ---
+\definecolor{appleTitleGray}{RGB}{86,86,91}
+\definecolor{appleLineGray}{RGB}{134,134,139}
+
+% --- 上下和（ハッチ/塗り） ---
+\definecolor{CupertinoBlue}{HTML}{0A84FF}   % System Blue
+\definecolor{CupertinoIndigo}{HTML}{5E5CE6} % System Indigo
+\colorlet{upperfill}{CupertinoBlue!28}
+\colorlet{lowerfill}{CupertinoIndigo!28}
+% ---- モノトーンのタグ色 ----
+\colorlet{SectionTag}{appleGrayDark}
+\colorlet{SubsectionTag}{appleGray}
+\colorlet{SubsubsectionTag}{appleInkGray}
+% ---- 行の高さに自動追従する左肩の細四角 ----
+\newcommand{\TitleSquareToText}[2][1.05ex]{%
+  \begingroup
+    \leavevmode
+    \setbox0=\hbox{\strut}%
+    \textcolor{#2}{\rule[-\dp\strutbox]{#1}{\dimexpr\ht\strutbox+\dp\strutbox\relax}}%
+  \endgroup
+}
+
+% ---------------- Part（下線=フル幅） ----------------
 \titleformat{\part}[display]
-  {\normalfont\Huge\bfseries\centering\color{black}}
-  {\partname~\thepart}
-  {20pt}
-  {\titlerule[2pt]\vspace{1pt}\titlerule[1pt]\vspace{1pc}}
-  []
-
-
-% section with number
+  {\normalfont\LARGE\bfseries\centering\color{appleInk}}
+  {\small\scshape\color{appleGray}\partname~\thepart}
+  {0.3ex}
+  {}%
+  [{%
+     \vspace{0.6ex}%
+     \noindent{\color{appleLine}\rule{\linewidth}{1.2pt}}%
+     \nobreak\vspace{0.25ex}%
+     \noindent{\color{appleLine}\rule{\linewidth}{0.6pt}}%
+  }]
+% ---------------- Section（下線=66%） ----------------
 \titleformat{\section}[block]
-{}{}{0pt}
-{
-  \colorbox{myred}{\begin{picture}(8,16)\end{picture}}
-  \hspace{0pt}
-  \normalfont \huge \bfseries 
-  \hspace{-4pt} \thesection\quad 
-}
-[
-\vspace{-10pt}
-\begin{picture}(100,0)
-  \linethickness{1.2pt}
-  \put(3,15.6){\color{myred}\line(1,0){280}}
-\end{picture}
-\\
-\vspace{-56pt}
-]
+  {\normalfont\Large\bfseries\color{appleInk}}
+  {}{0pt}
+  {%
+    \TitleSquareToText[1.05ex]{SectionTag}\hspace{0.6em}%
+    \thesection\quad
+  }%
+  [{%
+     \vspace*{-0.48\baselineskip}% ← 線を上に引き上げて詰める
+     \noindent{\color{appleLine}\rule{0.66\linewidth}{0.8pt}}%
+     \nobreak\vspace{-0.10\baselineskip}% ← 線の下側（本文との距離）
+  }]
 
-% subsection with number
+% ---------------- Subsection（下線=50%） ----------------
 \titleformat{\subsection}[block]
-{}{}{0pt}
-{
-  \colorbox{myblue}{\begin{picture}(5,10)\end{picture}}
-  \hspace{0pt} 
-  \normalfont \Large\bfseries 
-  \hspace{-4pt} \thesubsection\quad
-}
-[
-  \vspace{-5pt}
-\begin{picture}(100,0)
-  \linethickness{1pt}
-  \put(3,13){\color{myblue}\line(1,0){260}}
-\end{picture}
-\\
-\vspace{-44pt}
-]
+  {\normalfont\large\bfseries\color{appleInk}}
+  {}{0pt}
+  {%
+    \TitleSquareToText[0.95ex]{SubsectionTag}\hspace{0.55em}%
+    \thesubsection\quad
+  }%
+  [{%
+     \vspace*{-0.52\baselineskip}% ← もう少しだけ控えめに詰める
+     \noindent{\color{appleLine}\rule{0.50\linewidth}{0.6pt}}%
+     \nobreak\vspace{-0.18\baselineskip}%
+  }]
 
-% subsubsection with number
+% ---------------- Subsubsection（下線=42%） ----------------
 \titleformat{\subsubsection}[block]
-{}{}{0pt}
-{
-  \colorbox{charcoal}{\begin{picture}(4,8)\end{picture}}
-  \hspace{0pt} 
-  \large \bfseries 
-  \hspace{-4pt} \thesubsubsection\quad
-}
-[
-  \vspace{-2pt}
-\begin{picture}(100,0)
-  \linethickness{0.8pt}
-  \put(3,12){\color{charcoal}\line(1,0){200}}
-\end{picture}
-\\
-\vspace{-26pt}
-]
+  {\normalfont\large\bfseries\color{appleInk}}
+  {}{0pt}
+  {%
+    \TitleSquareToText[0.90ex]{SubsubsectionTag}\hspace{0.50em}%
+    \thesubsubsection\quad
+  }%
+  [{%
+     \vspace*{-0.40\baselineskip}% ← さらに控えめ
+     \noindent{\color{appleLine}\rule{0.42\linewidth}{0.5pt}}%
+     \nobreak\vspace{-0.16\baselineskip}%
+  }]
+
+
 % 数式
 \usepackage{nccmath}
 \usepackage{mathtools}
@@ -205,58 +249,84 @@
 }{%
   \end{tbdotleftline}%
 }
+% 必要パッケージ
+% \usepackage[most]{tcolorbox}   % 既に読み込み済みなら不要
+% \tcbuselibrary{skins,breakable}
 
-% 定理環境などの設定
-% Theorem styles
-\tcbset{mytheo/.style={fonttitle=\gtfamily\sffamily\bfseries\upshape,
-enhanced,colframe=burgundy,colback=burgundy!2!white,colbacktitle=burgundy,
-boxrule=0pt,borderline south={2pt}{-2pt}{burgundy},
-left*=1\zw,right*=1\zw,
-theorem style=standard,
-sharp corners,
-before skip=16pt,
-after skip=18pt,
-before upper={\setlength{\parindent}{1\zw}},
-before lower={\setlength{\parindent}{1\zw}},
-drop shadow={black!50!white}
-}}
+% ------------------------------------------------
+% Apple調の落ち着いた共通ベース
+% ------------------------------------------------
+% color_style.tex にある想定色（例）:
+% appleCard, applePaper, appleInk, appleInkGray, appleGrayLight, appleGray, appleGrayDark, applePurple
+% ※ applePurple が無ければ、appleInkGray へ一時的に差し替えて OK
 
-% Theorem
+% アクセント用の色エイリアス（ここだけ触れば配色一括変更できます）
+\colorlet{acc@th}{appleInkGray}                 % Theorem：最もニュートラル
+\colorlet{acc@pr}{appleGrayDark}                % Proposition：やや濃い灰
+\colorlet{acc@co}{appleGray}                    % Corollary：中間灰
+\colorlet{acc@ax}{appleInk}                     % Axiom：ほぼ黒（最も重い主張）
+\colorlet{acc@de}{applePurple}                  % Definition：紫（主張はするが落ち着き）
+\colorlet{acc@le}{applePurple!75!appleInk}      % Lemma：定義より少し落ち着いた紫
+\colorlet{acc@ex}{appleGrayLight}               % Example：軽めの灰（導入・補助）
+\colorlet{acc@qu}{applePurple!60!appleGray}     % Question：紫寄り灰
+
+% 共通ベース：白カード＋左2ptアクセント＋下端0.8ptの薄線
+\tcbset{
+  theo-base/.style={
+    enhanced, breakable, sharp corners,
+    boxrule=0pt, no shadow,
+    colback=appleCard, colframe=appleCard, colbacktitle=appleCard,
+    coltitle=appleInk, coltext=appleInk,
+    fonttitle=\gtfamily\sffamily\bfseries\upshape,
+    left*=1\zw, right*=1\zw, top=8pt, bottom=10pt,
+    borderline south={0.8pt}{-2pt}{appleLine}, % 「箱のすぐ下」に薄い仕切り線
+    before skip=16pt, after skip=18pt,
+    before upper={\setlength{\parindent}{1\zw}},
+    before lower={\setlength{\parindent}{1\zw}}
+  },
+  % 1 引数: アクセント色
+  mytheo/.style n args={1}{
+    theo-base,
+    borderline west={2pt}{0pt}{#1} % 左に2ptのアクセントバー
+  },
+}
+
+% ------------------------------------------------
+% 環境定義（番号は subsection 内で進む）
+% ------------------------------------------------
 \newtcbtheorem[number within=subsection]{theorem}{Theorem}%
-{mytheo}{th}
-\newcommand{\thref}[1]{{\bfseries\sffamily Theorem \ref{th:#1}}}
-% Proposition
+{mytheo={acc@th}}{th}
+\newcommand{\thref}[1]{\textsf{\bfseries Theorem~\ref{th:#1}}}
+
 \newtcbtheorem[use counter from=theorem]{prop}{Proposition}%
-{mytheo}{pr}
-\newcommand{\prref}[1]{{\bfseries\sffamily Proposition \ref{pr:#1}}}
-% Corollary
+{mytheo={acc@pr}}{pr}
+\newcommand{\prref}[1]{\textsf{\bfseries Proposition~\ref{pr:#1}}}
+
 \newtcbtheorem[use counter from=theorem]{cor}{Corollary}%
-{mytheo}{co}
-\newcommand{\coref}[1]{{\bfseries\sffamily Corollary \ref{co:#1}}}
-% Axiom
+{mytheo={acc@co}}{co}
+\newcommand{\coref}[1]{\textsf{\bfseries Corollary~\ref{co:#1}}}
+
 \newtcbtheorem[use counter from=theorem]{axiom}{Axiom}%
-{mytheo}{ax}
-\newcommand{\axref}[1]{{\bfseries\sffamily Axiom \ref{ax:#1}}}
-% Definition
+{mytheo={acc@ax}}{ax}
+\newcommand{\axref}[1]{\textsf{\bfseries Axiom~\ref{ax:#1}}}
+
 \newtcbtheorem[use counter from=theorem]{definition}{Definition}%
-{mytheo,
-colframe=blue!50!black,colback=blue!50!black!2!white,colbacktitle=blue!50!black,borderline south={2pt}{-2pt}{blue!50!black},}{de}
-\newcommand{\deref}[1]{{\bfseries\sffamily Definition \ref{de:#1}}}
-% Lemma
+{mytheo={acc@de}}{de}
+\newcommand{\deref}[1]{\textsf{\bfseries Definition~\ref{de:#1}}}
+
 \newtcbtheorem[use counter from=theorem]{lemma}{Lemma}%
-{mytheo,
-colframe=green!50!black,colback=green!50!black!2!white,colbacktitle=green!50!black,borderline south={2pt}{-2pt}{green!50!black},}{le}
-\newcommand{\leqqref}[1]{{\bfseries\sffamily Lemma \ref{le:#1}}}
-% Example
+{mytheo={acc@le}}{le}
+\newcommand{\lemref}[1]{\textsf{\bfseries Lemma~\ref{le:#1}}}
+% 互換：もし既存で \leqqref を使っていたら壊さないように
+\providecommand{\leqqref}[1]{\lemref{#1}}
+
 \newtcbtheorem[use counter from=theorem]{example}{Example}%
-{mytheo,
-colframe=mypink!50!black,colback=mypink!50!black!2!white,colbacktitle=mypink!50!black,,borderline south={2pt}{-2pt}{mypink!50!black},}{ex}
-\newcommand{\exref}[1]{{\bfseries\sffamily Example \ref{ex:#1}}}
-% Question
+{mytheo={acc@ex}}{ex}
+\newcommand{\exref}[1]{\textsf{\bfseries Example~\ref{ex:#1}}}
+
 \newtcbtheorem[use counter from=theorem]{question}{Question}%
-{mytheo,
-colframe=mypurple,colback=mypurple!2!white,colbacktitle=mypurple,borderline south={2pt}{-2pt}{mypurple},}{qu}
-\newcommand{\quref}[1]{{\bfseries\sffamily Question \ref{qu:#1}}}
+{mytheo={acc@qu}}{qu}
+\newcommand{\quref}[1]{\textsf{\bfseries Question~\ref{qu:#1}}}
 
 % その他の設定
 % 囲い枠
@@ -449,77 +519,77 @@ IfValueTF={#1}{title=【#2】〈#1〉}{title=【#2】},#4}
 
 \everymath{\displaystyle}
 
-\etocsetnexttocdepth{subsubsection} % 必要に応じて調整
+% ===================== ToC (etoc) — Apple風見出し =====================
+\makeatletter
+\AtBeginDocument{%
 
-  \etocsettocstyle{
-\vskip10pt
-  \noindent\hspace*{-\leftskip}%
-  \begin{tikzpicture}[x=\linewidth]
-    % 全幅の線を描く
-    \draw[line width=2pt, blur shadow,color=mypurple] (0,0) -- (1,0);
-    % 「目次」のボックスを線の中心に配置
-    \node[
-      draw=mypurple,
-      line width=3pt,
-      fill=white,
-      inner sep=6pt,
-      blur shadow,
-      rounded corners
-    ] at (0.5,0) {\bfseries\Large\textcolor{mypurple}{目次}};
-  \end{tikzpicture}
-  \vskip10pt
-}{
-  \vskip10pt
-  \noindent\hspace*{-\leftskip}%
-  \begin{tikzpicture}[x=\linewidth]
-    \draw[line width=2pt, blur shadow, color=mypurple] (0,0) -- (1,0);
-  \end{tikzpicture}
-  \vskip20pt
+  % 目次に出す深さ
+  \etocsetnexttocdepth{subsubsection}
+
+  % 目次ブロックの前後
+  \etocsettocstyle{%
+    \par\vspace{10pt}%
+    \noindent\hspace*{-\leftskip}%
+    \begin{tikzpicture}[x=\linewidth, baseline]
+      \draw[line cap=round, line width=0.8pt, color=appleLine] (0,0) -- (1,0);
+      \node[inner sep=2.5pt, outer sep=0pt, fill=appleCard] at (0.5,0)
+        {\bfseries\Large\textcolor{appleInk}{目\kern0.35em 次}};
+        % 背景が白なら fill=white に変更
+    \end{tikzpicture}%
+    \vspace{8pt}%
+  }{%
+    \vspace{8pt}%
+    \noindent\hspace*{-\leftskip}%
+    \begin{tikzpicture}[x=\linewidth, baseline]
+      \draw[line cap=round, line width=0.5pt, color=appleLine] (0,0) -- (1,0);
+    \end{tikzpicture}%
+    \vspace{12pt}%
+  }
+
+  % ---- 各レベルの表示 ----
+  \etocsetstyle{part}
+    {\noindent}
+    {%
+      \vskip20pt
+      \parindent0pt \leftskip0pt
+      \etoclink{\bfseries\huge\color{appleInk}\etocname}\par
+      \vskip10pt
+    }
+    {}
+
+  \etocsetstyle{section}
+    {\noindent}
+    {%
+      \vskip10pt
+      \parindent0pt \leftskip5pt
+      \etoclink{\bfseries\LARGE\color{appleInk}\etocnumber~\etocname}%
+      \leaders\hbox to .5em{\hss.\hss}\hfill \etocpage\par
+      \vskip10pt
+    }
+    {}
+
+  \etocsetstyle{subsection}
+    {\noindent}
+    {%
+      \vskip6pt
+      \parindent0pt \leftskip25pt % ←調整可（例: 20pt）
+      \etoclink{\bfseries\large\textcolor{appleInk}{\etocnumber~\etocname}}%
+      \nobreak\leaders\hbox to .5em{\hss.\hss}\hfill \etocpage\par
+      \vskip6pt
+    }
+    {}
 }
 \makeatother
+% ======================================================================
 
-% 各レベルの目次項目のスタイルを設定
-% `\leftskip` を階層に応じて設定します
-\etocsetstyle{part}
-{\noindent}
-{%
-  \vskip20pt
-  \parindent0pt \leftskip0pt % `part` はインデントなし
-  \etoclink{\bfseries\huge\color{mypurple}\etocname}\par
-  \vskip10pt
-}
-{}
 
-\etocsetstyle{section}
-{\noindent}
-{%
-  \vskip10pt
-  \parindent0pt \leftskip5pt % `section` は10ptのインデント
-  \etoclink{\bfseries\LARGE\color{mypurple}\etocnumber~\etocname}%
-  \leaders\hbox to 0.5em{\hss.\hss}\hfill
-  \etocpage\par
-  \vskip10pt
-}
-{}
-
-\etocsetstyle{subsection}
-{\noindent}
-{%
-  \vskip6pt
-  \parindent0pt \leftskip25pt % `subsection` は20ptのインデント
-  \etoclink{\bfseries\large\color{mypurple}\etocnumber~\etocname}%
-  \leaders\hbox to 0.5em{\hss.\hss}\hfill
-  \etocpage\par
-  \vskip6pt
-}
-{}
 
 \etocsetstyle{subsubsection}
 {\noindent}
 {%
   \parindent0pt \leftskip50pt % `subsubsection` は30ptのインデント
-  \etoclink{\bfseries\normalsize\color{mypurple}\etocnumber~\etocname}%
-  \space % 項目の間に半角スペースを挿入
+  \etoclink{\bfseries\normalsize\color{appleInk}{\etocnumber~\etocname}}%
+  \ % 項目の間に半角スペースを挿入
   (p.\etocpage)% ページ番号の表示
   \hspace{1em}
 }
@@ -536,23 +606,23 @@ IfValueTF={#1}{title=【#2】〈#1〉}{title=【#2】},#4}
   \begin{titlepage}
     \begin{center}
         \pagecolor{white} % 背景色を白に設定
-        \color{mypurple} % テキストカラーをmypurpleに設定
+        \color{appleInk} % テキストカラーをappleInkに設定
         
         \vspace*{2\baselineskip}
-        
-        % 横線の色をmypurpleに設定
-        \textcolor{mypurple}{\rule{\textwidth}{1.6pt}}\vspace*{-\baselineskip}\vspace*{2pt}
-        \textcolor{mypurple}{\rule{\textwidth}{0.4pt}}
+
+        % 横線の色をappleInkに設定
+        \textcolor{appleInk}{\rule{\textwidth}{1.6pt}}\vspace*{-\baselineskip}\vspace*{2pt}
+        \textcolor{appleInk}{\rule{\textwidth}{0.4pt}}
         
         \vspace{0.75\baselineskip}
         
         {\huge #1}
         
         \vspace{0.75\baselineskip}
-        
-        \textcolor{mypurple}{\rule{\textwidth}{0.4pt}}\vspace*{-\baselineskip}\vspace{3.2pt}
-        \textcolor{mypurple}{\rule{\textwidth}{1.6pt}}
-        
+
+        \textcolor{appleInk}{\rule{\textwidth}{0.4pt}}\vspace*{-\baselineskip}\vspace{3.2pt}
+        \textcolor{appleInk}{\rule{\textwidth}{1.6pt}}
+
         \vspace{2\baselineskip}
         
         #3
@@ -1049,9 +1119,9 @@ IfValueTF={#1}{title=【#2】〈#1〉}{title=【#2】},#4}
 
 ここでは「$c \in (a,b)$が存在する」という主張を「$c \in (a,b)$がただひとつ存在する」というより強い主張に変更した．この主張の真偽は偽である．以下で，このことが問題になる状況を挙げよう．
 
-\begin{wrapfigure}[11]{r}{0.55\textwidth}
+\begin{wrapfigure}[7]{r}{0.55\textwidth}
   \centering
-  \begin{tikzpicture}
+  \begin{tikzpicture}[scale=0.7]
     \begin{axis}[
         axis lines=middle,
         xmin=-1.2, xmax=1.2,
