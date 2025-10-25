@@ -344,69 +344,38 @@
 
 
     \colorlet{colexam}{red!75!black}
-    
-    \newtcolorbox[auto counter,number format=\Roman]{mycolumn}{
-      empty,
-      title={\bfseries\sffamily Column \thetcbcounter}, % カウンタをローマ数字で表示
-      attach boxed title to top left,
-      boxed title style={
-        empty,
-        size=minimal,
-        toprule=2pt,
-        top=4pt,
-        left=1cm, % タイトルを右に移動
-        overlay={
-          % タイトルの上の線を削除
-          % \draw[colexam,line width=2pt]
-          %   ([yshift=-1pt]frame.north west) -- ([yshift=-1pt]frame.north east);
-        }
-      },
-      coltitle=colexam,
-      fonttitle=\Large\bfseries,
-      before=\par\medskip\noindent,
-      parbox=false,
-      boxsep=0pt,
-      left=5mm, % 左のマージンを増やしてタイトルを右に移動
-      right=3mm,
-      top=4pt,
-      breakable,
-      pad at break*=0mm,
-      vfill before first,
-      overlay unbroken={
-        \draw[colexam,line width=2pt]
-          ([xshift=-0.5pt,yshift=10pt]frame.north east)
-          -- ([xshift=-0.5pt]frame.south east);
-        \draw[colexam,line width=2pt]
-          ([xshift=-1pt,yshift=10pt]frame.north west)
-          -- ([xshift=-1pt]frame.south west);
-      },
-      overlay first={
-        \draw[colexam,line width=2pt]
-          ([xshift=-0.5pt,yshift=10pt]frame.north east)
-          -- ([xshift=-0.5pt]frame.south east);
-        \draw[colexam,line width=2pt]
-          ([xshift=-1pt,yshift=10pt]frame.north west)
-          -- ([xshift=-1pt]frame.south west);
-      },
-      overlay middle={
-        \draw[colexam,line width=2pt]
-          ([xshift=-0.5pt,yshift=10pt]frame.north east)
-          -- ([xshift=-0.5pt]frame.south east);
-        \draw[colexam,line width=2pt]
-          ([xshift=-1pt,yshift=10pt]frame.north west)
-          -- ([xshift=-1pt]frame.south west);
-      },
-      overlay last={
-        \draw[colexam,line width=2pt]
-          ([xshift=-0.5pt,yshift=10pt]frame.north east)
-          -- ([xshift=-0.5pt]frame.south east);
-        \draw[colexam,line width=2pt]
-          ([xshift=-1pt,yshift=10pt]frame.north west)
-          -- ([xshift=-1pt]frame.south west);
-      },%
-    }
-    
-    
+\newtcolorbox[auto counter, number format=\Roman]{mycolumn}{
+  enhanced, breakable,
+  empty,            % 既定の枠は消す（線は自前で描く）
+  %---- タイトル ----
+  title={\bfseries\sffamily Column \thetcbcounter},
+  coltitle=colexam,
+  fonttitle=\Large\bfseries,
+  attach boxed title to top left,
+  boxed title style={
+    empty,
+    size=minimal,
+    toprule=0pt,    % ← 上の線を出さない
+    top=4pt,
+    left=1cm
+  },
+  %---- 余白など ----
+  before=\par\medskip\noindent,
+  parbox=false,
+  boxsep=0pt,
+  left=5mm,
+  right=3mm,
+  top=4pt,
+  pad at break*=0mm,
+  %---- タイトルを避けて縦線を描く（interior.* を使うのがコツ）----
+  frame code={
+    \draw[colexam,line width=2pt]
+      ([xshift=-0.5pt]interior.north east) -- ([xshift=-0.5pt]interior.south east);
+    \draw[colexam,line width=2pt]
+      ([xshift=-1pt]interior.north west) -- ([xshift=-1pt]interior.south west);
+  },
+}
+
 
 
 % 例題環境
@@ -1100,7 +1069,7 @@ IfValueTF={#1}{title=【#2】〈#1〉}{title=【#2】},#4}
 \phantomsection
 \subsubsection{一意性}
 
-数学において「一意性\index{いちいせい@一意性}」が重要である場面は多い．読者の中には線型代数の講義で「逆行列の一意性」などに触れた方もいると思われる．なぜ重要であるのか，一つ例を挙げて考えてることとする．
+数学において「一意性\index{いちいせい@一意性}」が重要である場面は多い．読者の中には線型代数の講義で「逆行列の一意性」などに触れた方もいると思われる．なぜ「一意性」が重要であるのか，一つ例を挙げて考えてみる．
 
 微分積分の講義で習う定理に「平均値の定理」というものがある．
 その主張は
@@ -1121,12 +1090,9 @@ IfValueTF={#1}{title=【#2】〈#1〉}{title=【#2】},#4}
   \]
   をみたす$ c \in (a,b)$がただひとつ存在する．
 \end{quotation}
-
-ここでは「$c \in (a,b)$が存在する」という主張を「$c \in (a,b)$がただひとつ存在する」というより強い主張に変更した．この主張の真偽は偽である．以下で，このことが問題になる状況を挙げよう．
-
-\begin{wrapfigure}[7]{r}{0.55\textwidth}
-  \centering
-  \begin{tikzpicture}[scale=0.7]
+\begin{wrapfigure}[8]{r}{0.425\textwidth}
+  %\centering
+  \begin{tikzpicture}[scale=0.78]
     \begin{axis}[
         axis lines=middle,
         xmin=-1.2, xmax=1.2,
@@ -1160,8 +1126,10 @@ IfValueTF={#1}{title=【#2】〈#1〉}{title=【#2】},#4}
     \end{axis}
   \end{tikzpicture}
 \end{wrapfigure}
-$f(x)=x^3$という関数を考える．この関数は$[-1,1]$で連続，$(-1,1)$で微分可能である．
 
+ここで「$c \in (a,b)$が存在する」という主張を「$c \in (a,b)$がただひとつ存在する」というより強い主張に変更した．この主張の真偽は偽である．このことが問題になる状況を挙げよう．
+
+$f(x)=x^3$という関数を考える．この関数は$[-1,1]$で連続，$(-1,1)$で微分可能である．
 このとき，図のように，条件を満たす$c \in (-1,1)$は複数存在するので，「ただひとつ存在する」という主張は偽である．
 さらに言えば，2本より多くこのような接線を引ける場合もある\footnote{確認してみよ．}．
 
