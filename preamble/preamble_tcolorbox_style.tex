@@ -1,0 +1,173 @@
+% tcolorbox系
+\usepackage[many]{tcolorbox}
+\tcbuselibrary{breakable,skins,theorems,xparse,hooks}
+\newtcolorbox{hosoibox}[1]{colframe=black,colback=white,coltitle=black,colbacktitle=white,boxrule=0.5pt,arc=0mm,enhanced,attach boxed title to top left={xshift=10mm,yshift=-3mm},boxed title style={frame hidden},title=#1}
+\usepackage{lipsum}
+
+%leftbar環境に注釈が入れられないことを解消する環境．名前は，tcolorboxの[t]とleftbarの組み合わせ
+\newtcolorbox{tbleftline}{blanker,breakable,left=5mm,borderline west={1.1mm}{0pt}{black}}
+\newenvironment{tleftbar}{\begin{tbleftline}\setlength{\parindent}{1\zw}}{\end{tbleftline}}
+
+%dotleftbar環境
+\newtcolorbox{tbdotleftline}{%
+  blanker, left=5mm,breakable,
+  borderline west={1.1mm}{0pt}{draw=black, dotted}
+}
+\newenvironment{dotleftbar}{%
+  \begin{tbdotleftline}\setlength{\parindent}{1\zw}%
+}{%
+  \end{tbdotleftline}%
+}
+% 必要パッケージ
+% \usepackage[most]{tcolorbox}   % 既に読み込み済みなら不要
+% \tcbuselibrary{skins,breakable}
+
+% ------------------------------------------------
+% Apple調の落ち着いた共通ベース
+% ------------------------------------------------
+% color_style.tex にある想定色（例）:
+% appleCard, applePaper, appleInk, appleInkGray, appleGrayLight, appleGray, appleGrayDark, applePurple
+% ※ applePurple が無ければ、appleInkGray へ一時的に差し替えて OK
+
+% アクセント用の色エイリアス（ここだけ触れば配色一括変更できます）
+\colorlet{acc@th}{appleInkGray}                 % Theorem：最もニュートラル
+\colorlet{acc@pr}{appleGrayDark}                % Proposition：やや濃い灰
+\colorlet{acc@co}{appleGray}                    % Corollary：中間灰
+\colorlet{acc@ax}{appleInk}                     % Axiom：ほぼ黒（最も重い主張）
+\colorlet{acc@de}{applePurple}                  % Definition：紫（主張はするが落ち着き）
+\colorlet{acc@le}{applePurple!75!appleInk}      % Lemma：定義より少し落ち着いた紫
+\colorlet{acc@ex}{appleGrayLight}               % Example：軽めの灰（導入・補助）
+\colorlet{acc@qu}{applePurple!60!appleGray}     % Question：紫寄り灰
+
+% 共通ベース：白カード＋左2ptアクセント＋下端0.8ptの薄線
+\tcbset{
+  theo-base/.style={
+    enhanced, breakable, sharp corners,
+    boxrule=0pt, no shadow,
+    colback=appleCard, colframe=appleCard, colbacktitle=appleCard,
+    coltitle=appleInk, coltext=appleInk,
+    fonttitle=\gtfamily\sffamily\bfseries\upshape,
+    left*=1\zw, right*=1\zw, top=8pt, bottom=10pt,
+    borderline south={0.8pt}{-2pt}{appleLine}, % 「箱のすぐ下」に薄い仕切り線
+    before skip=16pt, after skip=18pt,
+    before upper={\setlength{\parindent}{1\zw}},
+    before lower={\setlength{\parindent}{1\zw}}
+  },
+  % 1 引数: アクセント色
+  mytheo/.style n args={1}{
+    theo-base,
+    borderline west={2pt}{0pt}{#1} % 左に2ptのアクセントバー
+  },
+}
+
+% ------------------------------------------------
+% 環境定義（番号は subsection 内で進む）
+% ------------------------------------------------
+\newtcbtheorem[number within=subsection]{theorem}{Theorem}%
+{mytheo={acc@th}}{th}
+\newcommand{\thref}[1]{\textsf{\bfseries Theorem~\ref{th:#1}}}
+
+\newtcbtheorem[use counter from=theorem]{prop}{Proposition}%
+{mytheo={acc@pr}}{pr}
+\newcommand{\prref}[1]{\textsf{\bfseries Proposition~\ref{pr:#1}}}
+
+\newtcbtheorem[use counter from=theorem]{cor}{Corollary}%
+{mytheo={acc@co}}{co}
+\newcommand{\coref}[1]{\textsf{\bfseries Corollary~\ref{co:#1}}}
+
+\newtcbtheorem[use counter from=theorem]{axiom}{Axiom}%
+{mytheo={acc@ax}}{ax}
+\newcommand{\axref}[1]{\textsf{\bfseries Axiom~\ref{ax:#1}}}
+
+\newtcbtheorem[use counter from=theorem]{definition}{Definition}%
+{mytheo={acc@de}}{de}
+\newcommand{\deref}[1]{\textsf{\bfseries Definition~\ref{de:#1}}}
+
+\newtcbtheorem[use counter from=theorem]{lemma}{Lemma}%
+{mytheo={acc@le}}{le}
+\newcommand{\lemref}[1]{\textsf{\bfseries Lemma~\ref{le:#1}}}
+% 互換：もし既存で \leqqref を使っていたら壊さないように
+\providecommand{\leqqref}[1]{\lemref{#1}}
+
+\newtcbtheorem[use counter from=theorem]{example}{Example}%
+{mytheo={acc@ex}}{ex}
+\newcommand{\exref}[1]{\textsf{\bfseries Example~\ref{ex:#1}}}
+
+\newtcbtheorem[use counter from=theorem]{question}{Question}%
+{mytheo={acc@qu}}{qu}
+\newcommand{\quref}[1]{\textsf{\bfseries Question~\ref{qu:#1}}}
+
+% その他の設定
+% 囲い枠
+\DeclareTColorBox{simplesquarebox}{ o m O{.5} O{} }% 
+    {empty, left=2mm, right=2mm, top=-1mm, attach boxed title to top left={xshift=1.2\zw},
+    boxed title style={empty,left=-2mm,right=-2mm}, colframe=black, coltitle=black, coltext=black, breakable,  
+    underlay unbroken={\draw[black,line width=#3pt]
+        (title.east) -- (title.east-|frame.east) -- (frame.south east) -- (frame.south west) -- (title.west-|frame.west) -- (title.west); },
+    underlay first={\draw[black,line width=#3pt](title.east) -- (title.east-|frame.east) -- (frame.south east) ;
+        \draw[black,line width=#3pt] (frame.south west) -- (title.west-|frame.west) -- (title.west); },
+    underlay middle={\draw[black,line width=#3pt](frame.north east) -- (frame.south east) ;
+        \draw[black,line width=#3pt](frame.south west) -- (frame.north west) ;},
+    underlay last={\draw[black,line width=#3pt](frame.north east) -- (frame.south east) -- (frame.south west) -- (frame.north west) ;},
+    fonttitle=\gtfamily, IfValueTF={#1}{title=【#2】〈#1〉}{title=【#2】},#4}
+
+
+    \colorlet{colexam}{red!75!black}
+\newtcolorbox[auto counter, number format=\Roman]{mycolumn}{
+  enhanced, breakable,
+  empty,            % 既定の枠は消す（線は自前で描く）
+  %---- タイトル ----
+  title={\bfseries\sffamily Column \thetcbcounter},
+  coltitle=colexam,
+  fonttitle=\Large\bfseries,
+  attach boxed title to top left,
+  boxed title style={
+    empty,
+    size=minimal,
+    toprule=0pt,    % ← 上の線を出さない
+    top=4pt,
+    left=1cm
+  },
+  %---- 余白など ----
+  before=\par\medskip\noindent,
+  parbox=false,
+  boxsep=0pt,
+  left=5mm,
+  right=3mm,
+  top=4pt,
+  pad at break*=0mm,
+  %---- タイトルを避けて縦線を描く（interior.* を使うのがコツ）----
+  frame code={
+    \draw[colexam,line width=2pt]
+      ([xshift=-0.5pt]interior.north east) -- ([xshift=-0.5pt]interior.south east);
+    \draw[colexam,line width=2pt]
+      ([xshift=-1pt]interior.north west) -- ([xshift=-1pt]interior.south west);
+  },
+}
+
+
+
+% 例題環境
+\newcounter{mondaibangou}
+\newtcolorbox{mondai}[1][]{enhanced,boxrule=0.5mm,
+        top=2pt,left=44pt,right=4pt,bottom=2pt,arc=0mm,
+        colframe=blue!30!gray,
+        boxrule=1pt,
+        underlay={
+        \node[inner sep=1pt,blue!50!black,fill=blue!10!white]at ([xshift=22pt,yshift=-9pt]interior.north west) {\stepcounter{mondaibangou}\bfseries\gtfamily 問題\themondaibangou};},
+        segmentation code={%
+        \draw[dashed] (segmentation.west)--(segmentation.east);
+        \node[inner sep=1pt,blue!50!black,fill=blue!10!white] at ([xshift=22pt,yshift=-8pt]segmentation.south west) {\bfseries\gtfamily 解答};},
+        before upper={\setlength{\parindent}{1\zw}},
+        before lower={\setlength{\parindent}{1\zw}},#1
+}
+
+% 感想環境
+\DeclareTColorBox{kans}{ o m O{3} O{}}%
+{enhanced, colback=white, colframe=white,
+attach boxed title to top left={xshift=1cm,yshift=-\tcboxedtitleheight/2}, fonttitle=\bfseries,varwidth boxed title=0.85\linewidth, coltitle=black, fonttitle=\gtfamily, 
+enlarge top by=2mm, enlarge bottom by=2mm, breakable, sharp corners,
+boxed title style={colback=white,left=0mm,right=0mm}, 
+borderline={.75pt}{#3pt}{black,dotted},
+% underlay settings...
+IfValueTF={#1}{title=【#2】〈#1〉}{title=【#2】},#4}

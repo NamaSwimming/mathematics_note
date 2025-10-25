@@ -1,0 +1,61 @@
+\usepackage{xcolor}
+% colors
+\definecolor{myblue}{HTML}{3300CC}
+\definecolor{myred}{HTML}{CC33CC}
+\definecolor{mypink}{HTML}{FF66FF}
+\definecolor{mygreen}{HTML}{005500}
+\definecolor{mynamecolor}{HTML}{5507FF}
+\definecolor{myemailcolor}{HTML}{FF4F02}
+\definecolor{darkbrown}{HTML}{880000}
+\definecolor{dred}{HTML}{DD0000}
+\definecolor{dgreen}{HTML}{005500}
+\definecolor{dblue}{HTML}{000088}
+\definecolor{mypurple}{HTML}{ba55d3} % 追加
+\definecolor{burgundy}{rgb}{0.5, 0.0, 0.13}
+\definecolor{charcoal}{rgb}{0.21, 0.27, 0.31}
+\colorlet{lightmypurple}{mypurple!20!white}
+
+
+% --- Base (Neutrals) ---
+\definecolor{applePaper}{HTML}{F5F5F7} % ペーパー/セクション背景（明るい灰）
+\definecolor{appleCard} {HTML}{FFFFFF} % 白カード
+\definecolor{appleInk}  {HTML}{1D1D1F} % 本文インク（ほぼ黒）
+\definecolor{appleInkGray}{HTML}{37373A} % Ink寄りのダークグレイ（要求により必須）
+\definecolor{appleLine} {HTML}{D2D2D7} % 区切り線（Appleの薄い線）
+\definecolor{appleGrayLight}{HTML}{E5E5EA} % 薄い灰（背景の差別化）
+\definecolor{appleGray}     {HTML}{8E8E93} % 中間灰（注釈や副次情報）
+\definecolor{appleGrayDark} {HTML}{3A3A3C} % 濃い灰（強めのUI線）
+\definecolor{appleBlack}    {HTML}{1D1D1F} % 黒系のエイリアス
+
+% --- Accents (Blue / Indigo / Purple / Magenta) ---
+\definecolor{appleBlue600}{HTML}{0071E3} % Appleのボタン系ブルー
+\definecolor{appleBlue500}{HTML}{0A84FF} % iOS System Blue
+\definecolor{appleBlue300}{HTML}{64D2FF} % 薄いブルー（図形の塗りやハイライト）
+\definecolor{appleIndigo}  {HTML}{5E5CE6} % iOS System Indigo
+\definecolor{applePurple}  {HTML}{BF5AF2} % iOS System Purple（鮮やかな紫）
+\definecolor{applePurpleDark}{HTML}{8E43E7} % 濃い紫（強調用）
+\definecolor{appleMagenta} {HTML}{D6006D} % 赤紫（強調・リンク代替）
+\definecolor{applePink}    {HTML}{FF2D55} % ピンク寄り赤紫（軽いアクセント）
+\definecolor{appleOrange}  {HTML}{C76A00} % Dark Amber（白地でも視認性◎）
+\definecolor{appleRed}     {HTML}{C92A2A} % Dark Red（物理の強調・白地でも視認性◎）
+
+
+% --- 既存色名 → Apple調へのエイリアス（既存TikZコード互換） ---
+\colorlet{Ink}{appleInk}                   % 既存 'Ink' を本文インクに
+\colorlet{darkgray2}{appleGrayLight}       % 既存 'darkgray2' を薄い灰に
+\colorlet{appleBlue}{appleBlue600}         % 後方互換のため残す（定義名そのまま）
+\colorlet{appleLineDark}{appleGrayDark}    % 濃い線を統一
+
+% --- ドキュメントで参照される補助色（必要なら継続使用） ---
+\definecolor{appleTitleGray}{RGB}{86,86,91}
+\definecolor{appleLineGray}{RGB}{134,134,139}
+
+% --- 上下和（ハッチ/塗り） ---
+\definecolor{CupertinoBlue}{HTML}{0A84FF}   % System Blue
+\definecolor{CupertinoIndigo}{HTML}{5E5CE6} % System Indigo
+\colorlet{upperfill}{CupertinoBlue!28}
+\colorlet{lowerfill}{CupertinoIndigo!28}
+% ---- モノトーンのタグ色 ----
+\colorlet{SectionTag}{appleGrayDark}
+\colorlet{SubsectionTag}{appleGray}
+\colorlet{SubsubsectionTag}{appleInkGray}

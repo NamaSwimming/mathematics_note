@@ -1,0 +1,66 @@
+
+\usepackage{titlesec}
+\usepackage{picture}
+% ---- 行の高さに自動追従する左肩の細四角 ----
+\newcommand{\TitleSquareToText}[2][1.05ex]{%
+  \begingroup
+    \leavevmode
+    \setbox0=\hbox{\strut}%
+    \textcolor{#2}{\rule[-\dp\strutbox]{#1}{\dimexpr\ht\strutbox+\dp\strutbox\relax}}%
+  \endgroup
+}
+
+% ---------------- Part（下線=フル幅） ----------------
+\titleformat{\part}[display]
+  {\normalfont\LARGE\bfseries\centering\color{appleInk}}
+  {\small\scshape\color{appleGray}\partname~\thepart}
+  {0.3ex}
+  {}%
+  [{%
+     \vspace{0.6ex}%
+     \noindent{\color{appleLine}\rule{\linewidth}{1.2pt}}%
+     \nobreak\vspace{0.25ex}%
+     \noindent{\color{appleLine}\rule{\linewidth}{0.6pt}}%
+  }]
+% ---------------- Section（下線=66%） ----------------
+\titleformat{\section}[block]
+  {\normalfont\Large\bfseries\color{appleInk}}
+  {}{0pt}
+  {%
+    \TitleSquareToText[1.05ex]{SectionTag}\hspace{0.6em}%
+    \thesection\quad
+  }%
+  [{%
+     \vspace*{-0.48\baselineskip}% ← 線を上に引き上げて詰める
+     \noindent{\color{appleLine}\rule{0.66\linewidth}{0.8pt}}%
+     \nobreak\vspace{-0.10\baselineskip}% ← 線の下側（本文との距離）
+  }]
+
+% ---------------- Subsection（下線=50%） ----------------
+\titleformat{\subsection}[block]
+  {\normalfont\large\bfseries\color{appleInk}}
+  {}{0pt}
+  {%
+    \TitleSquareToText[0.95ex]{SubsectionTag}\hspace{0.55em}%
+    \thesubsection\quad
+  }%
+  [{%
+     \vspace*{-0.52\baselineskip}% ← もう少しだけ控えめに詰める
+     \noindent{\color{appleLine}\rule{0.50\linewidth}{0.6pt}}%
+     \nobreak\vspace{-0.18\baselineskip}%
+  }]
+
+% ---------------- Subsubsection（下線=42%） ----------------
+\titleformat{\subsubsection}[block]
+  {\normalfont\large\bfseries\color{appleInk}}
+  {}{0pt}
+  {%
+    \TitleSquareToText[0.90ex]{SubsubsectionTag}\hspace{0.50em}%
+    \thesubsubsection\quad
+  }%
+  [{%
+     \vspace*{-0.40\baselineskip}% ← さらに控えめ
+     \noindent{\color{appleLine}\rule{0.42\linewidth}{0.5pt}}%
+     \nobreak\vspace{-0.16\baselineskip}%
+  }]
+
