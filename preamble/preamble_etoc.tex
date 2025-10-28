@@ -1,10 +1,9 @@
-
 % ===================== ToC (etoc) — Apple風見出し =====================
 \makeatletter
 \AtBeginDocument{%
 
   % 目次に出す深さ
-  \etocsetnexttocdepth{subsubsection}
+  \etocsetnexttocdepth{subsection}
 
   % 目次ブロックの前後
   \etocsettocstyle{%
@@ -27,6 +26,8 @@
   }
 
   % ---- 各レベルの表示 ----
+  % （過去案は \iffalse...\fi でコメントアウト）
+  \iffalse
   \etocsetstyle{part}
     {\noindent}
     {%
@@ -36,41 +37,41 @@
       \vskip10pt
     }
     {}
+  \fi
 
-  \etocsetstyle{section}
+  \etocsetstyle{part}
     {\noindent}
     {%
       \vskip10pt
-      \parindent0pt \leftskip5pt
-      \etoclink{\bfseries\LARGE\color{appleInk}\etocnumber~\etocname}%
+      \parindent0pt \leftskip0pt
+      \etoclink{\bfseries\Large\color{appleInk}\etocnumber~\etocname}%
       \leaders\hbox to .5em{\hss.\hss}\hfill \etocpage\par
       \vskip10pt
     }
     {}
 
-  \etocsetstyle{subsection}
+  \etocsetstyle{section}
     {\noindent}
     {%
       \vskip6pt
-      \parindent0pt \leftskip25pt % ←調整可（例: 20pt）
+      \parindent0pt \leftskip20pt
       \etoclink{\bfseries\large\textcolor{appleInk}{\etocnumber~\etocname}}%
       \nobreak\leaders\hbox to .5em{\hss.\hss}\hfill \etocpage\par
       \vskip6pt
     }
     {}
 
+  \etocsetstyle{subsection}
+    {\noindent}
+    {%
+      \parindent0pt \leftskip40pt % `subsubsection` は30ptのインデント
+      \etoclink{\bfseries\normalsize\color{appleInk}{\etocnumber~\etocname}}%
+      \hspace{0.5em}% 項目名とページ番号の間
+      (p.\etocpage)%
+      \hspace{1em}%
+    }
+    {}
 
-
-\etocsetstyle{subsubsection}
-{\noindent}
-{%
-  \parindent0pt \leftskip50pt % `subsubsection` は30ptのインデント
-  \etoclink{\bfseries\normalsize\color{appleInk}{\etocnumber~\etocname}}%
-  \ % 項目の間に半角スペースを挿入
-  (p.\etocpage)% ページ番号の表示
-  \hspace{1em}
-}
-{}
-}
+}%
 \makeatother
 % ======================================================================

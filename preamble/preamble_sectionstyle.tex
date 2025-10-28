@@ -22,6 +22,7 @@
      \nobreak\vspace{0.25ex}%
      \noindent{\color{appleLine}\rule{\linewidth}{0.6pt}}%
   }]
+  \begin{comment}
 % ---------------- Section（下線=66%） ----------------
 \titleformat{\section}[block]
   {\normalfont\Large\bfseries\color{appleInk}}
@@ -35,14 +36,14 @@
      \noindent{\color{appleLine}\rule{0.66\linewidth}{0.8pt}}%
      \nobreak\vspace{-0.10\baselineskip}% ← 線の下側（本文との距離）
   }]
-
+\end{comment}
 % ---------------- Subsection（下線=50%） ----------------
-\titleformat{\subsection}[block]
+\titleformat{\section}[block]
   {\normalfont\large\bfseries\color{appleInk}}
   {}{0pt}
   {%
     \TitleSquareToText[0.95ex]{SubsectionTag}\hspace{0.55em}%
-    \thesubsection\quad
+    \thesection\quad
   }%
   [{%
      \vspace*{-0.52\baselineskip}% ← もう少しだけ控えめに詰める
@@ -51,12 +52,12 @@
   }]
 
 % ---------------- Subsubsection（下線=42%） ----------------
-\titleformat{\subsubsection}[block]
+\titleformat{\subsection}[block]
   {\normalfont\large\bfseries\color{appleInk}}
   {}{0pt}
   {%
     \TitleSquareToText[0.90ex]{SubsubsectionTag}\hspace{0.50em}%
-    \thesubsubsection\quad
+    \thesubsection\quad
   }%
   [{%
      \vspace*{-0.40\baselineskip}% ← さらに控えめ
