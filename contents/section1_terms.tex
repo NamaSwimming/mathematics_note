@@ -1,6 +1,14 @@
 \phantomsection
 \part*{数学の基本}
+
+\begin{abstract}
+  数学の学習を始める前に，定義・命題・定理・補題・系などの基本的な用語について理解を深めたい．
+  「『命題』という言葉は知っているけど，『定理』とはどう違うの？」という疑問を持ったり，「『定義』と『定理』の違いがあやふやなままで，よくわからない」と感じる学生は多い．
+  高等学校までの知識で，これらの用語を再確認することを試みよう．
+\end{abstract}
+
 \section{用語の定義}
+
 
 \phantomsection
 \subsection{定義・命題・定理・補題・系}
@@ -217,6 +225,104 @@
 
 補題や系を説明するためには，関連するいくつかの命題や定理が必要である．以下に具体的な例を示す．
 
+
+\begin{example}{（補題）ロルの定理}{（補題）ロルの定理}
+  実数値関数$f$ が閉区間 $[a,b]$ で連続，開区間 $(a,b)$ で微分可能，かつ $f(a)=f(b)$ とする．
+  このとき，
+  \[
+  f'(c)=0
+  \]
+  を満たす点 $c \in (a,b)$ が少なくとも1つ存在する．
+\end{example}
+
+\begin{tleftbar}
+\begin{proof}
+最大値・最小値の定理\footnote{ここでは，最大値・最小値の定理の成立を認めるものとする．}により，$f$は$[a,b]$ で最大値 $M$ と最小値 $m$ をとる．
+
+\textbf{(i) $f$ が定数の場合}：任意の $x \in [a,b]$ で $f'(x)=0$ なので任意の $c \in(a,b)$ で$f(c)=0$ となる．
+
+\textbf{(ii) $f$ が定数でない場合}：端点では $f(a)=f(b)$ だから
+$M>f(a)$ または $m<f(a)$ が成り立ち，したがって$f$の最大値（または最小値）は
+内部点 $c \in(a,b)$ にて達成される．
+
+$c$ で最大をとる場合を示す（最小のときは不等号が逆になる）．
+$h>0$ とすると， $f(c+h) \leqq f(c)$だから
+\[
+\frac{f(c+h)-f(c)}{h} \leqq 0 ,\quad \therefore ~ f'_+(c) \coloneqq \lim_{h \to 0+} \frac{f(c+h)-f(c)}{h}\leqq 0.
+\]
+一方 $h<0$ では同様に
+\[
+\frac{f(c+h)-f(c)}{h}\geqq 0 , \quad \therefore~  f'_-(c)\coloneqq \lim_{h\to0-}\frac{f(c+h)-f(c)}{h}\geqq 0.
+\]
+$f$の点$c$における微分可能性により，$f'_+(c)=f'_-(c)=f'(c)$であるから，
+\[
+0\leqq f'(c)\leqq 0 , \quad \therefore ~f'(c)=0.
+\]
+このことから，直ちに主張が従う．
+\end{proof}
+\end{tleftbar}
+
+
+\begin{example}{（定理）平均値の定理}{（定理）平均値の定理}
+  実数値関数$f$ が $[a,b]$ で連続，$(a,b)$ で微分可能なら，
+  ある $c \in(a,b)$ が存在して
+  \[
+    f'(c)=\frac{f(b)-f(a)}{b-a}
+  \]
+  が成り立つ．
+\end{example}
+
+\begin{tleftbar}
+\begin{proof}
+  関数$g$を
+  \[
+    g(x)=f(x)-\frac{f(b)-f(a)}{b-a}(x-a)
+  \]
+  と定義すると， $g(a)=g(b)$であり，なおかつ$g$ は $[a,b]$ で連続，$(a,b)$ で微分可能なので，
+  ロルの定理より $(a,b)$ に $g'(c)=0$ を満たす $c$ がある．
+  すると
+  \[
+    0=g'(c)=f'(c)-\frac{f(b)-f(a)}{b-a}.
+  \]
+  この式から，ただちに主張が従う．
+\end{proof}
+\end{tleftbar}
+
+\begin{example}{（系1）$f'(x)=0$ なら $f$ は定数}{（系1）導関数ゼロなら定数}
+  実数値関数$f$ が区間 $I$ で微分可能で $f'(x)=0$ （$x \in I$）とする．
+  このとき $f$ は $I$ 上で一定である．
+\end{example}
+
+\begin{tleftbar}
+\begin{proof}
+  任意の $x<y$ に平均値の定理を適用すると，ある $c\in(x,y)$ があって
+  \[
+     \frac{f(y)-f(x)}{y-x}=f'(c)=0.
+  \]
+  よってこのとき$f(y)=f(x)$である．．いま$x$，$y$ は任意なので $f$ は$I$上で一定である．
+\end{proof}
+\end{tleftbar}
+
+\begin{example}{（系2）導関数の符号と単調性}{（系2）単調性の系}
+  実数値関数$f$ が区間 $I$ で微分可能とする．
+  \begin{enumerate}
+    \item $f'(x)\geqq 0$（$x\in I$） なら $f$ は $I$ で単調増加関数である．
+    \item $f'(x)\leqq 0$（$x\in I$） なら $f$ は $I$ で単調減少関数である．
+  \end{enumerate}
+\end{example}
+
+\begin{tleftbar}
+\begin{proof}
+  (1) を示す．$x<y$ をとると平均値の定理により
+  \[
+     \frac{f(y)-f(x)}{y-x}=f'(c) \quad (c\in(x,y))
+  \]
+  となる．右辺は $0$以上，かつ $y-x>0$ だから $f(y)-f(x)\ge 0$である．このことからただちに主張が従う．
+  (2) も同様である．
+\end{proof}
+\end{tleftbar}
+
+\begin{comment}
 \phantomsection
 \begin{example}{（補題）ユークリッドの補題}{（補題）ユークリッドの補題}
   ユークリッドの補題は，整数論における基本的な結果であり，素因数分解の一意性を証明する際に重要な役割を果たす．その主張は以下の通りである：
@@ -277,6 +383,7 @@
     逆に，$n$が完全平方数であれば，各$e_i$は偶数であり，したがって$d(n)$は奇数となる．
   \end{proof}
 \end{tleftbar}
+\end{comment}
 
 \phantomsection
 \subsection{言い回し}
