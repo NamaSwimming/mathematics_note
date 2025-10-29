@@ -18,7 +18,7 @@
     $\lor$            & または（論理和\index{ろんりわ@論理和}） \\
     $\lnot$           & 否定\index{ひてい@否定}         \\
     $\to$             & ならば（含意\index{がんい@含意}）    \\
-    $\Leftrightarrow$ & 必要十分条件（同値）\index{どうち@同値} \\
+    $\leftrightarrow$ & 必要十分条件（同値）\index{どうち@同値} \\
     \hline
   \end{tabular}
 \end{table}
@@ -70,6 +70,42 @@
     \end{tabular}
   \end{center}
 \end{table}
+\begin{table}[htbp]
+  \begin{center}
+    \begin{tabular}{c}
+      \begin{minipage}{0.5\hsize}
+        \begin{center}
+          \caption{「含意」の真理値表}
+          \label{fig:「含意」の真理値表}
+          \begin{tabular}{|c|c|c|} \hline
+            $P$           & $Q$          & $P \to Q$      \\ \hline
+            $\mathrm{T}$  & $\mathrm{T}$ & $\mathrm{T}$    \\ \hline
+            $\mathrm{T} $ & $\mathrm{F}$ & $\mathrm{F}$    \\ \hline
+            $\mathrm{F} $ & $\mathrm{T}$ & $\mathrm{T} $   \\  \hline
+            $\mathrm{F}$  & $\mathrm{F}$ & $\mathrm{T}$   \\ \hline
+          \end{tabular}
+        \end{center}
+      \end{minipage}
+
+      \begin{minipage}{0.5\hsize}
+        \begin{center}
+          \caption{必要十分条件の真理値表}
+          \label{fig:必要十分条件の真理値表}
+          \begin{tabular}{|c|c|c|} \hline
+            $P$           & $Q$          & $P \leftrightarrow Q$      \\ \hline
+            $\mathrm{T}$  & $\mathrm{T}$ & $\mathrm{T}$    \\ \hline
+            $\mathrm{T} $ & $\mathrm{F}$ & $\mathrm{F}$    \\ \hline
+            $\mathrm{F} $ & $\mathrm{T}$ & $\mathrm{F} $   \\  \hline
+            $\mathrm{F}$  & $\mathrm{F}$ & $\mathrm{T}$   \\ \hline
+          \end{tabular}
+        \end{center}
+      \end{minipage}
+    \end{tabular}
+  \end{center}
+\end{table}
+
+なお，ここで$P \to Q$を$\overline{P} \lor Q$，
+$P \leftrightarrow Q$を$(P \to Q) \land (Q \to P)$と定義した．
 
 \phantomsection
 \subsection{述語論理\index{じゅつごろんり@述語論理}}
@@ -125,6 +161,7 @@
           「ある整数$x$が存在して，$x^2 = 4$となる．」
   \end{itemize}
 \end{example}
+
 
 \phantomsection
 \section{証明}
