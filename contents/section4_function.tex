@@ -38,12 +38,14 @@ $A=\{ 1,2 ,3 \}$， $B=\{ a, b,c \}$とする．$f(1) = a$，$f(2) = b$，$f(3) 
   \begin{tikzpicture}[
     >=Latex,
     font=\small,
+    scale=1.10, transform shape,
     set/.style   ={draw=black!70, fill=black!6, line width=0.8pt},
     elem/.style  ={circle, fill=black, inner sep=1.6pt},
     map/.style   ={-{Latex[length=2.0mm,width=1.4mm]}, draw=black!75, line width=0.6pt},
     labA/.style  ={anchor=east, xshift=-2pt},
     labB/.style  ={anchor=west, xshift= 2pt}
   ]
+    \useasboundingbox (-5.0,-2.6) rectangle (6.0,2.85);
 
     % 集合（同サイズ）
     \draw[set] (-2,0) ellipse (1.5cm and 2cm);
@@ -125,64 +127,6 @@ $A=\{ 1,2 ,3 \}$， $B=\{ a, b,c \}$とする．$f(1) = a$，$f(2) = b$，$f(3) 
   \index{ぞう@像} \index{ちいき@値域}
 \end{definition}
 
-\begin{figure}[h]
-  \centering
-  \begin{tikzpicture}[
-    >=Latex,
-    font=\small,
-    set/.style   ={draw=black!70, fill=black!6, line width=0.8pt},
-    subA/.style  ={draw=black!65, fill=black!18, line width=0.6pt},
-    subB/.style  ={draw=black!65, fill=black!18, line width=0.6pt},
-    elem/.style  ={circle, fill=black, inner sep=1.6pt},
-    map/.style   ={-{Latex[length=2.0mm,width=1.4mm]}, draw=black!75, line width=0.6pt},
-    labA/.style  ={anchor=east, xshift=-2pt},
-    labB/.style  ={anchor=west, xshift= 2pt}
-  ]
-    % 集合（同サイズ）
-    \draw[set] (-5,0) ellipse (2.5cm and 3cm);
-    \node[black!80] at (-5,3.45) {$A$};
-
-    \draw[set] ( 5,0) ellipse (2.5cm and 3cm);
-    \node[black!80] at ( 5,3.45) {$B$};
-
-    % A' と f(A')（灰の濃淡で強調）
-    \draw[subA] (-5,0) ellipse (1.0cm and 1.7cm);
-    \node[black!70] at (-6.45,0.55) {$A'$};
-
-    \draw[subB] ( 5,0) ellipse (0.7cm and 1.1cm);
-    \node[black!70] at ( 6.45,0.55) {$f(A')$};
-
-    % 要素（座標）
-    \coordinate (A1) at (-5, 1);
-    \coordinate (A2) at (-5, 0);
-    \coordinate (A3) at (-5,-1);
-
-    \coordinate (Ba) at ( 5, 0.5);
-    \coordinate (Bb) at ( 5,-0.5);
-
-    \node[elem] at (A1) {};
-    \node[elem] at (A2) {};
-    \node[elem] at (A3) {};
-    \node[elem] at (Ba) {};
-    \node[elem] at (Bb) {};
-
-    \node[labA] at (A1) {$1$};
-    \node[labA] at (A2) {$2$};
-    \node[labA] at (A3) {$3$};
-
-    \node[labB] at (Ba) {$a$};
-    \node[labB] at (Bb) {$b$};
-
-    % 矢印（重なりにくく）
-    \draw[map] (A1) to[out=10, in=170] (Ba);
-    \draw[map] (A2) -- (Bb);
-    \draw[map] (A3) to[out=20, in=190] (Ba);
-
-    % 写像名（任意）
-    \node[black!70] at (0,1.95) {$f$};
-  \end{tikzpicture}
-  \caption{像}
-\end{figure}
 
 
 
@@ -206,6 +150,7 @@ $A=\{ 1,2 ,3 \}$， $B=\{ a, b,c \}$とする．$f(1) = a$，$f(2) = b$，$f(3) 
   \begin{tikzpicture}[
     >=Latex,
     font=\small,
+    scale=1.10, transform shape,
     set/.style   ={draw=black!70, fill=black!6, line width=0.8pt},
     subA/.style  ={draw=black!65, fill=black!18, line width=0.6pt},
     subB/.style  ={draw=black!65, fill=black!18, line width=0.6pt},
@@ -214,28 +159,90 @@ $A=\{ 1,2 ,3 \}$， $B=\{ a, b,c \}$とする．$f(1) = a$，$f(2) = b$，$f(3) 
     labA/.style  ={anchor=east, xshift=-2pt},
     labB/.style  ={anchor=west, xshift= 2pt}
   ]
-    % 集合（同サイズ）
-    \draw[set] (-5,0) ellipse (2.5cm and 3cm);
-    \node[black!80] at (-5,3.45) {$A$};
+    \useasboundingbox (-5.0,-2.6) rectangle (6.0,2.85);
+    % 集合（他の図と同じ大きさ・配置）
+    \draw[set] (-2,0) ellipse (1.5cm and 2cm);
+    \node[black!80] at (-2,2.25) {$A$};
 
-    \draw[set] ( 5,0) ellipse (2.5cm and 3cm);
-    \node[black!80] at ( 5,3.45) {$B$};
+    \draw[set] ( 3,0) ellipse (1.5cm and 2cm);
+    \node[black!80] at ( 3,2.25) {$B$};
 
-    % B' と f^{-1}(B')（灰の濃淡で強調）
-    \draw[subB] ( 5,0) ellipse (0.5cm and 1.0cm);
-    \node[black!70] at ( 6.45,0.55) {$B'$};
+    % A' と f(A')
+    \draw[subA] (-2,0) ellipse (0.75cm and 1.25cm);
+    \node[black!70, anchor=east] at (-3.55,0.55) {$A'$};
 
-    \draw[subA] (-5,0) ellipse (0.8cm and 2.0cm);
-    \node[black!70] at (-6.45,0.55) {$f^{-1}(B')$};
+    \draw[subB] ( 3,0) ellipse (0.70cm and 0.95cm);
+    \node[black!70, anchor=west] at ( 4.55,0.55) {$f(A')$};
 
     % 要素（座標）
-    \coordinate (A1) at (-5, 1.5);
-    \coordinate (A2) at (-5, 0.5);
-    \coordinate (A3) at (-5,-0.5);
-    \coordinate (A4) at (-5,-1.5);
+    \coordinate (A1) at (-2, 1);
+    \coordinate (A2) at (-2, 0);
+    \coordinate (A3) at (-2,-1);
 
-    \coordinate (Ba) at ( 5, 0.5);
-    \coordinate (Bb) at ( 5,-0.5);
+    \coordinate (Ba) at ( 3, 0.5);
+    \coordinate (Bb) at ( 3,-0.5);
+
+    \node[elem] at (A1) {};
+    \node[elem] at (A2) {};
+    \node[elem] at (A3) {};
+    \node[elem] at (Ba) {};
+    \node[elem] at (Bb) {};
+
+    \node[labA] at (A1) {$1$};
+    \node[labA] at (A2) {$2$};
+    \node[labA] at (A3) {$3$};
+
+    \node[labB] at (Ba) {$a$};
+    \node[labB] at (Bb) {$b$};
+
+    % 矢印
+    \draw[map] (A1) to[out=10, in=170] (Ba);
+    \draw[map] (A2) -- (Bb);
+    \draw[map] (A3) to[out=20, in=190] (Ba);
+
+    % 写像名（任意）
+    \node[black!70] at (0.5,1.55) {$f$};
+  \end{tikzpicture}
+  \caption{像}
+\end{figure}
+
+\begin{figure}[h]
+  \centering
+  \begin{tikzpicture}[
+    >=Latex,
+    font=\small,
+    scale=1.10, transform shape,
+    set/.style   ={draw=black!70, fill=black!6, line width=0.8pt},
+    subA/.style  ={draw=black!65, fill=black!18, line width=0.6pt},
+    subB/.style  ={draw=black!65, fill=black!18, line width=0.6pt},
+    elem/.style  ={circle, fill=black, inner sep=1.6pt},
+    map/.style   ={-{Latex[length=2.0mm,width=1.4mm]}, draw=black!75, line width=0.6pt},
+    labA/.style  ={anchor=east, xshift=-2pt},
+    labB/.style  ={anchor=west, xshift= 2pt}
+  ]
+    \useasboundingbox (-5.0,-2.6) rectangle (6.0,2.85);
+    % 集合（他の図と同じ大きさ・配置）
+    \draw[set] (-2,0) ellipse (1.5cm and 2cm);
+    \node[black!80] at (-2,2.25) {$A$};
+
+    \draw[set] ( 3,0) ellipse (1.5cm and 2cm);
+    \node[black!80] at ( 3,2.25) {$B$};
+
+    % B' と f^{-1}(B')
+    \draw[subB] ( 3,0) ellipse (0.65cm and 0.95cm);
+    \node[black!70, anchor=west] at ( 4.55,0.55) {$B'$};
+
+    \draw[subA] (-2,0) ellipse (0.80cm and 1.55cm);
+    \node[black!70, anchor=east] at (-3.55,0.55) {$f^{-1}(B')$};
+
+    % 要素（座標：楕円内に収まるよう圧縮）
+    \coordinate (A1) at (-2, 1.2);
+    \coordinate (A2) at (-2, 0.4);
+    \coordinate (A3) at (-2,-0.4);
+    \coordinate (A4) at (-2,-1.2);
+
+    \coordinate (Ba) at ( 3, 0.5);
+    \coordinate (Bb) at ( 3,-0.5);
 
     \node[elem] at (A1) {};
     \node[elem] at (A2) {};
@@ -252,18 +259,17 @@ $A=\{ 1,2 ,3 \}$， $B=\{ a, b,c \}$とする．$f(1) = a$，$f(2) = b$，$f(3) 
     \node[labB] at (Ba) {$a$};
     \node[labB] at (Bb) {$b$};
 
-    % 矢印（曲げを調整）
-    \draw[map] (A1) to[out=10,  in=170] (Ba); % 1 -> a
-    \draw[map] (A2) -- (Ba);                  % 2 -> a
-    \draw[map] (A3) to[out=-10, in=-170] (Bb);% 3 -> b
-    \draw[map] (A4) to[out=0,   in=180] (Ba); % 4 -> a
+    % 矢印
+    \draw[map] (A1) to[out=10,  in=170] (Ba);
+    \draw[map] (A2) -- (Ba);
+    \draw[map] (A3) to[out=-10, in=-170] (Bb);
+    \draw[map] (A4) to[out=0,   in=180] (Ba);
 
     % 写像名（任意）
-    \node[black!70] at (0,2.05) {$f$};
+    \node[black!70] at (0.5,1.65) {$f$};
   \end{tikzpicture}
   \caption{逆像}
 \end{figure}
-
 
 
 
@@ -282,12 +288,14 @@ $A=\{ 1,2 ,3 \}$， $B=\{ a, b,c \}$とする．$f(1) = a$，$f(2) = b$，$f(3) 
   \begin{tikzpicture}[
     >=Latex,
     font=\small,
+    scale=1.10, transform shape,
     set/.style   ={draw=black!70, fill=black!6, line width=0.8pt},
     elem/.style  ={circle, fill=black, inner sep=1.6pt},
     map/.style   ={-{Latex[length=2.0mm,width=1.4mm]}, draw=black!75, line width=0.6pt},
     labA/.style  ={anchor=east, xshift=-2pt},
     labB/.style  ={anchor=west, xshift= 2pt}
   ]
+    \useasboundingbox (-5.0,-2.6) rectangle (6.0,2.85);
     % 集合
     \draw[set] (-2,0) ellipse (1.5cm and 2cm);
     \node[black!80] at (-2,2.25) {$A$};
@@ -378,12 +386,14 @@ $A=\{ 1,2 ,3 \}$， $B=\{ a, b,c \}$とする．$f(1) = a$，$f(2) = b$，$f(3) 
   \begin{tikzpicture}[
     >=Latex,
     font=\small,
+    scale=1.10, transform shape,
     set/.style   ={draw=black!70, fill=black!6, line width=0.8pt},
     elem/.style  ={circle, fill=black, inner sep=1.6pt},
     map/.style   ={-{Latex[length=2.0mm,width=1.4mm]}, draw=black!75, line width=0.6pt},
     labA/.style  ={anchor=east, xshift=-2pt},
     labB/.style  ={anchor=west, xshift= 2pt}
   ]
+    \useasboundingbox (-5.0,-2.6) rectangle (6.0,2.85);
     % 集合
     \draw[set] (-2,0) ellipse (1.5cm and 2cm);
     \node[black!80] at (-2,2.25) {$A$};
@@ -472,12 +482,14 @@ $A=\{ 1,2 ,3 \}$， $B=\{ a, b,c \}$とする．$f(1) = a$，$f(2) = b$，$f(3) 
   \begin{tikzpicture}[
     >=Latex,
     font=\small,
+    scale=1.10, transform shape,
     set/.style   ={draw=black!70, fill=black!6, line width=0.8pt},
     elem/.style  ={circle, fill=black, inner sep=1.6pt},
     map/.style   ={-{Latex[length=2.0mm,width=1.4mm]}, draw=black!75, line width=0.6pt},
     labA/.style  ={anchor=east, xshift=-2pt},
     labB/.style  ={anchor=west, xshift= 2pt}
   ]
+    \useasboundingbox (-5.0,-2.6) rectangle (6.0,2.85);
     % 集合
     \draw[set] (-2,0) ellipse (1.5cm and 2cm);
     \node[black!80] at (-2,2.25) {$A$};
