@@ -40,6 +40,8 @@
   このような違いを明確にしないと，運動の解析において誤った結論を導く可能性がある．
 \end{example}
 
+\newpage 
+
 同じ事柄について，2つ以上の定義の形式があることもある．次は数学における例を見てみよう：
 
 \phantomsection
@@ -381,13 +383,12 @@ $f$の点$c$における微分可能性により，$f'_+(c)=f'_-(c)=f'(c)$であ
   \end{proof}
 \end{tleftbar}
 \end{comment}
+\newpage 
 
 \phantomsection
 \section{言い回し}
 \phantomsection
 \subsection{存在}
-
-
 
 数学の証明において，「存在\index{そんざい@存在}」は重要な概念である．といっても，あまりこのことを意識したことのない読者の方もいると思うので，この場を借りて具体例をもとに説明を試みることとする．
 
@@ -415,7 +416,7 @@ $f$の点$c$における微分可能性により，$f'_+(c)=f'_-(c)=f'(c)$であ
   \]
 \end{prop}
 
-\begin{tleftbar}
+\begin{leftbar}
   \begin{proof}
     いくつかの補題を確認しつつ示す．
     \begin{lemma}{}{}
@@ -424,8 +425,6 @@ $f$の点$c$における微分可能性により，$f'_+(c)=f'_-(c)=f'(c)$であ
         x_n \leqq x_{n+1} < 2.
       \]
     \end{lemma}
-
-    \begin{dotleftbar}
       \begin{proof}
         数学的帰納法により，$x_n \leqq x_{n+1} < 2$を示す．
         \begin{enumerate}[(I)]
@@ -435,11 +434,10 @@ $f$の点$c$における微分可能性により，$f'_+(c)=f'_-(c)=f'(c)$であ
           \item \mbox{} \\ \label{proof:存在2}
                 $k \in \mathbb{N}$を任意にとり，$x_k \leqq x_{k+1} < 2$であると仮定する．
 
-                このとき，$x_{k+1} < 2$により$ x_{k+1}+2 < 4$なので，
+                このとき，$x_{k+1} < 2$により$ x_{k+1}+2 < 4$なので，以下の式が成り立つ：
                 \[
-                  x_{k+2}=\sqrt{x_{k+1} + 2} < 2
+                  x_{k+2}=\sqrt{x_{k+1} + 2} < 2.
                 \]
-                である．
 
                 また，$x_k \leqq x_{k+1}$により，$x_k +2  \leqq x_{k+1}+2$であるから，
                 \[
@@ -452,13 +450,9 @@ $f$の点$c$における微分可能性により，$f'_+(c)=f'_-(c)=f'(c)$であ
           x_n \leqq x_{n+1} < 2.
         \]
       \end{proof}
-    \end{dotleftbar}
-
     \begin{lemma}{}{}
       $(x_n)_{n \in \mathbb{N}}$は$ 0<  x \leqq 2$なる極限$x$に収束する．
     \end{lemma}
-
-    \begin{dotleftbar}
       \begin{proof}
         先の補題により，任意の$n \in \mathbb{N}$について，$ x_n \leqq x_{n+1} <2$なので，
         数列$(x_n)_{n \in \mathbb{N}}$は単調に増加し，上に有界である．
@@ -471,7 +465,6 @@ $f$の点$c$における微分可能性により，$f'_+(c)=f'_-(c)=f'(c)$であ
 
         $ x>0$は明らかであるから，以上の考察によりこの命題が証明された．
       \end{proof}
-    \end{dotleftbar}
 
     ここまでで，$(x_n)_{n \in \mathbb{N}}$の極限値の存在が確認されたので，先の漸化式について，
     \[
@@ -484,7 +477,7 @@ $f$の点$c$における微分可能性により，$f'_+(c)=f'_-(c)=f'(c)$であ
       \lim_{n \to \infty} x_n =2.
     \]
   \end{proof}
-\end{tleftbar}
+\end{leftbar}
 
 ここまで考察して，ようやく数列$(x_n)_{n \in \mathbb{N}}$が収束することを確認できた．
 この例では「極限値の存在」を確認する意味がわからない読者もいるかもしれないので，もう一つ例を挙げよう．
