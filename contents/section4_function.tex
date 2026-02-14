@@ -35,42 +35,59 @@
 $A=\{ 1,2 ,3 \}$， $B=\{ a, b,c \}$とする．$f(1) = a$，$f(2) = b$，$f(3) = a$とすると，この写像$f$は下図のように表現できる．
 \begin{figure}[h]
   \centering
-  \begin{tikzpicture}
-    % Aの集合
-    \draw[fill=cyan!20, draw=cyan] (-2,0) ellipse (1.5cm and 2cm);
-    \node at (-2,2.2) {$A$};
+  \begin{tikzpicture}[
+    >=Latex,
+    font=\small,
+    set/.style   ={draw=black!70, fill=black!6, line width=0.8pt},
+    elem/.style  ={circle, fill=black, inner sep=1.6pt},
+    map/.style   ={-{Latex[length=2.0mm,width=1.4mm]}, draw=black!75, line width=0.6pt},
+    labA/.style  ={anchor=east, xshift=-2pt},
+    labB/.style  ={anchor=west, xshift= 2pt}
+  ]
 
-    % Bの集合
-    \draw[fill=cyan!20, draw=cyan] (3,0) ellipse (1.5cm and 2cm);
-    \node at (3,2.2) {$B$};
+    % 集合（同サイズ）
+    \draw[set] (-2,0) ellipse (1.5cm and 2cm);
+    \node[black!80] at (-2,2.25) {$A$};
 
-    % Aの要素
-    \fill (-2,1) circle (2pt);
-    \node[left] at (-2,1) {$1$};
+    \draw[set] ( 3,0) ellipse (1.5cm and 2cm);
+    \node[black!80] at ( 3,2.25) {$B$};
 
-    \fill (-2,0) circle (2pt);
-    \node[left] at (-2,0) {$2$};
+    % 要素（座標に名前を付ける）
+    \coordinate (A1) at (-2, 1);
+    \coordinate (A2) at (-2, 0);
+    \coordinate (A3) at (-2,-1);
 
-    \fill (-2,-1) circle (2pt);
-    \node[left] at (-2,-1) {$3$};
+    \coordinate (Ba) at ( 3, 1);
+    \coordinate (Bb) at ( 3, 0);
+    \coordinate (Bc) at ( 3,-1);
 
-    % Bの要素
-    \fill (3,1) circle (2pt);
-    \node[right] at (3,1) {$a$};
+    \node[elem] at (A1) {};
+    \node[elem] at (A2) {};
+    \node[elem] at (A3) {};
+    \node[elem] at (Ba) {};
+    \node[elem] at (Bb) {};
+    \node[elem] at (Bc) {};
 
-    \fill (3,0) circle (2pt);
-    \node[right] at (3,0) {$b$};
+    \node[labA] at (A1) {$1$};
+    \node[labA] at (A2) {$2$};
+    \node[labA] at (A3) {$3$};
 
-    \fill (3,-1) circle (2pt);
-    \node[right] at (3,-1) {$c$};
+    \node[labB] at (Ba) {$a$};
+    \node[labB] at (Bb) {$b$};
+    \node[labB] at (Bc) {$c$};
 
-    % 矢印（写像）
-    \draw[->, thin] (-2,1) to[bend left=20] (3,1); % 1をaに対応
-    \draw[->, thin] (-2,0) to[bend left=0] (3,0); % 2をbに対応
-    \draw[->, thin] (-2,-1) to[bend left=20] (3,1); % 3をaに対応
+    % 写像（重なりにくい曲げ方）
+    \draw[map] (A1) to[out=10,  in=170] (Ba); % 1 -> a
+    \draw[map] (A2) -- (Bb);                 % 2 -> b
+    \draw[map] (A3) to[out=20,  in=190] (Ba); % 3 -> a
+
+    % 写像名（任意）
+    \node[black!70] at (0.5,1.55) {$f$};
+
   \end{tikzpicture}
   \caption{写像 $f \colon A \to B$}
 \end{figure}
+
 
 この例では，$1$と$3$がともに$a$に対応しているが，上記の写像の定義ではこのような場合があってもよい．
 また，$A$のどの元にも対応しない元$c$の存在も許容される．
@@ -110,50 +127,63 @@ $A=\{ 1,2 ,3 \}$， $B=\{ a, b,c \}$とする．$f(1) = a$，$f(2) = b$，$f(3) 
 
 \begin{figure}[h]
   \centering
-  \begin{tikzpicture}[scale=1]
-    % Aの集合（薄い青色）
-    \draw[fill=cyan!20, draw=cyan] (-5,0) ellipse (2.5cm and 3cm);
-    \node at (-5,3.5) {$A$};
+  \begin{tikzpicture}[
+    >=Latex,
+    font=\small,
+    set/.style   ={draw=black!70, fill=black!6, line width=0.8pt},
+    subA/.style  ={draw=black!65, fill=black!18, line width=0.6pt},
+    subB/.style  ={draw=black!65, fill=black!18, line width=0.6pt},
+    elem/.style  ={circle, fill=black, inner sep=1.6pt},
+    map/.style   ={-{Latex[length=2.0mm,width=1.4mm]}, draw=black!75, line width=0.6pt},
+    labA/.style  ={anchor=east, xshift=-2pt},
+    labB/.style  ={anchor=west, xshift= 2pt}
+  ]
+    % 集合（同サイズ）
+    \draw[set] (-5,0) ellipse (2.5cm and 3cm);
+    \node[black!80] at (-5,3.45) {$A$};
 
-    % Bの集合（薄い赤色）
-    \draw[fill=red!20, draw=red] (5,0) ellipse (2.5cm and 3cm);
-    \node at (5,3.5) {$B$};
+    \draw[set] ( 5,0) ellipse (2.5cm and 3cm);
+    \node[black!80] at ( 5,3.45) {$B$};
 
+    % A' と f(A')（灰の濃淡で強調）
+    \draw[subA] (-5,0) ellipse (1.0cm and 1.7cm);
+    \node[black!70] at (-6.45,0.55) {$A'$};
 
-        % A'の集合（濃い青色）
-    \draw[fill=blue!50, opacity=0.5] (-5,0) ellipse (1.0cm and 1.7cm);
-    \node at (-6.5,0.5) {$A'$};
+    \draw[subB] ( 5,0) ellipse (0.7cm and 1.1cm);
+    \node[black!70] at ( 6.45,0.55) {$f(A')$};
 
-    % 像 f(A')（濃い赤色）
-    \draw[fill=red!50, opacity=0.5] (5,0) ellipse (0.7cm and 1.1cm);
-    \node at (6.5,0.5) {$f(A')$};
+    % 要素（座標）
+    \coordinate (A1) at (-5, 1);
+    \coordinate (A2) at (-5, 0);
+    \coordinate (A3) at (-5,-1);
 
+    \coordinate (Ba) at ( 5, 0.5);
+    \coordinate (Bb) at ( 5,-0.5);
 
-    % Aの要素
-    \fill (-5,1) circle (2pt);
-    \node[left] at (-5,1) {$1$};
+    \node[elem] at (A1) {};
+    \node[elem] at (A2) {};
+    \node[elem] at (A3) {};
+    \node[elem] at (Ba) {};
+    \node[elem] at (Bb) {};
 
-    \fill (-5,0) circle (2pt);
-    \node[left] at (-5,0) {$2$};
+    \node[labA] at (A1) {$1$};
+    \node[labA] at (A2) {$2$};
+    \node[labA] at (A3) {$3$};
 
-    \fill (-5,-1) circle (2pt);
-    \node[left] at (-5,-1) {$3$};
+    \node[labB] at (Ba) {$a$};
+    \node[labB] at (Bb) {$b$};
 
-    % Bの要素
-    \fill (5,0.5) circle (2pt);
-    \node[right] at (5,0.5) {$a$};
+    % 矢印（重なりにくく）
+    \draw[map] (A1) to[out=10, in=170] (Ba);
+    \draw[map] (A2) -- (Bb);
+    \draw[map] (A3) to[out=20, in=190] (Ba);
 
-    \fill (5,-0.5) circle (2pt);
-    \node[right] at (5,-0.5) {$b$};
-
-
-    % 矢印（写像）
-    \draw[->, thin] (-5,1) to[bend left=20] (5,0.5); % 1をaに対応
-    \draw[->, thin] (-5,0) to[bend left=0] (5,-0.5); % 2をbに対応
-    \draw[->, thin] (-5,-1) to[bend left=20] (5,0.5); % 3をaに対応
+    % 写像名（任意）
+    \node[black!70] at (0,1.95) {$f$};
   \end{tikzpicture}
   \caption{像}
 \end{figure}
+
 
 
 \begin{definition}{逆像}{逆像}
@@ -171,54 +201,69 @@ $A=\{ 1,2 ,3 \}$， $B=\{ a, b,c \}$とする．$f(1) = a$，$f(2) = b$，$f(3) 
   逆像と紛らわしい単語に「逆写像」があるが，逆写像は$f$が全単射であるときに定義される写像である．その一方で，逆像は$f$が全単射でなくても定義される．
 \end{mycolumn}
 
-
 \begin{figure}[h]
   \centering
-  \begin{tikzpicture}[scale=1]
-    % 集合 A の描画（薄い青色）
-    \draw[fill=cyan!20, draw=cyan] (-5,0) ellipse (2.5cm and 3cm);
-    \node at (-5,3.5) {$A$};
+  \begin{tikzpicture}[
+    >=Latex,
+    font=\small,
+    set/.style   ={draw=black!70, fill=black!6, line width=0.8pt},
+    subA/.style  ={draw=black!65, fill=black!18, line width=0.6pt},
+    subB/.style  ={draw=black!65, fill=black!18, line width=0.6pt},
+    elem/.style  ={circle, fill=black, inner sep=1.6pt},
+    map/.style   ={-{Latex[length=2.0mm,width=1.4mm]}, draw=black!75, line width=0.6pt},
+    labA/.style  ={anchor=east, xshift=-2pt},
+    labB/.style  ={anchor=west, xshift= 2pt}
+  ]
+    % 集合（同サイズ）
+    \draw[set] (-5,0) ellipse (2.5cm and 3cm);
+    \node[black!80] at (-5,3.45) {$A$};
 
-    % 集合 B の描画（薄い赤色）
-    \draw[fill=red!20, draw=red] (5,0) ellipse (2.5cm and 3cm);
-    \node at (5,3.5) {$B$};
+    \draw[set] ( 5,0) ellipse (2.5cm and 3cm);
+    \node[black!80] at ( 5,3.45) {$B$};
 
-    % B' の集合（濃い赤色）
-    \draw[fill=red!50, opacity=0.5] (5,0) ellipse (0.5cm and 1.0cm);
-    \node at (6.5,0.5) {$B'$};
+    % B' と f^{-1}(B')（灰の濃淡で強調）
+    \draw[subB] ( 5,0) ellipse (0.5cm and 1.0cm);
+    \node[black!70] at ( 6.45,0.55) {$B'$};
 
-    % f^{-1}(B') の集合（濃い青色）
-    \draw[fill=cyan!50, opacity=0.5] (-5,0) ellipse (0.8cm and 2cm);
-    \node at (-6.5,0.5) {$f^{-1}(B')$};
+    \draw[subA] (-5,0) ellipse (0.8cm and 2.0cm);
+    \node[black!70] at (-6.45,0.55) {$f^{-1}(B')$};
 
-    % A の要素
-    \fill (-5,1.5) circle (2pt);
-    \node[left] at (-5,1.5) {$1$};
+    % 要素（座標）
+    \coordinate (A1) at (-5, 1.5);
+    \coordinate (A2) at (-5, 0.5);
+    \coordinate (A3) at (-5,-0.5);
+    \coordinate (A4) at (-5,-1.5);
 
-    \fill (-5,0.5) circle (2pt);
-    \node[left] at (-5,0.5) {$2$};
+    \coordinate (Ba) at ( 5, 0.5);
+    \coordinate (Bb) at ( 5,-0.5);
 
-    \fill (-5,-0.5) circle (2pt);
-    \node[left] at (-5,-0.5) {$3$};
+    \node[elem] at (A1) {};
+    \node[elem] at (A2) {};
+    \node[elem] at (A3) {};
+    \node[elem] at (A4) {};
+    \node[elem] at (Ba) {};
+    \node[elem] at (Bb) {};
 
-    \fill (-5,-1.5) circle (2pt);
-    \node[left] at (-5,-1.5) {$4$};
+    \node[labA] at (A1) {$1$};
+    \node[labA] at (A2) {$2$};
+    \node[labA] at (A3) {$3$};
+    \node[labA] at (A4) {$4$};
 
-    % B の要素
-    \fill (5,0.5) circle (2pt);
-    \node[right] at (5,0.5) {$a$};
+    \node[labB] at (Ba) {$a$};
+    \node[labB] at (Bb) {$b$};
 
-    \fill (5,-0.5) circle (2pt);
-    \node[right] at (5,-0.5) {$b$};
+    % 矢印（曲げを調整）
+    \draw[map] (A1) to[out=10,  in=170] (Ba); % 1 -> a
+    \draw[map] (A2) -- (Ba);                  % 2 -> a
+    \draw[map] (A3) to[out=-10, in=-170] (Bb);% 3 -> b
+    \draw[map] (A4) to[out=0,   in=180] (Ba); % 4 -> a
 
-    % 矢印（写像 f）
-    \draw[->, thin] (-5,1.5) to[bend left=20] (5,0.5); % 1 を a に対応
-    \draw[->, thin] (-5,0.5) to[bend left=0] (5,0.5);   % 2 を a に対応
-    \draw[->, thin] (-5,-0.5) to[bend right=20] (5,-0.5);% 3 を b に対応
-    \draw[->, thin] (-5,-1.5) to[bend left=0] (5,0.5);% 4 を a に対応
+    % 写像名（任意）
+    \node[black!70] at (0,2.05) {$f$};
   \end{tikzpicture}
   \caption{逆像}
 \end{figure}
+
 
 
 
@@ -232,48 +277,64 @@ $A=\{ 1,2 ,3 \}$， $B=\{ a, b,c \}$とする．$f(1) = a$，$f(2) = b$，$f(3) 
 \[
   f(1) = a, \quad f(2) = b, \quad f(3) = c.
 \]
-
 \begin{figure}[h]
   \centering
-  \begin{tikzpicture}
-    % Aの集合
-    \draw[fill=cyan!20, draw=cyan] (-2,0) ellipse (1.5cm and 2cm);
-    \node at (-2,2.2) {$A$};
+  \begin{tikzpicture}[
+    >=Latex,
+    font=\small,
+    set/.style   ={draw=black!70, fill=black!6, line width=0.8pt},
+    elem/.style  ={circle, fill=black, inner sep=1.6pt},
+    map/.style   ={-{Latex[length=2.0mm,width=1.4mm]}, draw=black!75, line width=0.6pt},
+    labA/.style  ={anchor=east, xshift=-2pt},
+    labB/.style  ={anchor=west, xshift= 2pt}
+  ]
+    % 集合
+    \draw[set] (-2,0) ellipse (1.5cm and 2cm);
+    \node[black!80] at (-2,2.25) {$A$};
 
-    % Bの集合
-    \draw[fill=cyan!20, draw=cyan] (3,0) ellipse (1.5cm and 2cm);
-    \node at (3,2.2) {$B$};
+    \draw[set] ( 3,0) ellipse (1.5cm and 2cm);
+    \node[black!80] at ( 3,2.25) {$B$};
 
-    % Aの要素
-    \fill (-2,1) circle (2pt);
-    \node[left] at (-2,1) {$1$};
+    % 要素（座標）
+    \coordinate (A1) at (-2, 1);
+    \coordinate (A2) at (-2, 0);
+    \coordinate (A3) at (-2,-1);
 
-    \fill (-2,0) circle (2pt);
-    \node[left] at (-2,0) {$2$};
+    \coordinate (Ba) at ( 3, 1.5);
+    \coordinate (Bb) at ( 3, 0.5);
+    \coordinate (Bc) at ( 3,-0.5);
+    \coordinate (Bd) at ( 3,-1.5);
 
-    \fill (-2,-1) circle (2pt);
-    \node[left] at (-2,-1) {$3$};
+    % 点
+    \node[elem] at (A1) {};
+    \node[elem] at (A2) {};
+    \node[elem] at (A3) {};
+    \node[elem] at (Ba) {};
+    \node[elem] at (Bb) {};
+    \node[elem] at (Bc) {};
+    \node[elem] at (Bd) {};
 
-    % Bの要素
-    \fill (3,1.5) circle (2pt);
-    \node[right] at (3,1.5) {$a$};
+    % ラベル
+    \node[labA] at (A1) {$1$};
+    \node[labA] at (A2) {$2$};
+    \node[labA] at (A3) {$3$};
 
-    \fill (3,0.5) circle (2pt);
-    \node[right] at (3,0.5) {$b$};
+    \node[labB] at (Ba) {$a$};
+    \node[labB] at (Bb) {$b$};
+    \node[labB] at (Bc) {$c$};
+    \node[labB] at (Bd) {$d$};
 
-    \fill (3,-0.5) circle (2pt);
-    \node[right] at (3,-0.5) {$c$};
+    % 矢印（重なりにくく）
+    \draw[map] (A1) to[out=10,  in=170] (Ba);
+    \draw[map] (A2) to[out=5,   in=175] (Bb);
+    \draw[map] (A3) -- (Bc);
 
-    \fill (3,-1.5) circle (2pt);
-    \node[right] at (3,-1.5) {$d$};
-
-    % 矢印（写像）
-    \draw[->, thin] (-2,1) to[bend left=20] (3,1.5); % 1をaに対応
-    \draw[->, thin] (-2,0) to[bend left=10] (3,0.5); % 2をbに対応
-    \draw[->, thin] (-2,-1) to[bend right=0] (3,-0.5); % 3をcに対応
+    % 写像名（任意）
+    \node[black!70] at (0.5,2.05) {$f$};
   \end{tikzpicture}
   \caption{単射の例}
 \end{figure}
+
 
 この$f$は単射だが，全射でない．
 
@@ -312,42 +373,58 @@ $A=\{ 1,2 ,3 \}$， $B=\{ a, b,c \}$とする．$f(1) = a$，$f(2) = b$，$f(3) 
 \[
   f(1) = a, \quad f(2) = a, \quad f(3) = b.
 \]
-
 \begin{figure}[h]
   \centering
-  \begin{tikzpicture}
-    % Aの集合
-    \draw[fill=cyan!20, draw=cyan] (-2,0) ellipse (1.5cm and 2cm);
-    \node at (-2,2.2) {$A$};
+  \begin{tikzpicture}[
+    >=Latex,
+    font=\small,
+    set/.style   ={draw=black!70, fill=black!6, line width=0.8pt},
+    elem/.style  ={circle, fill=black, inner sep=1.6pt},
+    map/.style   ={-{Latex[length=2.0mm,width=1.4mm]}, draw=black!75, line width=0.6pt},
+    labA/.style  ={anchor=east, xshift=-2pt},
+    labB/.style  ={anchor=west, xshift= 2pt}
+  ]
+    % 集合
+    \draw[set] (-2,0) ellipse (1.5cm and 2cm);
+    \node[black!80] at (-2,2.25) {$A$};
 
-    % Bの集合
-    \draw[fill=cyan!20, draw=cyan] (3,0) ellipse (1.5cm and 2cm);
-    \node at (3,2.2) {$B$};
+    \draw[set] ( 3,0) ellipse (1.5cm and 2cm);
+    \node[black!80] at ( 3,2.25) {$B$};
 
-    % Aの要素
-    \fill (-2,1) circle (2pt);
-    \node[left] at (-2,1) {$1$};
+    % 要素（座標）
+    \coordinate (A1) at (-2, 1);
+    \coordinate (A2) at (-2, 0);
+    \coordinate (A3) at (-2,-1);
 
-    \fill (-2,0) circle (2pt);
-    \node[left] at (-2,0) {$2$};
+    \coordinate (Ba) at ( 3, 0.5);
+    \coordinate (Bb) at ( 3,-0.5);
 
-    \fill (-2,-1) circle (2pt);
-    \node[left] at (-2,-1) {$3$};
+    % 点
+    \node[elem] at (A1) {};
+    \node[elem] at (A2) {};
+    \node[elem] at (A3) {};
+    \node[elem] at (Ba) {};
+    \node[elem] at (Bb) {};
 
-    % Bの要素
-    \fill (3,0.5) circle (2pt);
-    \node[right] at (3,0.5) {$a$};
+    % ラベル
+    \node[labA] at (A1) {$1$};
+    \node[labA] at (A2) {$2$};
+    \node[labA] at (A3) {$3$};
 
-    \fill (3,-0.5) circle (2pt);
-    \node[right] at (3,-0.5) {$b$};
+    \node[labB] at (Ba) {$a$};
+    \node[labB] at (Bb) {$b$};
 
-    % 矢印（写像）
-    \draw[->, thin] (-2,1) to[bend left=20] (3,0.5); % 1をaに対応
-    \draw[->, thin] (-2,0) to[bend left=10] (3,0.5); % 2をaに対応
-    \draw[->, thin] (-2,-1) to[bend right=0] (3,-0.5); % 3をbに対応
+    % 矢印（a に 2 本集め、b に 1 本）
+    \draw[map] (A1) to[out=10,  in=170] (Ba);
+    \draw[map] (A2) to[out=0,   in=180] (Ba);
+    \draw[map] (A3) -- (Bb);
+
+    % 写像名（任意）
+    \node[black!70] at (0.5,2.05) {$f$};
   \end{tikzpicture}
   \caption{全射の例}
 \end{figure}
+
 
 この$f$は全射だが，単射でない．
 
@@ -363,7 +440,7 @@ $A=\{ 1,2 ,3 \}$， $B=\{ a, b,c \}$とする．$f(1) = a$，$f(2) = b$，$f(3) 
   \]
   と書くと，$f$ は写像の定義を満たす．
 
-  図書館では，複数の本が同じ分類コードを持つことが一般的である、つまり，異なる本が同じ分類コードに対応することがある．
+  図書館では，複数の本が同じ分類コードを持つことが一般的である，つまり，異なる本が同じ分類コードに対応することがある．
 
   例えば，$A = \{\text{『数学入門』}, \text{『微分積分』}, \text{『物理学基礎』}, \text{『統計学』}\}$，
   $B = \{\text{410}, \text{420}, \text{350}\}$ とし，写像 $f$ を次のように定義する．
@@ -392,42 +469,59 @@ $A=\{ 1,2 ,3 \}$， $B=\{ a, b,c \}$とする．$f(1) = a$，$f(2) = b$，$f(3) 
 
 \begin{figure}[ht]
   \centering
-  \begin{tikzpicture}
-    % Aの集合
-    \draw[fill=cyan!20, draw=cyan] (-2,0) ellipse (1.5cm and 2cm);
-    \node at (-2,2.2) {$A$};
+  \begin{tikzpicture}[
+    >=Latex,
+    font=\small,
+    set/.style   ={draw=black!70, fill=black!6, line width=0.8pt},
+    elem/.style  ={circle, fill=black, inner sep=1.6pt},
+    map/.style   ={-{Latex[length=2.0mm,width=1.4mm]}, draw=black!75, line width=0.6pt},
+    labA/.style  ={anchor=east, xshift=-2pt},
+    labB/.style  ={anchor=west, xshift= 2pt}
+  ]
+    % 集合
+    \draw[set] (-2,0) ellipse (1.5cm and 2cm);
+    \node[black!80] at (-2,2.25) {$A$};
 
-    % Bの集合
-    \draw[fill=cyan!20, draw=cyan] (3,0) ellipse (1.5cm and 2cm);
-    \node at (3,2.2) {$B$};
+    \draw[set] ( 3,0) ellipse (1.5cm and 2cm);
+    \node[black!80] at ( 3,2.25) {$B$};
 
-    % Aの要素
-    \fill (-2,1) circle (2pt);
-    \node[left] at (-2,1) {$1$};
+    % 要素（座標）
+    \coordinate (A1) at (-2, 1);
+    \coordinate (A2) at (-2, 0);
+    \coordinate (A3) at (-2,-1);
 
-    \fill (-2,0) circle (2pt);
-    \node[left] at (-2,0) {$2$};
+    \coordinate (Ba) at ( 3, 1);
+    \coordinate (Bb) at ( 3, 0);
+    \coordinate (Bc) at ( 3,-1);
 
-    \fill (-2,-1) circle (2pt);
-    \node[left] at (-2,-1) {$3$};
+    % 点
+    \node[elem] at (A1) {};
+    \node[elem] at (A2) {};
+    \node[elem] at (A3) {};
+    \node[elem] at (Ba) {};
+    \node[elem] at (Bb) {};
+    \node[elem] at (Bc) {};
 
-    % Bの要素
-    \fill (3,1) circle (2pt);
-    \node[right] at (3,1) {$a$};
+    % ラベル
+    \node[labA] at (A1) {$1$};
+    \node[labA] at (A2) {$2$};
+    \node[labA] at (A3) {$3$};
 
-    \fill (3,0) circle (2pt);
-    \node[right] at (3,0) {$b$};
+    \node[labB] at (Ba) {$a$};
+    \node[labB] at (Bb) {$b$};
+    \node[labB] at (Bc) {$c$};
 
-    \fill (3,-1) circle (2pt);
-    \node[right] at (3,-1) {$c$};
-    ¬
-    % 矢印（写像）
-    \draw[->, thin] (-2,1) to[bend left=20] (3,-1); % 1をaに対応
-    \draw[->, thin] (-2,0) to[bend left=0] (3,0); % 2をbに対応
-    \draw[->, thin] (-2,-1) to[bend right=20] (3,1); % 3をcに対応
+    % 矢印（1->c, 2->b, 3->a）
+    \draw[map] (A1) to[out=10,  in=170] (Bc);
+    \draw[map] (A2) -- (Bb);
+    \draw[map] (A3) to[out=-10, in=-170] (Ba);
+
+    % 写像名（任意）
+    \node[black!70] at (0.5,2.05) {$f$};
   \end{tikzpicture}
   \caption{全単射の例}
 \end{figure}
+
 
 この $f$ は単射かつ全射，すなわち全単射である．
 
