@@ -8,6 +8,11 @@
 \newtcolorbox{tbleftline}{blanker,breakable,left=5mm,borderline west={1.1mm}{0pt}{black}}
 \newenvironment{tleftbar}{\begin{tbleftline}\setlength{\parindent}{1\zw}}{\end{tbleftline}}
 
+%leftbar環境に注釈が入れられないことを解消する環境．名前は，tcolorboxの[t]とleftbarの組み合わせ
+\newtcolorbox{ttbleftline}{blanker,breakable,left=5mm,borderline west={1.1mm}{0pt}{darkgray}}
+\newenvironment{ttleftbar}{\begin{ttbleftline}\setlength{\parindent}{1\zw}}{\end{ttbleftline}}
+
+
 %dotleftbar環境
 \newtcolorbox{tbdotleftline}{%
   blanker, left=5mm,breakable,
@@ -27,7 +32,7 @@
 % ------------------------------------------------
 % color_style.tex にある想定色（例）:
 % appleCard, applePaper, appleInk, appleInkGray, appleGrayLight, appleGray, appleGrayDark, applePurple
-% ※ applePurple が無ければ、appleInkGray へ一時的に差し替えて OK
+% ※ applePurple が無ければ，appleInkGray へ一時的に差し替えて OK
 
 % アクセント用の色エイリアス（ここだけ触れば配色一括変更できます）
 \colorlet{acc@th}{appleInkGray}                 % Theorem：最もニュートラル
