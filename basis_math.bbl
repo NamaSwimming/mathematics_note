@@ -1,0 +1,109 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.3 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{none/global//global/global/global}
+    \entry{nakajima}{book}{}{}
+      \name{author}{1}{}{%
+        {{hash=895da33ebbfd3dc0b068d57006a4bf9b}{%
+           family={中島},
+           familyi={中\bibinitperiod},
+           given={匠一},
+           giveni={匠\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {共立出版}%
+      }
+      \strng{namehash}{895da33ebbfd3dc0b068d57006a4bf9b}
+      \strng{fullhash}{895da33ebbfd3dc0b068d57006a4bf9b}
+      \strng{fullhashraw}{895da33ebbfd3dc0b068d57006a4bf9b}
+      \strng{bibnamehash}{895da33ebbfd3dc0b068d57006a4bf9b}
+      \strng{authorbibnamehash}{895da33ebbfd3dc0b068d57006a4bf9b}
+      \strng{authornamehash}{895da33ebbfd3dc0b068d57006a4bf9b}
+      \strng{authorfullhash}{895da33ebbfd3dc0b068d57006a4bf9b}
+      \strng{authorfullhashraw}{895da33ebbfd3dc0b068d57006a4bf9b}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{集合・写像・論理: 数学の基本を学ぶ}
+      \field{year}{2012}
+      \field{pages}{240}
+      \range{pages}{1}
+    \endentry
+    \entry{kaneko}{book}{}{}
+      \name{author}{1}{}{%
+        {{hash=6de2c9d7ee39270de7a1065fe78c6517}{%
+           family={金子},
+           familyi={金\bibinitperiod},
+           given={晃},
+           giveni={晃\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {サイエンス社}%
+      }
+      \strng{namehash}{6de2c9d7ee39270de7a1065fe78c6517}
+      \strng{fullhash}{6de2c9d7ee39270de7a1065fe78c6517}
+      \strng{fullhashraw}{6de2c9d7ee39270de7a1065fe78c6517}
+      \strng{bibnamehash}{6de2c9d7ee39270de7a1065fe78c6517}
+      \strng{authorbibnamehash}{6de2c9d7ee39270de7a1065fe78c6517}
+      \strng{authornamehash}{6de2c9d7ee39270de7a1065fe78c6517}
+      \strng{authorfullhash}{6de2c9d7ee39270de7a1065fe78c6517}
+      \strng{authorfullhashraw}{6de2c9d7ee39270de7a1065fe78c6517}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{数理基礎論講義: 論理・集合・位相 (ライブラリ数理・情報系の数学講義 1)}
+      \field{year}{2010}
+      \field{pages}{263}
+      \range{pages}{1}
+    \endentry
+    \entry{arai}{book}{}{}
+      \name{author}{1}{}{%
+        {{hash=a87f716c58d0dcd0c19453344dd997dc}{%
+           family={新井},
+           familyi={新\bibinitperiod},
+           given={敏康},
+           giveni={敏\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {東京図書}%
+      }
+      \strng{namehash}{a87f716c58d0dcd0c19453344dd997dc}
+      \strng{fullhash}{a87f716c58d0dcd0c19453344dd997dc}
+      \strng{fullhashraw}{a87f716c58d0dcd0c19453344dd997dc}
+      \strng{bibnamehash}{a87f716c58d0dcd0c19453344dd997dc}
+      \strng{authorbibnamehash}{a87f716c58d0dcd0c19453344dd997dc}
+      \strng{authornamehash}{a87f716c58d0dcd0c19453344dd997dc}
+      \strng{authorfullhash}{a87f716c58d0dcd0c19453344dd997dc}
+      \strng{authorfullhashraw}{a87f716c58d0dcd0c19453344dd997dc}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{基幹講座　数学　集合・論理と位相}
+      \field{year}{2016}
+      \field{pages}{256}
+      \range{pages}{1}
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+
