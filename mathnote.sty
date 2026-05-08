@@ -328,12 +328,12 @@
 \renewcommand{\headrulewidth}{0pt}
 
 \fancyhead[LE]{%
-  \footnotesize
+  \footnotesize\strut
   p.\,\thepage\hspace{1.2\zw}\CurrentPartTitle
 }
 
 \fancyhead[RO]{%
-  \footnotesize
+  \footnotesize\strut
   \CurrentSectionTitle\hspace{1\zw}|\hspace{1\zw}p.\,\thepage
 }
 % 数式
@@ -581,11 +581,11 @@ IfValueTF={#1}{title=【#2】〈#1〉}{title=【#2】},#4}
 \usetikzlibrary{intersections,calc,arrows.meta,calendar,shadows.blur}
 \RequirePackage{tikz-3dplot}
 \RequirePackage[
-  left=15truemm,
-  right=15truemm,
-  top=22truemm,
+  left=20truemm,
+  right=20truemm,
+  top=23truemm,
   bottom=22truemm,
-  headheight=10truemm,
+  headheight=12truemm,
   headsep=4truemm,
   marginparwidth=0pt
 ]{geometry}
