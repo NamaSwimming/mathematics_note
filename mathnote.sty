@@ -538,7 +538,25 @@ after skip=18pt,
     }
 
 
-
+% プリアンブルなどに追加
+\newtcolorbox{reviewbox}[1][]{
+  enhanced,
+  breakable,
+  colback=white,
+  colframe=appleLine,
+  boxrule=0.35pt,
+  arc=4mm,
+  left=7mm,
+  right=7mm,
+  top=4mm,
+  bottom=4mm,
+  before skip=0.9\baselineskip,
+  after skip=0.9\baselineskip,
+  fonttitle=\bfseries\sffamily,
+  coltitle=appleInk,
+  title=#1,
+  drop fuzzy shadow
+}
 
 % 例題環境
 \newcounter{mondaibangou}
