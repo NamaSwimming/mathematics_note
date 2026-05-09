@@ -70,14 +70,13 @@
 \RequirePackage{bm}
 \RequirePackage{ascmac}
 \RequirePackage{mathtools}
-\newcommand{\norm}[1]{\lVert #1 \rVert}
+\DeclarePairedDelimiter{\abs}{\lvert}{\rvert}
+\DeclarePairedDelimiter{\norm}{\lVert}{\rVert}
 
 
 % ヘッダーフォントの設定
 \renewcommand{\headfont}{\sffamily\bfseries}
 
-% 括弧
-\RequirePackage{delimseasy}
 
 % 二段組
 \RequirePackage{multicol}
