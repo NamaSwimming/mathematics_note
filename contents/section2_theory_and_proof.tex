@@ -204,17 +204,35 @@
 \subsubsection{証明とは}
 数学において，主張が正しいことを示すプロセスを\emph{証明}\index{しょうめい@証明}（\emph{proof}）という．
 
-先の例で，命題・定理・補題・系は証明されるべきものであるが，定義は一般に「証明すべきこと」でないことに注意したい．
-しかし，例えば「\exref{「絶対値」の定義}において$\abs{x} \coloneqq \max \{ x, -x \}$を仮定して$\abs{x} = \sqrt{x^2}$を導く」
+先の例で，命題・定理・補題・系は証明されるべきものであるが，定義は一般に「証明すべきこと」でないことに注意したい\footnote{しかし，例えば「\exref{「絶対値」の定義}において$\abs{x} \coloneqq \max \{ x, -x \}$を仮定して$\abs{x} = \sqrt{x^2}$を導く」
 など，異なる定義の同値性を示す場面では，定義が「証明すべきもの」となる．このことから，どの定義を採用しているか明確にすることが重要であることがわかる．
+}．
+
+以下で，．証明の例をいくつか見てみよう：
+
+
+\begin{example}{証明①（余りの計算）}{証明①（余りの計算）}
+  「任意の奇数$n$について，$n^2$を$4$で割った余りは$1$である」という命題を証明しよう：
+
+  奇数$n$は，ある整数$k$を用いて$n = 2k + 1$と表すことができる．このとき，
+\[
+  n^2 = (2k + 1)^2 = 4k^2 + 4k + 1 = 4(k^2 + k) + 1.
+\]
+したがって，$n^2$を$4$で割った余りは$1$である．\qed
+\end{example}
+
+このように証明することで，「任意の奇数$n$について，$n^2$を$4$で割った余りは$1$である」という命題が真であることが示され，したがってこの命題の主張は「疑いようのない真実」であることがわかる．
 
 証明は一つの命題にいくつか存在する場合がほとんどであり，たとえば，\exref{三平方の定理}の証明は100通り以上も存在することが知られている．
+数学の学習を進めるにあたって，様々な証明を見てみることは，論理的な思考力を養う上で非常に有益である．
+
 \phantomsection
-\begin{example}[sidebyside, % sidebysideオプションを局所的に有効化
-    lefthand width=7cm, % 図の幅を指定
-    righthand width=7cm, % テキストの幅を調整
-    sidebyside gap=5mm, % 図とテキスト間のスペース
-  ]{証明}{証明}
+\begin{example}[
+    sidebyside,
+    lefthand width=8.5cm,  % 文章側
+    righthand width=5cm,   % 図側
+    sidebyside gap=4mm,
+  ]{証明（三平方の定理）}{証明（三平方の定理）}
   辺の長さが$a$と$b$の直角三角形を$4$つ用意する．
   これらの三角形を組み合わせて，辺の長さが$a + b$の正方形を作る．
   このとき，大きな正方形の面積は$(a + b)^2$である．
@@ -223,16 +241,20 @@
 
   よって，大きな正方形の面積は，小さい正方形の面積と4つの三角形の面積の和に等しい．ゆえに
   \[
-    (a + b)^2 = c^2 + 4 \left( \frac{1}{2}ab \right), \quad \therefore ~(a + b)^2 = c^2 + 2ab.
+    (a + b)^2 = c^2 + 4 \left( \frac{1}{2}ab \right),
+    \quad \therefore ~(a + b)^2 = c^2 + 2ab.
   \]
   これにより，
   \[
-    a^2 + 2ab + b^2 = c^2 + 2ab, \quad \therefore ~a^2 + b^2 = c^2.
+    a^2 + 2ab + b^2 = c^2 + 2ab,
+    \quad \therefore ~a^2 + b^2 = c^2.
   \]
   これが証明すべきことであった．\qed
+
   \tcblower
-  % 左側に表示する図
-  \begin{tikzpicture}[scale=0.75]
+
+  \centering
+  \begin{tikzpicture}[scale=0.58]
     % 辺の長さの定義
     \def\a{3}
     \def\b{4}
@@ -242,21 +264,17 @@
     \draw (0,0) rectangle (\a+\b,\a+\b);
 
     % 4つの直角三角形の描画
-    % 第1の三角形
     \draw (0,0) -- (\b,0) -- (0,\a) -- cycle;
     \draw (0,\a) -- node[midway,above] {$c$} (\b,0);
 
-    % 第2の三角形
     \draw (\b,0) -- (\a+\b,0) -- (\a+\b,\b) -- cycle;
     \draw (\a+\b,\b) -- node[midway,above] {$c$} (\b,0);
 
-    % 第3の三角形
     \draw (\a+\b,\b) -- (\a+\b,\a+\b) -- (\a,\a+\b) -- cycle;
     \draw (\a,\a+\b) -- node[midway,above] {$c$} (\a+\b,\b);
 
-    % 第4の三角形
-    \draw (\a, \a+\b) -- (0, \a+\b) -- (0,\a) -- cycle;
-    \draw (0,\a) -- node[midway,above] {$c$} (\a, \a+\b);
+    \draw (\a,\a+\b) -- (0,\a+\b) -- (0,\a) -- cycle;
+    \draw (0,\a) -- node[midway,above] {$c$} (\a,\a+\b);
 
     % 中央の小さな正方形の描画
     \draw (\b,0) -- (\a+\b,\b) -- (\a,\a+\b) -- (0,\a) -- cycle;
@@ -266,7 +284,6 @@
     \draw [<->] (-0.5,\a) -- (-0.5,\a+\b) node[midway,left] {$b$};
     \draw [<->] (0,-0.5) -- (\b,-0.5) node[midway,below] {$b$};
     \draw [<->] (\b,-0.5) -- (\a+\b,-0.5) node[midway,below] {$a$};
-
   \end{tikzpicture}
 \end{example}
 
