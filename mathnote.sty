@@ -73,6 +73,51 @@
 \DeclarePairedDelimiter{\abs}{\lvert}{\rvert}
 \DeclarePairedDelimiter{\norm}{\lVert}{\rVert}
 
+% --- 分数のカスタマイズ ---
+\makeatletter
+
+% 元の \frac を保存
+\let\oldfrac\frac
+
+% 分数記号（emath 風・横幅最適化版）
+\DeclareRobustCommand{\bunsuu}{\@ifstar{\bunsuu@}{\@@bunsuu}}
+
+% 通常版：上下の微調整を維持しつつ、横幅の余白を最小限(\mkern1mu)に抑える
+\def\@@bunsuu#1#2{%
+  \dfrac{%
+    \lower.44ex\hbox{$\m@th\displaystyle\mkern1mu#1\mkern1mu$}%
+  }{%
+    \lower-.1ex\hbox{$\m@th\displaystyle\mkern1mu#2\mkern1mu$}%
+  }%
+}
+
+% textstyle 用
+\def\tbunsuu#1#2{%
+  \tfrac{%
+    \mkern1mu#1\mkern1mu
+  }{%
+    \lower-.1ex\hbox{$\m@th\scriptstyle\mkern1mu#2\mkern1mu$}%
+  }%
+}
+
+% スター版：数式スタイルに追従
+\def\bunsuu@#1#2{%
+  \mathchoice
+    {\@@bunsuu{#1}{#2}}% \displaystyle
+    {\tbunsuu{#1}{#2}}%  \textstyle
+    {\oldfrac{\mkern1mu#1\mkern1mu}{\mkern1mu#2\mkern1mu}}% \scriptstyle
+    {\oldfrac{\mkern1mu#1\mkern1mu}{\mkern1mu#2\mkern1mu}}% \scriptscriptstyle
+}
+
+% \frac を \bunsuu に置き換える
+\renewcommand{\frac}[2]{\bunsuu{#1}{#2}}
+
+% 退避した通常の \frac も使えるようにしておく
+\newcommand{\normalfrac}[2]{\oldfrac{#1}{#2}}
+
+\makeatother
+
+
 
 % ヘッダーフォントの設定
 \renewcommand{\headfont}{\sffamily\bfseries}
