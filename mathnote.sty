@@ -696,6 +696,8 @@ IfValueTF={#1}{title=【#2】〈#1〉}{title=【#2】},#4}
 \newcommand{\kaijou}{\ensuremath{\mkern1mu!\mkern1mu}}
 \newcommand{\dom}{\mathop{\mathrm{dom}}\nolimits}
 \newcommand{\ran}{\mathop{\mathrm{ran}}\nolimits}
+%\newcommand{\relmiddle}[1]{\mathrel{}\middle#1\mathrel{}}
+\newcommand{\relmiddle}[1]{\, \middle|\,}
 
 \DeclareMathOperator{\Ker}{Ker}
 \DeclareMathOperator{\sgn}{sgn}
@@ -703,17 +705,23 @@ IfValueTF={#1}{title=【#2】〈#1〉}{title=【#2】},#4}
 
 % --- 証明環境のカスタマイズ ---
 \makeatletter
+
+\renewcommand{\proofname}{\textgt{証明}}
+\renewcommand{\qedsymbol}{$\blacksquare$}
+\renewcommand{\qed}{\unskip\nobreak\hspace{1.5em}\qedsymbol}
+
 \renewenvironment{proof}[1][\proofname]{\par
   \pushQED{\qed}%
   \normalfont \topsep6\p@\@plus6\p@\relax
   \trivlist
   \item[\hskip\labelsep
-        \itshape
-    #1\@addpunct{.}] % ラベル（証明.）の出力
-    \mbox{}\par\nobreak\ignorespaces % ここで改行を入れる
+        \normalfont
+        #1\@addpunct{.}]%
+    \mbox{}\par\nobreak\ignorespaces
 }{%
   \popQED\endtrivlist\@endpefalse
 }
+
 \makeatother
 
 
