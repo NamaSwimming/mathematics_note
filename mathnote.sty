@@ -76,18 +76,16 @@
 % --- 分数のカスタマイズ ---
 \makeatletter
 
-% 元の \frac を保存
 \let\oldfrac\frac
 
-% 分数記号（emath 風・横幅最適化版）
 \DeclareRobustCommand{\bunsuu}{\@ifstar{\bunsuu@}{\@@bunsuu}}
 
-% 通常版：上下の微調整を維持しつつ、横幅の余白を最小限(\mkern1mu)に抑える
+% 通常版：少しだけ詰める版
 \def\@@bunsuu#1#2{%
   \dfrac{%
-    \lower.44ex\hbox{$\m@th\displaystyle\mkern1mu#1\mkern1mu$}%
+    \lower.25ex\hbox{$\m@th\displaystyle\mkern1mu#1\mkern1mu$}%
   }{%
-    \lower-.1ex\hbox{$\m@th\displaystyle\mkern1mu#2\mkern1mu$}%
+    \lower-.05ex\hbox{$\m@th\displaystyle\mkern1mu#2\mkern1mu$}%
   }%
 }
 
@@ -96,24 +94,52 @@
   \tfrac{%
     \mkern1mu#1\mkern1mu
   }{%
-    \lower-.1ex\hbox{$\m@th\scriptstyle\mkern1mu#2\mkern1mu$}%
+    \lower-.05ex\hbox{$\m@th\scriptstyle\mkern1mu#2\mkern1mu$}%
   }%
 }
 
 % スター版：数式スタイルに追従
 \def\bunsuu@#1#2{%
   \mathchoice
-    {\@@bunsuu{#1}{#2}}% \displaystyle
-    {\tbunsuu{#1}{#2}}%  \textstyle
-    {\oldfrac{\mkern1mu#1\mkern1mu}{\mkern1mu#2\mkern1mu}}% \scriptstyle
-    {\oldfrac{\mkern1mu#1\mkern1mu}{\mkern1mu#2\mkern1mu}}% \scriptscriptstyle
+    {\@@bunsuu{#1}{#2}}%
+    {\tbunsuu{#1}{#2}}%
+    {\oldfrac{\mkern1mu#1\mkern1mu}{\mkern1mu#2\mkern1mu}}%
+    {\oldfrac{\mkern1mu#1\mkern1mu}{\mkern1mu#2\mkern1mu}}%
 }
 
-% \frac を \bunsuu に置き換える
 \renewcommand{\frac}[2]{\bunsuu{#1}{#2}}
 
-% 退避した通常の \frac も使えるようにしておく
 \newcommand{\normalfrac}[2]{\oldfrac{#1}{#2}}
+
+\makeatother
+
+% --- 総和・総乗記号のカスタマイズ ---
+
+\makeatletter
+
+% 元の記号を保存
+\let\orgsum\sum
+\let\orgprod\prod
+
+% \sum を 0.97 倍
+\DeclareRobustCommand{\sum}{%
+  \mathop{\mathchoice
+    {\vcenter{\hbox{\scalebox{0.97}{$\displaystyle\orgsum$}}}}%
+    {\vcenter{\hbox{\scalebox{0.97}{$\textstyle\orgsum$}}}}%
+    {\vcenter{\hbox{\scalebox{0.97}{$\scriptstyle\orgsum$}}}}%
+    {\vcenter{\hbox{\scalebox{0.97}{$\scriptscriptstyle\orgsum$}}}}%
+  }\limits%
+}
+
+% \prod を 0.97 倍
+\DeclareRobustCommand{\prod}{%
+  \mathop{\mathchoice
+    {\vcenter{\hbox{\scalebox{0.97}{$\displaystyle\orgprod$}}}}%
+    {\vcenter{\hbox{\scalebox{0.97}{$\textstyle\orgprod$}}}}%
+    {\vcenter{\hbox{\scalebox{0.97}{$\scriptstyle\orgprod$}}}}%
+    {\vcenter{\hbox{\scalebox{0.97}{$\scriptscriptstyle\orgprod$}}}}%
+  }\limits%
+}
 
 \makeatother
 
