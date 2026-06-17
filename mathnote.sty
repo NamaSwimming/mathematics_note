@@ -83,9 +83,9 @@
 % 通常版：少しだけ詰める版
 \def\@@bunsuu#1#2{%
   \dfrac{%
-    \lower.25ex\hbox{$\m@th\displaystyle\mkern1mu#1\mkern1mu$}%
+    \lower.16ex\hbox{$\m@th\displaystyle\mkern1mu#1\mkern1mu$}%
   }{%
-    \lower-.05ex\hbox{$\m@th\displaystyle\mkern1mu#2\mkern1mu$}%
+    \lower-.036ex\hbox{$\m@th\displaystyle\mkern1mu#2\mkern1mu$}%
   }%
 }
 
@@ -1020,3 +1020,6 @@ IfValueTF={#1}{title=【#2】〈#1〉}{title=【#2】},#4}
 
 
 \setcounter{secnumdepth}{3}
+\AtBeginDocument{%
+  \linespread{1.06}\selectfont
+}
