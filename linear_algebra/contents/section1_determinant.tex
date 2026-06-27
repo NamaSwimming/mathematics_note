@@ -1,0 +1,1004 @@
+\phantomsection
+\part{行列式}
+
+\begin{abstract}
+  このセクションでは「行列式」に関連する基本的な用語や概念を定義し，それらの関係性を明確にする．
+\end{abstract}
+
+\phantomsection
+\section{置換}
+
+\phantomsection
+\subsection{置換}
+
+まず，行列式を定義する際に必要となる\textbf{置換}\index{ちかん@置換}を定義しよう．
+
+\begin{definition}{置換}{置換}
+  $n$次の置換とは，集合$\{1, 2, \dots, n\}$から集合$\{1, 2, \dots, n\}$への全単射である．
+  
+  置換$\sigma$は，以下のように表されることが多い：
+  \[
+  \sigma = \chikan{1, 2, \cdots, n}{\sigma(1), \sigma(2), \cdots, \sigma(n)}
+  \]
+  このように，上段の数字と下段の数字を対応させることで，置換を表す．
+\end{definition}
+
+この定義だけでは，いまいち「置換」というものがイメージしにくいかもしれない．
+そこで，具体例を挙げて説明しよう．
+
+\begin{example}{置換}{置換} 
+$\sigma$が，$1$を$2$，$2$を$3$，$3$を$1$に対応させるとする．
+つまり，$\sigma$は次のような写像である：
+\[
+\sigma \colon 1 \mapsto 2, \quad 2 \mapsto 3, \quad 3 \mapsto 1
+\]
+このとき，$\sigma$は$3$次の置換であり，次のように表すことができる：
+\[
+\sigma = \chikan{1, 2, 3}{2, 3, 1}
+\]
+\end{example}
+
+ここで，\exref{置換}の$\sigma$は
+\[
+P_\sigma = 
+\begin{pmatrix}
+  0 & 1 & 0 \\
+  0 & 0 & 1\\ 
+  1 & 0 & 0 
+\end{pmatrix}
+\]
+とは異なる概念であることに注意したい．たしかに
+\[
+ P_\sigma \begin{pmatrix} 1 \\ 2 \\ 3 \end{pmatrix} = \begin{pmatrix} 2 \\ 3\\ 1 \end{pmatrix}
+\]
+ではあるが，$\sigma$は行列ではなく，$P_\sigma$とは異なるものである．
+
+また，置換を議論する際には，「動かさない文字は省略してよい」と約束することが多い．たとえば以下のような例である：
+\[
+\chikan{1, 2, 3, 4, 5}{3, 2, 4, 1, 5} = \chikan*{1, 2, 3, 4, 5}{3, 2, 4, 1, 5}
+\]
+
+
+
+ここまでで，置換の定義について確かめた．次に，「$3$次の置換はいくつあるか」という問いの答えを考えよう．
+その過程で我々は，地道に置換を列挙していく方法をとる．まず，以下の命題を証明しよう．
+
+\begin{prop}{n次の置換の個数}{n次の置換の個数}
+  $n$次の置換は$n\kaijou$個ある．
+\end{prop}
+
+\begin{leftbar}
+\begin{proof}
+  $n$次の置換を考えるとき，まず$1$に対応する文字を$n$通りの文字の中から選ぶことができる．
+  次に，$2$に対応する文字を残りの$n-1$通りの文字の中から選ぶことができる．
+  同様にして，$3,4,\ldots,n$にも文字を対応させていくと，$n$次の置換の個数は
+  \[
+  n \times (n-1) \times (n-2) \times \cdots \times 1 = n\kaijou
+  \]
+  個である．これが証明すべきことであった．
+\end{proof}
+\end{leftbar}
+
+そして，以下では$n$次の置換すべての集合を$S_n$で表すことにする．このとき，\prref{n次の置換の個数}より，
+\[
+\abs{S_n} = n\kaijou
+\]
+である．ただし$\abs{S_n}$は$S_n$の元の個数を表す\footnote{この$\abs{S_n}$は$n(S_n)$や$\# S_n$とも表される．}．
+
+$n$次の置換の個数がわかったので，具体的な数字での例を考えてみよう．
+
+\begin{example}{3次の置換}{3次の置換}
+  3次の置換は，$\abs{S_3} = 3\kaijou = 6$より，下記の$6$個でつくされる．
+  \begin{align*}
+    &\chikan{1, 2, 3}{1, 2, 3}, \\
+    &\chikan{1, 2, 3}{1, 3, 2}, \quad
+    \chikan{1, 2, 3}{2, 1, 3},\quad 
+    \chikan{1, 2, 3}{3, 2, 1}, \\
+    &\chikan{1, 2, 3}{2, 3, 1},\quad 
+    \chikan{1, 2, 3}{3, 1, 2}.
+  \end{align*}
+\end{example}
+
+$4$次以上の置換についても同様に数え上げることができる．
+
+\subsection{対称群}
+
+前節では置換の定義と，置換の個数について議論した．本節では，置換の積や逆置換などの概念を定義し，置換の集合$S_n$が群をなすことを示す．
+
+\begin{definition}{置換の積}{置換の積}
+  $\sigma, \tau \in S_n$に対して，写像の合成$\sigma \circ \tau$を
+  \[
+  (\sigma \circ \tau)(i) = \sigma(\tau(i))
+  \]
+  と定義する．このとき，$\sigma \circ \tau$もまた$n$次の置換であり，これは$\sigma$と$\tau$の\textbf{積}\index{ちかんのせき@置換の積}と呼ばれる．
+\end{definition}　
+
+\begin{example}{置換の積}{置換の積}
+  $\sigma, \tau \in S_3$を
+  \[
+  \sigma = \chikan{1, 2, 3}{2, 3, 1}, \quad
+  \tau = \chikan{1, 2, 3}{3, 1, 2}
+  \]
+  とする．このとき，$\sigma \circ \tau$は次のように計算される：
+  \begin{align*}
+    (\sigma \circ \tau)(1) &= \sigma(\tau(1)) = \sigma(3) = 1, \\
+    (\sigma \circ \tau)(2) &= \sigma(\tau(2)) = \sigma(1) = 2, \\
+    (\sigma \circ \tau)(3) &= \sigma(\tau(3)) = \sigma(2) = 3.
+  \end{align*}
+  よって，
+  \[
+  \sigma \circ \tau = \chikan{1, 2, 3}{1, 2, 3}
+  \]
+\end{example}
+
+\begin{definition}{恒等置換}{恒等置換}
+  $\sigma\in S_n$において，すべての$i \in \{1, 2, \dots, n\}$に対して$\sigma(i) = i$を満たす置換$\sigma$を\textbf{恒等置換}\index{こうとうちかん@恒等置換}とよび．
+  \[
+  1_n
+  \]
+  と表す．
+\end{definition}
+
+
+\begin{example}{恒等置換}{恒等置換}
+  $3$次の恒等置換$1_3$は，次のように表される：
+  \[
+  1_3 = \chikan{1, 2, 3}{1, 2, 3}
+  \]
+  $4$次の恒等置換$1_4$は，次のように表される：
+  \[
+  1_4 = \chikan{1, 2, 3, 4}{1, 2, 3, 4}
+  \]
+\end{example}
+
+\begin{definition}{逆置換}{逆置換}
+  $\sigma\in S_n$に対して，逆写像$\sigma^{-1}$を$\sigma$の\textbf{逆置換}\index{ぎゃくちかん@逆置換}とよび，次のように定義する：
+  \[
+  \sigma^{-1}(\sigma(i)) = i, \quad \forall i \in \{1, 2, \dots, n\}
+  \]
+\end{definition}
+
+\begin{example}{逆置換}{逆置換}
+  $\sigma \in S_3$を
+  \[
+  \sigma = \chikan{1, 2, 3}{2, 3, 1}
+  \]
+  とする．このとき，$\sigma$の逆置換$\sigma^{-1}$は次のように計算される：
+  \begin{align*}
+    \sigma^{-1}(2) &= 1, \\
+    \sigma^{-1}(3) &= 2, \\
+    \sigma^{-1}(1) &= 3.
+  \end{align*}
+  よって，
+  \[
+  \sigma^{-1} = \chikan{1, 2, 3}{3, 1, 2}
+  \]
+\end{example}
+
+
+\begin{mycolumn}
+$\sigma, \tau, \rho \in S_n$と写像$\circ \colon S_n \times S_n \to S_n$に対して以下のことが成り立つ：
+  
+  \begin{description}[align=left,labelwidth=6em]
+    \item[結合律] $(\sigma \circ \tau) \circ \rho = \sigma \circ (\tau \circ \rho) $となる\footnote{写像の合成についてこの命題が成り立つことは既知とする．}．\label{item:結合律}
+    
+    \item[単位元の存在] 恒等写像 $1_n$ が単位元として存在し，$1_n \circ \sigma = \sigma \circ 1_n = \sigma $となる．\label{item:単位元の存在}
+    
+    \item[逆元の存在] 各元 $\sigma$ は全単射であるため逆写像 $\sigma^{-1}$ が存在し，
+    $\sigma \circ \sigma ^{-1} = \sigma ^{-1} \circ \sigma = 1_n $となる．\label{item:逆元の存在}
+  \end{description}
+  
+  このとき，$(S_n,\circ)$は\textbf{群}をなすという\footnote{単に「$S_n$は群である」ともいうが，正確には$S_n$と二項演算$\circ$の組$(S_n,\circ)$が群である．}．特にこれを $n$ 次対称群と呼ぶ．
+
+   もし上記の3つの条件に加えて，任意の$\sigma, \tau \in S_n$に対して$\sigma \circ \tau = \tau \circ \sigma $が成り立つならば，$(S_n,\circ)$は\textbf{可換群}であるというが，
+  $n \geqq 3$のとき，$(S_n,\circ)$は可換群ではない．
+  \end{mycolumn}
+
+\begin{mycolumn}
+  任意の$n \in \mathbb{N}$に対して，$S_n \ne \varnothing$である．
+  なぜならば，恒等置換$1_n$が$S_n$の元としてただひとつ存在するからである．
+\end{mycolumn}
+
+\begin{prop}{置換の性質}{置換の性質}
+  任意の関数$ f \colon S_n \to \mathbb{C} $に対して，次が成り立つ：
+  \[
+  \sum_{\sigma \in S_n} f(\sigma) = \sum_{\sigma \in S_n} f(\sigma^{-1}).
+  \]
+\end{prop}
+
+\begin{leftbar}
+\begin{proof}
+  写像 $\varphi \colon S_n \to S_n$ を $\varphi(\sigma)=\sigma^{-1}$ で定める．
+  任意の $\sigma \in S_n$ に対し $\sigma^{-1}\in S_n$ であるから，$\varphi$ は確かに定義される．
+
+  さらに，任意の $\sigma \in S_n$ について
+  \[
+    (\varphi \circ \varphi)(\sigma) =\varphi (\varphi(\sigma)) 
+    =\varphi (\sigma^{-1}) 
+    =(\sigma^{-1})^{-1} 
+    =\sigma
+  \]
+  となるので，$\varphi \circ\varphi=\mathrm{id}_{S_n}$ である．
+  よって $\varphi$ は逆写像として$\varphi$をもち，したがって全単射である．
+
+  $\varphi$は全単射であるから，$\sigma$ が $S_n$ を動くとき $\tau=\varphi(\sigma)=\sigma^{-1}$ もまた
+  $S_n$ を重複なく動く．したがって
+  \[
+    \sum_{\sigma\in S_n} f(\sigma^{-1}) 
+    =\sum_{\sigma\in S_n} f(\varphi(\sigma)) 
+    =\sum_{\tau\in S_n} f(\tau) 
+    =\sum_{\sigma\in S_n} f(\sigma)
+  \]
+  であり，これが証明すべきことであった．
+\end{proof}
+\end{leftbar}
+
+\prref{置換の性質}は，$\{ \sigma^{-1} \mid \sigma \in S_n \} = S_n$という命題と同値である．ここではのちに行列式を定義する際に議論が容易になる形を採用した．
+この命題は「$\sigma$が$S_n$を動くとき，$\sigma^{-1}$もまた$S_n$を重複なく動く」という直感的な理解でも十分である．
+
+\subsection{置換の符号}
+
+\begin{definition}{互換}{互換}
+  $\sigma \in S_n$が，ある$i, j \in \{1, 2, \dots, n\}$に対して
+  \[
+  \sigma(i) = j, \quad \sigma(j) = i
+  \]
+  かつ
+  \[
+  \sigma(k) = k, \quad \forall k \in \{1, 2, \dots, n\} \setminus \{i, j\}
+  \]
+  を満たすとき，$\sigma$を\textbf{互換}\index{ごかん@互換}と呼ぶ． このとき，互換$\sigma$は
+  \[
+  \chikan{1, 2, \cdots, i, \cdots, j, \cdots, n}{1, 2, \cdots, j, \cdots, i, \cdots, n}
+  \]
+  ともかけ，これ以下で$(i,j)$とかく．
+\end{definition}
+
+\begin{example}{互換}{互換}
+  $\sigma \in S_4$を
+  \[
+  \sigma = \chikan{1, 2, 3, 4}{1, 3, 2, 4}
+  \]
+  とする．このとき，$\sigma$は$2$と$3$を入れ替え，$1$と$4$を動かさないので，$\sigma$は互換であり，$(2,3)$ともかける．
+\end{example}
+
+\begin{prop}{}{}
+  任意の$\sigma \in S_n$は，いくつかの互換の積として表される．
+\end{prop}
+
+
+\begin{leftbar}
+  \begin{proof}
+     $\sigma \in S_n$を任意にとる．
+
+     $\sigma$ が恒等置換 $1_n$ であるとき，$\sigma$は $(1, 2) \circ (1, 2)$ のように，同じ入れ替えを2回繰り返したものとみなせる．
+     したがって，$1_n$は互換の積として表せる．
+     
+    $\sigma$ が恒等置換でないとき，$i \ne \sigma(i)$ となる $i$ がある．
+    ここで，互換 $\tau = (i, \sigma(i))$ を考え，
+    新たな置換 $\sigma' = \tau \circ \sigma$ を定める．
+    すると，$\sigma'(i) = \tau(\sigma(i)) = i$ となるため，
+   $\sigma'$ によって自分自身に写される元の数が $1$ つ増加する．
+この操作を繰り返すと，有限個の互換 $\tau_1, \tau_2, \dots, \tau_k$ を用いて
+$1_n = \tau_k \circ \dots \circ \tau_1 \circ \sigma = $と表せる．
+各互換 $\tau_j$ の逆置換は自分自身（${\tau_j}^{-1} = \tau_j$）であるから，左から順に $\tau_k, \dots, \tau_1$ を乗じることで$ \sigma = \tau_1 \circ \dots \circ \tau_k $が得られる．
+
+よって，$\sigma$ は互換の積として表される．
+  \end{proof}
+\end{leftbar}
+
+ここで注意しておきたいのは，互換の積の表現は一通りに定まるとは限らないということである．たとえば，次のような例がある：
+
+\begin{example}{}{}
+  $\sigma \in S_3$を
+  \[
+  \sigma = \chikan{1, 2, 3}{3, 1, 2}
+  \]
+  とする．このとき，$\sigma$は互換の積として
+  \[
+  \sigma = (1, 3) \circ (1, 2)
+  \]
+  とも
+  \[
+  \sigma = (2, 3) \circ (1, 3)
+  \]
+  とも表せる．
+\end{example}
+
+このように，互換の積は一意に定まらないが，互換の積に含まれる互換の数の偶奇性は一定である．
+
+\begin{prop}{置換の符号の偶奇}{置換の符号の偶奇}
+  任意の$\sigma \in S_n$に対して，$\sigma$を互換の積として表すとき，その互換の数の偶奇は$\sigma$により決まり，互換の積の表現によらない．
+\end{prop}
+
+\begin{tleftbar}
+\begin{proof}
+  まず，多項式
+  \begin{align*} 
+    \Delta (x_1, x_2, \dots, x_n) & = \prod_{1 \leqq i < j \leqq n} (x_j - x_i) \\
+    & = \left\{
+\begin{array}{@{}cccc@{}}
+(x_2-x_1) & (x_3-x_1) & \cdots & (x_n-x_1)\\
+          & \times(x_3-x_2) & \cdots & (x_n-x_2)\\
+          &                & \ddots & \vdots\\
+          &                &        & \times(x_n-x_{n-1})
+\end{array}
+\right.
+\end{align*}
+  を考える\footnote{この多項式を差積という．以下，単に$\Delta$とも記す．}．さらに，
+  \begin{align*} 
+    \Delta^{\sigma} (x_1, x_2, \dots, x_n) & = \prod_{1 \leqq i < j \leqq n} (x_{\sigma(j)} - x_{\sigma(i)}) \\
+    & = \left\{
+\begin{array}{@{}cccc@{}}
+(x_{\sigma(2)}-x_{\sigma(1)}) & (x_{\sigma(3)}-x_{\sigma(1)}) & \cdots & (x_{\sigma(n)}-x_{\sigma(1)})\\
+          & \times(x_{\sigma(3)}-x_{\sigma(2)}) & \cdots & (x_{\sigma(n)}-x_{\sigma(2)})\\
+          &                & \ddots & \vdots\\
+          &                &        & \times(x_{\sigma(n)}-x_{\sigma(n-1)})
+\end{array}
+\right.
+  \end{align*}
+  と定める．
+
+  ここで，$\sigma$が互換$(i,j)$であるとき，$\Delta^{\sigma}$は$\Delta$のうち$(x_j - x_i)$の符号を反転させたものである．
+  したがって，$\sigma = \tau_1 \tau_2 \dotsm \tau_s = \rho_1 \rho_2 \dotsm \rho_t$であるとき，
+  \begin{align*}
+  \Delta^{\sigma} (x_1, x_2, \dots, x_n) & = (-1)^t \Delta (x_1, x_2, \dots, x_n) \\
+  & = (-1)^s \Delta (x_1, x_2, \dots, x_n)
+  \end{align*}
+  が成り立つ．したがって，$(-1)^s = (-1)^t$が成り立ち，$s$と$t$の偶奇は一致する．
+  これが証明すべきことであった．
+\end{proof}
+\end{tleftbar}
+
+今までの議論のまとめとして，用語を定義しよう：
+
+\begin{definition}{置換の符号}{置換の符号}
+  $\sigma \in S_n$が互換の積として表されるとき，その互換の数が偶数であれば$\sigma$は\textbf{偶置換}\index{ぐうちかん@偶置換}であり，奇数であれば\textbf{奇置換}\index{きちかん@奇置換}であるという．
+  
+  また，$\sigma$が偶置換であれば
+  \[
+  \sgn(\sigma) = 1
+  \]
+  と定め，奇置換であれば
+  \[
+  \sgn(\sigma) = -1
+  \]
+  と定める．この$\sgn(\sigma)$を$\sigma$の\textbf{符号}\index{ふごう@符号}と呼ぶ．
+\end{definition}
+
+\begin{mycolumn}
+  \deref{置換の符号}で現れる $\sgn(\sigma)$ は，置換 $\sigma$ の「符号」（sign / signature）を表す記号である．
+  記号$\sgn$は ``signum''（ラテン語で「しるし」）に由来し，実数 $x$ の符号を返す符号関数 $\sgn x$ にも用いられる．
+  $\sgn$は「サイン」「シグナム」「シグネチャー」「エス・ジー・エヌ」などと呼ばれることが多い．
+\end{mycolumn}
+
+\begin{example}{置換の符号}{置換の符号}
+  $\sigma \in S_3$を
+  \[
+  \sigma = \chikan{1, 2, 3}{3, 1, 2}
+  \]
+  とする．このとき，$\sigma$は互換の積として
+  \[
+  \sigma = (1, 3) \circ (1, 2)
+  \]
+  と表せるので，互換の個数は偶数である．ゆえに$\sigma$は偶置換であり，
+  \[
+  \sgn(\sigma) = 1
+  \]
+\end{example}
+
+
+次に，多項式に対する置換の作用を厳密に定義することで，符号の性質を導こう．
+\begin{definition}{多項式に対する置換の作用}{多項式に対する置換の作用}
+  $n$ 変数多項式 $f(x_1, \dots, x_n)$ と置換 $\sigma \in S_n$ に対して，新たな多項式 $f^\sigma$ を
+  \[
+  f^\sigma(x_1, \dots, x_n) = f(x_{\sigma(1)}, \dots, x_{\sigma(n)})
+  \]
+  で定義する．このとき，$f^\sigma$ を $f$ に対する置換 $\sigma$ の\textbf{作用}\index{さよう@作用}とよぶ．
+\end{definition}
+
+この定義に基づくと，差積 $\Delta$ に対する作用 $\Delta^\sigma$ は次のようにかける：
+\[
+\Delta^\sigma = \prod_{1 \le i < j \le n} (x_{\sigma(j)} - x_{\sigma(i)})
+\]
+このとき，$\sgn(\sigma)$ は $\Delta^\sigma = \sgn(\sigma) \Delta$ を満たす定数である．
+
+この定義のもとで，次の補題を証明しよう．
+\begin{lemma}{作用の合成}{作用の合成}
+  任意の多項式 $f$ と置換 $\sigma, \tau \in S_n$ に対して，次式が成り立つ：
+  \[
+  (f^\tau)^\sigma = f^{\sigma \circ \tau}
+  \]
+\end{lemma}
+
+\begin{proof}
+  $g = f^\tau$ とおくと，定義より $g(y_1, \dots, y_n) = f(y_{\tau(1)}, \dots, y_{\tau(n)})$ である．
+  ここで $y_k = x_{\sigma(k)}$ と置き換えて作用させると，
+  \begin{align*}
+    (f^\tau)^\sigma &= g(x_{\sigma(1)}, \dots, x_{\sigma(n)}) \\
+    &= f(x_{\sigma(\tau(1))}, \dots, x_{\sigma(\tau(n))}) \\
+    &= f(x_{(\sigma \circ \tau)(1)}, \dots, x_{(\sigma \circ \tau)(n)}) \\
+    &= f^{\sigma \circ \tau}.
+  \end{align*}
+  これが証明すべきことであった．
+\end{proof}
+最後に，置換の符号の基本的な性質をまとめた命題を示す．
+
+\begin{prop}{置換の符号の性質}{置換の符号の性質}
+  任意の$\sigma, \tau \in S_n$に対して，次が成り立つ：
+  \begin{align*} 
+     &\sgn(1_n)  = 1, \\
+    &\sgn(\sigma \circ \tau) = \sgn(\sigma) \cdot \sgn(\tau), \\
+     &\sgn(\sigma^{-1}) = \sgn(\sigma).
+  \end{align*}
+\end{prop}
+
+
+\begin{leftbar}
+\begin{proof}
+第1式について，
+\[
+  \Delta^{1_n} (x_1, x_2, \dots, x_n)  = \Delta (x_1, x_2, \dots, x_n) 
+\]
+なので，$\sgn(1_n) = 1$が成り立つ．
+
+第2式について，\lemref{作用の合成}から，
+任意の置換 $\sigma, \tau$ に対して $(\Delta^\tau)^\sigma = \Delta^{\sigma \circ \tau}$ が成り立つ．
+これを用いると，
+\begin{align*}
+  \sgn(\sigma \circ \tau) \Delta &= \Delta^{\sigma \circ \tau} \\
+  &= (\Delta^\tau)^\sigma \\
+  &= (\sgn(\tau) \Delta)^\sigma \\
+  &= \sgn(\tau) (\Delta^\sigma) \quad (\text{$\sgn(\tau)$ は定数なので作用の外に出る}) \\
+  &= \sgn(\tau) (\sgn(\sigma) \Delta) \\
+  &= (\sgn(\sigma) \sgn(\tau)) \Delta
+\end{align*}
+したがって，$\sgn(\sigma \circ \tau) = \sgn(\sigma) \sgn(\tau)$ が成り立つ．
+
+第3式について，$\sigma \circ \sigma^{-1} = 1_n$ であるから，いままでの結果を用いると，
+\begin{align*}
+  \sgn(\sigma \circ \sigma^{-1}) &= \sgn(1_n) \\
+  \sgn(\sigma) \sgn(\sigma^{-1}) &= 1
+\end{align*}
+$\sgn(\sigma) \in \{1, -1\}$ より $\sgn(\sigma)^2 = 1$ であるから，両辺に $\sgn(\sigma)$ を掛ければ
+\[
+\sgn(\sigma^{-1}) = \sgn(\sigma)
+\]
+を得る．
+
+以上の議論により，命題の3つの式がすべて成り立つことが示された．
+\end{proof}
+\end{leftbar}
+
+ここまでで「置換」と「置換の符号」についての議論を終えた．次章では，これらの概念を用いて行列式を定義しよう．
+
+\section{行列式の定義}
+
+\subsection{成分による行列式の定義}
+
+\begin{definition}{行列式}{行列式}
+  $n$次正方行列$A = (a_{ij})$に対して，$A$の\textbf{行列式}\index{ぎょうれつしき@行列式}（determinant）を$\det A $で表し，次のように定義する：
+  \begin{align*}
+  \det A &=\sum_{\sigma \in S_n} \sgn(\sigma) \prod_{k=1}^n a_{k\sigma(k)} \\
+  &=  \sum_{\sigma \in S_n} \sgn(\sigma) \cdot a_{1\sigma(1)} a_{2\sigma(2)} \dotsm a_{n\sigma(n)}
+  \end{align*}
+  $\det A$はしばしば$\abs{A}$ともかく．$A$の成分を明記したい場合には下記のようにも表記する：
+  \[
+  \begin{vmatrix}
+  a_{11}  & a_{12}  & \cdots & a_{1n} \\
+  a_{21}  & a_{22}  & \cdots & a_{2n} \\
+  \vdots  & \vdots  & \ddots & \vdots \\
+  a_{n1}  & a_{n2}  & \cdots & a_{nn}
+  \end{vmatrix}
+  \]
+  また，$A$の$i$列目の列ベクトルについて
+  \[
+   \bm{a_i} =\begin{pmatrix} a_{1i}\\ a_{2i}  \\ \vdots \\ a_{ni} \end{pmatrix}
+  \]
+  のときは$\det A$を下記のように表記することもある：
+  \[
+  \det(\bm{a}_1, \bm{a}_2, \dots, \bm{a}_n)
+  \]
+\end{definition}
+
+
+
+\begin{mycolumn}
+  行列式の定義において，$\sigma$が$S_n$を動くとき，$a_{1\sigma(1)} a_{2\sigma(2)} \cdots a_{n\sigma(n)}$は$A$の各行からちょうど1つずつ要素を選び，かつ各列からも1つずつ要素を選ぶような積である．
+  したがって，行列式は「各行・各列から1つずつ要素を選んでできる積」の符号付き和として解釈できる．
+\end{mycolumn}
+
+\begin{example}{2次の行列式}{2次の行列式}
+  $2$次正方行列$A = \begin{pmatrix} a_{11} & a_{12} \\ a_{21} & a_{22} \end{pmatrix}$に対して，$A$の行列式は次のように計算される：
+  \begin{align*}
+    \det A &= \sum_{\sigma \in S_2} \sgn(\sigma) \cdot a_{1\sigma(1)} a_{2\sigma(2)} \\
+    &= \sgn\left( \chikan{1, 2}{1, 2} \right) a_{11} a_{22} + \sgn\left( \chikan{1, 2}{2, 1} \right) a_{12} a_{21} \\
+    &= 1 \cdot a_{11} a_{22} + (-1) \cdot a_{12} a_{21} \\
+    &= a_{11} a_{22} - a_{12} a_{21}.
+  \end{align*}
+\end{example}
+
+\begin{example}{3次の行列式}{3次の行列式}
+  $3$次正方行列$A = \begin{pmatrix} a_{11} & a_{12} & a_{13} \\ a_{21} & a_{22} & a_{23} \\ a_{31} & a_{32} & a_{33} \end{pmatrix}$に対して，$A$の行列式は次のように計算される：
+  \begin{align*}
+    \det A &= \sum_{\sigma \in S_3} \sgn(\sigma) \cdot  a_{1\sigma(1)} a_{2\sigma(2)} a_{3\sigma(3)} \\
+    &= \sgn\left( \chikan{1, 2, 3}{1, 2, 3} \right) a_{11} a_{22} a_{33} + \sgn\left( \chikan{1, 2, 3}{1, 3, 2} \right) a_{11} a_{23} a_{32} \\
+    &\quad + \sgn\left( \chikan{1, 2, 3}{2, 1, 3} \right) a_{12} a_{21} a_{33} + \sgn\left( \chikan{1, 2, 3}{3, 2, 1} \right) a_{13} a_{22} a_{31} \\
+    &\quad + \sgn\left( \chikan{1, 2, 3}{2, 3, 1} \right) a_{12} a_{23} a_{31} + \sgn\left( \chikan{1, 2, 3}{3, 1, 2} \right) a_{13} a_{21} a_{32} \\
+    &= 1 \cdot a_{11} a_{22} a_{33} + (-1) \cdot a_{11} a_{23} a_{32} + (-1) \cdot a_{12} a_{21} a_{33} \\
+    &\quad + (-1) \cdot a_{13} a_{22} a_{31} + 1 \cdot a_{12} a_{23} a_{31} + 1 \cdot a_{13} a_{21} a_{32} \\
+    &= a_{11} a_{22} a_{33} + a_{12} a_{23} a_{31} + a_{13} a_{21} a_{32} - a_{11} a_{23} a_{32} - a_{12} a_{21} a_{33} - a_{13} a_{22} a_{31}.
+  \end{align*}
+\end{example}
+
+\subsection{行列式の諸性質}
+
+\begin{prop}{転置行列の行列式}{転置行列の行列式}
+  $n$次正方行列$A = (a_{ij})$に対して，次が成り立つ：
+  \[
+  \det A = \det A^\mathsf{T} 
+  \]
+\end{prop}
+
+\begin{leftbar}
+\begin{proof}
+ $\sigma (k) = i$とおく．$\sigma$が全単射であることにより，$\sigma$の逆写像として$\sigma ^{-1}$が存在し，
+ $\sigma ^{-1} (i)=k$が成立する．このとき，以下の式が成り立つ：
+ \[
+ a_{1\sigma(1)} a_{2\sigma(2)} \dotsm a_{n\sigma(n)} =  a_{\sigma^{-1}(1)1} a_{\sigma^{-1}(2)2} \dotsm a_{\sigma^{-1}(n)n}
+ \]
+ ただし，ここでは積の順序を適宜入れ替えた．
+
+ したがって，
+ \[
+  \det A = \sum_{\sigma \in S_n} \sgn(\sigma) \cdot a_{\sigma^{-1}(1)1} a_{\sigma^{-1}(2)2} \dotsm a_{\sigma^{-1}(n)n}
+\]
+であり，\prref{置換の符号の性質}の第2式を用いると，
+\[
+\det A = \sum_{\sigma \in S_n} \sgn(\sigma^{-1}) \cdot a_{\sigma^{-1}(1)1} a_{\sigma^{-1}(2)2} \dotsm a_{\sigma^{-1}(n)n}.
+\]
+この右辺に\prref{置換の性質}の主張を適用すると，
+\[
+\det A = \sum_{\sigma \in S_n} \sgn (\sigma ) \cdot a_{\sigma(1)1} a_{\sigma(2)2} \dotsm a_{\sigma(n)n}.
+\]
+この右辺は$\det A^\mathsf{T}$にほかならない．ゆえに，$\det A = \det A^\mathsf{T}$が成り立つことが示された．
+\end{proof}
+\end{leftbar}
+
+この事実が示唆することは「行列式は行ベクトルに関しても列ベクトルに関しても同様の性質が成り立つ」ということである．
+
+
+
+先に我々は，行列式を「各行・各列から1つずつ要素を選んでできる積」の符号付き和として解釈できると述べた．
+
+この解釈はもちろん正しいのだが，以下では行列式を「多重線型性」「交代性」「正規化条件」を満たす関数として定義することを考える．
+
+\begin{prop}{行列式の多重線型性}{行列式の多重線型性}
+  $n$次正方行列$A = (a_{ij})$に対して，$i$行目を
+  \[
+  \bm{a}_i = \bm{b}_i + \bm{c}_i
+  \]
+  と分解したとき，次が成り立つ：
+  \[
+  \det(\bm{a}_1, \dots, \bm{a}_{i-1}, \bm{a}_i, \bm{a}_{i+1}, \dots, \bm{a}_n) 
+  = \det(\bm{a}_1, \dots, \bm{a}_{i-1}, \bm{b}_i, \bm{a}_{i+1}, \dots, \bm{a}_n) 
+  + \det(\bm{a}_1, \dots, \bm{a}_{i-1}, \bm{c}_i, \bm{a}_{i+1}, \dots, \bm{a}_n)
+  \]
+  また，任意の定数$k \in \mathbb{C}$に対して，次が成り立つ：
+  \[
+  \det(\bm{a}_1, \dots, \bm{a}_{i-1}, k \bm{a}_i, \bm{a}_{i+1}, \dots, \bm{a}_n) 
+  = k \cdot \det(\bm{a}_1, \dots, \bm{a}_n)
+  \]
+\end{prop}
+
+\begin{leftbar}
+\begin{proof}
+  一つ目の主張について，行列式の定義から，
+  \begin{align*} 
+    &\det(\bm{a}_1, \dots, \bm{a}_{i-1}, \bm{a}_i, \bm{a}_{i+1}, \dots, \bm{a}_n) \\
+    =& \sum_{\sigma \in S_n} \sgn(\sigma) \cdot a_{1\sigma(1)} a_{2\sigma(2)} \dotsm a_{i\sigma(i)} \dotsm a_{n\sigma(n)} \\
+    =& \sum_{\sigma \in S_n} \sgn(\sigma) \cdot a_{1\sigma(1)} a_{2\sigma(2)} \dotsm (b_{i\sigma(i)} + c_{i\sigma(i)}) \dotsm a_{n\sigma(n)} \\
+    =& \sum_{\sigma \in S_n} \sgn(\sigma) \cdot a_{1\sigma(1)} a_{2\sigma(2)} \dotsm b_{i\sigma(i)} \dotsm a_{n\sigma(n)} 
+    + \sum_{\sigma \in S_n} \sgn(\sigma) \cdot a_{1\sigma(1)} a_{2\sigma(2)} \dotsm c_{i\sigma(i)} \dotsm a_{n\sigma(n)} \\
+    =& \det(\bm{a}_1, \dots, \bm{a}_{i-1}, \bm{b}_i, \bm{a}_{i+1}, \dots, \bm{a}_n) 
+     + \det(\bm{a}_1, \dots, \bm{a}_{i-1}, \bm{c}_i, \bm{a}_{i+1}, \dots, \bm{a}_n).
+  \end{align*}
+  二つ目の主張についても，行列式の定義から，
+  \begin{align*} 
+    &\det(\bm{a}_1, \dots, \bm{a}_{i-1}, k \bm{a}_i, \bm{a}_{i+1}, \dots, \bm{a}_n) \\
+    =& \sum_{\sigma \in S_n} \sgn(\sigma) \cdot a_{1\sigma(1)} a_{2\sigma(2)} \dotsm (k a_{i\sigma(i)}) \dotsm a_{n\sigma(n)} \\
+    =& k \sum_{\sigma \in S_n} \sgn(\sigma) \cdot a_{1\sigma(1)} a_{2\sigma(2)} \dotsm a_{i\sigma(i)} \dotsm a_{n\sigma(n)} \\
+    =& k \cdot \det(\bm{a}_1, \dots, \bm{a}_n).
+  \end{align*}
+  以上により，命題の両方の主張が成り立つことが示された．
+\end{proof}
+\end{leftbar}
+
+\begin{prop}{行列式の交代性}{行列式の交代性}
+  $n$次正方行列$A = (\bm{a}_1, \bm{a}_2, \dots, \bm{a}_n)$に置換$\tau$を施した行列として
+  $A' = (\bm{a}_{\tau(1)}, \bm{a}_{\tau(2)}, \dots, \bm{a}_{\tau(n)})$を考えると，次が成り立つ：
+  \[
+  \det A ' = \sgn (\tau) \cdot \det A
+  \]
+\end{prop}
+
+この命題は，特に$\tau$が互換$(i,j)$であるとき，次のように書き直せる：
+\[
+\det A'  = -\det A
+\]
+これは，行列$A$の$i$行目と$j$行目を入れ替えた行列$A'$の行列式は，$A$の行列式の符号を反転させたものであることを意味する．
+
+具体例を考えたところで，本題の証明に入ろう：
+
+\begin{leftbar}
+  \begin{proof}
+    行列式の定義から，
+    \begin{align*} 
+      \det A ' = & \sum_{\sigma \in S_n} \sgn(\sigma) \cdot a_{\tau(1)\sigma(1)} a_{\tau(2)\sigma(2)} \dotsm a_{\tau(n)\sigma(n)} \\
+      = & \sum_{\sigma \in S_n} \sgn(\sigma) \cdot a_{1(\sigma  \tau^{-1})(1)} a_{2(\sigma  \tau^{-1})(2)} \dotsm a_{n(\sigma  \tau^{-1})(n)}.
+    \end{align*} 
+    ここで，$\sgn (\sigma) = \sgn (\sigma \tau^{-1} (\tau))= \sgn (\sigma \tau^{-1}) \sgn (\tau)$が成り立つので，
+    \begin{align*} 
+      \det A ' = & \sum_{\sigma \in S_n} \sgn(\sigma  \tau^{-1}) \sgn (\tau) \cdot a_{1(\sigma  \tau^{-1})(1)} a_{2(\sigma  \tau^{-1})(2)} \dotsm a_{n(\sigma  \tau^{-1})(n)} \\
+      = & \sgn (\tau) \sum_{\sigma \tau^{-1} \in S_n} \sgn(\sigma \tau ^{-1}) \cdot a_{1\sigma \tau^{-1}(1)} a_{2\sigma \tau^{-1}(2)} \dotsm a_{n\sigma \tau^{-1}(n)} \\
+      = & \sgn (\tau) \cdot \det A.
+    \end{align*}
+    ここで，$\sigma$が$S_n$を動くとき，$\sigma \tau^{-1}$も$S_n$を動くことを用いた．
+
+    以上により，命題が正しいことが示された．
+  \end{proof}
+  \end{leftbar}
+
+  先ほどの具体例は，\prref{行列式の交代性}から導ける系としてまとめておこう：
+
+  \begin{cor}{行列式の交代性の系①}{行列式の交代性の系1}
+    $n$次正方行列$A = (\bm{a}_1, \bm{a}_2, \dots, \bm{a}_n)$において，相異なる$2$つの行$\bm{a}_i$と$\bm{a}_j$を入れ替えた行列を$A'$とすると，次が成り立つ：
+    \[
+    \det A' = - \det A
+    \]
+  \end{cor}
+
+  逆に\coref{行列式の交代性の系1}から\prref{行列式の交代性}も従う．
+  実際，任意の置換$\tau\in S_n$は互換の積として
+  \[
+  \tau=\pi_1\pi_2\cdots\pi_m
+  \]
+  と表せる（$m$は何回交換したかの回数）．
+  いま行列$A$の行を$\pi_1,\pi_2,\dots,\pi_m$の順に入れ替えていくと，\coref{行列式の交代性の系1}より
+  行列式は互換1回ごとに$-1$倍されるから，
+  最終的に $\det A' = (-1)^m \det A$ を得る．
+  そして，$\sgn(\tau)$は「互換分解における互換の回数の偶奇」で定まっており，$\sgn(\tau)=(-1)^m$であるから，
+  $\det A'=\sgn(\tau)\det A$ が従う．
+
+  さて，\prref{行列式の交代性}から導けるもう一つの系を示そう：
+\begin{cor}{行列式の交代性の系②}{行列式の交代性の系2}
+  $n$次正方行列$A = (\bm{a}_1, \bm{a}_2, \dots, \bm{a}_n)$において，もし$\bm{a}_i = \bm{a}_j$となる$i \ne j$が存在すれば，次が成り立つ：
+  \[
+  \det A = 0
+  \]
+\end{cor}
+
+\begin{leftbar}
+\begin{proof}
+  $i$行目と$j$行目を入れ替えた行列を$A'$とすると，\coref{行列式の交代性の系1}より
+  \[
+  \det A' = - \det A
+  \]
+  一方で，$\bm{a}_i = \bm{a}_j$であるから，$A = A'$であり，
+  \[
+  \det A' = \det A
+  \]
+  が成り立つ．以上より，
+  \[
+  \det A = - \det A
+  \]
+  が成り立ち，$\det A = 0$が得られる．これが証明すべきことであった．
+\end{proof}
+\end{leftbar}
+
+\coref{行列式の交代性の系2}から，$A$の$n$個の列が一次従属ならば$\det A =0$であることがわかる．
+命題としてまとめよう：
+
+\begin{prop}{行列式と一次従属}{行列式と一次従属}
+  $n$次正方行列$A = (\bm{a}_1, \bm{a}_2, \dots, \bm{a}_n)$において，もし$\bm{a}_1, \bm{a}_2, \dots, \bm{a}_n$が一次従属であれば，次が成り立つ：
+  \[
+  \det A = 0
+  \]
+\end{prop}
+
+\begin{leftbar}
+\begin{proof}
+  $\bm{a}_1, \bm{a}_2, \dots, \bm{a}_n$が一次従属であるとき，ある$i$に対して$\bm{a}_i$が他の列ベクトルの線形結合として表せる．
+  すなわち，ある定数$c_1, c_2, \dots, c_{i-1}, c_{i+1}, \dots, c_n \in \mathbb{C}$が存在して，
+  \[
+  \bm{a}_i = \sum_{\substack{1\leqq j\leqq n\\ j \ne i}} c_j \bm{a}_j
+  \]
+  が成り立つ．
+
+  このとき，行列式の多重線型性から，
+  \begin{align*} 
+    &\det(\bm{a}_1, \dots, \bm{a}_{i-1}, \bm{a}_i, \bm{a}_{i+1}, \dots, \bm{a}_n)  = \det(\bm{a}_1, \dots, \bm{a}_{i-1}, \sum_{\substack{1\leqq j\leqq n\\ j \ne i}} c_j \bm{a}_j, \bm{a}_{i+1}, \dots, \bm{a}_n) \\
+    =& \sum_{\substack{1\leqq j\leqq n\\ j\ne i}} c_j \det(\bm{a}_1, \dots, \bm{a}_{i-1}, \bm{a}_j, \bm{a}_{i+1}, \dots, \bm{a}_n).
+  \end{align*}
+  ここで，各項において$i$行目と$j$行目が等しいため，\coref{行列式の交代性の系2}より各項は$0$となる．
+  したがって，このとき$\det A = 0$となる．
+  
+  以上により，命題が示された．
+\end{proof}
+\end{leftbar}
+
+\prref{行列式と一次従属}の対偶を考えると，以下の命題が得られる：
+
+\begin{prop}{行列式と一次独立}{行列式と一次独立}
+  $n$次正方行列$A = (\bm{a}_1, \bm{a}_2, \dots, \bm{a}_n)$において，もし$\det A \ne 0$であれば，$\bm{a}_1, \bm{a}_2, \dots, \bm{a}_n$は一次独立である．
+  つまりこのとき，
+  \[
+  \rank A = n
+  \]
+  が成り立つ．
+\end{prop}
+
+この命題から「クラメールの公式」を証明できる．少し話はそれるが，以下に示そう：
+
+
+\begin{prop}{クラメールの公式}{クラメールの公式}
+  $n$元の連立一次方程式
+  \[
+  \begin{cases}
+    a_{11} x_1 + a_{12} x_2 + \dots + a_{1n} x_n = b_1 \\
+    a_{21} x_1 + a_{22} x_2 + \dots + a_{2n} x_n = b_2 \\
+    \vdots \\
+    a_{n1} x_1 + a_{n2} x_2 + \dots + a_{nn} x_n = b_n
+  \end{cases}
+  \]
+  を考える．このとき，係数行列$A = (a_{ij})$の行列式が$\det A \ne 0$であるならば，この連立一次方程式はただ一つの解をもち，その解は次で与えられる：
+  \[
+  x_i = \frac{\det A_i}{\det A} \quad (i=1, 2, \dots, n)
+  \]
+  ただし，$A_i$は行列$A$の$i$列目をベクトル$\bm{b} = (b_1, b_2, \dots, b_n)^\mathsf{T}$で置き換えた行列である．
+\end{prop}
+
+\begin{leftbar}
+\begin{proof}
+  解の存在と一意性は，\prref{行列式と一次独立}から従う．
+  そこで，以下では解の具体的な形を示すことにする．
+  \[
+   \bm{b}= x_1 \bm{a}_1+x_2 \bm{a}_2+\dots + x_n \bm{a}_n
+  \]
+  であるから，
+  \begin{align*}
+  \det A_i & = \det (\bm{a}_1,\bm{a}_2,\dots,\bm{b},\dots,\bm{a}_n) \\
+  & = \det (\bm{a}_1,\bm{a}_2,\dots, \sum_{k=1}^n x_k \bm{a}_k ,\dots,\bm{a}_n) \\
+  & = \sum_{k=1}^n x_k \det (\bm{a}_1,\bm{a}_2,\dots, \bm{a}_k ,\dots,\bm{a}_n) 
+  \end{align*}
+  ここで，$k \ne i$であるとき，行列式の交代性から
+  \[
+  \det (\bm{a}_1,\bm{a}_2,\dots, \bm{a}_k ,\dots,\bm{a}_n) = 0
+  \]
+  が成り立つ．したがって，
+  \[
+  \det A_i = x_i \det A
+  \]
+  が成り立ち，これを変形すれば
+  \[
+  x_i = \frac{\det A_i}{\det A}
+  \]
+  が得られる．これが証明すべきことであった．
+\end{proof}
+\end{leftbar}
+
+クラメールの公式は，連立方程式の解を行列式を用いて明示的に解く方法を提供する．
+ただし，実際の計算においては，行列式の計算が複雑になるため，あまり効率的ではないことに注意されたい．
+
+少し話が逸れてしまったが，行列式の性質に戻ろう．
+
+\begin{prop}{行列式の正規化条件}{行列式の正規化条件}
+  $n$次単位行列$E_n$に対して，次が成り立つ：
+  \[
+  \det E_n = 1
+  \]
+\end{prop}
+
+\begin{tleftbar}
+\begin{proof}
+  行列式の定義から，
+  \begin{align*} 
+    \det E_n &= \sum_{\sigma \in S_n} \sgn(\sigma) \cdot e_{1\sigma(1)} e_{2\sigma(2)} \dotsm e_{n\sigma(n)} \\
+    &= \sgn(1_n) \cdot e_{11} e_{22} \dotsm e_{nn} + \sum_{\sigma \in S_n, \sigma \ne 1_n} \sgn(\sigma) \cdot e_{1\sigma(1)} e_{2\sigma(2)} \dotsm e_{n\sigma(n)} \\
+    &= 1 \cdot 1 \cdot 1 \dotsm 1 + 0 \\
+    &= 1.
+  \end{align*}
+  ここで，$\sigma \ne 1_n$であるとき，少なくとも一つの$k$に対して$\sigma(k) \ne k$が成り立ち，したがって$e_{k\sigma(k)} = 0$であることを用いた．
+
+  以上の議論によって，命題が示された．
+\end{proof}
+\end{tleftbar}
+
+\subsection{行列式の「公理的定義」}
+
+\begin{prop}{行列式の特徴づけ}{行列式の特徴づけ}
+多重線型写像$F \colon \mathbb{C}^n \times \mathbb{C}^n \times \dots \times \mathbb{C}^n \to \mathbb{C}$が交代性と正規化条件を満たすとき，$F$は写像$\det$と一致する．
+\end{prop}
+
+\begin{leftbar}
+\begin{proof}
+  $\bm{x}_j \in \mathbb{C}^n$をとり，行列$A = (\bm{x}_1, \bm{x}_2, \dots, \bm{x}_n)$を考える．
+  また，必要に応じて以下では$\bm{x}_j = \sum_{i=1}^n x_{ij} \bm{e}_i$と表記し，
+  $\bm{e}_i$は標準基底ベクトルとする．
+
+  まず，$F$が多重線型写像であることから，
+  \begin{align*} 
+    F (\bm{x}_1, \bm{x}_2, \dots, \bm{x}_n)& = \left (\sum_{i_1=1}^n x_{i_11} \bm{e}_{i_1}, \sum_{i_2=1}^n x_{i_22} \bm{e}_{i_2}, \dots, \sum_{i_n=1}^n x_{i_nn} \bm{e}_{i_n} \right) \\
+    & = \sum_{i_1=1}^n \sum_{i_2=1}^n \dotsm \sum_{i_n=1}^n x_{i_11} x_{i_22} \dotsm x_{i_nn} F(\bm{e}_{i_1}, \bm{e}_{i_2}, \dots, \bm{e}_{i_n}).
+  \end{align*}
+  
+  ここで，もし$(i_1, i_2, \dots, i_n)$において，$i_k = i_l$となる$k \ne l$が存在すれば，交代性から
+  \[
+  F(\bm{e}_{i_1}, \bm{e}_{i_2}, \dots, \bm{e}_{i_n}) = 0
+  \]
+  が成り立つ．したがって，和の中で非零となるのは，$(i_1, i_2, \dots, i_n)$が$\{1, 2, \dots, n\}$の置換である場合に限られる．
+  すなわち，ある$\sigma \in S_n$に対して$(i_1, i_2, \dots, i_n) = (\sigma(1), \sigma(2), \dots, \sigma(n))$である場合に限られる．
+  
+  したがって，
+  \begin{align*}
+    F (\bm{x}_1, \bm{x}_2, \dots, \bm{x}_n)& = \sum_{\sigma \in S_n} x_{\sigma(1)1} x_{\sigma(2)2} \dotsm x_{\sigma(n)n} F(\bm{e}_{\sigma(1)}, \bm{e}_{\sigma(2)}, \dots, \bm{e}_{\sigma(n)}) \\
+    & = \sum_{\sigma \in S_n} x_{\sigma(1)1} x_{\sigma(2)2} \dotsm x_{\sigma(n)n} \sgn(\sigma) F(\bm{e}_1, \bm{e}_2, \dots, \bm{e}_n) \\
+    & = F(\bm{e}_1, \bm{e}_2, \dots, \bm{e}_n) \sum_{\sigma \in S_n} \sgn(\sigma) x_{\sigma(1)1} x_{\sigma(2)2} \dotsm x_{\sigma(n)n}.
+  \end{align*}
+  ここで，正規化条件から$F(\bm{e}_1, \bm{e}_2, \dots, \bm{e}_n) = 1$であることを用いると，
+  \[
+  F (\bm{x}_1, \bm{x}_2, \dots, \bm{x}_n) = \sum_{\sigma \in S_n} \sgn(\sigma) x_{\sigma(1)1} x_{\sigma(2)2} \dotsm x_{\sigma(n)n} = \det A
+  \]
+  が成り立つ．これが証明すべきことであった．
+\end{proof}
+\end{leftbar}
+
+以上の議論を踏まえると，行列式は下記のようにも定義できる：
+
+\begin{definition}{行列式の「公理的定義」}{行列式の「公理的定義」}
+  $n$次正方行列$A = (\bm{a}_1, \bm{a}_2, \dots, \bm{a}_n)$に対して，以下の3つの性質をすべて満たす写像
+  \[
+  \det \colon M_n(\mathbb{C}) \to \mathbb{C}
+  \]
+  はただ一つ存在し\footnote{置換を用いた定義式（\deref{行列式}）がこれらの性質を満たすことが証明されているため，写像の存在が保証され，またこれらの性質を満たす写像が定義式と一致することが\prref{行列式の特徴づけ}で示されているため，この写像は一意に定まる．}，これを$A$の\textbf{行列式}と呼ぶ：
+  \begin{description}[labelwidth=5\zw,leftmargin=!, itemsep=0pt]
+   \item [多重線型性]各行に関して線型である．
+\item [交代性]任意の置換$\tau \in S_n$に対して，$\det(\bm{a}_{\tau(1)}, \bm{a}_{\tau(2)}, \dots, \bm{a}_{\tau(n)}) = \sgn(\tau) \cdot \det(\bm{a}_1, \bm{a}_2, \dots, \bm{a}_n)$が成り立つ．
+   \item [正規化条件]単位行列$E_n$に対して，$\det E_n = 1$が成り立つ．
+  \end{description}
+\end{definition}
+
+ここまでで，行列式の「行列の成分による定義」と「公理的定義」の2つをみてきた．これらの定義を整理すると以下のようになる．
+
+
+
+\begin{table}[ht]
+  \centering
+  \caption{行列式の2つの定義の比較}
+  %\renewcommand{\arraystretch}{1.8} % 数式が上下の線に触れないよう少し広めに
+  \begin{tabular}{|B{1.6cm}|L{6.8cm}|L{6.8cm}|} % || を | に変更して分離を解消
+    \hline
+    \makecell[c]{\mbox{}}
+      & \makecell[c]{\textbf{行列の成分による定義}}
+      & \makecell[c]{\textbf{公理的定義}}
+    \\ \hline
+    % \hline\hline を \hline にして地続きに
+
+    \makecell[c]{手法}
+      & \makecell[l]{置換を用いて具体的な表式を書き下す}
+      & \makecell[l]{行列式が満たすべき3つの性質で定義}
+    \\ \hline
+
+    \makecell[c]{参照}
+      & \makecell[l]{\deref{行列式}}
+      & \makecell[l]{\deref{行列式の「公理的定義」}}
+    \\ \hline
+
+    \raisebox{-0.25\baselineskip}{\makecell[c]{要請}}
+      & \makecell[l]{$\displaystyle
+          \det A=\sum_{\sigma\in S_n}\sgn(\sigma)
+          \prod_{k=1}^{n} a_{k\sigma(k)}$} % \makecell で包んで中央配置
+      & \makecell[l]{1. 多重線型性 2. 交代性 3. 正規化条件\\の3つを満たす写像}
+    \\ \hline
+  \end{tabular}
+\end{table}
+
+
+\begin{prop}{行列式の積}{行列式の積}
+  $A, X \in M_n(\mathbb{C})$ に対して
+  \[
+    \det(AX)=\det(A)\det(X)
+  \]
+  が成り立つ．
+\end{prop}
+
+\begin{leftbar}
+\begin{proof}[1]
+  $A$ を固定し，$X$ を変数として
+  \[
+    F(X)=  \det(AX)
+  \]
+  とおく．このとき，$F$ が「行列式」と同じ性質（多重線型性・交代性）を満たすことを確認し，
+  \prref{行列式の特徴づけ}を適用する．
+
+  \medskip
+  \noindent\textbf{(1) 列に関する多重線型性}\par
+  $X$ の $j$ 列を $\bm{x}_j$ と書く（すなわち $X=(\bm{x}_1,\dots,\bm{x}_n)$）．
+  行列の積の定義より
+  \[
+    AX=(A\bm{x}_1,A\bm{x}_2,\dots,A\bm{x}_n)
+  \]
+  である．したがって $j$ 列だけを見れば，$AX$ の $j$ 列は $A\bm{x}_j$ であり，
+  これは $\bm{x}_j$ に関して線型である（$A$ は固定している）．
+  よって $F(X)=\det(AX)$ は $X$ の各列について線型，すなわち多重線型である．
+
+  \medskip
+  \noindent\textbf{(2) 列に関する交代性}\par
+  $X$ の 2 本の列を入れ替えた行列を $X'$ とすると，
+  $AX'$ は $AX$ の同じ 2 本の列を入れ替えた行列になっている．
+  したがって\coref{行列式の交代性の系1}より
+  \[
+    F(X')=\det(AX')=-\det(AX)=-F(X)
+  \]
+  となる．つまり $F$ は列に関して交代的である．
+
+  \medskip
+  \noindent\textbf{(3) 正規化（値の確認）}\par
+  単位行列 $E_n$ に対して
+  \[
+    F(E_n)=\det(AE_n)=\det(A)
+  \]
+  である．
+
+  \medskip
+  以上より，$F$ は「列に関して」多重線型かつ交代的である．
+
+  そこで$\det(A) \ne 0$ の場合に，
+  \[
+    G(X) = \frac{F(X)}{\det(A)}
+  \]
+  とおくと，$G$ もまた多重線型・交代性を満たし，さらに
+  \[
+    G(E_n)=\frac{F(E_n)}{\det(A)}=1
+  \]
+  となる．よって \prref{行列式の特徴づけ}より $G(X)=\det(X)$ が従う．したがって
+  \[
+    F(X)=\det(A)\det(X),
+  \]
+  ゆえに，$\det (A) \ne 0$のときに$\det(AX)=\det(A)\det(X)$が成り立つ．
+
+  \medskip
+  最後に $\det(A)=0$ の場合でも結論が成り立つことを述べる．
+  このとき，$A$ の列ベクトルは一次従属なので，$A$ の列のある線型結合が $0$ になる．
+  同じ係数で $AX$ の列にも線型結合をとれば $0$ となるため，$AX$ の列も一次従属である．
+  よって $\det(AX)=0$ であり，右辺も $\det(A)\det(X)=0$ なので等式は成り立つ．
+
+  以上の議論により，命題が示された．
+\end{proof}
+\end{leftbar}
+
+
+\begin{leftbar}
+\begin{proof}[2]
+  $A =(a_{ij})$，$X = (\bm{x}_1 , \bm{x}_2 , \dots, \bm{x}_n)$ とおくと，
+  \[
+   AX = \left(\sum_{i_1 =1}^{n} a_{1i_1} \bm{x}_{i_1},\sum_{i_2 =1}^{n} a_{2i_2} \bm{x}_{i_2},\dots,\sum_{i_n =1}^{n} a_{ni_n} \bm{x}_{i_n} \right)
+  \]
+  であるから，
+  \begin{align*} 
+    \det(AX) & = \det \left(\sum_{i_1 =1}^{n} a_{1i_1} \bm{x}_{i_1},\sum_{i_2 =1}^{n} a_{2i_2} \bm{x}_{i_2},\dots,\sum_{i_n =1}^{n} a_{ni_n} \bm{x}_{i_n} \right) \\
+    & = \sum_{i_1 =1}^{n} \sum_{i_2 =1}^{n} \dotsm \sum_{i_n =1}^{n} a_{1i_1} a_{2i_2} \dotsm a_{ni_n} \det(\bm{x}_{i_1},\bm{x}_{i_2},\dots,\bm{x}_{i_n}) \\
+    & =  \sum_{\sigma \in S_n} a_{1\sigma(1)} a_{2\sigma(2)} \dotsm a_{n\sigma(n)} \det(\bm{x}_{\sigma(1)},\bm{x}_{\sigma(2)},\dots,\bm{x}_{\sigma(n)}) \\
+    & =  \sum_{\sigma \in S_n} a_{1\sigma(1)} a_{2\sigma(2)} \dotsm a_{n\sigma(n)} \sgn(\sigma) \det(\bm{x}_1,\bm{x}_2,\dots,\bm{x}_n) \\
+    & = \left( \sum_{\sigma \in S_n} \sgn(\sigma) a_{1\sigma(1)} a_{2\sigma(2)} \dotsm a_{n\sigma(n)} \right) \det X \\
+    & = \det A \cdot \det X.
+  \end{align*}
+  ここで，二つ目の等号では行列式の多重線型性を用い，三つ目の等号では
+  $(i_1, i_2, \dots, i_n)$が置換である場合のみ非零となることを用い，
+  四つ目の等号では行列式の交代性を用いた．
+  以上により，命題が示された．
+\end{proof}
+\end{leftbar}
+
+
+\clearpage

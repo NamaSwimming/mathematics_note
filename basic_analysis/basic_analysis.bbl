@@ -1,0 +1,105 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.3 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{none/global//global/global/global}
+    \entry{sugiura}{book}{}{}
+      \name{author}{1}{}{%
+        {{hash=59a7596f02f01f20af2d0ce9d89f6590}{%
+           family={杉浦},
+           familyi={杉\bibinitperiod},
+           given={光夫},
+           giveni={光\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {東京大学出版会}%
+      }
+      \strng{namehash}{59a7596f02f01f20af2d0ce9d89f6590}
+      \strng{fullhash}{59a7596f02f01f20af2d0ce9d89f6590}
+      \strng{fullhashraw}{59a7596f02f01f20af2d0ce9d89f6590}
+      \strng{bibnamehash}{59a7596f02f01f20af2d0ce9d89f6590}
+      \strng{authorbibnamehash}{59a7596f02f01f20af2d0ce9d89f6590}
+      \strng{authornamehash}{59a7596f02f01f20af2d0ce9d89f6590}
+      \strng{authorfullhash}{59a7596f02f01f20af2d0ce9d89f6590}
+      \strng{authorfullhashraw}{59a7596f02f01f20af2d0ce9d89f6590}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{series}{基礎数学}
+      \field{title}{解析入門}
+      \field{year}{1980}
+    \endentry
+    \entry{matsuzaka}{book}{}{}
+      \name{author}{1}{}{%
+        {{hash=a3d621cccd4b07fffb4ed9d98e2e1ef5}{%
+           family={松坂},
+           familyi={松\bibinitperiod},
+           given={和夫},
+           giveni={和\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {岩波書店}%
+      }
+      \strng{namehash}{a3d621cccd4b07fffb4ed9d98e2e1ef5}
+      \strng{fullhash}{a3d621cccd4b07fffb4ed9d98e2e1ef5}
+      \strng{fullhashraw}{a3d621cccd4b07fffb4ed9d98e2e1ef5}
+      \strng{bibnamehash}{a3d621cccd4b07fffb4ed9d98e2e1ef5}
+      \strng{authorbibnamehash}{a3d621cccd4b07fffb4ed9d98e2e1ef5}
+      \strng{authornamehash}{a3d621cccd4b07fffb4ed9d98e2e1ef5}
+      \strng{authorfullhash}{a3d621cccd4b07fffb4ed9d98e2e1ef5}
+      \strng{authorfullhashraw}{a3d621cccd4b07fffb4ed9d98e2e1ef5}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{series}{松坂和夫数学入門シリーズ}
+      \field{title}{解析入門}
+      \field{year}{2018}
+    \endentry
+    \entry{saito}{book}{}{}
+      \name{author}{1}{}{%
+        {{hash=e3d85307764e6cb7ed01c7176b4af50d}{%
+           family={斎藤},
+           familyi={斎\bibinitperiod},
+           given={正彦},
+           giveni={正\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {東京図書}%
+      }
+      \strng{namehash}{e3d85307764e6cb7ed01c7176b4af50d}
+      \strng{fullhash}{e3d85307764e6cb7ed01c7176b4af50d}
+      \strng{fullhashraw}{e3d85307764e6cb7ed01c7176b4af50d}
+      \strng{bibnamehash}{e3d85307764e6cb7ed01c7176b4af50d}
+      \strng{authorbibnamehash}{e3d85307764e6cb7ed01c7176b4af50d}
+      \strng{authornamehash}{e3d85307764e6cb7ed01c7176b4af50d}
+      \strng{authorfullhash}{e3d85307764e6cb7ed01c7176b4af50d}
+      \strng{authorfullhashraw}{e3d85307764e6cb7ed01c7176b4af50d}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{微分積分学}
+      \field{year}{2006}
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+

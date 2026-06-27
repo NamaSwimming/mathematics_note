@@ -1,0 +1,44 @@
+\documentclass{mathnote}
+\usepackage{mathnote}
+
+\begin{document}
+
+% タイトルページの呼び出し
+\tituloum{線型代数のノート}{Namachan}{}{}{\today}
+
+%\include{Preambulo/Capa}
+
+\thispagestyle{empty}
+
+\newpage
+\pagenumbering{arabic}
+\pagecolor{white}
+
+% 目次の表示
+\localtableofcontents
+
+\newpage
+\input{contents/section1_determinant.tex}
+\newpage
+
+
+\cite{saitomasahiko1966}，\cite{arai}，\cite{yukiegunron}，\cite{fujioka2021}を参考にした．
+
+% 参考文献
+\phantomsection
+\setcounter{section}{5}
+\titleformat{name=\part,numberless}[block]
+{}{}{0pt}{\normalfont\huge\bfseries}
+\printbibliography[title=参考文献]
+\addcontentsline{toc}{part}{参考文献}
+
+% 索引
+\clearpage
+\setcounter{section}{6}
+\renewcommand{\indexname}{索引}
+\titleformat{name=\part,numberless}[block]
+{}{}{0pt}{\normalfont\huge\bfseries}
+\phantomsection \addcontentsline{toc}{part}{索引}
+\printindex
+
+\end{document}

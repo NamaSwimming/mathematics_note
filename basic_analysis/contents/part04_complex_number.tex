@@ -1,0 +1,372 @@
+\part{\texorpdfstring{$\mathbb{R}^n$と$\mathbb{C}$}{Rn と C}}
+
+
+\phantomsection
+\section{\texorpdfstring{$n$次元数空間}{n次元数空間}}
+
+\begin{definition}{$n$次元数空間}{}
+	直積集合
+	\[
+		\mathbb{R} \times \mathbb{R} \times \dotsm \times \mathbb{R} = \mathbb{R}^n
+	\]
+	を$n$次元数空間といい，その元を$n$次元数ベクトルという．
+\end{definition}
+
+\begin{definition}{ベクトルの相等}{}
+	2つのベクトル
+	\[
+		\bm{x} = (x_1,x_2,\ldots,x_n) \in \mathbb{R}^n,\quad \bm{y} = (y_1,y_2,\ldots,y_n) \in \mathbb{R}^n
+	\]
+	が等しいことを，任意の$i \in \{ 1, 2 , \ldots ,n \}$に対して$x_i = y _i$であることとする．
+\end{definition}
+
+
+\begin{definition}{ベクトルの和}{}
+	2つのベクトル
+	\[
+		\bm{x} = (x_1,x_2,\ldots,x_n) \in \mathbb{R}^n,\quad \bm{y} = (y_1,y_2,\ldots,y_n) \in \mathbb{R}^n
+	\]
+	の和を，
+	\[
+		\bm{x}+\bm{y} \coloneqq (x_1+y_1,x_2+y_2,\ldots,x_n+y_n) \in \mathbb{R}^n
+	\]
+	とする．
+\end{definition}
+
+左辺の$+$は演算$+ \colon \mathbb{R}^n \times \mathbb{R}^n \to \mathbb{R}^n$を表しているが，
+右辺の$+$は演算$+ \colon  \mathbb{R} \times \mathbb{R} \to \mathbb{R}$を表しており，これを区別することなく演算記号を約束した．
+
+\begin{definition}{ベクトルのスカラー倍}{}
+	ベクトル
+	\[
+		\bm{x} = (x_1,x_2,\ldots,x_n) \in \mathbb{R}^n
+	\]
+	と実数$ a \in \mathbb{R}$の積を，
+	\[
+		a  \cdot  \bm{x} \coloneqq (a \cdot  x_1,a\cdot  x_2,\ldots,a \cdot  x_n) \in \mathbb{R}^n
+	\]
+	とする．
+\end{definition}
+
+ここでも，$a \cdot \bm{x}$の$ \cdot $は演算$\cdot  \colon \mathbb{R} \times   \mathbb{R}^n \to \mathbb{R}^n$を表しているが，
+右辺の$\cdot $は演算$\cdot \colon \mathbb{R} \times  \mathbb{R} \to \mathbb{R}$を表しており，これを区別することなく演算記号を約束した．
+また，次からは$\cdot $を省略することがある．
+
+\newpage 
+
+\begin{theorem}{ベクトルの演算に関する性質}{ベクトルの演算に関する性質}
+	$\mathbb{R}^n$の任意のベクトル$\bm{x}$，$\bm{y}$，$\bm{z}$と$a \in \mathbb{R}$に対して，次の性質が成り立つ．
+	\begin{enumerate}
+		\item $\bm{x}+\bm{y} = \bm{y}+\bm{x}$
+		\item $(\bm{x}+\bm{y})+\bm{z} = \bm{x}+(\bm{y}+\bm{z})$
+		\item $\bm{x}+\bm{0} = \bm{x}$
+		\item $\bm{x}+(-\bm{x}) = \bm{0}$
+		\item $1 \cdot \bm{x} = \bm{x}$
+		\item $a \cdot (b \cdot \bm{x}) = (ab) \cdot \bm{x}$
+		\item $(a+b) \cdot \bm{x} = a \cdot \bm{x} + b \cdot \bm{x}$
+		\item $a \cdot (\bm{x}+\bm{y}) = a \cdot \bm{x} + a \cdot \bm{y}$
+	\end{enumerate}
+\end{theorem}
+
+\begin{leftbar}
+	\begin{proof}
+		1，2，5，6は演算の定義から明らか．
+		3，4は，$\bm{0} = (0,0,\ldots,0)$，$-\bm{x} = (-x_1,-x_2,\ldots,-x_n)$と定義すればよい．
+		7，8は，$a \cdot \bm{x} = (ax_1,ax_2,\ldots,ax_n)$，$b \cdot \bm{x} = (bx_1,bx_2,\ldots,bx_n)$と定義すればよい．
+	\end{proof}
+\end{leftbar}
+
+\begin{definition}{ベクトルの内積}{}
+	2つのベクトル
+	\[
+		\bm{x} = (x_1,x_2,\ldots,x_n) \in \mathbb{R}^n,\quad \bm{y} = (y_1,y_2,\ldots,y_n) \in \mathbb{R}^n
+	\]
+	の内積を，
+	\[
+		\langle \bm{x} , \bm{y} \rangle \coloneqq x_1y_1+x_2y_2+\dotsb+x_ny_n \in \mathbb{R}
+	\]
+	とする．
+\end{definition}
+
+\begin{theorem}{ベクトルの内積の性質}{ベクトルの内積の性質}
+	$\bm{x},\bm{y},\bm{z} \in \mathbb{R}^n$，$a \in \mathbb{R}$に対して，次の性質が成り立つ．
+	\begin{enumerate}
+		\item $\langle \bm{x} , \bm{y} \rangle = \langle \bm{y} , \bm{x} \rangle$
+		\item $\langle \bm{x} , \bm{y} + \bm{z} \rangle = \langle \bm{x} , \bm{y} \rangle + \langle \bm{x} , \bm{z} \rangle$
+		\item $\langle a \cdot \bm{x} , \bm{y} \rangle = a \cdot \langle \bm{x} , \bm{y} \rangle$
+		\item $\langle \bm{x} , \bm{x} \rangle \geqq 0$，$\langle \bm{x} , \bm{x} \rangle = 0 \iff \bm{x} = \bm{0}$
+		\item $\abs{\langle \bm{x} , \bm{y} \rangle} \leqq \sqrt{\langle \bm{x} , \bm{x} \rangle} \sqrt{\langle \bm{y} , \bm{y} \rangle}$
+		\item $\langle \bm{x} , \bm{y} \rangle = 0 \iff \bm{x} \perp \bm{y}$
+	\end{enumerate}
+\end{theorem}
+\phantomsection
+\section{複素数体の定義}
+
+
+\begin{definition}{$\mathbb{R}^2$の和と積}{R2の和と積}
+	$(a,b),(c,d) \in \mathbb{R}^2$に関して，加法と乗法を
+	\begin{align*} 
+		& (a,b)+(c,d)=(a+c,b+d), \\
+		& (a,b) \cdot (c,d) = (ac-bd,ad+bc)
+	\end{align*} 
+	と定める．
+\end{definition}
+
+\begin{theorem}{}{}
+	\deref{R2の和と積}における$\mathbb{R}^2$は可換体である．．
+	乗法の単位元は$(1,0)$であり，乗法の逆元に関して$(a,b)^{-1}=(a/(a^2+b^2),-b/(a^2+b^2))$である．ただし$(a,b) \ne (0,0)$とする．
+\end{theorem}
+
+\begin{tleftbar}
+\begin{proof}
+	乗法の単位元に関して，
+	\[
+		(a,b)(1,0) = (a \cdot 1 - b \cdot 0 , a \cdot 0 + b \cdot 1) = (a,b)
+	\]
+	であるから，たしかに$(1,0)$は乗法の単位元である．
+
+	また，$(a,b) \ne (0,0)$とすると，$a^2+b^2 \ne 0$であるから，$(a,b)$の乗法の逆元は
+	\[
+		\left( \frac{a}{a^2+b^2},\frac{-b}{a^2+b^2} \right)
+	\]
+	である\footnote{計算は省略する．}
+\end{proof}
+\end{tleftbar}
+
+\begin{definition}{虚数単位}{}
+	\[
+		(0,1)=i
+	\]
+	と記し，$i$を虚数単位とよぶ．
+\end{definition}
+
+\begin{prop}{}{}
+\[
+	i^2 =-1
+\]
+\end{prop}
+
+\begin{tleftbar}
+	\begin{proof}
+		\[
+			i^2 = (0,1)(0,1) = (0 \cdot 0 - 1 \cdot 1 , 0 \cdot 1 + 1 \cdot 0) = (-1,0) = -1
+		\]
+	\end{proof}
+\end{tleftbar}
+
+\begin{definition}{複素数体}{}
+	$\mathbb{C} \coloneqq \mathbb{R}^2$とし，$\mathbb{C}$の元を複素数という．
+\end{definition}
+
+\begin{prop}{複素数の性質}{}
+	$z,w \in \mathbb{C}$のとき，
+	\begin{enumerate}
+		\item $\overline{z \pm w} = \overline{z} \pm \overline{w}$
+		\item $\overline{zw} = \overline{z} \cdot \overline{w}$
+		\item $\overline{z}z = \abs{z}^2$
+		\item $\abs{zw} = \abs{z} \abs{w}$
+	\end{enumerate}
+	となる．
+\end{prop}
+
+\begin{tleftbar}
+	\begin{proof}
+		1，2は演算の定義から明らか．
+		3に関して，
+		\[
+			\overline{z}z = (a,-b)(a,b) = (a^2+b^2,0) = \abs{z}^2
+		\]
+		である．
+		4に関して，
+		\[
+			\abs{zw}^2 = \overline{zw}zw = \overline{z}z \overline{w}w = \abs{z}^2 \abs{w}^2
+		\]
+		であるから，$\abs{zw} = \abs{z} \abs{w}$である．
+	\end{proof}
+\end{tleftbar}
+
+\newpage 
+
+\phantomsection
+\section{点列}
+
+\begin{definition}{点列}{点列}
+	写像
+	\[
+		a \colon \mathbb{N} \ni m \longmapsto a_m \in \mathbb{R}^n
+	\]
+	を$\mathbb{R}^n$の点列という．
+\end{definition}
+
+\begin{definition}{$\mathbb{R}^n$における有界性}{Rnにおける有界性}
+	$\mathbb{R}^n$の部分集合$A$が有界であるとは，ある$M>0$が存在して，任意の$a \in A$に対して，
+	\[
+		\abs{a} \leqq M
+	\]
+	が成り立つことである．
+\end{definition}
+
+\begin{definition}{点列の収束}{点列の収束}
+	点列$(a_m)_{m \in \mathbb{N}}$が$a \in \mathbb{R}^n$に収束するとは，任意の$\varepsilon >0$に対して，ある$N \in \mathbb{N}$が存在して，任意の$m \in \mathbb{N}$に対して，
+	\[
+		m \ge N \Rightarrow \abs{a_m -a} < \varepsilon
+	\]
+	が成り立つことである．
+\end{definition}
+
+\begin{definition}{$\mathbb{R}^n$におけるコーシー列}{Rnにおけるコーシー列}
+	点列$(a_m)_{m \in \mathbb{N}}$が$\mathbb{R}^n$においてコーシー列であるとは，任意の$\varepsilon >0$に対して，ある$N \in \mathbb{N}$が存在して，任意の$m，n \in \mathbb{N}$に対して，
+	\[
+		m，n \ge N \Rightarrow \abs{a_m -a_n} < \varepsilon
+	\]
+	が成り立つことである．
+\end{definition}
+
+以下では$\mathbb{R}^n$の点列$(a_m)_{m \mathbb{N}}$を
+\[
+	a_m = (a_{m,1},a_{m,2},\ldots,a_{m,n})
+\]
+と表記することがある．
+
+\begin{theorem}{}{}
+	$\mathbb{R}^n$の点列$(a_m)_{m \in \mathbb{N}}$に関して，次のことが成り立つ．
+\begin{align*} 
+	& \lim_{m \to \infty} a_m = a \in \mathbb{R}^n \\
+	\iff & \lim_{m \to \infty} a_{m,i} = a_i \in \mathbb{R} \quad (i=1,2,\ldots,n) 
+\end{align*} 
+\end{theorem}
+
+\begin{leftbar}
+\begin{proof}
+	必要条件であること，十分条件であることを分けて証明する．
+	
+	必要条件であることを示す．$\lim_{m \to \infty} a_m = a \in \mathbb{R}^n$とする．
+	このとき，任意の$\varepsilon >0$に対して，ある$N \in \mathbb{N}$が存在して，任意の$m \in \mathbb{N}$に対して，
+	\[
+		m \ge N \Rightarrow \abs{a_m -a} < \varepsilon
+	\]
+	が成り立つ．
+	ここで，$m \ge N$とすると，
+	\[
+		\abs{a_m -a} = \left \{ \sum_{i=1}^{n} (a_{m,i} -a_i)^2 \right \}^\frac{1}{2}  < \varepsilon
+	\]
+	であるから，$\abs{a_{m,i} -a_i} < \varepsilon$である．
+	よって，$\lim_{m \to \infty} a_{m,i} = a_i \in \mathbb{R} \quad (i=1,2,\ldots,n)$である．
+
+	十分条件であることを示す．$\lim_{m \to \infty} a_{m,i} = a_i \in \mathbb{R} \quad (i=1,2,\ldots,n)$とする．
+	任意の$\varepsilon >0$に対して，ある$N_i \in \mathbb{N}$が存在して，任意の$m \in \mathbb{N}$に対して，
+	\[
+		m \ge N_i \Rightarrow \abs{a_{m,i} -a_i} < \frac{\varepsilon}{\sqrt{n}}
+	\]
+	が成り立つ．
+	ここで，$N \coloneqq \max \{ N_1,N_2,\ldots,N_n \}$とすると，$m \ge N$のとき，
+	\[
+		\abs{a_m -a} =\left \{ \sum_{i=1}^{n} (a_{m,i} -a_i)^2 \right \}^{\frac{1}{2}}  < \left \{ \sum_{i=1}^{n} \left( \frac{\varepsilon}{\sqrt{n}} \right)^2 \right \}^\frac{1}{2} = \varepsilon
+		\] 
+		となり，$\lim_{m \to \infty} a_m = a \in \mathbb{R}^n$である．
+
+		以上の考察により証明された．
+\end{proof}
+\end{leftbar}
+
+
+\begin{theorem}{}{}
+	$\mathbb{R}^n$の点列$(a_m)_{m \in \mathbb{N}}$に関して，次のことが成り立つ．
+\begin{align*} 
+	& (a_m)_{m \in \mathbb{N}} ~{:}  \text{コーシー列} \\
+	\iff & (a_{m,i})_{m \in \mathbb{N}} ~{:} \text{コーシー列}\quad (i=1,2,\ldots,n) 
+\end{align*} 
+\end{theorem}
+
+\begin{leftbar}
+	\begin{proof}
+		必要条件であること，十分条件であることを分けて証明する，
+
+		必要条件であることを示す．$(a_m)_{m \in \mathbb{N}}$がコーシー列であるとする．
+		このとき，任意の$\varepsilon >0$に対して，$N \in \mathbb{N}$が存在し，任意の$m,l \in \mathbb{N}$に対して
+		\[
+			m,l  \ge N \Rightarrow \abs{a_m - a_l}<\varepsilon 
+		\]
+		が成り立つ．
+
+		ここで，
+		\[
+			\abs{a_m - a_l} = \left \{ \sum_{i=1}^{n} \abs{a_{m,i}-a_{l,i}}^2 \right \}^\frac{1}{2}=\varepsilon 
+		\]
+		であるから，$ l,m \ge N$のとき$\abs{a_{m,i}-a_{l,i}}<\varepsilon$~$(i=1,2,\ldots,n)$であり，ここまでで必要条件であることが示された．
+
+		十分条件であることを示す．$(a_{m,i})_{m \in \mathbb{N}}$~$(i=1,2,\ldots,n)$がコーシー列であるとする．
+
+		このとき，任意の$\varepsilon /\sqrt{n}>0$に対して，ある$N_i \in \mathbb{N}$が存在して，任意の$m,l \in \mathbb{N}$に対して，
+		\[
+			m ,l\ge N_i \Rightarrow \abs{a_{m,i}-a_{l,i}}<\frac{\varepsilon}{\sqrt{n}}
+		\]
+		である．ここで，$N \coloneqq \{ N_1 ,N_2,\ldots,N_n \}$とすると，$m,l \geqq N$のとき
+		\[
+			\abs{a_m - a_l }=\left  \{ \sum_{i=1}^{n} \abs{a_{m,i}-a_{l,i}} \right \}^\frac{1}{2} < \left \{ \sum_{i=1}^{n} \left (  \frac{\varepsilon}{\sqrt{n}} \right )^2 \right \}^\frac{1}{2}=\varepsilon 
+		\]
+		となり，ここまでで十分条件であることも示された．
+
+		以上の考察により，この命題が示された．
+	\end{proof}
+\end{leftbar}
+
+
+\begin{theorem}{}{}
+	$\mathbb{R}^n$の点列$(a_m)_{m \in \mathbb{N}}$に関して，次のことが成り立つ．
+\begin{align*} 
+	& (a_m)_{m \in \mathbb{N}}~ {:}  \text{収束} \\
+	\iff & (a_m)_{m \in \mathbb{N}} ~{:}  \text{コーシー列}
+\end{align*} 
+\end{theorem}
+
+\begin{leftbar}
+	\begin{proof}
+		以下のように証明される．
+\begin{align*} 
+	& (a_m)_{m \in \mathbb{N}}~ {:} \text{収束} \\
+	\iff & (a_{m,i})_{m \in \mathbb{N}}~ {:} \text{収束} \quad (i=1,2,\ldots,n) \\
+	\iff & (a_{m,i})_{m \in \mathbb{N}}~{:} \text{コーシー列}\quad (i=1,2,\ldots,n)  \\
+	\iff & (a_m)_{m \in \mathbb{N}} ~{:} \text{コーシー列}
+\end{align*} 
+\end{proof}
+\end{leftbar}
+
+\begin{theorem}{}{}
+	$\mathbb{R}^n$の点列$(a_m)_{m \in \mathbb{N}}$とその部分列$(a_{m(k)})_{k \in \mathbb{N}}$に関して，次のことが成り立つ．
+	\begin{align*}
+		&\lim_{m \to \infty} a_m = b \in \mathbb{R}^n \\
+		\Rightarrow & \lim_{k \to \infty} a_{m(k)} = b \in \mathbb{R}^n
+	\end{align*} 
+\end{theorem} 
+
+\begin{leftbar}
+\begin{proof} 
+	任意の$\varepsilon >0$に対して，ある$N \in \mathbb{N}$が存在して，任意の$m \in \mathbb{N}$に対して，
+	\[
+		m \ge N \Rightarrow \abs{a_m -b} < \varepsilon
+	\]
+	が成り立つ．
+	ここで，$k \in \mathbb{N}$に対して，$m(k) \geqq k$であるから，
+	\[
+		k \ge N \Rightarrow m(k) \ge N \Rightarrow \abs{a_{m(k)} -b} < \varepsilon
+	\]
+	であるから，$\lim_{k \to \infty} a_{m(k)} = b \in \mathbb{R}^n$である．
+\end{proof}
+\end{leftbar}
+
+\begin{theorem}{}{}
+	$\mathbb{R}^n$の点列$(a_m)_{m \in \mathbb{N}}$に関して，次のことが成り立つ．
+	\begin{align*}
+		& (a_m)_{m \in \mathbb{N}}~ {:}  \text{収束} \\
+		\Rightarrow  & (a_m)_{m \in \mathbb{N}} ~{:}  \text{有界}
+	\end{align*}
+\end{theorem}
+
+\begin{leftbar}
+	\begin{proof}
+		各$k \in \{ 1,2,\ldots,n \}$に対し$(a_{m,k})_{m \in \mathbb{N}}$は収束するので，
+		先の命題により，$(a_{m,k})_{m \in \mathbb{N}}$は有界である．
+		よって，$(a_m)_{m \in \mathbb{N}}$も有界である．
+	\end{proof}
+\end{leftbar}

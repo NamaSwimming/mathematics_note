@@ -1,0 +1,256 @@
+\part{級数}
+
+\phantomsection
+\section{級数の定義}
+
+
+\begin{definition}{級数}{級数の定義}
+	実数列$(a_n)_{n \in \mathbb{N}}$から，数列$(s_n)_{n \in \mathbb{N}}$を
+	\[
+		s_0 =a_0 ,\quad s_1 =a_0+a_1,\ldots,s_n=a_0+a_1+\cdots+a_n,\ldots 
+	\]
+	と定義する．この数列$(s_n)_{n \in \mathbb{N}}$を，$a_n$を第$n$項とする無限級数といい，$s_n$をこの級数の第$n$部分和ともいう．もし，
+	\[
+		\lim_{n \to \infty} s_n =s
+	\]
+	が存在すれば，この級数は収束するといい，$s$をその和とよび，
+	\[
+		s=\sum_{n=0}^{\infty} a_n =a_0+a_1+\cdots+a_n+\cdots
+	\]
+	と記す．
+\end{definition}
+
+\begin{theorem}{級数に関するコーシーの収束条件}{級数に関するコーシーの収束条件}
+	$\sum_{n=0}^{\infty} a_n$が収束することと，任意の$\varepsilon>0$に対し，ある$n_0 \in \mathbb{N}$が存在して，任意の$m，n \in \mathbb{N}$に対して，
+	\[
+		m,n \ge n_0 \Rightarrow \abs{a_{m+1}+a_{m+2}+\cdots+a_{n}}<\varepsilon
+	\]
+	となることは同値である．
+\end{theorem}
+
+\begin{leftbar}
+	\begin{proof}
+		前半の主張は，部分和の数列$(s_n)_{n \in \mathbb{N}}$が収束するということであり，このときコーシーの収束条件により，$(s_n)_{n \in \mathbb{N}}$はコーシー列である．ゆえにただちに主張が従う，
+	\end{proof}
+\end{leftbar}
+
+\begin{cor}{}{}
+	級数$\sum_{n=0}^{\infty} a_n$が収束するとき，$\lim_{n \to \infty} a_n =0$である．
+\end{cor}
+
+\begin{leftbar}
+	\begin{proof}
+		\thref{級数に関するコーシーの収束条件}により，このとき，とくに$\lim_{n \to \infty} \abs{s_{n}-s_{n-1}}=0$であり，$\lim_{n \to \infty} a_n =0$となる．
+	\end{proof}
+\end{leftbar}
+
+\begin{cor}{}{}
+	$\lim_{n \to \infty} a_n \ne 0$のとき，$\sum_{n=0}^{\infty} a_n$は発散する．
+\end{cor}
+
+\begin{leftbar}
+\begin{proof}
+	先の命題の対偶をとればよい．
+\end{proof}
+\end{leftbar}
+
+\begin{example}{級数の収束・発散の判定}{}
+	$\lim_{n \to \infty} (-1)^n \ne 0$であるから，$\sum_{n=0}^{\infty} (-1)^n$は発散する．
+\end{example}
+
+\phantomsection
+\section{絶対収束}
+
+\begin{prop}{絶対収束}{絶対収束}
+	$\sum_{n=0}^{\infty} \abs{a_n}$が収束すれば，$\sum_{n=0}^{\infty} a_n$も収束する\footnote{この定理の逆は成り立たない．たとえば，$\sum_{n=1}^{\infty} \frac{(-1)^n}{n}$の場合などである．}．
+\end{prop}
+
+\begin{leftbar}
+	\begin{proof}
+		\[
+			\abs{a_{m+1}+a_{m+2}+\cdots+a_{n}} \leqq \abs{a_{m+1}}+\abs{a_{m+2}}+\cdots+\abs{a_{n}}
+		\]
+		より従う．
+	\end{proof}
+\end{leftbar}
+
+\begin{definition}{絶対収束}{絶対収束}
+	$\sum_{n=0}^{\infty} \abs{a_n}$が収束するとき，$\sum_{n=0}^{\infty} a_n$は絶対収束するという．命題\prref{絶対収束}により，絶対収束する級数は収束する．
+\end{definition}
+
+\phantomsection
+\section{級数の線型性および和の性質}
+
+\begin{prop}{級数の線型性}{級数の線型性}
+	$\sum_{n=0}^{\infty} a_n$，$\sum_{n=0}^{\infty} b_n$はともに収束して，それぞれ和は$s$，$t$であるとする．このとき，
+	\[
+		\sum_{n=0}^{\infty} (a_n \pm b_n) = s \pm t,\quad \sum_{n=0}^{\infty} c a_n =cs
+	\]
+	が成り立つ．ただし$c$を実数の定数とする．
+\end{prop}
+
+\begin{leftbar}
+	\begin{proof}
+		$\sum_{k=0}^{n-1} a_k = s_n$，$\sum_{k=0}^{n-1} b_k = t_n$とすると，
+		\begin{align*}
+			\sum_{k=0}^{n-1} (a_k \pm b_k) & = s_n \pm t_n \\
+			& \to s \pm t~(n \to \infty)
+		\end{align*}
+		であるから，前半の主張が証明された．後半については，
+		\begin{align*}
+			\sum_{k=0}^{n-1} ca_k & = c a_n \\
+			& \to cs ~(n \to \infty)
+		\end{align*}
+		となり，これが証明すべきことであった．
+	\end{proof}
+\end{leftbar}
+
+\begin{prop}{}{}
+	$\sum \abs{a_n}$が収束するとき，$\sum a_n$も収束する．
+\end{prop}
+
+\begin{leftbar}
+	\begin{proof}
+		$\sum_{n=0}^{\infty} \abs{a_n}$が収束するとき，\thref{級数に関するコーシーの収束条件}により，任意の$\varepsilon >0$に対して，ある$n_0 \in \mathbb{N}$が存在して，任意の$m ，n \in \mathbb{N}$に対して，
+		\[
+			m,n \ge n_0 \Rightarrow \abs{a_{m+1}} +\abs{a_{m+2}} + \cdots + \abs{a_n}<\varepsilon
+		\]
+		である．ここで，絶対値の性質により，
+		\[
+			\abs{a_{m+1}+a_{m+2}+\cdots + a_n } \leqq  \abs{a_{m+1}} +\abs{a_{m+2}} + \cdots + \abs{a_n}
+		\]
+		であるから，以上の議論により，$\sum_{n=0}^{\infty} a_n$も収束する．
+	\end{proof}
+\end{leftbar}
+
+\begin{prop}{}{}
+	$\sum_{n=0}^{\infty} a_n$が収束するとき，その連続する有限個の項の和を項とする級数
+	\[
+		(a_0+a_1+\cdots+a_{n_0})+(a_{n_0 +1}+a_{n_0 +2}+\cdots+a_{n_1})+(\cdots)+\cdots
+	\]
+	も収束して，その和は$\sum_{n=0}^{\infty} a_n$の和に等しい．
+\end{prop}
+
+\begin{example}{}{}
+	級数$ \sum a_n$が収束して和$s$をもつとき，たとえば
+	\[
+		(a_0+a_1) + (a_2+a_3+a_4)+(a_5+a_6)+ \cdots
+	\]
+	のように項を括弧でくくって得られる級数，つまり，
+	\[
+		b_0 = a_0 + a_1 , \quad b_1 =a_2 + a_3 + a_4 ,\quad b_2 =a_5 + a_6 , \cdots 
+	\]
+	として得られる級数$\sum b_n$に関して考える．
+	
+	級数$\sum a_n$，$\sum b_n$の部分和をそれぞれ$s_n$，$t_n$とすると
+	\begin{align*}
+		& t_0 = a_0 + a_1=s_1  , \\
+		& t_1 = (a_0 + a_1) + (a_2 + a_3 + a_4)=s_4 ,\\
+		& t_2 = (a_0+a_1)+ (a_2 + a_3+a_4)+(a_5+a_6) = s_6 
+	\end{align*}
+	となり，$(t_n)_{n \in \mathbb{N}}$は$(s_n)_{n \in \mathbb{N}}$の部分列である．
+	
+	ゆえに．以下の定理により，
+	$\lim_{n \to \infty} s_n=s$ならば$\lim_{n \to \infty} t_n =s$である．
+\end{example}
+
+\begin{theorem}{}{}
+	数列$(a_n)_{n \in \mathbb{N}}$が$\alpha$に収束すれば，その任意の部分列も$\alpha$に収束する．
+\end{theorem}
+
+\begin{example}{}{}
+	級数$\sum a_n$の第$n$部分和を$s_n$としたとき，数列$(t_n)_{n \in \mathbb{N}}$を
+	\[
+		t_n=s_{2n}
+	\]
+	と定義する．このとき，
+	\begin{align*}
+		& t_0 = s_0=a_0 , \\
+		& t_1 = s_2 = a_0 + a_1 + a_2 \\
+		& t_2 = s_4 = a_0 + a_1 + a_2 + a_3 + a_4 , \cdots 
+	\end{align*} 
+	となり，$(t_n)_{n \in \mathbb{N}}$は$(s_n)_{n \in \mathbb{N}}$の部分列である．
+	
+	ゆえに．先の定理により，
+	$\lim_{n \to \infty} s_n=s$ならば$\lim_{n \to \infty} t_n =s$である．
+\end{example}
+
+\begin{leftbar}
+\begin{proof}
+	この新しい級数の部分和の列はもとの$\sum_{n=0}^{\infty} a_n$の部分和の数列$(s_n)_{n \in \mathbb{N}}$の部分列$(s_{n(k)})_{n \in \mathbb{N}}$であるから，この命題が成り立つ．
+\end{proof}
+\end{leftbar}
+
+\phantomsection
+\section{正項級数}
+
+\begin{definition}{正項級数}{正項級数}
+	任意の$n \in \mathbb{N}$に対して，$a_n \ge 0$である級数$\sum_{n=0}^{\infty} a_n$を正項級数という．
+\end{definition}
+
+\begin{theorem}{}{}
+	正項級数$\sum_{n=0}^{\infty} a_n$が収束するためには，部分和の数列$(s_n)_{n \in \mathbb{N}}$が上に有界であることが必要かつ十分な条件である．
+\end{theorem}
+
+\begin{leftbar}
+	\begin{proof}
+		\deref{正項級数}により，$a_n \ge 0$であるから，部分和$(s_n)_{n \in \mathbb{N}}$について，任意の$n \in \mathbb{N}$に対して，
+		\[
+			s_n \leqq s_{n+1}
+		\]
+		となり，$(s_n)_{n \in \mathbb{N}}$は単調増加列である．よって，$(s_n)_{n \in \mathbb{N}}$は\thref{単調収束定理}により$\sup \{s_n \mid n \in \mathbb{N}\}$に収束する．逆に$(s_n)_{n \in \mathbb{N}}$が収束すれば，$(s_n)_{n \in \mathbb{N}}$は有界である．
+	\end{proof}
+\end{leftbar}
+
+\begin{theorem}{比較定理(1)}{比較定理(1)}
+	\begin{align*}
+		& \forall n \in \mathbb{N} \left [ (a_n \geqq 0 )\land (c_n \geqq 0 )\land (a_n \leqq c_n)\land \left( \sum_{n=0}^{\infty} c_n ~{:}\text{収束} \right) \right ] \\ 
+		& \Longrightarrow  \left( \sum_{n=0}^{\infty} a_n~ {:} \text{収束} \right)
+	\end{align*}
+\end{theorem}
+
+\begin{tleftbar}
+\begin{proof}
+	$(a_n)_{n \in \mathbb{N}}$，$(c_n)_{n \in \mathbb{N}}$が収束するとき，部分和の数列$(A_n)_{n \in \mathbb{N}}$，$(C_n)_{n \in \mathbb{N}}$は上に有界な単調増加列である．
+	よって，
+	\[
+		a \coloneqq \sup \{ A_n \mid n \in \mathbb{N} \} ,\quad c \coloneqq \sup \{ C_n \mid n \in \mathbb{N} \}
+	\]
+	が存在し，
+	\[
+		\lim_{n \to \infty} A_n =a ,\quad \lim_{n \to \infty} C_n =c
+	\]
+	なので，$\sum_{n=0}^{\infty} a_n$は収束する．
+\end{proof}
+\end{tleftbar}
+
+
+\begin{theorem}{比較定理(2)}{比較定理(2)}
+	\begin{align*}
+		& \forall n \in \mathbb{N} \left [ (a_n \geqq 0 )\land (d_n \geqq 0 )\land (d_n \leqq a_n)\land \left( \sum_{n=0}^{\infty} d_n ~{:}\text{発散} \right) \right ] \\ 
+		& \Longrightarrow  \left( \sum_{n=0}^{\infty} a_n~ {:} \text{発散} \right)
+	\end{align*}
+\end{theorem}
+
+
+
+\begin{tleftbar}
+\begin{proof}
+	背理法で示す．$\sum a_n$が収束すると仮定する．
+
+	このとき，\thref{比較定理(1)}で示したことから，$\sum d_n$も収束するが，これは$\sum d_n$が発散することに矛盾する．
+
+	よって，先の仮定が誤りであり，$\sum a_n$は収束する．
+\end{proof}
+\end{tleftbar}
+
+\newpage 
+
+
+\begin{theorem}{コーシー積}{コーシー積}
+	\begin{align*}
+		& \left (\sum a_n ~{:} \text{絶対収束} \right)\land \left (\sum b_n ~{:} \text{絶対収束} \right) \\
+		\Longrightarrow & \left (\sum_{n=0}^{\infty} \sum_{k=0}^{n} a_k b_{n-k} ~{:} \text{絶対収束} \right ) \land \sum_{n=0}^{\infty} \sum_{k=0}^{n} a_k b_{n-k} = \left( \sum_{n=0}^{\infty} a_n \right) \left( \sum_{n=0}^{\infty} b_n \right)
+	\end{align*}
+\end{theorem}
+

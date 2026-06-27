@@ -1,0 +1,132 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.3 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{none/global//global/global/global}
+    \entry{saitomasahiko1966}{book}{}{}
+      \name{author}{1}{}{%
+        {{hash=e3d85307764e6cb7ed01c7176b4af50d}{%
+           family={斎藤},
+           familyi={斎\bibinitperiod},
+           given={正彦},
+           giveni={正\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {東京大学出版会}%
+      }
+      \strng{namehash}{e3d85307764e6cb7ed01c7176b4af50d}
+      \strng{fullhash}{e3d85307764e6cb7ed01c7176b4af50d}
+      \strng{fullhashraw}{e3d85307764e6cb7ed01c7176b4af50d}
+      \strng{bibnamehash}{e3d85307764e6cb7ed01c7176b4af50d}
+      \strng{authorbibnamehash}{e3d85307764e6cb7ed01c7176b4af50d}
+      \strng{authornamehash}{e3d85307764e6cb7ed01c7176b4af50d}
+      \strng{authorfullhash}{e3d85307764e6cb7ed01c7176b4af50d}
+      \strng{authorfullhashraw}{e3d85307764e6cb7ed01c7176b4af50d}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{series}{基礎数学}
+      \field{title}{線型代数入門}
+      \field{year}{1966}
+    \endentry
+    \entry{arai}{book}{}{}
+      \name{author}{1}{}{%
+        {{hash=c5644a3cdc2a5cee327a31484dbcbd8d}{%
+           family={新井},
+           familyi={新\bibinitperiod},
+           given={仁之},
+           giveni={仁\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {日本評論社,亀書房}%
+      }
+      \strng{namehash}{c5644a3cdc2a5cee327a31484dbcbd8d}
+      \strng{fullhash}{c5644a3cdc2a5cee327a31484dbcbd8d}
+      \strng{fullhashraw}{c5644a3cdc2a5cee327a31484dbcbd8d}
+      \strng{bibnamehash}{c5644a3cdc2a5cee327a31484dbcbd8d}
+      \strng{authorbibnamehash}{c5644a3cdc2a5cee327a31484dbcbd8d}
+      \strng{authornamehash}{c5644a3cdc2a5cee327a31484dbcbd8d}
+      \strng{authorfullhash}{c5644a3cdc2a5cee327a31484dbcbd8d}
+      \strng{authorfullhashraw}{c5644a3cdc2a5cee327a31484dbcbd8d}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{線形代数 : 基礎と応用}
+      \field{year}{2006}
+    \endentry
+    \entry{yukiegunron}{book}{}{}
+      \name{author}{1}{}{%
+        {{hash=f0cc53108066f338868ec71f520ab99e}{%
+           family={雪江},
+           familyi={雪\bibinitperiod},
+           given={明彦},
+           giveni={明\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {日本評論社}%
+      }
+      \strng{namehash}{f0cc53108066f338868ec71f520ab99e}
+      \strng{fullhash}{f0cc53108066f338868ec71f520ab99e}
+      \strng{fullhashraw}{f0cc53108066f338868ec71f520ab99e}
+      \strng{bibnamehash}{f0cc53108066f338868ec71f520ab99e}
+      \strng{authorbibnamehash}{f0cc53108066f338868ec71f520ab99e}
+      \strng{authornamehash}{f0cc53108066f338868ec71f520ab99e}
+      \strng{authorfullhash}{f0cc53108066f338868ec71f520ab99e}
+      \strng{authorfullhashraw}{f0cc53108066f338868ec71f520ab99e}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{number}{1}
+      \field{series}{代数学 / 雪江明彦著}
+      \field{title}{群論入門}
+      \field{year}{2023}
+    \endentry
+    \entry{fujioka2021}{book}{}{}
+      \name{author}{1}{}{%
+        {{hash=891267e1d194e7e68eedb0fbdc9bfa6f}{%
+           family={藤岡},
+           familyi={藤\bibinitperiod},
+           given={敦},
+           giveni={敦\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {裳華房}%
+      }
+      \strng{namehash}{891267e1d194e7e68eedb0fbdc9bfa6f}
+      \strng{fullhash}{891267e1d194e7e68eedb0fbdc9bfa6f}
+      \strng{fullhashraw}{891267e1d194e7e68eedb0fbdc9bfa6f}
+      \strng{bibnamehash}{891267e1d194e7e68eedb0fbdc9bfa6f}
+      \strng{authorbibnamehash}{891267e1d194e7e68eedb0fbdc9bfa6f}
+      \strng{authornamehash}{891267e1d194e7e68eedb0fbdc9bfa6f}
+      \strng{authorfullhash}{891267e1d194e7e68eedb0fbdc9bfa6f}
+      \strng{authorfullhashraw}{891267e1d194e7e68eedb0fbdc9bfa6f}
+      \field{sortinit}{4}
+      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{手を動かしてまなぶ線形代数}
+      \field{year}{2021}
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+

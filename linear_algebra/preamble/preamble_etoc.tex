@@ -1,0 +1,77 @@
+% ===================== ToC (etoc) — Apple風見出し =====================
+\makeatletter
+\AtBeginDocument{%
+
+  % 目次に出す深さ
+  \etocsetnexttocdepth{subsection}
+
+  % 目次ブロックの前後
+  \etocsettocstyle{%
+    \par\vspace{10pt}%
+    \noindent\hspace*{-\leftskip}%
+    \begin{tikzpicture}[x=\linewidth, baseline]
+      \draw[line cap=round, line width=0.8pt, color=appleLine] (0,0) -- (1,0);
+      \node[inner sep=2.5pt, outer sep=0pt, fill=appleCard] at (0.5,0)
+        {\bfseries\Large\textcolor{appleInk}{目\kern0.35em 次}};
+        % 背景が白なら fill=white に変更
+    \end{tikzpicture}%
+    \vspace{8pt}%
+  }{%
+    \vspace{8pt}%
+    \noindent\hspace*{-\leftskip}%
+    \begin{tikzpicture}[x=\linewidth, baseline]
+      \draw[line cap=round, line width=0.5pt, color=appleLine] (0,0) -- (1,0);
+    \end{tikzpicture}%
+    \vspace{12pt}%
+  }
+
+  % ---- 各レベルの表示 ----
+  % （過去案は \iffalse...\fi でコメントアウト）
+  \iffalse
+  \etocsetstyle{part}
+    {\noindent}
+    {%
+      \vskip20pt
+      \parindent0pt \leftskip0pt
+      \etoclink{\bfseries\huge\color{appleInk}\etocname}\par
+      \vskip10pt
+    }
+    {}
+  \fi
+
+  \etocsetstyle{part}
+    {\noindent}
+    {%
+      \vskip10pt
+      \parindent0pt \leftskip0pt
+      \etoclink{\bfseries\Large\color{appleInk}\etocnumber~\etocname}%
+      \leaders\hbox to .5em{\hss.\hss}\hfill \etocpage\par
+      \vskip10pt
+    }
+    {}
+
+  \etocsetstyle{section}
+    {\noindent}
+    {%
+      \vskip6pt
+      \parindent0pt \leftskip20pt
+      \etoclink{\bfseries\large\textcolor{appleInk}{\etocnumber~\etocname}}%
+      \nobreak\leaders\hbox to .5em{\hss.\hss}\hfill \etocpage\par
+      \vskip6pt
+    }
+    {}
+
+  \etocsetstyle{subsection}
+    {\noindent}
+    {%
+      \parindent0pt \leftskip40pt % `subsubsection` は30ptのインデント
+      \etoclink{\bfseries\normalsize\color{appleInk}{\etocnumber~\etocname}}%
+      \hspace{0.5em}% 項目名とページ番号の間
+      (p.\etocpage)%
+      \hspace{1em}%
+    }
+    {}
+
+}%
+\makeatother
+% ======================================================================
