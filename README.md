@@ -1,7 +1,9 @@
 # mathematics_note
+
 ## PDF
 
 最新版PDFはこちらです。
 
-- [PDFを読む](https://github.com/NamaSwimming/mathematics_note/releases/latest/download/basis_math.pdf)
-- [過去版を含むReleases一覧](https://github.com/NamaSwimming/mathematics_note/releases)
+- [数学の基礎](https://namaswimming.github.io/basis_math.pdf)
+- [線型代数](https://namaswimming.github.io/linear_algebra.pdf)
+- [微積分](https://namaswimming.github.io/basic_analysis.pdf)
