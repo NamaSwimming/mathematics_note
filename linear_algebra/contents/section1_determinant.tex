@@ -314,29 +314,46 @@ $1_n = \tau_k \circ \dots \circ \tau_1 \circ \sigma = $と表せる．
 \begin{tleftbar}
 \begin{proof}
   まず，多項式
-  \begin{align*} 
-    \Delta (x_1, x_2, \dots, x_n) & = \prod_{1 \leqq i < j \leqq n} (x_j - x_i) \\
-    & = \left\{
-\begin{array}{@{}cccc@{}}
-(x_2-x_1) & (x_3-x_1) & \cdots & (x_n-x_1)\\
-          & \times(x_3-x_2) & \cdots & (x_n-x_2)\\
-          &                & \ddots & \vdots\\
-          &                &        & \times(x_n-x_{n-1})
-\end{array}
-\right.
+\begin{align*}
+\Delta(x_1,x_2,\dots,x_n)
+  &= \prod_{1 \leqq i < j \leqq n}(x_j-x_i) \\
+  &= \left\{\,\begin{array}{@{}c@{\quad}r@{\,}l@{\quad}c@{\quad}r@{\,}l@{}}
+(x_2-x_1)
+  &        & (x_3-x_1)
+  & \cdots
+  &        & (x_n-x_1)\\
+  & \times & (x_3-x_2)
+  & \cdots
+  &        & (x_n-x_2)\\
+  &        &
+  & \ddots
+  &        & \vdots\\
+  &        &
+  &
+  & \times & (x_n-x_{n-1})
+\end{array}\right.
 \end{align*}
   を考える\footnote{この多項式を差積という．以下，単に$\Delta$とも記す．}．さらに，
-  \begin{align*} 
-    \Delta^{\sigma} (x_1, x_2, \dots, x_n) & = \prod_{1 \leqq i < j \leqq n} (x_{\sigma(j)} - x_{\sigma(i)}) \\
-    & = \left\{
-\begin{array}{@{}cccc@{}}
-(x_{\sigma(2)}-x_{\sigma(1)}) & (x_{\sigma(3)}-x_{\sigma(1)}) & \cdots & (x_{\sigma(n)}-x_{\sigma(1)})\\
-          & \times(x_{\sigma(3)}-x_{\sigma(2)}) & \cdots & (x_{\sigma(n)}-x_{\sigma(2)})\\
-          &                & \ddots & \vdots\\
-          &                &        & \times(x_{\sigma(n)}-x_{\sigma(n-1)})
-\end{array}
-\right.
-  \end{align*}
+\begin{align*}
+\Delta^{\sigma}(x_1,x_2,\dots,x_n)
+  &= \prod_{1 \leqq i < j \leqq n}
+     (x_{\sigma(j)}-x_{\sigma(i)}) \\
+  &= \left\{\,\begin{array}{@{}c@{\quad}r@{\,}l@{\quad}c@{\quad}r@{\,}l@{}}
+(x_{\sigma(2)}-x_{\sigma(1)})
+  &        & (x_{\sigma(3)}-x_{\sigma(1)})
+  & \cdots
+  &        & (x_{\sigma(n)}-x_{\sigma(1)})\\
+  & \times & (x_{\sigma(3)}-x_{\sigma(2)})
+  & \cdots
+  &        & (x_{\sigma(n)}-x_{\sigma(2)})\\
+  &        &
+  & \ddots
+  &        & \vdots\\
+  &        &
+  &
+  & \times & (x_{\sigma(n)}-x_{\sigma(n-1)})
+\end{array}\right.
+\end{align*}
   と定める．
 
   ここで，$\sigma$が互換$(i,j)$であるとき，$\Delta^{\sigma}$は$\Delta$のうち$(x_j - x_i)$の符号を反転させたものである．
