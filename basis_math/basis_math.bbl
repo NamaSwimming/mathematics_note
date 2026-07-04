@@ -44,8 +44,6 @@
       \field{labeltitlesource}{title}
       \field{title}{集合・写像・論理: 数学の基本を学ぶ}
       \field{year}{2012}
-      \field{pages}{240}
-      \range{pages}{1}
     \endentry
     \entry{kaneko}{book}{}{}
       \name{author}{1}{}{%
@@ -72,8 +70,6 @@
       \field{labeltitlesource}{title}
       \field{title}{数理基礎論講義: 論理・集合・位相 (ライブラリ数理・情報系の数学講義 1)}
       \field{year}{2010}
-      \field{pages}{263}
-      \range{pages}{1}
     \endentry
     \entry{arai}{book}{}{}
       \name{author}{1}{}{%
@@ -100,8 +96,6 @@
       \field{labeltitlesource}{title}
       \field{title}{基幹講座　数学　集合・論理と位相}
       \field{year}{2016}
-      \field{pages}{256}
-      \range{pages}{1}
     \endentry
   \enddatalist
 \endrefsection
