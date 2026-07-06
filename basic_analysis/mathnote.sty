@@ -519,10 +519,14 @@
     left*=1\zw, right*=1\zw, top=8pt, bottom=10pt,
     % 箱のすぐ下に薄い仕切り線（次の環境との視覚的区切り）
     borderline south={0.8pt}{-2pt}{appleLine},
-    before={\par\ifdim\pagetotal=0pt \vspace*{16pt}\else \vspace{16pt}\fi\noindent},
+    before={\par\vspace*{16pt}\noindent},
     after skip=18pt,
     before upper={\setlength{\parindent}{1\zw}},
-    before lower={\setlength{\parindent}{1\zw}}
+    before lower={\setlength{\parindent}{1\zw}},
+    % ページ先頭での継続時に上部スペースを確保
+    pad at break=0pt,
+    enlarge top at break by=12pt,
+    enlarge bottom at break by=0pt
   },
   % mytheo: theo-base に左アクセントバーを追加（#1 = 色名）
   mytheo/.style n args={1}{
@@ -900,6 +904,15 @@
   }{%
     \underbrace{#1}_{#2}%
   }%
+}
+
+%---- 証明のステップを強調表示するコマンド ----
+\newcommand{\proofstep}[1]{%
+  \par\smallskip
+  \noindent
+  \normalsize{■}%
+  \hspace{0.5\zw}%
+  \textbf{#1}\par\smallskip
 }
 
 % ---- 丸付き文字（\ctext{A} → 丸囲み A） ----

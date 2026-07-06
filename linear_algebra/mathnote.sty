@@ -906,6 +906,15 @@
   }%
 }
 
+%---- 証明のステップを強調表示するコマンド ----
+\newcommand{\proofstep}[1]{%
+  \par\smallskip
+  \noindent
+  \normalsize{■}%
+  \hspace{0.5\zw}%
+  \textbf{#1}\par\smallskip
+}
+
 % ---- 丸付き文字（\ctext{A} → 丸囲み A） ----
 \newcommand{\ctext}[1]{\raise0.2ex\hbox{\textcircled{\scriptsize{#1}}}}
 
