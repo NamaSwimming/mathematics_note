@@ -127,6 +127,17 @@ i \xmapsto{\tau} \tau(i) \xmapsto{\sigma} \sigma(\tau(i))
 記号上は $\sigma$ が左に書かれているが，先に使うのは $\tau$ であることに注意する．
 \end{mycolumn}
 
+\begin{mycolumn}
+置換の積を書くとき，右から左へ作用させる流儀と，
+左から右へ作用させる流儀がある．
+ここでは，写像の合成
+\[
+(\sigma\circ\tau)(i)=\sigma(\tau(i))
+\]
+に従い，右側の置換から先に作用させると約束する．
+文献によっては反対の流儀を採用していることもあるので，注意して欲しい．
+\end{mycolumn}
+
 \begin{example}{置換の積}{置換の積}
   $\sigma, \tau \in S_3$を
   \[
@@ -154,6 +165,17 @@ i \xmapsto{\tau} \tau(i) \xmapsto{\sigma} \sigma(\tau(i))
   \]
   と表す．
 \end{definition}
+
+\begin{mycolumn}
+恒等置換を $1_n$ と書くのは，数の $1$ と同じように，
+置換の積に関して何も変えない役割をもつからである．
+実際，任意の $\sigma\in S_n$ に対して
+\[
+1_n\circ\sigma=\sigma\circ 1_n=\sigma
+\]
+が成り立つ．この意味で，$1_n$ は置換の積に関する\textbf{単位元}である．
+ただし，$1_n$ は数ではなく，恒等写像としての置換である．
+\end{mycolumn}
 
 
 \begin{example}{恒等置換}{恒等置換}
