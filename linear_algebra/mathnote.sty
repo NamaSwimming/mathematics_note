@@ -469,22 +469,23 @@
 
   % ---- Subsection エントリ（インデント 56pt，ページ番号はカッコ付き） ----
   \etocsetstyle{subsection}
-    {\noindent}
-    {%
-      \parindent=0pt
-      \leftskip=56pt
-      \rightskip=0pt plus 1fil
-      \small
-      \etoclink{%
-        \makebox[2.0em][l]{\etocnumber}%
-        \etocname
-        \hspace{0.35em}%
-        {(p.\etocpage)}%
-      }%
-      \hspace{1.35em plus 0.45em minus 0.15em}%
-    }
-    {}
-    {}
+  {\noindent}
+  {%
+    \parindent=0pt
+    \leftskip=56pt
+    \rightskip=0pt
+    \small
+    \noindent
+    \etoclink{%
+      \makebox[2.0em][l]{\etocnumber}%
+      \etocname
+      \hspace{0.35em}%
+      {(p.\etocpage)}%
+    }%
+    \par
+  }
+  {}
+  {}
 
 }%
 \makeatother
