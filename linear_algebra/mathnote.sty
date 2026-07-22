@@ -412,23 +412,44 @@
   \etocsetnexttocdepth{subsection}
 
   % 目次ブロックの前後に TikZ でヘアラインを引き，中央に「目 次」を配置
-  \etocsettocstyle{%
-    \par\vspace{10pt}%
-    \noindent\hspace*{-\leftskip}%
-    \begin{tikzpicture}[x=\linewidth, baseline]
-      \draw[line cap=round, line width=0.8pt, color=appleLine] (0,0) -- (1,0);
-      \node[inner sep=2.5pt, outer sep=0pt, fill=appleCard] at (0.5,0)
-        {\bfseries\Large\textcolor{appleInk}{目\kern0.35em 次}};
-    \end{tikzpicture}%
-    \vspace{8pt}%
-  }{%
-    \vspace{8pt}%
-    \noindent\hspace*{-\leftskip}%
-    \begin{tikzpicture}[x=\linewidth, baseline]
-      \draw[line cap=round, line width=0.5pt, color=appleLine] (0,0) -- (1,0);
-    \end{tikzpicture}%
-    \vspace{12pt}%
-  }
+\etocsettocstyle{%
+  \par\vspace{10pt}%
+  \noindent\hspace*{-\leftskip}%
+  \begin{tikzpicture}[x=\linewidth, baseline]
+    \draw[
+      line cap=round,
+      line width=0.8pt,
+      color=appleLine
+    ] (0,0) -- (1,0);
+    \node[
+      inner sep=2.5pt,
+      outer sep=0pt,
+      fill=appleCard
+    ] at (0.5,0)
+      {\bfseries\Large\textcolor{appleInk}{目\kern0.35em 次}};
+  \end{tikzpicture}%
+  \vspace{8pt}%
+
+  % ここから目次項目を2段組にする
+  \setlength{\columnsep}{24pt}%
+  \setlength{\columnseprule}{0pt}%
+  \begin{multicols}{2}%
+  \raggedcolumns
+}{%
+  % ここで目次項目の2段組を終了
+  \end{multicols}%
+
+  \vspace{4pt}%
+  \noindent\hspace*{-\leftskip}%
+  \begin{tikzpicture}[x=\linewidth, baseline]
+    \draw[
+      line cap=round,
+      line width=0.5pt,
+      color=appleLine
+    ] (0,0) -- (1,0);
+  \end{tikzpicture}%
+  \vspace{12pt}%
+}
 
   % ---- Part エントリ（インデント=0，リーダー線あり） ----
   \etocsetstyle{part}
