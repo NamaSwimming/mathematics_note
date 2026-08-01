@@ -233,6 +233,8 @@
 % 偶数ページ左: ページ番号 + Part タイトル
 % 奇数ページ右: Section タイトル + ページ番号
 \RequirePackage{fancyhdr}
+% \titleformat / \titlespacing（\section・\subsection の見出し整形で使用）
+\RequirePackage{titlesec}
 
 % 現在の Part・Section タイトルを保持するグローバル変数
 \newcommand{\CurrentPartTitle}{}
@@ -281,25 +283,6 @@
   \gdef\CurrentPartTitle{#1}%
 }
 
-% --- \section の拡張 ---
-\let\origsection\section
-\renewcommand{\section}{%
-  \@ifstar{\section@star}{\@ifnextchar[{\section@opt}{\section@noopt}}%
-}
-
-\def\section@noopt#1{%
-  \origsection{#1}%
-  \gdef\CurrentSectionTitle{\thesection\quad #1}%
-}
-\def\section@opt[#1]#2{%
-  \origsection[#1]{#2}%
-  \gdef\CurrentSectionTitle{\thesection\quad #1}%
-}
-\def\section@star#1{%
-  \origsection*{#1}%
-  \gdef\CurrentSectionTitle{#1}%
-}
-
 \makeatother
 
 % ページスタイルの適用
@@ -325,79 +308,132 @@
 % 脚注が改ページをまたぐのを極力避ける
 \interfootnotelinepenalty=10000
 
-% ==============================================================
-% § 7. 見出しスタイル（titlesec）
-% ==============================================================
 
-\RequirePackage{titlesec}
-\RequirePackage{picture}
-
-% ---- 行の高さに自動追従する左肩の細角四角 ----
-% #1（省略可）: 幅（デフォルト 1.05ex）  #2: 色名
-\newcommand{\TitleSquareToText}[2][1.05ex]{%
-  \begingroup
-    \leavevmode
-    \setbox0=\hbox{\strut}%
-    \textcolor{#2}{\rule[-\dp\strutbox]{#1}{\dimexpr\ht\strutbox+\dp\strutbox\relax}}%
-  \endgroup
-}
-
-% ---- Part（二重横線） ----
+% ---- Part：中央揃え + 二重グレー罫線 ----
 \titleformat{\part}[display]
   {\normalfont\LARGE\bfseries\centering\color{appleInk}}
-  {\small\scshape\color{appleGray}第\thepart 章}
-  {0.3ex}
+  {\normalsize\color{appleGray}第\thepart 章}
+  {-0.65ex}
   {}%
   [{%
-     \vspace{0.6ex}%
-     {\color{appleLine}\titlerule[1.2pt]}%  太線
-     \nobreak\vspace{0.25ex}%
-     {\color{appleLine}\titlerule[0.6pt]}%  細線
+    \vspace{0.6ex}%
+    {\color{appleLineGray}\titlerule[1.2pt]}%
+    \nobreak\vspace{0.25ex}%
+    {\color{appleLine}\titlerule[0.6pt]}%
   }]
 
-% ---- Section（下線 50%・\large） ----
-% 意図的に "サブセクション" 相当の軽さに調整してある
-% より重い見出し（下線 66%・\Large）にする場合は以下を差し替える:
-%
-%   \titleformat{\section}[block]
-%     {\normalfont\Large\bfseries\color{appleInk}}
-%     {}{0pt}
-%     {%
-%       \TitleSquareToText[1.05ex]{SectionTag}\hspace{0.6em}%
-%       \thesection\quad
-%     }%
-%     [{%
-%        \vspace*{-0.48\baselineskip}%
-%        \noindent{\color{appleLine}\rule{0.66\linewidth}{0.8pt}}%
-%        \nobreak\vspace{-0.10\baselineskip}%
-%     }]
-%
+\titlespacing*{\part}
+  {0pt}
+  {2.0\baselineskip}
+  {1.4\baselineskip}
+
+% rule/caps color and bar fill/outline
+\colorlet{secrule}{appleLineGray}
+\colorlet{secbarfill}{appleGrayLight}
+\colorlet{secbaredge}{appleGray}
+
+\newlength{\secbarx}
+\setlength{\secbarx}{8mm}
+
+\newlength{\sectextx}
+\setlength{\sectextx}{12mm}
+
+% 番号付き section
+\newcommand{\sectionheadrule}[2]{%
+  \gdef\CurrentSectionTitle{\thesection\quad #2}%
+  \noindent
+  \begin{tikzpicture}[baseline=(title.base)]
+    \path[use as bounding box]
+      (0,-9mm) rectangle (\linewidth,7mm);
+
+    \draw[secrule,line width=0.4pt]
+      (0,0) -- (\linewidth,0);
+
+    \fill[secrule]
+      (-0.4pt,-1.0mm) rectangle ++(2.0mm,2.0mm);
+
+    \fill[secrule]
+      (\linewidth,-1.0mm) rectangle ++(-2.0mm,2.0mm);
+
+    \fill[secbarfill]
+      (\secbarx,-7.5mm) rectangle ++(1.8mm,13.5mm);
+
+    \draw[secbaredge,line width=0.4pt]
+      (\secbarx,-7.5mm) rectangle ++(1.8mm,13.5mm);
+
+    \draw[secbaredge,line width=0.4pt]
+      (\secbarx-0.9mm,-7.5mm) -- ++(0,13.5mm);
+
+    \node[
+      anchor=south west,
+      inner sep=0pt
+    ] at (\sectextx,1.2mm)
+      {\color{black}\large\bfseries #1};
+
+    \node[
+      anchor=north west,
+      inner sep=0pt
+    ] (title) at (\sectextx,-1.6mm)
+      {\color{black}\Large\bfseries #2};
+  \end{tikzpicture}%
+}
+
+% 番号なし section
+\newcommand{\sectionheadrulestar}[1]{%
+  \gdef\CurrentSectionTitle{#1}%
+  \noindent
+  \begin{tikzpicture}[baseline=(title.base)]
+    \path[use as bounding box]
+      (0,-9mm) rectangle (\linewidth,7mm);
+
+    \draw[secrule,line width=0.4pt]
+      (0,0) -- (\linewidth,0);
+
+    \fill[secrule]
+      (-0.4pt,-1.0mm) rectangle ++(2.0mm,2.0mm);
+
+    \fill[secrule]
+      (\linewidth,-1.0mm) rectangle ++(-2.0mm,2.0mm);
+
+    \fill[secbarfill]
+      (\secbarx,-7.5mm) rectangle ++(1.8mm,13.5mm);
+
+    \draw[secbaredge,line width=0.4pt]
+      (\secbarx,-7.5mm) rectangle ++(1.8mm,13.5mm);
+
+    \draw[secbaredge,line width=0.4pt]
+      (\secbarx-0.9mm,-7.5mm) -- ++(0,13.5mm);
+
+    \node[
+      anchor=north west,
+      inner sep=0pt
+    ] (title) at (\sectextx,-1.6mm)
+      {\color{black}\Large\bfseries #1};
+  \end{tikzpicture}%
+}
+
 \titleformat{\section}[block]
-  {\normalfont\large\bfseries\color{appleInk}}
-  {}{0pt}
-  {%
-    \TitleSquareToText[0.95ex]{SubsectionTag}\hspace{0.55em}%
-    \thesection\quad
-  }%
-  [{%
-     \vspace*{-0.52\baselineskip}%
-     \noindent{\color{appleLine}\rule{0.50\linewidth}{0.6pt}}%
-     \nobreak\vspace{-0.18\baselineskip}%
-  }]
+  {}{}{0pt}
+  {\sectionheadrule{第\thesection 節}}
 
-% ---- Subsection（下線 42%・やや控えめ） ----
+\titleformat{name=\section,numberless}[block]
+  {}{}{0pt}
+  {\sectionheadrulestar}
+
+\titlespacing*{\section}
+  {0pt}{18pt}{14pt}
+
 \titleformat{\subsection}[block]
-  {\normalfont\large\bfseries\color{appleInk}}
-  {}{0pt}
-  {%
-    \TitleSquareToText[0.90ex]{SubsubsectionTag}\hspace{0.50em}%
-    \thesubsection\quad
-  }%
-  [{%
-     \vspace*{-0.40\baselineskip}%
-     \noindent{\color{appleLine}\rule{0.42\linewidth}{0.5pt}}%
-     \nobreak\vspace{-0.16\baselineskip}%
-  }]
+  {\normalfont\color{black}\large\bfseries}
+  {\thesubsection}
+  {0.7em}
+  {}
+
+\titlespacing*{\subsection}
+  {0pt}{14pt}{6pt}
+
+\setlength{\parindent}{1\zw}
+
 
 % ==============================================================
 % § 8. 目次（etoc — Apple 風デザイン）
