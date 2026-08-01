@@ -240,51 +240,6 @@
 \newcommand{\CurrentPartTitle}{}
 \newcommand{\CurrentSectionTitle}{}
 
-% \part / \section を拡張してタイトルを \gdef で更新する
-\makeatletter
-
-% --- \part の拡張 ---
-\let\origpart\part
-\renewcommand{\part}{%
-  \@ifstar{\part@star}{\@ifnextchar[{\part@opt}{\part@noopt}}%
-}
-
-% オプション引数なし版
-\def\part@noopt#1{%
-  % .toc 書き込み時に \numberline を強制付与（etoc との互換性のため）
-  \let\saved@addcontentsline\addcontentsline
-  \def\addcontentsline##1##2##3{%
-    \saved@addcontentsline{##1}{##2}{\protect\numberline{\thepart}#1}%
-    \let\addcontentsline\saved@addcontentsline
-  }%
-  \origpart{#1}%
-  \let\addcontentsline\saved@addcontentsline
-  \thispagestyle{empty}%  % part ページは柱を出さない
-  \gdef\CurrentPartTitle{第\thepart 章\quad #1}%
-}
-
-% オプション引数あり版 [短縮タイトル]{表示タイトル}
-\def\part@opt[#1]#2{%
-  \let\saved@addcontentsline\addcontentsline
-  \def\addcontentsline##1##2##3{%
-    \saved@addcontentsline{##1}{##2}{\protect\numberline{\thepart}#1}%
-    \let\addcontentsline\saved@addcontentsline
-  }%
-  \origpart[#1]{#2}%
-  \let\addcontentsline\saved@addcontentsline
-  \thispagestyle{empty}%
-  \gdef\CurrentPartTitle{第\thepart 章\quad #1}%
-}
-
-% スター版（番号なし）
-\def\part@star#1{%
-  \origpart*{#1}%
-  \thispagestyle{empty}%
-  \gdef\CurrentPartTitle{#1}%
-}
-
-\makeatother
-
 % ページスタイルの適用
 \pagestyle{fancy}
 \fancyhf{}
@@ -324,8 +279,64 @@
 
 \titlespacing*{\part}
   {0pt}
-  {2.0\baselineskip}
+  {-1.8\baselineskip}
   {1.4\baselineskip}
+
+% \part / \section を拡張してタイトルを \gdef で更新する
+% titlesec の \titleformat{\part}／\titlespacing*{\part} が \part 自体を
+% 再定義するため，このラップは必ずそれらの後ろに置く
+% （先に置くと titlesec の再定義で上書きされ，ここでの拡張が失われる）
+\makeatletter
+
+% --- \part の拡張 ---
+\let\origpart\part
+\renewcommand{\part}{%
+  \@ifstar{\part@star}{\@ifnextchar[{\part@opt}{\part@noopt}}%
+}
+
+% \part は新しいページ（twoside では右ページ）から開始する
+% ページ境界を明確にしないと \thispagestyle{empty} が
+% 意図したページに適用されない（自然な改ページ位置に依存してしまう）ため
+\def\part@newpage{%
+  \pltx@cleartorightpage
+  \thispagestyle{empty}%  % part ページは柱を出さない
+}
+
+% オプション引数なし版
+\def\part@noopt#1{%
+  \part@newpage
+  % .toc 書き込み時に \numberline を強制付与（etoc との互換性のため）
+  \let\saved@addcontentsline\addcontentsline
+  \def\addcontentsline##1##2##3{%
+    \saved@addcontentsline{##1}{##2}{\protect\numberline{\thepart}#1}%
+    \let\addcontentsline\saved@addcontentsline
+  }%
+  \origpart{#1}%
+  \let\addcontentsline\saved@addcontentsline
+  \gdef\CurrentPartTitle{第\thepart 章\quad #1}%
+}
+
+% オプション引数あり版 [短縮タイトル]{表示タイトル}
+\def\part@opt[#1]#2{%
+  \part@newpage
+  \let\saved@addcontentsline\addcontentsline
+  \def\addcontentsline##1##2##3{%
+    \saved@addcontentsline{##1}{##2}{\protect\numberline{\thepart}#1}%
+    \let\addcontentsline\saved@addcontentsline
+  }%
+  \origpart[#1]{#2}%
+  \let\addcontentsline\saved@addcontentsline
+  \gdef\CurrentPartTitle{第\thepart 章\quad #1}%
+}
+
+% スター版（番号なし）
+\def\part@star#1{%
+  \part@newpage
+  \origpart*{#1}%
+  \gdef\CurrentPartTitle{#1}%
+}
+
+\makeatother
 
 % rule/caps color and bar fill/outline
 \colorlet{secrule}{appleLineGray}
@@ -553,17 +564,19 @@
 
 \RequirePackage[many]{tcolorbox}
 \tcbuselibrary{breakable,skins,theorems,xparse,hooks}
+% ==============================================================
+% § 9. 定理環境（Apple風・モノトーン）
+% ==============================================================
 
-% ---- 各環境のアクセント色エイリアス ----
-% ここを変えるだけで全環境の配色を一括変更できる
-\colorlet{acc@th}{appleInkGray}              % Theorem：ニュートラルな濃い灰
-\colorlet{acc@pr}{appleGrayDark}             % Proposition：やや濃い灰
-\colorlet{acc@co}{appleGray}                 % Corollary：中間灰
-\colorlet{acc@ax}{appleInk}                  % Axiom：ほぼ黒（最も重い命題）
-\colorlet{acc@de}{applePurple}               % Definition：紫
-\colorlet{acc@le}{applePurple!75!appleInk}   % Lemma：定義より落ち着いた紫
-\colorlet{acc@ex}{appleGrayLight}            % Example：軽めの灰
-\colorlet{acc@qu}{applePurple!60!appleGray}  % Question：紫寄り灰
+% ---- 各環境のアクセント色（モノトーン） ----
+\colorlet{acc@th}{appleInkGray}     % Theorem：濃い灰
+\colorlet{acc@pr}{appleGrayDark}    % Proposition：やや濃い灰
+\colorlet{acc@co}{appleGray}        % Corollary：中間灰
+\colorlet{acc@ax}{appleInk}         % Axiom：ほぼ黒
+\colorlet{acc@de}{appleGrayDark}    % Definition：濃い灰
+\colorlet{acc@le}{appleGray}        % Lemma：中間灰
+\colorlet{acc@ex}{appleGrayLight}   % Example：薄い灰
+\colorlet{acc@qu}{appleLineGray}    % Question：淡い灰（白は使わない）
 
 % ---- 共通ベーススタイル ----
 % 白カード + 下端に薄い仕切り線 + 左に 2pt のアクセントバー
@@ -571,22 +584,25 @@
   theo-base/.style={
     enhanced, breakable, sharp corners,
     boxrule=0pt, no shadow,
-    colback=appleCard, colframe=appleCard, colbacktitle=appleCard,
-    coltitle=appleInk, coltext=appleInk,
+    colback=appleCard,
+    colframe=appleCard,
+    colbacktitle=appleCard,
+    coltitle=appleInk,
+    coltext=appleInk,
     fonttitle=\gtfamily\sffamily\bfseries\upshape,
-    left*=1\zw, right*=1\zw, top=8pt, bottom=10pt,
-    % 箱のすぐ下に薄い仕切り線（次の環境との視覚的区切り）
+    left*=1\zw,
+    right*=1\zw,
+    top=8pt,
+    bottom=10pt,
     borderline south={0.8pt}{-2pt}{appleLine},
     before={\par\vspace*{16pt}\noindent},
     after skip=18pt,
     before upper={\setlength{\parindent}{1\zw}},
     before lower={\setlength{\parindent}{1\zw}},
-    % ページ先頭での継続時に上部スペースを確保
     pad at break=0pt,
     enlarge top at break by=12pt,
     enlarge bottom at break by=0pt
   },
-  % mytheo: theo-base に左アクセントバーを追加（#1 = 色名）
   mytheo/.style n args={1}{
     theo-base,
     borderline west={2pt}{0pt}{#1}
@@ -674,7 +690,7 @@
 }
 
 % ---- mycolumn: コラム環境（ローマ数字カウンタ，両端に縦線） ----
-\colorlet{colexam}{red!75!black}
+\colorlet{colexam}{magenta!75!black}
 \newtcolorbox[auto counter,number format=\Roman]{mycolumn}{
   empty,
   title={\bfseries\sffamily Column \thetcbcounter},
