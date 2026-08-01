@@ -122,8 +122,24 @@
 \makeatother
 
 % ---- 数式周りの縦スペースを微調整 ----
-\setlength{\abovedisplayskip}{5pt}
-\setlength{\belowdisplayskip}{3pt}
+% 【変更】(1) plus/minus（伸縮量）を追加：
+%   固定長だと \flushbottom がページを下端まで詰められず，
+%   ボックス移動時の下部余白がそのまま残ってしまうため．
+% 【変更】(2) \AtBeginDocument で設定：
+%   ltjsarticle ではサイズ命令（\normalsize 等）がこれらの長さを
+%   再設定するため，プリアンブルでの \setlength は上書きされうる．
+\AtBeginDocument{%
+  \setlength{\abovedisplayskip}{5pt plus 3pt minus 2pt}%
+  \setlength{\belowdisplayskip}{3pt plus 3pt minus 1pt}%
+  \setlength{\abovedisplayshortskip}{2pt plus 2pt}%
+  \setlength{\belowdisplayshortskip}{2pt plus 2pt minus 1pt}%
+}
+
+% 【追加】align / gather 等の複数行ディスプレイ数式の行間でも
+% 改ページを許可する（amsmath）．長い証明の数式ブロックが
+% 丸ごと次ページへ送られて大きな余白ができるのを防ぐ．
+% 引数は 1（消極的）〜 4（積極的）．気に入らなければ [1] へ．
+\allowdisplaybreaks[2]
 
 % ==============================================================
 % § 4. 色の定義
@@ -234,7 +250,12 @@
 % 奇数ページ右: Section タイトル + ページ番号
 \RequirePackage{fancyhdr}
 % \titleformat / \titlespacing（\section・\subsection の見出し整形で使用）
-\RequirePackage{titlesec}
+% 【変更】nobottomtitles* を追加：ページ下部の残り高さが
+% \bottomtitlespace 未満なら，見出しを次ページ先頭へ送る．
+% （見出しだけがページ最下部に孤立するのを防ぐ）
+\RequirePackage[nobottomtitles*]{titlesec}
+% 見出し＋本文数行が入らない場合に送る閾値（好みで調整．大きいほど早めに送る）
+\renewcommand{\bottomtitlespace}{.15\textheight}
 
 % 現在の Part・Section タイトルを保持するグローバル変数
 \newcommand{\CurrentPartTitle}{}
@@ -595,8 +616,13 @@
     top=8pt,
     bottom=10pt,
     borderline south={0.8pt}{-2pt}{appleLine},
-    before={\par\vspace*{16pt}\noindent},
-    after skip=18pt,
+    % 【変更】before={\par\vspace*{16pt}\noindent} を before skip に変更：
+    %   \vspace* はページ先頭でも消えない余白を作り，改ページ位置の
+    %   計算も乱す．before skip は tcolorbox が適切な改ページ点と
+    %   ともに挿入し，ページ先頭では自動的に消える．
+    %   plus/minus は \flushbottom がページを詰めるための伸び代．
+    before skip=16pt plus 6pt minus 4pt,
+    after skip=18pt plus 6pt minus 4pt,
     before upper={\setlength{\parindent}{1\zw}},
     before lower={\setlength{\parindent}{1\zw}},
     pad at break=0pt,
@@ -713,7 +739,11 @@
   top=4pt,
   breakable,
   pad at break*=0mm,
-  vfill before first,
+  % 【変更】vfill before first を削除：
+  %   このオプションは「Column がページ境界で分割される場合，
+  %   開始を丸ごと次ページへ送り，現ページ下部を \vfill で埋める」
+  %   もの．つまりページ下部の大きな空白を意図的に作る設定なので，
+  %   自然に分割させたい場合は外す．（元の挙動が良ければ戻すこと）
   % 左右の縦線をタイトル下端から箱の下端まで TikZ で引く
   overlay unbroken={
     \draw[colexam,line width=2pt]
@@ -1087,4 +1117,8 @@
 % 行送りを標準より 6% 広げる
 \AtBeginDocument{%
   \linespread{1.06}\selectfont
+  % 【追加】段落間にごく小さな伸び代（自然長は 0pt のまま）．
+  % 段落数の多いページで \flushbottom が下端まで詰めやすくなる．
+  % 見た目に影響が出ると感じたら削除してよい．
+  \setlength{\parskip}{0pt plus 1pt}%
 }
