@@ -233,9 +233,19 @@
 
 % \tightpartnumber: 現在の part カウンタを \tightromanpart で出力
 % .toc への書き込み時にも番号がずれないよう \DeclareRobustCommand で定義
-\DeclareRobustCommand{\tightpartnumber}{\tightromanpart{\value{part}}}
+%\DeclareRobustCommand{\tightpartnumber}{\tightromanpart{\value{part}}}
 % \thepart の表示形式を詰めローマ数字に変更
 \renewcommand{\thepart}{\tightromanpart{\value{part}}}
+
+\DeclareRobustCommand{\tightpartnumber}{\tightromanpart{\value{part}}}
+
+\renewcommand{\thepart}{\arabic{part}}
+\renewcommand{\thesection}{\thepart.\arabic{section}}
+\renewcommand{\thesubsection}{\thesection.\arabic{subsection}}
+
+\makeatletter
+\@addtoreset{section}{part}
+\makeatother
 
 % ==============================================================
 % § 6. ページレイアウト（余白・ヘッダー・フッター・脚注）
@@ -288,7 +298,7 @@
 % ---- Part：中央揃え + 二重グレー罫線 ----
 \titleformat{\part}[display]
   {\normalfont\LARGE\bfseries\centering\color{appleInk}}
-  {\normalsize\color{appleGray}第\thepart 章}
+  {\large\color{appleGray}第\thepart 章}
   {-0.65ex}
   {}%
   [{%
