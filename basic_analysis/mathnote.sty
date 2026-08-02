@@ -615,35 +615,44 @@
 \colorlet{acc@ex}{appleGrayLight}   % Example：薄い灰
 \colorlet{acc@qu}{appleLineGray}    % Question：淡い灰（白は使わない）
 
+% ---- 追加：カードの薄い背景（Column 環境と同じ黒1%） ----
+\colorlet{appleCardTint}{white}
+
 % ---- 共通ベーススタイル ----
-% 白カード + 下端に薄い仕切り線 + 左に 2pt のアクセントバー
+% 薄灰カード + 見出し下ヘアライン + 下端ヘアライン + 左に 2pt バー
 \tcbset{
   theo-base/.style={
     enhanced, breakable, sharp corners,
     boxrule=0pt, no shadow,
-    colback=appleCard,
-    colframe=appleCard,
-    colbacktitle=appleCard,
+    colback=appleCardTint,          % 【変更】白 → 薄灰カード
+    colframe=appleCardTint,
+    colbacktitle=appleCardTint,
     coltitle=appleInk,
     coltext=appleInk,
     fonttitle=\gtfamily\sffamily\bfseries\upshape,
     left*=1\zw,
     right*=1\zw,
-    top=8pt,
+    toptitle=9pt,                   % 【追加】見出し帯の上余白
+    bottomtitle=7pt,                % 【追加】見出し〜仕切り線の間
+    top=9pt,                        % 仕切り線〜本文の間
     bottom=10pt,
-    borderline south={0.8pt}{-2pt}{appleLine},
-    % 【変更】before={\par\vspace*{16pt}\noindent} を before skip に変更：
-    %   \vspace* はページ先頭でも消えない余白を作り，改ページ位置の
-    %   計算も乱す．before skip は tcolorbox が適切な改ページ点と
-    %   ともに挿入し，ページ先頭では自動的に消える．
-    %   plus/minus は \flushbottom がページを詰めるための伸び代．
+    % 【変更】{0.8pt}{-2pt} → {0.5pt}{0pt}：
+    %   背景に色が付くとカードの下端が見えるようになるため，
+    %   2pt 外側に浮いた線は「ズレ」に見える．下端に密着させる．
+    borderline south={0.5pt}{0pt}{appleLineGray},
     before skip=16pt plus 6pt minus 4pt,
     after skip=18pt plus 6pt minus 4pt,
     before upper={\setlength{\parindent}{1\zw}},
     before lower={\setlength{\parindent}{1\zw}},
     pad at break=0pt,
     enlarge top at break by=12pt,
-    enlarge bottom at break by=0pt
+    enlarge bottom at break by=0pt,
+    % 【追加】見出しの下に全幅ヘアライン（Column 環境の区切り線と同族）．
+    %   分割時は先頭パートにのみ描画される．
+    overlay unbroken and first={
+      \draw[appleLine, line width=0.4pt]
+        (title.south west) -- (title.south east);
+    },
   },
   mytheo/.style n args={1}{
     theo-base,
@@ -739,7 +748,7 @@
 % ---- 色設定 ----
 \colorlet{columnMagenta}{magenta!72!black}
 \colorlet{columnInk}{black!88}
-\colorlet{columnBackground}{black!1}
+\colorlet{columnBackground}{black!2.5}  % コラム背景（白地に近い薄灰）
 \colorlet{columnFrame}{black!45}   % 外枠・見出し枠のヘアライン（濃いめ）
 \colorlet{columnRule}{black!22}    % 見出し右の区切り線
 
