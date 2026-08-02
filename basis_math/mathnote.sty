@@ -378,14 +378,17 @@
     \path[use as bounding box]
       (0,-9mm) rectangle (\linewidth,7mm);
 
+    % 中央の横罫線
     \draw[secrule,line width=0.4pt]
       (0,0) -- (\linewidth,0);
 
+    % 横罫線の左端の円
     \fill[secrule]
-      (-0.4pt,-1.0mm) rectangle ++(2.0mm,2.0mm);
+      (0,0) circle[radius=1mm];
 
+    % 横罫線の右端の円
     \fill[secrule]
-      (\linewidth,-1.0mm) rectangle ++(-2.0mm,2.0mm);
+      (\linewidth,0) circle[radius=1mm];
 
     \fill[secbarfill]
       (\secbarx,-7.5mm) rectangle ++(1.8mm,13.5mm);
@@ -418,14 +421,17 @@
     \path[use as bounding box]
       (0,-9mm) rectangle (\linewidth,7mm);
 
+    % 中央の横罫線
     \draw[secrule,line width=0.4pt]
       (0,0) -- (\linewidth,0);
 
+    % 横罫線の左端の円
     \fill[secrule]
-      (-0.4pt,-1.0mm) rectangle ++(2.0mm,2.0mm);
+      (0,0) circle[radius=1mm];
 
+    % 横罫線の右端の円
     \fill[secrule]
-      (\linewidth,-1.0mm) rectangle ++(-2.0mm,2.0mm);
+      (\linewidth,0) circle[radius=1mm];
 
     \fill[secbarfill]
       (\secbarx,-7.5mm) rectangle ++(1.8mm,13.5mm);
