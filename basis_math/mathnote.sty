@@ -731,60 +731,83 @@
   IfValueTF={#1}{title=【#2】〈#1〉}{title=【#2】},#4%
 }
 
-% ---- mycolumn: コラム環境（ローマ数字カウンタ，両端に縦線） ----
-\colorlet{colexam}{magenta!75!black}
-\newtcolorbox[auto counter,number format=\Roman]{mycolumn}{
-  empty,
-  title={\bfseries\sffamily Column \thetcbcounter},
-  attach boxed title to top left,
-  boxed title style={
-    empty,
-    size=minimal,
-    toprule=2pt,
-    top=4pt,
-    bottom=3pt,
-    left=1cm,  % タイトル開始位置を右に寄せる
-  },
-  coltitle=colexam,
-  fonttitle=\Large\bfseries,
-  before=\par\medskip\noindent,
-  parbox=false,
-  boxsep=0pt,
-  left=5mm,
-  right=3mm,
-  top=4pt,
+% ==============================================================
+% mycolumn：Apple風コラム環境
+% 使用色：白・黒・マゼンタのみ
+% ==============================================================
+
+% ---- 色設定 ----
+\colorlet{columnMagenta}{magenta!72!black}
+\colorlet{columnInk}{black!88}
+\colorlet{columnBackground}{black!1}
+\colorlet{columnFrame}{black!45}   % 外枠・見出し枠のヘアライン（濃いめ）
+\colorlet{columnRule}{black!22}    % 見出し右の区切り線
+
+% ---- 見出し枠の中心を上辺から何mm下げるか（ここ1か所で調整） ----
+\newlength{\columnTitleDrop}
+\setlength{\columnTitleDrop}{6.4mm}
+
+% ---- 罫線ヘルパ ----
+\newcommand{\columnAccentLine}[2]{%
+  \draw[columnMagenta, line width=1.2pt, line cap=round]
+    ([xshift=2.8mm, yshift=#1]frame.north west) --
+    ([xshift=2.8mm, yshift=#2]frame.south west);}
+\newcommand{\columnHeadRule}{%
+  \draw[columnRule, line width=0.4pt]
+    ([xshift=7mm+\tcboxedtitlewidth+3.2mm, yshift=-\columnTitleDrop]frame.north west)
+    -- ([xshift=-6mm, yshift=-\columnTitleDrop]frame.north east);}
+
+\newtcolorbox[
+  auto counter,
+  number format=\Roman
+]{mycolumn}{
+  enhanced,
   breakable,
-  pad at break*=0mm,
-  % 【変更】vfill before first を削除：
-  %   このオプションは「Column がページ境界で分割される場合，
-  %   開始を丸ごと次ページへ送り，現ページ下部を \vfill で埋める」
-  %   もの．つまりページ下部の大きな空白を意図的に作る設定なので，
-  %   自然に分割させたい場合は外す．（元の挙動が良ければ戻すこと）
-  % 左右の縦線をタイトル下端から箱の下端まで TikZ で引く
-  overlay unbroken={
-    \draw[colexam,line width=2pt]
-      ([xshift=-0.5pt,yshift=16pt]frame.north east) -- ([xshift=-0.5pt]frame.south east);
-    \draw[colexam,line width=2pt]
-      ([xshift=-1pt,yshift=16pt]frame.north west) -- ([xshift=-1pt]frame.south west);
+  colback=columnBackground,
+  colframe=columnFrame,          % ← 追加：外枠の色
+  coltext=columnInk,
+  boxrule=0.4pt,                 % ← 追加：ヘアライン
+  arc=0mm,
+  outer arc=0mm,
+  boxsep=0pt,
+  left=7mm,
+  right=6mm,
+  top=4mm,                      % 見出し帯のぶん 10mm→12mm
+  bottom=6mm,
+  before=\par\medskip\noindent,
+  after=\par\medskip,
+  parbox=false,
+  pad at break*=2mm,
+  toprule at break=0.4pt,
+  bottomrule at break=0.4pt,
+  title={%
+    \sffamily\bfseries
+    \fontsize{10pt}{12pt}\selectfont
+    Column\hspace{0.7em}\thetcbcounter
   },
-  overlay first={
-    \draw[colexam,line width=2pt]
-      ([xshift=-0.5pt,yshift=16pt]frame.north east) -- ([xshift=-0.5pt]frame.south east);
-    \draw[colexam,line width=2pt]
-      ([xshift=-1pt,yshift=16pt]frame.north west) -- ([xshift=-1pt]frame.south west);
+  coltitle=columnMagenta,
+  fonttitle=\sffamily\bfseries,
+  attach boxed title to top left={
+    xshift=7mm,
+    yshift*={-\tcboxedtitleheight/2-\columnTitleDrop}
   },
-  overlay middle={
-    \draw[colexam,line width=2pt]
-      ([xshift=-0.5pt,yshift=16pt]frame.north east) -- ([xshift=-0.5pt]frame.south east);
-    \draw[colexam,line width=2pt]
-      ([xshift=-1pt,yshift=16pt]frame.north west) -- ([xshift=-1pt]frame.south west);
+  boxed title style={
+    enhanced,
+    colframe=columnFrame,
+    boxrule=0.4pt,
+    colback=columnBackground,
+    arc=1.0mm,
+    outer arc=1.0mm,
+    boxsep=0pt,
+    left=3mm,                    % ← 左右対称に
+    right=3mm,
+    top=1.4mm,                   % ← 上下にも余白を
+    bottom=1.4mm
   },
-  overlay last={
-    \draw[colexam,line width=2pt]
-      ([xshift=-0.5pt,yshift=16pt]frame.north east) -- ([xshift=-0.5pt]frame.south east);
-    \draw[colexam,line width=2pt]
-      ([xshift=-1pt,yshift=16pt]frame.north west) -- ([xshift=-1pt]frame.south west);
-  },%
+  overlay unbroken={\columnAccentLine{-10mm}{5mm}\columnHeadRule},
+  overlay first   ={\columnAccentLine{-10mm}{0mm}\columnHeadRule},
+  overlay middle  ={\columnAccentLine{0mm}{0mm}},
+  overlay last    ={\columnAccentLine{0mm}{5mm}}
 }
 
 % ---- reviewbox: 丸角・影付きの復習ボックス（オプションでタイトル） ----
