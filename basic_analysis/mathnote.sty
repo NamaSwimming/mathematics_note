@@ -298,7 +298,7 @@
 % ---- Part：中央揃え + 二重グレー罫線 ----
 \titleformat{\part}[display]
   {\normalfont\LARGE\bfseries\centering\color{appleInk}}
-  {\normalsize\color{appleGray}第\thepart 章}
+  {\large\color{appleGray}第\thepart 章}
   {-0.65ex}
   {}%
   [{%
@@ -559,11 +559,11 @@
     {%
       \vskip2.5pt
       \parindent=0pt
-      \leftskip=30pt
+      \leftskip=24pt
       \noindent
       \etoclink{%
         \bfseries\normalsize\color{appleInk}%
-        \makebox[2.0em][l]{\etocnumber}%
+        \makebox[2.5em][l]{\etocnumber}%
         \etocname
       }%
       \nobreak\leaders\hbox to .5em{\hss.\hss}\hfill \etocpage\par
@@ -577,12 +577,12 @@
   {\noindent}
   {%
     \parindent=0pt
-    \leftskip=56pt
+    \leftskip=44pt
     \rightskip=0pt
     \small
     \noindent
     \etoclink{%
-      \makebox[2.0em][l]{\etocnumber}%
+      \makebox[3.4em][l]{\etocnumber}%
       \etocname
       \hspace{0.35em}%
       {(p.\etocpage)}%
