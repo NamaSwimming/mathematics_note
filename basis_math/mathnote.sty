@@ -468,8 +468,10 @@
   {}{}{0pt}
   {\sectionheadrulestar}
 
-\titlespacing*{\section}
+\titlespacing{\section}
   {0pt}{18pt}{14pt}
+
+\setlength{\parindent}{1\zw}
 
 \titleformat{\subsection}[block]
   {\normalfont\color{black}\large\bfseries}
@@ -477,10 +479,10 @@
   {0.7em}
   {}
 
-\titlespacing*{\subsection}
-  {0pt}{14pt}{6pt}
+% 星なし ＝ 見出し直後の段落を字下げする
+\titlespacing{\subsection}{0pt}{14pt}{6pt}
 
-\setlength{\parindent}{1\zw}
+
 
 
 % ==============================================================
