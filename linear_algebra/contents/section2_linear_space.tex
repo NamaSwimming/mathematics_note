@@ -26,11 +26,14 @@
   $K$を体とする．
   集合$V$が次の条件を満たすとき，
   $V$を体$K$上の\textbf{線型空間}という．
+
   また，ここでは写像$ V \times V \to V$と$ K \times V \to V$を区別することなく\footnote{つまり，$\alpha + \beta$の$+$と$\alpha v + \beta w$の$+$を演算記号で区別しない．}演算記号$+$を用いると約束する．
-  \begin{description}
-  \item[加法に関して可換群] \mbox{} \\
+\begin{enumerate}[label=(\roman*),leftmargin=3.2em]
+  \item \textbf{加法に関して可換群} 
+  
   集合$V$は，加法に関して可換群をなす．
-  \item[スカラー倍に関する性質] \mbox{} \\
+  \item \textbf{スカラー倍に関する性質} 
+ 
   任意の$v,w\in V$および任意の$\alpha,\beta\in K$に対して，
   \[
   1_K v=v
@@ -45,7 +48,7 @@
   (\alpha\beta)v=\alpha(\beta v)
   \]
   が成り立つ．
-  \end{description}
+  \end{enumerate}
 
   $V$の元を\textbf{ベクトル}という．
 \end{definition}
@@ -100,26 +103,30 @@ v+(-v)=0_V
   体$K$上の線型空間$V$の部分集合$W$が，
   次の条件を満たすとき，
   $W$を$V$の\textbf{線型部分空間}という．
-  \begin{description}
-  \item[空でない] \mbox{} \\
-  \[
-  W\neq\varnothing
-  \]
-  である．
-  \item[加法に関する性質] \mbox{} \\
-  任意の$v,w\in W$に対して，
-  \[
-  v+w\in W
-  \]
-  である．
-  \item[スカラー倍に関する性質] \mbox{} \\
-  任意の$v\in W$，
-  任意の$\alpha\in K$に対して，
-  \[
-  \alpha v\in W
-  \]
-  である．
-  \end{description}
+\begin{enumerate}[label=(\roman*),leftmargin=3.2em]
+    \item \textbf{空でない}
+    \[
+      W\neq\varnothing
+    \]
+    である．
+
+    \item \textbf{加法に関する性質}
+
+    任意の$v,w\in W$に対して，
+    \[
+      v+w\in W
+    \]
+    である．
+
+    \item \textbf{スカラー倍に関する性質}
+
+    任意の$v\in W$，
+    任意の$\alpha\in K$に対して，
+    \[
+      \alpha v\in W
+    \]
+    である．
+  \end{enumerate}
 \end{definition}
 
 \begin{mycolumn}
@@ -162,7 +169,7 @@ v+(-v)=0_V
 \end{definition}
 
 \begin{prop}{共通部分と和の線型部分空間性}{共通部分と和の線型部分空間性}
-  \deref{共通部分，和}で定義した，
+  \deref{共通部分・和}で定義した，
   線型部分空間の共通部分および和は，
   ともに線型部分空間である．
 \end{prop}
