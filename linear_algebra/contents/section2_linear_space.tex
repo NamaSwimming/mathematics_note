@@ -15,8 +15,7 @@
 \subsection{線型空間の定義}
 
 
-線型代数学では，ベクトルとは必ずしも矢印である必要はない．
-実際に，ある条件を満たす集合の元を「ベクトル」とすることができる．
+線型代数学では「ある条件を満たす集合の元」を「ベクトル」とする．
 
 そこでまず，ベクトルを抽象化した概念である
 \textbf{線型空間}\index{せんけいくうかん@線型空間}
@@ -28,25 +27,25 @@
   $V$を体$K$上の\textbf{線型空間}という．
 
 また，体$K$の加法と線型空間$V$の加法は，文脈から区別できるものとして，ともに演算記号$+$で表すことにする
-\footnote{すなわち，$\alpha+\beta$に現れる$+$と$\alpha v+\beta w$に現れる$+$とを異なる記号で表さず，同じ記号で記述する．}．
+\footnote{すなわち，$\alpha+\beta$に現れる$+$と$\alpha\bm{v}+\beta\bm{w}$に現れる$+$とを異なる記号で表さず，同じ記号で記述する．}．
 \begin{enumerate}[label=(\roman*),leftmargin=3.2em]
   \item \textbf{加法に関して可換群} 
   
   集合$V$は，加法に関して可換群をなす．
   \item \textbf{スカラー倍に関する性質} 
  
-  任意の$v,w\in V$および任意の$\alpha,\beta\in K$に対して，
+  任意の$\bm{v},\bm{w}\in V$および任意の$\alpha,\beta\in K$に対して，
   \[
-  1_K v=v
+  1_K \bm{v}=\bm{v}
   \]
   \[
-  (\alpha+\beta) v=\alpha v+\beta v
+  (\alpha+\beta) \bm{v}=\alpha \bm{v}+\beta \bm{v}
   \]
   \[
-  \alpha(v+w)=\alpha v+\alpha w,
+  \alpha(\bm{v}+\bm{w})=\alpha \bm{v}+\alpha \bm{w},
   \]
   \[
-  (\alpha\beta)v=\alpha(\beta v)
+  (\alpha\beta)\bm{v}=\alpha(\beta \bm{v})
   \]
   が成り立つ．
   \end{enumerate}
@@ -65,18 +64,18 @@
 \item 加法逆元の存在
 \end{itemize}
 
-が含まれている．具体的には，任意の$v,w,u\in V$に対して，
+が含まれている．具体的には，任意の$\bm{v},\bm{w},\bm{u}\in V$に対して，
 \[
-(v+w)+u=v+(w+u),
+(\bm{v}+\bm{w})+\bm{u}=\bm{v}+(\bm{w}+\bm{u}),
 \]
 \[
-v+w=w+v,
+\bm{v}+\bm{w}=\bm{w}+\bm{v},
 \]
 \[
-v+0_V=v,
+\bm{v}+\bm{0}_V=\bm{v},
 \]
 \[
-v+(-v)=0_V
+\bm{v}+(-\bm{v})=\bm{0}_V
 \]
 が成り立つ．
 \end{mycolumn}
@@ -113,18 +112,18 @@ v+(-v)=0_V
 
     \item \textbf{加法に関する性質}
 
-    任意の$v,w\in W$に対して，
+    任意の$\bm{v},\bm{w}\in W$に対して，
     \[
-      v+w\in W
+      \bm{v}+\bm{w}\in W
     \]
     である．
 
     \item \textbf{スカラー倍に関する性質}
 
-    任意の$v\in W$，
+    任意の$\bm{v}\in W$，
     任意の$\alpha\in K$に対して，
     \[
-      \alpha v\in W
+      \alpha \bm{v}\in W
     \]
     である．
   \end{enumerate}
@@ -133,7 +132,7 @@ v+(-v)=0_V
 \begin{mycolumn}
 定義の最初の条件は
 \[
-0_V\in W
+\bm{0}_V\in W
 \]
 としてもよい．
 
@@ -160,10 +159,10 @@ v+(-v)=0_V
   W_1+W_2
   =
   \{
-  w_1+w_2
+  \bm{w}_1+\bm{w}_2
   \mid
-  w_1\in W_1,\
-  w_2\in W_2
+  \bm{w}_1\in W_1,\
+  \bm{w}_2\in W_2
   \}
   \]
   を$W_1$と$W_2$の\textbf{和}という．
@@ -197,23 +196,23 @@ v+(-v)=0_V
   V\times W
   =
   \{
-  (v,w)
+  (\bm{v},\bm{w})
   \mid
-  v\in V,\
-  w\in W
+  \bm{v}\in V,\
+  \bm{w}\in W
   \}
   \]
   を考え，
   加法およびスカラー倍を
   \[
-  (v_1,w_1)+(v_2,w_2)
+  (\bm{v}_1,\bm{w}_1)+(\bm{v}_2,\bm{w}_2)
   =
-  (v_1+v_2,w_1+w_2),
+  (\bm{v}_1+\bm{v}_2,\bm{w}_1+\bm{w}_2),
   \]
   \[
-  \alpha(v,w)
+  \alpha(\bm{v},\bm{w})
   =
-  (\alpha v,\alpha w)
+  (\alpha \bm{v},\alpha \bm{w})
   \]
   によって定める．
 
