@@ -1,0 +1,574 @@
+\phantomsection
+\part{線型空間}
+
+\begin{abstract}
+  この章では「線型空間」について学ぶ．
+  高校までの学習では「ベクトル」を「平面や空間内で，向きと大きさを持った量」として説明することが多かった．
+  一方，線型代数学では，ベクトルを「ある条件を満たす集合の元」として抽象的に扱う．
+  この考え方により，数ベクトルだけでなく，行列や関数なども同じ枠組みで議論できるようになる．
+  また，ベクトルの集合から生成される線型部分空間として，線型包を導入する．
+\end{abstract}
+
+\phantomsection
+\section{線型空間}
+
+\phantomsection
+\subsection{線型空間の定義}
+
+
+線型代数学では「ある条件を満たす集合の元」を「ベクトル」とする．
+
+そこでまず，ベクトルを抽象化した概念である
+\textbf{線型空間}\index{せんけいくうかん@線型空間}
+を定義する．
+
+\begin{definition}{線型空間}{線型空間}
+  $K$を体とする．
+  集合$V$が次の条件を満たすとき，
+  $V$を体$K$上の\textbf{線型空間}という．
+
+また，体$K$の加法と線型空間$V$の加法は，文脈から区別できるものとして，ともに演算記号$+$で表すことにする
+\footnote{すなわち，$\alpha+\beta$に現れる$+$と$\alpha\bm{v}+\beta\bm{w}$に現れる$+$とを異なる記号で表さず，同じ記号で記述する．}．
+\begin{enumerate}[label=(\roman*),leftmargin=3.2em]
+  \item \textbf{加法に関して可換群} 
+  
+  集合$V$は，加法に関して可換群をなす．
+  \item \textbf{スカラー倍に関する性質} 
+ 
+  任意の$\bm{v},\bm{w}\in V$および任意の$\alpha,\beta\in K$に対して，
+  \[
+  1_K \bm{v}=\bm{v}
+  \]
+  \[
+  (\alpha+\beta) \bm{v}=\alpha \bm{v}+\beta \bm{v},
+  \]
+  \[
+  \alpha(\bm{v}+\bm{w})=\alpha \bm{v}+\alpha \bm{w},
+  \]
+  \[
+  (\alpha\beta)\bm{v}=\alpha(\beta \bm{v})
+  \]
+  が成り立つ．
+  \end{enumerate}
+
+  $V$の元を\textbf{ベクトル}という．
+\end{definition}
+
+\begin{mycolumn}
+線型空間の公理のうち，
+「加法に関して可換群である」という条件には，
+
+\begin{itemize}
+\item 結合法則
+\item 交換法則
+\item 零ベクトルの存在
+\item 加法逆元の存在
+\end{itemize}
+
+が含まれている．具体的には，任意の$\bm{v},\bm{w},\bm{u}\in V$に対して，
+\[
+(\bm{v}+\bm{w})+\bm{u}=\bm{v}+(\bm{w}+\bm{u}),
+\]
+\[
+\bm{v}+\bm{w}=\bm{w}+\bm{v},
+\]
+\[
+\bm{v}+\bm{0}_V=\bm{v},
+\]
+\[
+\bm{v}+(-\bm{v})=\bm{0}_V
+\]
+が成り立つ．
+\end{mycolumn}
+
+\begin{example}{線型空間の例}{線型空間の例}
+次の集合はいずれも線型空間となる．
+
+\begin{itemize}
+\item $\mathbb{R}^n$
+\item $\mathbb{C}^n$
+\item $m\times n$行列全体
+\item 実数係数多項式全体
+\end{itemize}
+
+これらは一見異なる対象であるが，
+線型空間という共通の枠組みで扱うことができる．
+\end{example}
+
+線型空間の公理からは，数ベクトルの場合と同様の計算規則が導かれる．
+
+\begin{prop}{線型空間の基本性質}{線型空間の基本性質}
+  $V$を体$K$上の線型空間とする．
+  任意の$\bm{v} \in V$および任意の$\alpha \in K$に対して，次が成り立つ：
+  \begin{enumerate}[label=(\roman*),leftmargin=3.2em]
+    \item $0_K \bm{v} = \bm{0}_V$
+    \item $\alpha \bm{0}_V = \bm{0}_V$
+    \item $(-1_K)\bm{v} = -\bm{v}$
+  \end{enumerate}
+\end{prop}
+
+\begin{leftbar}
+\begin{proof}
+  (i)について，スカラー倍に関する分配律より，
+  \[
+    0_K \bm{v} = (0_K + 0_K)\bm{v} = 0_K \bm{v} + 0_K \bm{v}
+  \]
+  である．両辺に$0_K \bm{v}$の加法逆元$-(0_K \bm{v})$を加えると，
+  \[
+    \bm{0}_V = 0_K \bm{v}
+  \]
+  を得る．
+
+  (ii)について，同様に，
+  \[
+    \alpha \bm{0}_V = \alpha(\bm{0}_V + \bm{0}_V) = \alpha \bm{0}_V + \alpha \bm{0}_V
+  \]
+  であるから，両辺に$-(\alpha \bm{0}_V)$を加えて$\bm{0}_V = \alpha \bm{0}_V$を得る．
+
+  (iii)について，(i)より，
+  \[
+    \bm{v} + (-1_K)\bm{v} = 1_K \bm{v} + (-1_K)\bm{v} = \bigl(1_K + (-1_K)\bigr)\bm{v} = 0_K \bm{v} = \bm{0}_V
+  \]
+  である．加法逆元の一意性より，$(-1_K)\bm{v} = -\bm{v}$である．
+  以上の考察により，命題が示された．
+\end{proof}
+\end{leftbar}
+
+\subsection{線型部分空間}
+
+線型空間の部分集合のうち，
+それ自身も線型空間となるものを線型部分空間という．
+
+\begin{definition}{線型部分空間}{線型部分空間}
+  体$K$上の線型空間$V$の部分集合$W$が，
+  次の条件を満たすとき，
+  $W$を$V$の\textbf{線型部分空間}という．
+\begin{enumerate}[label=(\roman*),leftmargin=3.2em]
+    \item \textbf{空でない}
+    \[
+      W\neq\varnothing
+    \]
+    である．
+
+    \item \textbf{加法に関する性質}
+
+    任意の$\bm{v},\bm{w}\in W$に対して，
+    \[
+      \bm{v}+\bm{w}\in W
+    \]
+    である．
+
+    \item \textbf{スカラー倍に関する性質}
+
+    任意の$\bm{v}\in W$，
+    任意の$\alpha\in K$に対して，
+    \[
+      \alpha \bm{v}\in W
+    \]
+    である．
+  \end{enumerate}
+\end{definition}
+
+\begin{mycolumn}
+定義の最初の条件は
+\[
+\bm{0}_V\in W
+\]
+としてもよい．
+
+実際，$W$が空でなければ$\bm{w} \in W$がとれ，$W$がスカラー倍について閉じていることと\prref{線型空間の基本性質}より，
+\[
+\bm{0}_V = 0_K \bm{w} \in W
+\]
+となる．
+\end{mycolumn}
+
+線型部分空間どうしから新たな線型部分空間を作る方法として，
+共通部分と和が重要である．
+
+\begin{definition}{共通部分・和}{共通部分・和}
+  $V$を線型空間，
+  $W_1,W_2$を$V$の線型部分空間とする．
+
+  このとき，
+  \[
+  W_1\cap W_2
+  \]
+  を$W_1$と$W_2$の\textbf{共通部分}という．
+
+  また，
+  \[
+  W_1+W_2
+  =
+  \{
+  \bm{w}_1+\bm{w}_2
+  \mid
+  \bm{w}_1\in W_1,\
+  \bm{w}_2\in W_2
+  \}
+  \]
+  を$W_1$と$W_2$の\textbf{和}という．
+\end{definition}
+
+\begin{prop}{共通部分と和の線型部分空間性}{共通部分と和の線型部分空間性}
+  \deref{共通部分・和}で定義した，
+  線型部分空間の共通部分および和は，
+  ともに線型部分空間である．
+\end{prop}
+
+\begin{leftbar}
+\begin{proof}
+  まず，共通部分$W_1\cap W_2$について示す．
+  $W_1,W_2$はいずれも線型部分空間であるから，
+  \[
+    \bm{0}_V\in W_1,
+    \quad
+    \bm{0}_V\in W_2
+  \]
+  である．したがって，
+  \[
+    \bm{0}_V\in W_1\cap W_2
+  \]
+  であり，$W_1\cap W_2$は空でない．
+
+  次に，$\bm{x},\bm{y}\in W_1\cap W_2$とする．
+  このとき，
+  \[
+    \bm{x},\bm{y}\in W_1
+    \quad\text{かつ}\quad
+    \bm{x},\bm{y}\in W_2
+  \]
+  である．$W_1,W_2$は加法について閉じているから，
+  \[
+    \bm{x}+\bm{y}\in W_1
+    \quad\text{かつ}\quad
+    \bm{x}+\bm{y}\in W_2
+  \]
+  となる．ゆえに，
+  \[
+    \bm{x}+\bm{y}\in W_1\cap W_2
+  \]
+  である．
+
+  また，任意の$\alpha\in K$に対して，
+  $W_1,W_2$はスカラー倍について閉じているから，
+  \[
+    \alpha\bm{x}\in W_1
+    \quad\text{かつ}\quad
+    \alpha\bm{x}\in W_2
+  \]
+  となる．したがって，
+  \[
+    \alpha\bm{x}\in W_1\cap W_2
+  \]
+  である．以上より，$W_1\cap W_2$は$V$の線型部分空間である．
+
+  続いて，和$W_1+W_2$について示す．
+  \[
+    \bm{0}_V=\bm{0}_V+\bm{0}_V
+  \]
+  であり，$\bm{0}_V\in W_1$かつ$\bm{0}_V\in W_2$であるから，
+  \[
+    \bm{0}_V\in W_1+W_2
+  \]
+  である．したがって，$W_1+W_2$は空でない．
+
+  $\bm{x},\bm{y}\in W_1+W_2$とする．
+  このとき，ある$\bm{x}_1,\bm{y}_1\in W_1$および
+  $\bm{x}_2,\bm{y}_2\in W_2$が存在して，
+  \[
+    \bm{x}=\bm{x}_1+\bm{x}_2,
+    \quad
+    \bm{y}=\bm{y}_1+\bm{y}_2
+  \]
+  と表せる．したがって，
+  \begin{align*}
+    \bm{x}+\bm{y}
+    &=(\bm{x}_1+\bm{x}_2)+(\bm{y}_1+\bm{y}_2)\\
+    &=(\bm{x}_1+\bm{y}_1)+(\bm{x}_2+\bm{y}_2)
+  \end{align*}
+  である．ここで，
+  \[
+    \bm{x}_1+\bm{y}_1\in W_1,
+    \quad
+    \bm{x}_2+\bm{y}_2\in W_2
+  \]
+  であるから，
+  \[
+    \bm{x}+\bm{y}\in W_1+W_2
+  \]
+  となる．
+
+  さらに，任意の$\alpha\in K$に対して，
+  \[
+    \alpha\bm{x}
+    =\alpha(\bm{x}_1+\bm{x}_2)
+    =\alpha\bm{x}_1+\alpha\bm{x}_2
+  \]
+  である．$\alpha\bm{x}_1\in W_1$かつ
+  $\alpha\bm{x}_2\in W_2$であるから，
+  \[
+    \alpha\bm{x}\in W_1+W_2
+  \]
+  である．以上より，$W_1+W_2$も$V$の線型部分空間である．
+\end{proof}
+\end{leftbar}
+
+\phantomsection
+\subsection{線型結合と線型包}
+
+第1章では，数ベクトルに対して線型結合を定義した（\deref{線型結合}）．
+その定義は，一般の線型空間の元に対しても，まったく同様に通用する．
+
+\begin{definition}{線型結合（一般の線型空間）}{一般の線型結合}
+  $V$を体$K$上の線型空間とする．
+  $n$個のベクトル$\bm{v}_1, \bm{v}_2, \dots, \bm{v}_n \in V$に対して，
+  \[
+    \lambda_1 \bm{v}_1 + \lambda_2 \bm{v}_2 + \cdots + \lambda_n \bm{v}_n
+    \quad (\lambda_i \in K)
+  \]
+  の形のベクトルを，$\bm{v}_1, \bm{v}_2, \dots, \bm{v}_n$の\textbf{線型結合}という．
+
+  線型関係，線型独立，線型従属についても，第1章と同じ式によって定義される．
+\end{definition}
+
+ベクトルの集合が与えられたとき，その元の線型結合として表されるベクトルをすべて集めた集合を考えよう．
+
+\begin{definition}{線型包}{線型包}
+  $V$を体$K$上の線型空間とし，$S$を$V$の部分集合とする．
+
+  $S \neq \varnothing$のとき，$S$の有限個の元の線型結合全体の集合
+  \[
+    \Span(S)
+    = \{ \lambda_1 \bm{v}_1 + \lambda_2 \bm{v}_2 + \cdots + \lambda_n \bm{v}_n \mid n \ge 1,\ \bm{v}_1, \dots, \bm{v}_n \in S,\ \lambda_1, \dots, \lambda_n \in K \}
+  \]
+  を$S$の\textbf{線型包}\index{せんけいほう@線型包}\index{Span@$\Span$}（\textbf{張る空間}\index{はるくうかん@張る空間}，生成される部分空間）という．
+  また，$\Span(\varnothing) = \{\bm{0}_V\}$と定める．
+
+  有限個のベクトル$\bm{v}_1, \bm{v}_2, \dots, \bm{v}_n \in V$に対しては，
+  \[
+    \Span(\bm{v}_1, \bm{v}_2, \dots, \bm{v}_n) = \Span(\{\bm{v}_1, \bm{v}_2, \dots, \bm{v}_n\})
+  \]
+  ともかく．
+\end{definition}
+
+\begin{example}{線型包の例}{線型包の例}
+  $K^3$の標準基底ベクトル$\bm{e}_1$，$\bm{e}_2$に対して，
+  \[
+    \Span(\bm{e}_1, \bm{e}_2)
+    = \left\{ \lambda_1 \begin{pmatrix} 1 \\ 0 \\ 0 \end{pmatrix} + \lambda_2 \begin{pmatrix} 0 \\ 1 \\ 0 \end{pmatrix} ~\middle|~ \lambda_1, \lambda_2 \in K \right\}
+    = \left\{ \begin{pmatrix} \lambda_1 \\ \lambda_2 \\ 0 \end{pmatrix} ~\middle|~ \lambda_1, \lambda_2 \in K \right\}
+  \]
+  である．$K = \mathbb{R}$のとき，これは$xyz$空間における$xy$平面にほかならない．
+
+  また，線型空間$V$の$1$個のベクトル$\bm{v} \neq \bm{0}_V$に対して，
+  \[
+    \Span(\bm{v}) = \{ \lambda \bm{v} \mid \lambda \in K \}
+  \]
+  であり，たとえば$V = \mathbb{R}^3$のとき，これは原点を通り$\bm{v}$の方向に伸びる直線である．
+
+  さらに，$V$を実数係数多項式全体のなす線型空間とすると，
+  \[
+    \Span(1, x, x^2)
+    = \{ a + bx + cx^2 \mid a, b, c \in \mathbb{R} \}
+  \]
+  であり，これは次数が$2$以下の多項式全体（零多項式を含む）にほかならない．
+  このように，線型包の概念は数ベクトルに限らず適用できる．
+\end{example}
+
+線型包は，つねに線型部分空間となる．
+
+\begin{prop}{線型包の線型部分空間性}{線型包の線型部分空間性}
+  $V$を体$K$上の線型空間，$S$を$V$の部分集合とする．
+  このとき，$\Span(S)$は$V$の線型部分空間である．
+\end{prop}
+
+\begin{leftbar}
+\begin{proof}
+  まず，$S = \varnothing$のときを考える．
+  このとき$\Span(\varnothing) = \{\bm{0}_V\}$であり，
+  \[
+    \bm{0}_V + \bm{0}_V = \bm{0}_V
+  \]
+  および，任意の$\alpha \in K$に対して\prref{線型空間の基本性質}より
+  \[
+    \alpha \bm{0}_V = \bm{0}_V
+  \]
+  が成り立つ．よって$\{\bm{0}_V\}$は空でなく，加法とスカラー倍について閉じているから，$V$の線型部分空間である．
+
+  次に，$S \neq \varnothing$とする．
+  $\bm{v} \in S$をとると，
+  \[
+    \bm{v} = 1_K \bm{v} \in \Span(S)
+  \]
+  であるから，$\Span(S)$は空でない．
+
+  $\bm{x}, \bm{y} \in \Span(S)$とすると，ある$\bm{v}_1, \dots, \bm{v}_m \in S$，$\bm{w}_1, \dots, \bm{w}_l \in S$および$\lambda_i, \mu_j \in K$を用いて
+  \[
+    \bm{x} = \sum_{i=1}^{m} \lambda_i \bm{v}_i, \quad
+    \bm{y} = \sum_{j=1}^{l} \mu_j \bm{w}_j
+  \]
+  と表せる．このとき，
+  \[
+    \bm{x} + \bm{y}
+    = \lambda_1 \bm{v}_1 + \cdots + \lambda_m \bm{v}_m + \mu_1 \bm{w}_1 + \cdots + \mu_l \bm{w}_l
+  \]
+  も$S$の有限個の元の線型結合であるから，$\bm{x} + \bm{y} \in \Span(S)$である．
+
+  さらに，任意の$\alpha \in K$に対して，スカラー倍に関する分配律より，
+  \[
+    \alpha\bm{x} = \sum_{i=1}^{m} (\alpha\lambda_i) \bm{v}_i
+  \]
+  も$S$の有限個の元の線型結合であるから，$\alpha\bm{x} \in \Span(S)$である．
+  以上より，$\Span(S)$は$V$の線型部分空間である．
+\end{proof}
+\end{leftbar}
+
+さらに，線型包は「$S$を含む最小の線型部分空間」として特徴づけられる．
+
+\begin{prop}{線型包の最小性}{線型包の最小性}
+  $V$を体$K$上の線型空間，$S$を$V$の部分集合とする．このとき，次が成り立つ：
+  \begin{enumerate}[label=(\roman*),leftmargin=3.2em]
+    \item $S \subseteq \Span(S)$である．
+    \item $W$が$S \subseteq W$を満たす$V$の線型部分空間ならば，$\Span(S) \subseteq W$である．
+  \end{enumerate}
+  すなわち，$\Span(S)$は，$S$を含む最小の線型部分空間である．
+\end{prop}
+
+\begin{leftbar}
+\begin{proof}
+  (i)について，任意の$\bm{v} \in S$は
+  \[
+    \bm{v} = 1_K \bm{v}
+  \]
+  と表せるから，$\bm{v} \in \Span(S)$である．
+
+  (ii)について，まず$S = \varnothing$のときを考える．
+  任意の線型部分空間$W$は零ベクトルを含む（\deref{線型部分空間}のあとの注意を参照）から，
+  \[
+    \Span(\varnothing) = \{\bm{0}_V\} \subseteq W
+  \]
+  である．
+
+  次に，$S \neq \varnothing$とし，$\Span(S)$の任意の元
+  \[
+    \bm{x} = \lambda_1 \bm{v}_1 + \lambda_2 \bm{v}_2 + \cdots + \lambda_n \bm{v}_n
+    \quad (\bm{v}_i \in S,\ \lambda_i \in K)
+  \]
+  をとる．$S \subseteq W$より$\bm{v}_i \in W$であり，$W$はスカラー倍について閉じているから，
+  \[
+    \lambda_i \bm{v}_i \in W \quad (1 \le i \le n)
+  \]
+  である．さらに，$W$は加法について閉じているから，これらの和である$\bm{x}$も$W$に属する．
+  よって$\Span(S) \subseteq W$である．
+  以上の考察により，命題が示された．
+\end{proof}
+\end{leftbar}
+
+\begin{mycolumn}
+\prref{線型包の最小性}より，$\Span(S)$は「$S$を含む線型部分空間すべての共通部分」とも一致する．
+
+実際，\prref{線型包の線型部分空間性}と\prref{線型包の最小性}(i)より，$\Span(S)$自身が「$S$を含む線型部分空間」のひとつであるから，共通部分は$\Span(S)$に含まれる．
+逆に，\prref{線型包の最小性}(ii)より，$\Span(S)$は$S$を含むどの線型部分空間にも含まれるから，共通部分にも含まれる．
+
+なお，\prref{共通部分と和の線型部分空間性}では二つの線型部分空間の共通部分を扱ったが，同様の議論により，任意個の線型部分空間の共通部分も線型部分空間となる．
+\end{mycolumn}
+
+和と線型包のあいだには，次の関係が成り立つ．
+
+\begin{prop}{和と線型包}{和と線型包}
+  $V$を線型空間，$W_1, W_2$を$V$の線型部分空間とする．このとき，
+  \[
+    W_1 + W_2 = \Span(W_1 \cup W_2)
+  \]
+  が成り立つ．
+\end{prop}
+
+\begin{leftbar}
+\begin{proof}
+  まず，$W_1 + W_2 \subseteq \Span(W_1 \cup W_2)$を示す．
+  任意の$\bm{w}_1 \in W_1$，$\bm{w}_2 \in W_2$に対して，
+  \[
+    \bm{w}_1 + \bm{w}_2 = 1_K \bm{w}_1 + 1_K \bm{w}_2
+  \]
+  は$W_1 \cup W_2$の元の線型結合であるから，$\bm{w}_1 + \bm{w}_2 \in \Span(W_1 \cup W_2)$である．
+
+  逆に，$\Span(W_1 \cup W_2) \subseteq W_1 + W_2$を示す．
+  \prref{共通部分と和の線型部分空間性}より$W_1 + W_2$は$V$の線型部分空間であり，
+  \[
+    \bm{w}_1 = \bm{w}_1 + \bm{0}_V \in W_1 + W_2,
+    \quad
+    \bm{w}_2 = \bm{0}_V + \bm{w}_2 \in W_1 + W_2
+  \]
+  より$W_1 \cup W_2 \subseteq W_1 + W_2$である．
+  よって，\prref{線型包の最小性}より$\Span(W_1 \cup W_2) \subseteq W_1 + W_2$である．
+  以上の考察により，命題が示された．
+\end{proof}
+\end{leftbar}
+
+\begin{mycolumn}
+一般に，線型部分空間どうしの合併$W_1 \cup W_2$は線型部分空間になるとは限らない．
+たとえば，$\mathbb{R}^2$において$x$軸と$y$軸はいずれも線型部分空間であるが，
+\[
+  \begin{pmatrix} 1 \\ 0 \end{pmatrix}
+  +
+  \begin{pmatrix} 0 \\ 1 \end{pmatrix}
+  =
+  \begin{pmatrix} 1 \\ 1 \end{pmatrix}
+\]
+は$x$軸にも$y$軸にも属さないので，合併は加法について閉じていない．
+
+\prref{和と線型包}は，合併そのものではなく，和$W_1 + W_2$こそが「$W_1$と$W_2$の両方を含む最小の線型部分空間」であることを示している．
+\end{mycolumn}
+
+\phantomsection
+\subsection{直和}
+
+二つの線型空間を一つの線型空間として扱う方法として，
+直和を定義する．
+
+\begin{definition}{直和}{直和}
+  $V,W$を体$K$上の線型空間とする．
+
+  直積集合
+  \[
+  V\times W
+  =
+  \{
+  (\bm{v},\bm{w})
+  \mid
+  \bm{v}\in V,\
+  \bm{w}\in W
+  \}
+  \]
+  を考え，
+  加法およびスカラー倍を
+  \[
+  (\bm{v}_1,\bm{w}_1)+(\bm{v}_2,\bm{w}_2)
+  =
+  (\bm{v}_1+\bm{v}_2,\bm{w}_1+\bm{w}_2),
+  \]
+  \[
+  \alpha(\bm{v},\bm{w})
+  =
+  (\alpha \bm{v},\alpha \bm{w})
+  \]
+  によって定める．
+
+  このとき，
+  $V\times W$は線型空間となる．
+
+  これを
+  $V$と$W$の\textbf{直和}といい，
+  \[
+  V\oplus W
+  \]
+  と表す．
+\end{definition}
+
+\begin{mycolumn}
+直和
+$V\oplus W$
+は，
+二つの線型空間を互いに独立な成分として並べた線型空間と考えることができる．
+\end{mycolumn}
