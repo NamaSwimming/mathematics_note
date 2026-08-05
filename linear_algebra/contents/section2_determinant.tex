@@ -746,10 +746,10 @@ $4$次以上の行列式にこれを適用してはならない．
   = \det(\bm{a}_1, \dots, \bm{a}_{i-1}, \bm{b}_i, \bm{a}_{i+1}, \dots, \bm{a}_n) 
   + \det(\bm{a}_1, \dots, \bm{a}_{i-1}, \bm{c}_i, \bm{a}_{i+1}, \dots, \bm{a}_n)
   \]
-  また，任意の定数$k \in \mathbb{C}$に対して，次が成り立つ：
+  また，任意の定数$\alpha \in \mathbb{C}$に対して，次が成り立つ：
   \[
-  \det(\bm{a}_1, \dots, \bm{a}_{i-1}, k \bm{a}_i, \bm{a}_{i+1}, \dots, \bm{a}_n) 
-  = k \cdot \det(\bm{a}_1, \dots, \bm{a}_n)
+  \det(\bm{a}_1, \dots, \bm{a}_{i-1}, \alpha \bm{a}_i, \bm{a}_{i+1}, \dots, \bm{a}_n) 
+  = \alpha \cdot \det(\bm{a}_1, \dots, \bm{a}_n)
   \]
 \end{prop}
 
@@ -780,12 +780,12 @@ $4$次以上の行列式にこれを適用してはならない．
   \end{align*}
   最後の等号では，第$i$列を$\bm{b}_i$（または$\bm{c}_i$）で置き換えた行列に同じ表示を適用した．
 
-  二つ目の主張についても，第$i$列を$k\bm{a}_i$で置き換えた行列に同じ表示を適用すると，第$i$列から選ばれる成分は$k a_{\sigma(i)i}$となるから，
+  二つ目の主張についても，第$i$列を$\alpha\bm{a}_i$で置き換えた行列に同じ表示を適用すると，第$i$列から選ばれる成分は$\alpha a_{\sigma(i)i}$となるから，
   \begin{align*} 
-    &\det(\bm{a}_1, \dots, \bm{a}_{i-1}, k \bm{a}_i, \bm{a}_{i+1}, \dots, \bm{a}_n) \\
-    =& \sum_{\sigma \in S_n} \sgn(\sigma) \cdot a_{\sigma(1)1} \dotsm (k a_{\sigma(i)i}) \dotsm a_{\sigma(n)n} \\
-    =& k \sum_{\sigma \in S_n} \sgn(\sigma) \cdot a_{\sigma(1)1} \dotsm a_{\sigma(i)i} \dotsm a_{\sigma(n)n} \\
-    =& k \cdot \det(\bm{a}_1, \dots, \bm{a}_n).
+    &\det(\bm{a}_1, \dots, \bm{a}_{i-1}, \alpha \bm{a}_i, \bm{a}_{i+1}, \dots, \bm{a}_n) \\
+    =& \sum_{\sigma \in S_n} \sgn(\sigma) \cdot a_{\sigma(1)1} \dotsm (\alpha a_{\sigma(i)i}) \dotsm a_{\sigma(n)n} \\
+    =& \alpha \sum_{\sigma \in S_n} \sgn(\sigma) \cdot a_{\sigma(1)1} \dotsm a_{\sigma(i)i} \dotsm a_{\sigma(n)n} \\
+    =& \alpha \cdot \det(\bm{a}_1, \dots, \bm{a}_n).
   \end{align*}
   以上により命題の両方の主張が成り立つことが示された．
 \end{proof}
@@ -963,16 +963,16 @@ $4$次以上の行列式にこれを適用してはならない．
 \begin{leftbar}
 \begin{proof}
   $\bm{a}_1, \bm{a}_2, \dots, \bm{a}_n$が線型従属であるとき，\prref{線型従属の言い換え}より，ある$i$に対して$\bm{a}_i$が他の列ベクトルの線型結合として表せる．
-  すなわち，ある定数$c_1, c_2, \dots, c_{i-1}, c_{i+1}, \dots, c_n \in \mathbb{C}$が存在して，
+  すなわち，ある定数$\lambda_1, \lambda_2, \dots, \lambda_{i-1}, \lambda_{i+1}, \dots, \lambda_n \in \mathbb{C}$が存在して，
   \[
-  \bm{a}_i = \sum_{\substack{1\leqq j\leqq n\\ j \ne i}} c_j \bm{a}_j
+  \bm{a}_i = \sum_{\substack{1\leqq j\leqq n\\ j \ne i}} \lambda_j \bm{a}_j
   \]
   が成り立つ．
 
   このとき，行列式の多重線型性から，
   \begin{align*} 
-    &\det(\bm{a}_1, \dots, \bm{a}_{i-1}, \bm{a}_i, \bm{a}_{i+1}, \dots, \bm{a}_n)  = \det(\bm{a}_1, \dots, \bm{a}_{i-1}, \sum_{\substack{1\leqq j\leqq n\\ j \ne i}} c_j \bm{a}_j, \bm{a}_{i+1}, \dots, \bm{a}_n) \\
-    =& \sum_{\substack{1\leqq j\leqq n\\ j\ne i}} c_j \det(\bm{a}_1, \dots, \bm{a}_{i-1}, \bm{a}_j, \bm{a}_{i+1}, \dots, \bm{a}_n).
+    &\det(\bm{a}_1, \dots, \bm{a}_{i-1}, \bm{a}_i, \bm{a}_{i+1}, \dots, \bm{a}_n)  = \det(\bm{a}_1, \dots, \bm{a}_{i-1}, \sum_{\substack{1\leqq j\leqq n\\ j \ne i}} \lambda_j \bm{a}_j, \bm{a}_{i+1}, \dots, \bm{a}_n) \\
+    =& \sum_{\substack{1\leqq j\leqq n\\ j\ne i}} \lambda_j \det(\bm{a}_1, \dots, \bm{a}_{i-1}, \bm{a}_j, \bm{a}_{i+1}, \dots, \bm{a}_n).
   \end{align*}
   ここで各項において$i$列目と$j$列目が等しいため，\coref{行列式の交代性の系2}より各項は$0$となる．
   したがって$\det A = 0$となる．
@@ -1842,9 +1842,9 @@ $F$ は列に関して多重線型である．
   \[
   \bm{a}_{j_1},\bm{a}_{j_2},\dots,\bm{a}_{j_s}
   \]
-  は線型従属である．したがって，少なくとも一つが$0$でない定数$c_1,c_2,\dots,c_s \in \mathbb{C}$が存在して
+  は線型従属である．したがって，少なくとも一つが$0$でない定数$\lambda_1,\lambda_2,\dots,\lambda_s \in \mathbb{C}$が存在して
   \[
-  c_1 \bm{a}_{j_1} + c_2 \bm{a}_{j_2} + \dots + c_s \bm{a}_{j_s} = \bm{0}
+  \lambda_1 \bm{a}_{j_1} + \lambda_2 \bm{a}_{j_2} + \dots + \lambda_s \bm{a}_{j_s} = \bm{0}
   \]
   が成り立つ．
 
