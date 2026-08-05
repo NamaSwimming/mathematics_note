@@ -191,17 +191,17 @@
 型の異なる行列に対しては，和は定義されない．
 
 \begin{definition}{行列のスカラー倍}{行列のスカラー倍}
-  $\lambda \in K$と$m \times n$行列$A = (a_{ij})$に対して，$A$の\textbf{スカラー倍}\index{ぎょうれつのすからーばい@行列のスカラー倍}$\lambda A$を
+  $\alpha \in K$と$m \times n$行列$A = (a_{ij})$に対して，$A$の\textbf{スカラー倍}\index{ぎょうれつのすからーばい@行列のスカラー倍}$\alpha A$を
   \[
-    \lambda A =
+    \alpha A =
     \begin{pmatrix}
-      \lambda a_{11} & \lambda a_{12} & \cdots & \lambda a_{1n} \\
-      \lambda a_{21} & \lambda a_{22} & \cdots & \lambda a_{2n} \\
+      \alpha a_{11} & \alpha a_{12} & \cdots & \alpha a_{1n} \\
+      \alpha a_{21} & \alpha a_{22} & \cdots & \alpha a_{2n} \\
       \vdots & \vdots & \ddots & \vdots \\
-      \lambda a_{m1} & \lambda a_{m2} & \cdots & \lambda a_{mn}
+      \alpha a_{m1} & \alpha a_{m2} & \cdots & \alpha a_{mn}
     \end{pmatrix}
   \]
-  と定義する．すなわち，すべての成分を$\lambda$倍する．
+  と定義する．すなわち，すべての成分を$\alpha$倍する．
 \end{definition}
 
 \begin{example}{行列のスカラー倍}{行列のスカラー倍}
@@ -224,13 +224,13 @@
 \end{example}
 
 \begin{mycolumn}
-  行列のスカラー倍を，たとえば「第$1$行だけを$\lambda$倍する」操作として定めることも，定義としては可能である．
-  この操作を仮に$\lambda \ast A$とかくと，$1 \ast A = A$や$\lambda \ast (A + B) = \lambda \ast A + \lambda \ast B$は成り立つが，
+  行列のスカラー倍を，たとえば「第$1$行だけを$\alpha$倍する」操作として定めることも，定義としては可能である．
+  この操作を仮に$\alpha \ast A$とかくと，$1 \ast A = A$や$\alpha \ast (A + B) = \alpha \ast A + \alpha \ast B$は成り立つが，
   \[
-    (\lambda + \mu) \ast A = \lambda \ast A + \mu \ast A
+    (\alpha + \beta) \ast A = \alpha \ast A + \beta \ast A
   \]
   は一般に成り立たない．実際，左辺の第$2$行以降は$A$のままであるのに対し，右辺の第$2$行以降は$A$の対応する行の$2$倍になる．
-  \deref{行列のスカラー倍}が「すべての成分を$\lambda$倍する」という形をしているのは，こうした計算規則が成り立つように選ばれた結果である．
+  \deref{行列のスカラー倍}が「すべての成分を$\alpha$倍する」という形をしているのは，こうした計算規則が成り立つように選ばれた結果である．
   定義は天下りに与えられるものではなく，望ましい性質から逆算して設計されるものである．
 \end{mycolumn}
 
@@ -679,11 +679,11 @@
 写像のうち，「和とスカラー倍を保つ」という性質をもつものを線型写像とよぶ．
 
 \begin{definition}{線型写像・線型変換}{線型写像}
-  写像$f \colon K^n \to K^m$が，任意の$\bm{x}, \bm{y} \in K^n$と任意の$c \in K$に対して
+  写像$f \colon K^n \to K^m$が，任意の$\bm{x}, \bm{y} \in K^n$と任意の$\alpha \in K$に対して
   \[
     \begin{cases}
       f(\bm{x} + \bm{y}) = f(\bm{x}) + f(\bm{y}) \\
-      f(c\bm{x}) = c f(\bm{x})
+      f(\alpha\bm{x}) = \alpha f(\bm{x})
     \end{cases}
   \]
   を満たすとき，$f$を$K^n$から$K^m$への\textbf{線型写像}という．
@@ -691,11 +691,11 @@
 \end{definition}
 
 \deref{線型写像}に現れる$2$つの条件は，次のひとつの条件にまとめることもできる：
-任意の$\bm{x}, \bm{y} \in K^n$と任意の$\lambda, \mu \in K$に対して，
+任意の$\bm{x}, \bm{y} \in K^n$と任意の$\alpha, \beta \in K$に対して，
 \[
-  f(\lambda\bm{x} + \mu\bm{y}) = \lambda f(\bm{x}) + \mu f(\bm{y})
+  f(\alpha\bm{x} + \beta\bm{y}) = \alpha f(\bm{x}) + \beta f(\bm{y})
 \]
-が成り立つ\footnote{実際，この条件で$\lambda = \mu = 1$とすれば第$1$の条件が，$\mu = 0$とすれば第$2$の条件が得られる．逆に$2$つの条件を順に用いれば$f(\lambda\bm{x} + \mu\bm{y}) = f(\lambda\bm{x}) + f(\mu\bm{y}) = \lambda f(\bm{x}) + \mu f(\bm{y})$となる．}．
+が成り立つ\footnote{実際，この条件で$\alpha = \beta = 1$とすれば第$1$の条件が，$\beta = 0$とすれば第$2$の条件が得られる．逆に$2$つの条件を順に用いれば$f(\alpha\bm{x} + \beta\bm{y}) = f(\alpha\bm{x}) + f(\beta\bm{y}) = \alpha f(\bm{x}) + \beta f(\bm{y})$となる．}．
 
 定義だけでは掴みにくいので，最も簡単な具体例を確かめておこう．
 
@@ -705,10 +705,10 @@
     f(x) = ax
   \]
   で定義する．このとき，$f$は$K$の線型変換である．
-  実際，任意の$x, y \in K$と$c \in K$に対して
+  実際，任意の$x, y \in K$と$\alpha \in K$に対して
   \begin{align*}
     f(x + y) &= a(x + y) = ax + ay = f(x) + f(y), \\
-    f(cx) &= a(cx) = c(ax) = cf(x)
+    f(\alpha x) &= a(\alpha x) = \alpha(ax) = \alpha f(x)
   \end{align*}
   が成り立つからである．
 \end{example}
@@ -723,16 +723,16 @@
   \]
   で定まる写像$h \colon K^n \to K^m$を$f$と$g$の\textbf{和}\index{せんけいしゃぞうのわ@線型写像の和}とよび，$f + g$と表す．
 
-  また，$a \in K$と線型写像$f \colon K^n \to K^m$に対して，
+  また，$\alpha \in K$と線型写像$f \colon K^n \to K^m$に対して，
   \[
-    h(\bm{x}) = a \cdot f(\bm{x})
+    h(\bm{x}) = \alpha \cdot f(\bm{x})
   \]
-  で定まる写像$h \colon K^n \to K^m$を$f$の\textbf{$a$倍}\index{せんけいしゃぞうのすからーばい@線型写像のスカラー倍}とよび，$af$と表す．
+  で定まる写像$h \colon K^n \to K^m$を$f$の\textbf{$\alpha$倍}\index{せんけいしゃぞうのすからーばい@線型写像のスカラー倍}とよび，$\alpha f$と表す．
 \end{definition}
 
 \begin{prop}{線型写像の和とスカラー倍の線型性}{線型写像の和とスカラー倍の線型性}
   $f, g \colon K^n \to K^m$が線型写像ならば，$f + g \colon K^n \to K^m$も線型写像である．
-  また，$a \in K$に対して，$af \colon K^n \to K^m$も線型写像である．
+  また，$\alpha \in K$に対して，$\alpha f \colon K^n \to K^m$も線型写像である．
 \end{prop}
 
 \begin{leftbar}
@@ -744,12 +744,12 @@
     &= \bigl(f(\bm{x}) + g(\bm{x})\bigr) + \bigl(f(\bm{y}) + g(\bm{y})\bigr) \nonumber \\
     &= (f + g)(\bm{x}) + (f + g)(\bm{y}) \tag{$f+g$の定義}
   \end{align}
-  が成り立ち，さらに任意の$c \in K$に対して，
+  が成り立ち，さらに任意の$\alpha \in K$に対して，
   \begin{align}
-    (f + g)(c\bm{x}) &= f(c\bm{x}) + g(c\bm{x}) \tag{$f+g$の定義} \\
-    &= cf(\bm{x}) + cg(\bm{x}) \tag{$f,g$の線型性} \\
-    &= c\bigl(f(\bm{x}) + g(\bm{x})\bigr) \nonumber \\
-    &= c(f + g)(\bm{x}) \tag{$f+g$の定義}
+    (f + g)(\alpha\bm{x}) &= f(\alpha\bm{x}) + g(\alpha\bm{x}) \tag{$f+g$の定義} \\
+    &= \alpha f(\bm{x}) + \alpha g(\bm{x}) \tag{$f,g$の線型性} \\
+    &= \alpha\bigl(f(\bm{x}) + g(\bm{x})\bigr) \nonumber \\
+    &= \alpha(f + g)(\bm{x}) \tag{$f+g$の定義}
   \end{align}
   が成り立つ．よって$f + g$は\deref{線型写像}の条件を満たし，線型写像である．
 
@@ -771,12 +771,12 @@
     &= g\bigl(f(\bm{x})\bigr) + g\bigl(f(\bm{y})\bigr) \tag{$g$の線型性} \\
     &= (g \circ f)(\bm{x}) + (g \circ f)(\bm{y}) \nonumber
   \end{align}
-  が成り立ち，さらに任意の$c \in K$に対して，
+  が成り立ち，さらに任意の$\alpha \in K$に対して，
   \begin{align}
-    (g \circ f)(c\bm{x}) &= g\bigl(f(c\bm{x})\bigr) \nonumber \\
-    &= g\bigl(cf(\bm{x})\bigr) \tag{$f$の線型性} \\
-    &= cg\bigl(f(\bm{x})\bigr) \tag{$g$の線型性} \\
-    &= c(g \circ f)(\bm{x}) \nonumber
+    (g \circ f)(\alpha\bm{x}) &= g\bigl(f(\alpha\bm{x})\bigr) \nonumber \\
+    &= g\bigl(\alpha f(\bm{x})\bigr) \tag{$f$の線型性} \\
+    &= \alpha g\bigl(f(\bm{x})\bigr) \tag{$g$の線型性} \\
+    &= \alpha(g \circ f)(\bm{x}) \nonumber
   \end{align}
   が成り立つ．これが証明すべきことであった．
 \end{proof}
@@ -807,7 +807,7 @@
 
 \begin{leftbar}
 \begin{proof}
-  任意の$\bm{x}, \bm{y} \in K^n$と$c \in K$に対して，
+  任意の$\bm{x}, \bm{y} \in K^n$と$\alpha \in K$に対して，
   \begin{align}
     T_A(\bm{x} + \bm{y}) &= A(\bm{x} + \bm{y}) \tag{$T_A$の定義} \\
     &= A\bm{x} + A\bm{y} \tag{行列の積の分配律} \\
@@ -815,9 +815,9 @@
   \end{align}
   が成り立ち，さらに，
   \begin{align}
-    T_A(c\bm{x}) &= A(c\bm{x}) \tag{$T_A$の定義} \\
-    &= c(A\bm{x}) \tag{行列の積の性質} \\
-    &= cT_A(\bm{x}) \nonumber
+    T_A(\alpha\bm{x}) &= A(\alpha\bm{x}) \tag{$T_A$の定義} \\
+    &= \alpha(A\bm{x}) \tag{行列の積の性質} \\
+    &= \alpha T_A(\bm{x}) \nonumber
   \end{align}
   が成り立つ．
   よって$T_A$は線型写像である．
@@ -1086,12 +1086,12 @@
 
   逆に，ある$i$に対して
   \[
-    \bm{x}_i = \sum_{\substack{1 \le j \le n \\ j \ne i}} c_j \bm{x}_j
-    \quad (c_j \in K)
+    \bm{x}_i = \sum_{\substack{1 \le j \le n \\ j \ne i}} \lambda_j \bm{x}_j
+    \quad (\lambda_j \in K)
   \]
   と表せるとする．このとき，
   \[
-    c_1 \bm{x}_1 + \cdots + c_{i-1} \bm{x}_{i-1} + (-1)\bm{x}_i + c_{i+1} \bm{x}_{i+1} + \cdots + c_n \bm{x}_n = \bm{0}
+    \lambda_1 \bm{x}_1 + \cdots + \lambda_{i-1} \bm{x}_{i-1} + (-1)\bm{x}_i + \lambda_{i+1} \bm{x}_{i+1} + \cdots + \lambda_n \bm{x}_n = \bm{0}
   \]
   が成り立つ．$\bm{x}_i$の係数は$-1 \ne 0$であるから，これは非自明な線型関係である．
   よって$\bm{x}_1, \bm{x}_2, \dots, \bm{x}_n$は線型従属である．
