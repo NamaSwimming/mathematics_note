@@ -43,7 +43,11 @@
 \[
   \begin{pmatrix} x_1 & x_2 & \cdots & x_n \end{pmatrix}
 \]
-は$1 \times n$行列である．
+は$1 \times n$行列である．なお，以下では行ベクトルを
+\[
+  (x_1, x_2, \dots, x_n)
+\]
+のようにカンマ区切りで表す表記も用いることにする．
 
 \begin{example}{行列}{行列}
   \[
@@ -992,9 +996,12 @@
 \end{definition}
 
 \begin{prop}{線型独立の言い換え}{線型独立の言い換え}
-  $\bm{x}_1, \bm{x}_2, \dots, \bm{x}_n \in K^m$が線型独立であることは，任意の$(\lambda_1, \lambda_2, \dots, \lambda_n) \ne (0, 0, \dots, 0)$に対して，
+  $\bm{x}_1,\bm{x}_2,\dots,\bm{x}_n\in K^m$が線型独立であることは，
+  少なくとも一つが$0$でない任意の
+  $\lambda_1,\lambda_2,\dots,\lambda_n\in K$に対して，
   \[
-    \lambda_1 \bm{x}_1 + \lambda_2 \bm{x}_2 + \cdots + \lambda_n \bm{x}_n \ne \bm{0}
+    \lambda_1\bm{x}_1+\lambda_2\bm{x}_2+\cdots
+    +\lambda_n\bm{x}_n\ne\bm{0}
   \]
   となることと同値である．
 \end{prop}
@@ -1008,7 +1015,7 @@
 線型独立でないベクトルの組は，\textbf{線型従属}\index{せんけいじゅうぞく@線型従属}であるという．
 
 \begin{definition}{線型従属}{線型従属}
-  $\bm{x}_1, \bm{x}_2, \dots, \bm{x}_n \in K^m$が線型独立でないとき，すなわち，すべてが$0$ではない定数$\lambda_1, \lambda_2, \dots, \lambda_n \in K$が存在して
+  $\bm{x}_1, \bm{x}_2, \dots, \bm{x}_n \in K^m$が線型独立でないとき，すなわち，少なくとも一つが$0$でない任意の$\lambda_1, \lambda_2, \dots, \lambda_n \in K$が存在して
   \[
     \lambda_1 \bm{x}_1 + \lambda_2 \bm{x}_2 + \cdots + \lambda_n \bm{x}_n = \bm{0}
   \]
