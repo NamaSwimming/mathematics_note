@@ -138,10 +138,10 @@ $4$次以上の置換についても同様に数え上げることができる�
 i \xmapsto{\tau} \tau(i) \xmapsto{\sigma} \sigma(\tau(i))
 \]
 の順に追う．
-記号上は $\sigma$ が左に書かれているが，先に使うのは $\tau$ であることに注意する．
+記号上は $\sigma$ が左にかかれているが，先に使うのは $\tau$ であることに注意する．
 
 
-また，置換の積を書くとき，右から左へ作用させる流儀と，左から右へ作用させる流儀がある．
+また，置換の積をかくとき，右から左へ作用させる流儀と，左から右へ作用させる流儀がある．
 ここでは，写像の合成
 \[
 (\sigma\circ\tau)(i)=\sigma(\tau(i))
@@ -178,7 +178,7 @@ i \xmapsto{\tau} \tau(i) \xmapsto{\sigma} \sigma(\tau(i))
 \end{definition}
 
 
-恒等置換を $1_n$ と書くのは，数字の $1$ と同じように，
+恒等置換を $1_n$ とかくのは，数字の $1$ と同じように，
 置換の積に関してなにも変更を加えず，元の状態を維持する役割をもつからである．
 実際，任意の $\sigma\in S_n$ に対して
 \[
@@ -324,17 +324,43 @@ $\sigma, \tau, \rho \in S_n$と写像$\circ \colon S_n \times S_n \to S_n$に対
   \begin{proof}
      $\sigma \in S_n$を任意にとる．
 
-     $\sigma$ が恒等置換 $1_n$ であるとき，$\sigma$は $(1, 2) \circ (1, 2)$ のように，同じ入れ替えを2回繰り返したものとみなせる．
+     $\sigma$ が恒等置換 $1_n$ であるとき，$\sigma$は $(1, 2) \circ (1, 2)$ のように，同じ入れ替えを2回繰り返したものとみなせる\footnote{ここでは$n \geqq 2$としている．$n = 1$のときは$S_1 = \{1_1\}$であり，互換がそもそも存在しない．そこで，$0$個の互換の積（空積）は恒等置換を表すと約束し，$1_1$も互換の積とみなす．}．
      したがって，$1_n$は互換の積として表せる．
      
     $\sigma$ が恒等置換でないとき，$i \ne \sigma(i)$ となる $i$ がある．
     ここで，互換 $\tau = (i, \sigma(i))$ を考え，
     新たな置換 $\sigma' = \tau \circ \sigma$ を定める．
-    すると$\sigma'(i) = \tau(\sigma(i)) = i$ となるため，
-   $\sigma'$ によってそれ自身に写される元の数が $1$ つ増加する．
-この操作を繰り返すと，有限個の互換 $\tau_1, \tau_2, \dots, \tau_k$ を用いて
-$1_n = \tau_k \circ \dots \circ \tau_1 \circ \sigma$と表せる．
-各互換 $\tau_j$ の逆置換は自分自身（${\tau_j}^{-1} = \tau_j$）であるから，左から順に $\tau_k, \dots, \tau_1$ を乗じることで$ \sigma = \tau_1 \circ \dots \circ \tau_k $が得られる．
+    すると$\sigma'(i) = \tau(\sigma(i)) = i$ となり，$i$は$\sigma'$によってそれ自身に写る．
+
+    また，$\sigma(p) = p$を満たす元$p$については，$p \ne i$かつ$p \ne \sigma(i)$である．
+    実際，$p = i$なら$\sigma(i) = i$となって$i$のとり方に反する．
+    また，$p = \sigma(i)$なら$\sigma(p) = p = \sigma(i)$，すなわち$\sigma(p) = \sigma(i)$となり，
+    $\sigma$の単射性から$p = i$，したがって$\sigma(i) = i$となってやはり矛盾する．
+    ゆえに互換$\tau = (i, \sigma(i))$は$p$を動かさず，
+    \[
+      \sigma'(p) = \tau(\sigma(p)) = \tau(p) = p
+    \]
+    である．
+    よって，$\sigma$によってそれ自身に写る元は$\sigma'$によってもそれ自身に写り，さらに$i$が新たに加わるので，
+    それ自身に写される元の個数は少なくとも$1$つ増加する．
+
+    それ自身に写される元の個数は$n$以下であるから，この操作を有限回繰り返せば，
+    すべての元がそれ自身に写る置換，すなわち恒等置換に到達する．
+    したがって，有限個の互換 $\tau_1, \tau_2, \dots, \tau_k$ を用いて
+    \[
+      1_n = \tau_k \circ \cdots \circ \tau_1 \circ \sigma
+    \]
+    と表せる．
+    各互換 $\tau_j$ の逆置換は自分自身（${\tau_j}^{-1} = \tau_j$）であるから，この式の両辺に左から$\tau_1 \circ \cdots \circ \tau_k$を合成すると，
+    \[
+      \tau_1 \circ \cdots \circ \tau_k \circ 1_n
+      = \tau_1 \circ \cdots \circ \tau_k \circ \tau_k \circ \cdots \circ \tau_1 \circ \sigma
+    \]
+    となる．左辺は$\tau_1 \circ \cdots \circ \tau_k$に等しく，右辺は$\tau_j \circ \tau_j = 1_n$を内側から順に用いれば$\sigma$に等しい．ゆえに
+    \[
+      \sigma = \tau_1 \circ \cdots \circ \tau_k
+    \]
+    が得られる．
 
 よって，$\sigma$ は互換の積として表される．
   \end{proof}
@@ -359,6 +385,45 @@ $1_n = \tau_k \circ \dots \circ \tau_1 \circ \sigma$と表せる．
 \end{example}
 
 このように互換の積は一意に定まらないが，互換の積に含まれる互換の数の偶奇性は一定である．
+このことを証明する準備として，多項式に対する置換の作用を定義しよう．
+
+\begin{definition}{多項式に対する置換の作用}{多項式に対する置換の作用}
+  $n$ 変数多項式 $f(x_1, \dots, x_n)$ と置換 $\sigma \in S_n$ に対して，新たな多項式 $f^\sigma$ を
+  \[
+  f^\sigma(x_1, \dots, x_n) = f(x_{\sigma(1)}, \dots, x_{\sigma(n)})
+  \]
+  で定義する．このとき，$f^\sigma$ を $f$ に対する置換 $\sigma$ の\textbf{作用}\index{さよう@作用}とよぶ．
+\end{definition}
+
+作用は変数の置き換えにほかならないから，スカラー$c$と多項式$f$に対して
+\[
+  (cf)^\sigma = c\,f^\sigma
+\]
+が成り立つ．すなわち，定数倍は作用の外に出る．
+
+この定義のもとで，次の補題を証明しよう．
+\begin{lemma}{作用の合成}{作用の合成}
+  任意の多項式 $f$ と置換 $\sigma, \tau \in S_n$ に対して，次式が成り立つ：
+  \[
+  (f^\tau)^\sigma = f^{\sigma \circ \tau}
+  \]
+\end{lemma}
+
+\begin{leftbar}
+\begin{proof}
+  $g = f^\tau$ とおくと，定義より $g(y_1, \dots, y_n) = f(y_{\tau(1)}, \dots, y_{\tau(n)})$ である．
+  ここで，$y_k = x_{\sigma(k)}$ と置き換えて作用させると，
+  \begin{align*}
+    (f^\tau)^\sigma &= g(x_{\sigma(1)}, \dots, x_{\sigma(n)}) \\
+    &= f(x_{\sigma(\tau(1))}, \dots, x_{\sigma(\tau(n))}) \\
+    &= f(x_{(\sigma \circ \tau)(1)}, \dots, x_{(\sigma \circ \tau)(n)}) \\
+    &= f^{\sigma \circ \tau}.
+  \end{align*}
+  これが証明すべきことであった．
+\end{proof}
+\end{leftbar}
+
+これらを用いて，偶奇の不変性を証明する．
 
 \begin{prop}{置換の符号の偶奇}{置換の符号の偶奇}
   任意の$\sigma \in S_n$に対して，$\sigma$を互換の積として表すとき，その互換の数の偶奇は$\sigma$により決まり，互換の積の表現によらない．
@@ -366,7 +431,7 @@ $1_n = \tau_k \circ \dots \circ \tau_1 \circ \sigma$と表せる．
 
 \begin{tleftbar}
 \begin{proof}
-  まず，多項式
+  多項式
 \begin{align*}
 \Delta(x_1,x_2,\dots,x_n)
   &= \prod_{1 \leqq i < j \leqq n}(x_j-x_i) \\
@@ -386,7 +451,7 @@ $1_n = \tau_k \circ \dots \circ \tau_1 \circ \sigma$と表せる．
   & \times & (x_n-x_{n-1})
 \end{array}\right.
 \end{align*}
-  を考える\footnote{この多項式を差積という．以下では単に$\Delta$とも記す．}．さらに
+  を考える\footnote{この多項式を差積という．以下では単に$\Delta$とも記す．}．このとき
 \begin{align*}
 \Delta^{\sigma}(x_1,x_2,\dots,x_n)
   &= \prod_{1 \leqq i < j \leqq n}
@@ -407,15 +472,56 @@ $1_n = \tau_k \circ \dots \circ \tau_1 \circ \sigma$と表せる．
   & \times & (x_{\sigma(n)}-x_{\sigma(n-1)})
 \end{array}\right.
 \end{align*}
-  と定める．
+  である（これは，\deref{多項式に対する置換の作用}に従って$\Delta$に$\sigma$を作用させたものにほかならない）．
 
-  ここで，$\sigma$が互換$(i,j)$であるとき，$x_i$と$x_j$の入れ替えによって，$\Delta$の因子のうち奇数個の符号が反転するため，$\Delta^{\sigma}=-\Delta$が成り立つ．
-  したがって，$\sigma = \tau_1 \tau_2 \dotsm \tau_s = \rho_1 \rho_2 \dotsm \rho_t$であるとき，
-  \begin{align*}
-  \Delta^{\sigma} (x_1, x_2, \dots, x_n) & = (-1)^t \Delta (x_1, x_2, \dots, x_n) \\
-  & = (-1)^s \Delta (x_1, x_2, \dots, x_n)
-  \end{align*}
-  が成り立つ．したがって，$(-1)^s = (-1)^t$が成り立ち，$s$と$t$の偶奇は一致する．
+  まず，$\sigma$が互換$\tau = (p, q)$（$p < q$）であるとき，$\Delta^{\tau} = -\Delta$が成り立つことを示す．
+  $\Delta^{\tau}$は，$\Delta$の各因子において$x_p$と$x_q$を入れ替えて得られる多項式の積である．
+  このとき，$\Delta$の因子は次のように変化する：
+  \begin{itemize}
+    \item 因子$x_q - x_p$は$x_p - x_q = -(x_q - x_p)$に変わる．すなわち，符号が$1$回反転する．
+    \item $k \ne p, q$を満たす各$k$に対して，$x_p$または$x_q$を含む$2$つの因子（添字の組$\{k, p\}$と$\{k, q\}$に対応する因子）を組にして考える．
+      $k < p$のときは$(x_p - x_k)$と$(x_q - x_k)$が互いに入れ替わるだけであり，
+      $q < k$のときも$(x_k - x_p)$と$(x_k - x_q)$が互いに入れ替わるだけである．
+      $p < k < q$のときは，$(x_k - x_p)$が$(x_k - x_q) = -(x_q - x_k)$に，$(x_q - x_k)$が$(x_p - x_k) = -(x_k - x_p)$に変わり，符号の反転が$2$回起こって打ち消し合う．
+      したがって，いずれの場合も$2$つの因子の積は変化しない．
+    \item $x_p$も$x_q$も含まない因子は変化しない．
+  \end{itemize}
+  ゆえに，積全体では符号がちょうど$1$回だけ反転し，
+  \[
+    \Delta^{\tau} = -\Delta
+  \]
+  が成り立つ．
+
+  次に，$\sigma$が$s$個の互換の積として$\sigma = \tau_1 \circ \tau_2 \circ \cdots \circ \tau_s$と表されるとき，
+  \[
+    \Delta^{\sigma} = (-1)^s \Delta
+  \]
+  が成り立つことを，$s$についての帰納法で示す．
+  $s = 1$の場合は，いま示した通りである．
+  $s \geqq 2$のとき，\lemref{作用の合成}より
+  \[
+    \Delta^{\sigma}
+    = \Delta^{\tau_1 \circ (\tau_2 \circ \cdots \circ \tau_s)}
+    = \left( \Delta^{\tau_2 \circ \cdots \circ \tau_s} \right)^{\tau_1}
+  \]
+  であり，帰納法の仮定より$\Delta^{\tau_2 \circ \cdots \circ \tau_s} = (-1)^{s-1}\Delta$である．
+  定数倍は作用の外に出るから，
+  \[
+    \Delta^{\sigma}
+    = \left( (-1)^{s-1}\Delta \right)^{\tau_1}
+    = (-1)^{s-1}\Delta^{\tau_1}
+    = (-1)^{s-1} \cdot (-1) \cdot \Delta
+    = (-1)^s \Delta
+  \]
+  となり，主張が成り立つ．
+
+  したがって，$\sigma$が$\sigma = \tau_1 \circ \cdots \circ \tau_s = \rho_1 \circ \cdots \circ \rho_t$と$2$通りに互換の積として表されるとき，
+  \[
+  (-1)^s \Delta (x_1, x_2, \dots, x_n)
+  = \Delta^{\sigma} (x_1, x_2, \dots, x_n)
+  = (-1)^t \Delta (x_1, x_2, \dots, x_n)
+  \]
+  が成り立つ．$\Delta$は零多項式ではないから$(-1)^s = (-1)^t$が成り立ち，$s$と$t$の偶奇は一致する．
   これが証明すべきことであった．
 \end{proof}
 \end{tleftbar}
@@ -466,42 +572,16 @@ $1_n = \tau_k \circ \dots \circ \tau_1 \circ \sigma$と表せる．
 \end{example}
 
 
-次に，多項式に対する置換の作用を厳密に定義し，符号の性質を導こう．
-\begin{definition}{多項式に対する置換の作用}{多項式に対する置換の作用}
-  $n$ 変数多項式 $f(x_1, \dots, x_n)$ と置換 $\sigma \in S_n$ に対して，新たな多項式 $f^\sigma$ を
-  \[
-  f^\sigma(x_1, \dots, x_n) = f(x_{\sigma(1)}, \dots, x_{\sigma(n)})
-  \]
-  で定義する．このとき，$f^\sigma$ を $f$ に対する置換 $\sigma$ の\textbf{作用}\index{さよう@作用}とよぶ．
-\end{definition}
-
-この定義に基づくと，差積 $\Delta$ に対する作用 $\Delta^\sigma$ は次のようにかける：
+\prref{置換の符号の偶奇}の証明で見たように，$\sigma$を$s$個の互換の積として表すと
 \[
-\Delta^\sigma = \prod_{1 \le i < j \le n} (x_{\sigma(j)} - x_{\sigma(i)})
+\Delta^\sigma = (-1)^s \Delta
 \]
-このとき，$\sgn(\sigma)$ は $\Delta^\sigma = \sgn(\sigma) \Delta$ を満たす定数である．
+が成り立つ．\deref{置換の符号}とあわせれば，これは
+\[
+\Delta^\sigma = \sgn(\sigma) \Delta
+\]
+と表せる．すなわち，$\sgn(\sigma)$は，差積$\Delta$が置換$\sigma$の作用によってどれだけ符号を変えるかを表す定数にほかならない．
 
-この定義のもとで，次の補題を証明しよう．
-\begin{lemma}{作用の合成}{作用の合成}
-  任意の多項式 $f$ と置換 $\sigma, \tau \in S_n$ に対して，次式が成り立つ：
-  \[
-  (f^\tau)^\sigma = f^{\sigma \circ \tau}
-  \]
-\end{lemma}
-
-\begin{leftbar}
-\begin{proof}
-  $g = f^\tau$ とおくと，定義より $g(y_1, \dots, y_n) = f(y_{\tau(1)}, \dots, y_{\tau(n)})$ である．
-  ここで，$y_k = x_{\sigma(k)}$ と置き換えて作用させると，
-  \begin{align*}
-    (f^\tau)^\sigma &= g(x_{\sigma(1)}, \dots, x_{\sigma(n)}) \\
-    &= f(x_{\sigma(\tau(1))}, \dots, x_{\sigma(\tau(n))}) \\
-    &= f(x_{(\sigma \circ \tau)(1)}, \dots, x_{(\sigma \circ \tau)(n)}) \\
-    &= f^{\sigma \circ \tau}.
-  \end{align*}
-  これが証明すべきことであった．
-\end{proof}
-\end{leftbar}
 最後に，置換の符号の基本的な性質をまとめた命題を示す．
 
 \begin{prop}{置換の符号の性質}{置換の符号の性質}
@@ -540,7 +620,7 @@ $1_n = \tau_k \circ \dots \circ \tau_1 \circ \sigma$と表せる．
   \sgn(\sigma \circ \sigma^{-1}) &= \sgn(1_n) \\
   \sgn(\sigma) \sgn(\sigma^{-1}) &= 1
 \end{align*}
-$\sgn(\sigma) \in \{1, -1\}$ より $\sgn(\sigma)^2 = 1$ であるから，両辺に $\sgn(\sigma)$ を掛ければ
+$\sgn(\sigma) \in \{1, -1\}$ より $\sgn(\sigma)^2 = 1$ であるから，両辺に $\sgn(\sigma)$ をかければ
 \[
 \sgn(\sigma^{-1}) = \sgn(\sigma)
 \]
@@ -732,7 +812,7 @@ $4$次以上の行列式にこれを適用してはならない．
 
 
 
-さて，先に我々は，行列式を「各行・各列から1つずつ要素を選んでできる積」の符号付き和として解釈できると述べた．この解釈はもちろん正しいのだが，以下では行列式を「多重線型性」「交代性」「正規化条件」を満たす関数として定義することを考える．
+さて，先に我々は，行列式を「各行・各列から$1$つずつ成分を選んでできる積」の符号付き和として解釈できると述べた．この解釈はもちろん正しいのだが，以下では行列式を「多重線型性」「交代性」「正規化条件」を満たす関数として定義することを考える．
 そのために，まず行列式のもつ性質を確認していこう：
 
 \begin{prop}{行列式の多重線型性}{行列式の多重線型性}
@@ -746,7 +826,7 @@ $4$次以上の行列式にこれを適用してはならない．
   = \det(\bm{a}_1, \dots, \bm{a}_{i-1}, \bm{b}_i, \bm{a}_{i+1}, \dots, \bm{a}_n) 
   + \det(\bm{a}_1, \dots, \bm{a}_{i-1}, \bm{c}_i, \bm{a}_{i+1}, \dots, \bm{a}_n)
   \]
-  また，任意の定数$\alpha \in \mathbb{C}$に対して，次が成り立つ：
+  また，任意のスカラー$\alpha \in \mathbb{C}$に対して，次が成り立つ：
   \[
   \det(\bm{a}_1, \dots, \bm{a}_{i-1}, \alpha \bm{a}_i, \bm{a}_{i+1}, \dots, \bm{a}_n) 
   = \alpha \cdot \det(\bm{a}_1, \dots, \bm{a}_n)
@@ -844,7 +924,7 @@ $4$次以上の行列式にこれを適用してはならない．
   逆に\coref{行列式の交代性の系1}から\prref{行列式の交代性}も従う．
   実際，任意の置換$\tau\in S_n$は互換の積として
   \[
-  \tau=\pi_1\pi_2\cdots\pi_m
+  \tau=\pi_1\circ\pi_2\circ\cdots\circ\pi_m
   \]
   と表せる（$m$は何回交換したかの回数）．
   いま行列$A$の列を$\pi_1,\pi_2,\dots,\pi_m$の順に入れ替えていくと，\coref{行列式の交代性の系1}より
@@ -963,7 +1043,7 @@ $4$次以上の行列式にこれを適用してはならない．
 \begin{leftbar}
 \begin{proof}
   $\bm{a}_1, \bm{a}_2, \dots, \bm{a}_n$が線型従属であるとき，\prref{線型従属の言い換え}より，ある$i$に対して$\bm{a}_i$が他の列ベクトルの線型結合として表せる．
-  すなわち，ある定数$\lambda_1, \lambda_2, \dots, \lambda_{i-1}, \lambda_{i+1}, \dots, \lambda_n \in \mathbb{C}$が存在して，
+  すなわち，あるスカラー$\lambda_1, \lambda_2, \dots, \lambda_{i-1}, \lambda_{i+1}, \dots, \lambda_n \in \mathbb{C}$が存在して，
   \[
   \bm{a}_i = \sum_{\substack{1\leqq j\leqq n\\ j \ne i}} \lambda_j \bm{a}_j
   \]
@@ -1376,7 +1456,7 @@ $\det A$は，各列から$\bm{e}_1,\bm{e}_2,\bm{e}_3$のいずれか1つを選�
 
 
 \proofstep{列に関する多重線型性}
-  $X$ の $j$ 列を $\bm{x}_j$ と書く（すなわち $X=(\bm{x}_1,\dots,\bm{x}_n)$）．
+  $X$ の $j$ 列を $\bm{x}_j$ とかく（すなわち $X=(\bm{x}_1,\dots,\bm{x}_n)$）．
   行列の積の定義より
   \[
     AX=(A\bm{x}_1,A\bm{x}_2,\dots,A\bm{x}_n)
@@ -1842,7 +1922,7 @@ $F$ は列に関して多重線型である．
   \[
   \bm{a}_{j_1},\bm{a}_{j_2},\dots,\bm{a}_{j_s}
   \]
-  は線型従属である．したがって，少なくとも一つが$0$でない定数$\lambda_1,\lambda_2,\dots,\lambda_s \in \mathbb{C}$が存在して
+  は線型従属である．したがって，少なくとも一つが$0$でないスカラー$\lambda_1,\lambda_2,\dots,\lambda_s \in \mathbb{C}$が存在して
   \[
   \lambda_1 \bm{a}_{j_1} + \lambda_2 \bm{a}_{j_2} + \dots + \lambda_s \bm{a}_{j_s} = \bm{0}
   \]
@@ -1945,7 +2025,7 @@ r=\rank A
 行列式の「展開」とは，$n$次の行列式の計算を，それより次数の低い小行列式の計算へ帰着させる操作のことである．より正確には，行列式を「行列の成分」と「余因子」の積の和として表す．そのために，まず「小行列式」と「余因子」を定義しよう．
 
 \begin{definition}{小行列式と余因子}{cofactor}
-  $A = (a_{ij})$を$n \times n$行列（$n \geq 2$）とする．$A$から第$i$行と第$j$列を取り除いて得られる$(n-1) \times (n-1)$行列を$A_{ij}$と表し，その行列式$\det A_{ij}$を$A$の$(i,j)$\textbf{小行列式}という（これは，\deref{小行列}の意味での$A$の$(n-1)$次の小行列式のうち，特別なものに名前を付けたことになる）．さらに，これに符号$(-1)^{i+j}$を掛けた
+  $A = (a_{ij})$を$n \times n$行列（$n \geq 2$）とする．$A$から第$i$行と第$j$列を取り除いて得られる$(n-1) \times (n-1)$行列を$A_{ij}$と表し，その行列式$\det A_{ij}$を$A$の$(i,j)$\textbf{小行列式}という（これは，\deref{小行列}の意味での$A$の$(n-1)$次の小行列式のうち，特別なものに名前を付けたことになる）．さらに，これに符号$(-1)^{i+j}$をかけた
   \[
   \tilde{a}_{ij} = (-1)^{i+j} \det A_{ij}
   \]
@@ -2165,7 +2245,7 @@ $A'$から第$i$行と第$1$列を取り除いた行列は$A_{ij}$に一致す�
   (-1)^{j-1} \det A = \det A'
   = \sum_{i=1}^{n} (-1)^{i+1} a_{ij} \det A_{ij}
 \end{align*}
-となり，両辺に$(-1)^{j-1}$を掛ければ
+となり，両辺に$(-1)^{j-1}$をかければ
 \[
   \det A = \sum_{i=1}^{n} (-1)^{i+j} a_{ij} \det A_{ij}
          = \sum_{i=1}^{n} a_{ij} \tilde{a}_{ij}
@@ -2359,7 +2439,7 @@ $i \ne k$のとき，上記の式は$A$の第$k$行を第$i$行に置き換え�
     = \sum_{j=1}^{n} a_{jk} \tilde{a}_{ji}
   \]
   である．$i = k$のときは，この和は\prref{cofactor_expansion}の第$i$列に関する余因子展開そのものであるから，$\det A$に等しい．
-  $i \ne k$のときは，$A$の第$i$列を第$k$列（と同じ列ベクトル）で置き換えた行列を$B$とすると，$B$から第$j$行と第$i$列を取り除いた行列は$A$から第$j$行と第$i$列を取り除いた行列$A_{ji}$に一致するから，$B$の$(j,i)$余因子は$\tilde{a}_{ji}$に等しい．
+  $i \ne k$のときは，$A$の第$i$列を，$A$の第$k$列と同じ列ベクトルで置き換えた行列を$B$とすると，$B$から第$j$行と第$i$列を取り除いた行列は$A$から第$j$行と第$i$列を取り除いた行列$A_{ji}$に一致するから，$B$の$(j,i)$余因子は$\tilde{a}_{ji}$に等しい．
   よって，上の和は$B$を第$i$列に関して余因子展開したもの，すなわち$\det B$に等しい．
   ところが$B$は第$i$列と第$k$列が等しいので，\coref{行列式の交代性の系2}より$\det B = 0$である．
   したがって
