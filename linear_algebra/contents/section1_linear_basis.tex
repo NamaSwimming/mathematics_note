@@ -713,6 +713,347 @@
   が成り立つからである．
 \end{example}
 
+この例は$n = m = 1$の場合であった．
+以下，$K^n$から$K^m$への線型写像の例を，いくつか具体的に見ていこう．
+とくに断らない限り，本節の幾何的な例では$K = \mathbb{R}$とし，$\mathbb{R}^2$の元
+\[
+  \bm{x} = \begin{pmatrix} x \\ y \end{pmatrix}
+\]
+を座標平面上の点$(x, y)$と同一視する．
+
+\begin{example}{恒等変換と零写像}{恒等変換と零写像}
+  写像$\mathrm{id} \colon K^n \to K^n$を$\mathrm{id}(\bm{x}) = \bm{x}$で定めると，
+  \[
+    \mathrm{id}(\bm{x} + \bm{y}) = \bm{x} + \bm{y} = \mathrm{id}(\bm{x}) + \mathrm{id}(\bm{y}), \quad
+    \mathrm{id}(\alpha\bm{x}) = \alpha\bm{x} = \alpha\,\mathrm{id}(\bm{x})
+  \]
+  であるから，$\mathrm{id}$は線型変換である．これを\textbf{恒等変換}\index{こうとうへんかん@恒等変換}という．
+
+  また，すべての$\bm{x} \in K^n$に対して$f(\bm{x}) = \bm{0}$と定めた写像$f \colon K^n \to K^m$も，
+  \[
+    f(\bm{x} + \bm{y}) = \bm{0} = \bm{0} + \bm{0} = f(\bm{x}) + f(\bm{y}), \quad
+    f(\alpha\bm{x}) = \bm{0} = \alpha\bm{0} = \alpha f(\bm{x})
+  \]
+  より線型写像である．これを\textbf{零写像}\index{れいしゃぞう@零写像}という．
+\end{example}
+
+\begin{example}{相似の中心が原点である拡大・縮小}{相似変換}
+  $c \in K$を定数とし，写像$f \colon K^n \to K^n$を
+  \[
+    f(\bm{x}) = c\bm{x}
+  \]
+  で定める．このとき，
+  \[
+    f(\bm{x} + \bm{y}) = c(\bm{x} + \bm{y}) = c\bm{x} + c\bm{y} = f(\bm{x}) + f(\bm{y}), \quad
+    f(\alpha\bm{x}) = c(\alpha\bm{x}) = \alpha(c\bm{x}) = \alpha f(\bm{x})
+  \]
+  が成り立つので，$f$は線型変換である．
+  $K = \mathbb{R}$，$n = 2$のときこれは，原点を中心とする相似比$c$の拡大・縮小にあたる．
+  とくに$c = 1$のときが恒等変換，$c = 0$のときが零写像，$c = -1$のときが原点に関する対称移動である．
+\end{example}
+
+次に，座標平面上の図形的な変換の例を見よう．いずれも高校数学で図形の移動として扱われるものである．
+
+\begin{example}{対称移動と正射影}{対称移動と正射影}
+  $K = \mathbb{R}$とし，写像$\mathbb{R}^2 \to \mathbb{R}^2$を次のように定める：
+  \[
+    f_1 \begin{pmatrix} x \\ y \end{pmatrix} = \begin{pmatrix} x \\ -y \end{pmatrix}, \quad
+    f_2 \begin{pmatrix} x \\ y \end{pmatrix} = \begin{pmatrix} y \\ x \end{pmatrix}, \quad
+    f_3 \begin{pmatrix} x \\ y \end{pmatrix} = \begin{pmatrix} x \\ 0 \end{pmatrix}.
+  \]
+  $f_1$は$x$軸に関する対称移動，$f_2$は直線$y = x$に関する対称移動，$f_3$は$x$軸への正射影（$x$軸に下ろした垂線の足への対応）である．
+  これらはいずれも線型変換である．
+
+  たとえば$f_1$について確かめよう．
+  $\bm{x} = \begin{pmatrix} x_1 \\ x_2 \end{pmatrix}$，$\bm{y} = \begin{pmatrix} y_1 \\ y_2 \end{pmatrix}$，$\alpha \in \mathbb{R}$に対して，
+  \[
+    f_1(\bm{x} + \bm{y})
+    = \begin{pmatrix} x_1 + y_1 \\ -(x_2 + y_2) \end{pmatrix}
+    = \begin{pmatrix} x_1 \\ -x_2 \end{pmatrix} + \begin{pmatrix} y_1 \\ -y_2 \end{pmatrix}
+    = f_1(\bm{x}) + f_1(\bm{y}),
+  \]
+  \[
+    f_1(\alpha\bm{x})
+    = \begin{pmatrix} \alpha x_1 \\ -\alpha x_2 \end{pmatrix}
+    = \alpha \begin{pmatrix} x_1 \\ -x_2 \end{pmatrix}
+    = \alpha f_1(\bm{x})
+  \]
+  が成り立つ．$f_2$，$f_3$についても同様である．
+\end{example}
+
+\begin{example}{原点のまわりの回転}{原点のまわりの回転}
+  $K = \mathbb{R}$とし，$\theta$を定数とする．
+  座標平面上の点を原点のまわりに角$\theta$だけ回転させる対応は，
+  \[
+    f\begin{pmatrix} x \\ y \end{pmatrix}
+    = \begin{pmatrix} x\cos\theta - y\sin\theta \\ x\sin\theta + y\cos\theta \end{pmatrix}
+  \]
+  と表される\footnote{点$(x, y)$を極形式で$x = r\cos\varphi$，$y = r\sin\varphi$とかけば，回転後の点は$(r\cos(\varphi + \theta),\ r\sin(\varphi + \theta))$である．三角関数の加法定理を用いて展開すれば，上の式が得られる．}．
+  この$f$は$\mathbb{R}^2$の線型変換である．実際，
+  \[
+    f\left( \begin{pmatrix} x_1 \\ x_2 \end{pmatrix} + \begin{pmatrix} y_1 \\ y_2 \end{pmatrix} \right)
+    = \begin{pmatrix} (x_1 + y_1)\cos\theta - (x_2 + y_2)\sin\theta \\ (x_1 + y_1)\sin\theta + (x_2 + y_2)\cos\theta \end{pmatrix}
+    = f\begin{pmatrix} x_1 \\ x_2 \end{pmatrix} + f\begin{pmatrix} y_1 \\ y_2 \end{pmatrix}
+  \]
+  であり，また$\alpha \in \mathbb{R}$に対して
+  \[
+    f\left( \alpha \begin{pmatrix} x_1 \\ x_2 \end{pmatrix} \right)
+    = \begin{pmatrix} \alpha x_1 \cos\theta - \alpha x_2 \sin\theta \\ \alpha x_1 \sin\theta + \alpha x_2 \cos\theta \end{pmatrix}
+    = \alpha f\begin{pmatrix} x_1 \\ x_2 \end{pmatrix}
+  \]
+  が成り立つからである．
+
+  なお，この事実は幾何的にも納得できる．
+  和$\bm{x} + \bm{y}$は平行四辺形の対角線として得られるが，平行四辺形全体を回転させても平行四辺形のままであり，
+  対角線は対角線にうつる．これが$f(\bm{x} + \bm{y}) = f(\bm{x}) + f(\bm{y})$の意味するところである．
+\end{example}
+
+高校で学ぶベクトルの内積も，線型写像の例を与える．
+
+\begin{example}{内積が定める線型写像}{内積が定める線型写像}
+  $K = \mathbb{R}$とし，$\bm{a} = \begin{pmatrix} a_1 \\ a_2 \end{pmatrix} \in \mathbb{R}^2$を定ベクトルとする．
+  写像$f \colon \mathbb{R}^2 \to \mathbb{R}$を，内積を用いて
+  \[
+    f(\bm{x}) = \bm{a} \cdot \bm{x} = a_1 x_1 + a_2 x_2
+  \]
+  で定めると，$f$は線型写像である．
+  これは，高校で学ぶ内積の性質
+  \[
+    \bm{a} \cdot (\bm{x} + \bm{y}) = \bm{a} \cdot \bm{x} + \bm{a} \cdot \bm{y}, \qquad
+    \bm{a} \cdot (\alpha\bm{x}) = \alpha (\bm{a} \cdot \bm{x})
+  \]
+  そのものにほかならない．
+
+  さらに，$\bm{u}$を大きさ$1$のベクトルとするとき，$\bm{x}$から$\bm{u}$の定める直線への正射影は
+  \[
+    g(\bm{x}) = (\bm{u} \cdot \bm{x})\,\bm{u}
+  \]
+  で与えられる．内積の上の性質より，
+  \[
+    g(\bm{x} + \bm{y}) = \bigl(\bm{u} \cdot (\bm{x} + \bm{y})\bigr)\bm{u}
+    = (\bm{u} \cdot \bm{x})\bm{u} + (\bm{u} \cdot \bm{y})\bm{u} = g(\bm{x}) + g(\bm{y})
+  \]
+  となり，スカラー倍についても同様であるから，$g$は$\mathbb{R}^2$の線型変換である．
+  $\bm{u} = \bm{e}_1$とすれば，\exref{対称移動と正射影}の$f_3$が得られる．
+\end{example}
+
+線型性の定義から直ちに従う，簡単だが有用な性質を注意しておこう．
+
+\begin{prop}{線型写像は原点を原点にうつす}{線型写像と零ベクトル}
+  $f \colon K^n \to K^m$が線型写像ならば，
+  \[
+    f(\bm{0}) = \bm{0}
+  \]
+  が成り立つ．
+\end{prop}
+
+\begin{leftbar}
+\begin{proof}
+  \deref{線型写像}の第$2$の条件で$\alpha = 0$，$\bm{x} = \bm{0}$とすれば，
+  \[
+    f(\bm{0}) = f(0 \cdot \bm{0}) = 0 \cdot f(\bm{0}) = \bm{0}
+  \]
+  が成り立つ．これが証明すべきことであった．
+\end{proof}
+\end{leftbar}
+
+\prref{線型写像と零ベクトル}の対偶をとれば，「$f(\bm{0}) \ne \bm{0}$ならば$f$は線型写像でない」となる．
+これは，与えられた写像が線型でないことを示す際の，もっとも手軽な判定法である．
+
+\begin{example}{線型写像でない写像}{線型写像でない写像}
+  以下，$K = \mathbb{R}$とする．
+  \begin{enumerate}[label=(\arabic*),leftmargin=3.2em]
+    \item （平行移動）$\bm{b} \ne \bm{0}$を定ベクトルとし，$f \colon \mathbb{R}^2 \to \mathbb{R}^2$を$f(\bm{x}) = \bm{x} + \bm{b}$で定めると，
+      $f(\bm{0}) = \bm{b} \ne \bm{0}$であるから，\prref{線型写像と零ベクトル}より$f$は線型写像でない．
+    \item （$2$乗）$f \colon \mathbb{R} \to \mathbb{R}$を$f(x) = x^2$で定めると，
+      \[
+        f(1 + 1) = 4, \quad f(1) + f(1) = 2
+      \]
+      であり，$f(x + y) = f(x) + f(y)$が成り立たない．よって$f$は線型写像でない．
+    \item （絶対値）$f \colon \mathbb{R} \to \mathbb{R}$を$f(x) = |x|$で定めると，$f(0) = 0$は成り立つが，
+      \[
+        f\bigl((-1) \cdot 1\bigr) = 1, \quad (-1) \cdot f(1) = -1
+      \]
+      であり，$f(\alpha x) = \alpha f(x)$が成り立たない．よって$f$は線型写像でない．
+    \item （成分の積）$f \colon \mathbb{R}^2 \to \mathbb{R}$を$f\begin{pmatrix} x \\ y \end{pmatrix} = xy$で定めると，$f(\bm{0}) = 0$であるが，
+      $\bm{x} = \begin{pmatrix} 1 \\ 1 \end{pmatrix}$に対して
+      \[
+        f(2\bm{x}) = 2 \cdot 2 = 4, \quad 2 f(\bm{x}) = 2 \cdot 1 = 2
+      \]
+      となり，やはり線型写像でない．
+  \end{enumerate}
+  (3)，(4)からわかるように，$f(\bm{0}) = \bm{0}$は線型写像であるための必要条件にすぎず，十分条件ではない．
+\end{example}
+
+\begin{mycolumn}
+  高校数学では$y = ax + b$を\textbf{一次関数}とよぶ．
+  しかし，$b \ne 0$のとき，この対応$f(x) = ax + b$は\prref{線型写像と零ベクトル}より線型写像ではない．
+  「一次」という言葉と「線型」という言葉は，ここでずれるのである．
+
+  グラフでいえば，線型写像$\mathbb{R} \to \mathbb{R}$に対応するのは「原点を通る直線」だけであり，
+  切片$b$の分だけ平行移動された直線は線型写像を与えない．
+  一般に，線型写像$f$と定ベクトル$\bm{b}$を用いて
+  \[
+    g(\bm{x}) = f(\bm{x}) + \bm{b}
+  \]
+  と表される写像を\textbf{アフィン写像}\index{あふぃんしゃぞう@アフィン写像}という．
+  一次関数は，線型写像そのものではなく，アフィン写像の例なのである．
+
+  なお，$b \ne 0$のときの$f(x) = ax + b$も，$1$次元分の「下駄」を履かせて
+  \[
+    \begin{pmatrix} x \\ 1 \end{pmatrix} \longmapsto \begin{pmatrix} ax + b \\ 1 \end{pmatrix}
+  \]
+  という$\mathbb{R}^2$の線型変換とみなすことができる．
+  コンピュータグラフィックスで平行移動を行列で扱う際には，この考え方（同次座標）が用いられる．
+\end{mycolumn}
+
+幾何以外にも，高校数学のなかには線型写像が数多く隠れている．
+
+\begin{example}{合計と平均}{合計と平均}
+  $n$個のデータ$x_1, x_2, \dots, x_n$を$\bm{x} \in \mathbb{R}^n$とみなし，写像$S, M \colon \mathbb{R}^n \to \mathbb{R}$を
+  \[
+    S(\bm{x}) = x_1 + x_2 + \cdots + x_n, \qquad
+    M(\bm{x}) = \frac{x_1 + x_2 + \cdots + x_n}{n}
+  \]
+  で定める．すなわち$S$は合計，$M$は平均である．
+  このとき$S$，$M$はいずれも線型写像である．
+  「$2$組のデータを足し合わせたものの平均は，それぞれの平均の和に等しい」「すべてのデータを$\alpha$倍すれば平均も$\alpha$倍になる」という，
+  データの分析でおなじみの性質が，そのまま線型性である．
+
+  一方，分散
+  \[
+    V(\bm{x}) = \frac{1}{n}\sum_{i=1}^{n} \bigl(x_i - M(\bm{x})\bigr)^2
+  \]
+  は線型写像ではない．実際，$V(\alpha\bm{x}) = \alpha^2 V(\bm{x})$であって$\alpha V(\bm{x})$ではない．
+\end{example}
+
+\begin{example}{多項式の微分と定積分}{多項式の微分と定積分}
+  $2$次以下の多項式$a_0 + a_1 x + a_2 x^2$を，その係数を並べたベクトル
+  \[
+    \begin{pmatrix} a_0 \\ a_1 \\ a_2 \end{pmatrix} \in \mathbb{R}^3
+  \]
+  と同一視する．同様に，$1$次以下の多項式$b_0 + b_1 x$を$\begin{pmatrix} b_0 \\ b_1 \end{pmatrix} \in \mathbb{R}^2$と同一視する．
+
+  多項式を微分する操作は，
+  \[
+    (a_0 + a_1 x + a_2 x^2)' = a_1 + 2a_2 x
+  \]
+  であるから，この同一視のもとで写像
+  \[
+    D \colon \mathbb{R}^3 \to \mathbb{R}^2, \quad
+    D\begin{pmatrix} a_0 \\ a_1 \\ a_2 \end{pmatrix} = \begin{pmatrix} a_1 \\ 2a_2 \end{pmatrix}
+  \]
+  を定める．$D$は線型写像であり，これは高校で学ぶ微分の性質
+  \[
+    (f + g)' = f' + g', \qquad (\alpha f)' = \alpha f'
+  \]
+  にほかならない．
+
+  同様に，定積分
+  \[
+    \int_0^1 (a_0 + a_1 x + a_2 x^2)\,dx = a_0 + \frac{a_1}{2} + \frac{a_2}{3}
+  \]
+  を対応させる写像$I \colon \mathbb{R}^3 \to \mathbb{R}$も線型写像である．
+  これは，積分の線型性
+  \[
+    \int_0^1 \bigl(f(x) + g(x)\bigr) dx = \int_0^1 f(x)\,dx + \int_0^1 g(x)\,dx, \qquad
+    \int_0^1 \alpha f(x)\,dx = \alpha \int_0^1 f(x)\,dx
+  \]
+  の言い換えである．
+\end{example}
+
+数列もまた，線型写像の格好の題材である．
+以下では，有限個の項からなる数列$a_1, a_2, \dots, a_n$を，そのままベクトル
+\[
+  \bm{a} = \begin{pmatrix} a_1 \\ a_2 \\ \vdots \\ a_n \end{pmatrix} \in K^n
+\]
+とみなす．
+
+\begin{example}{階差数列をとる写像}{階差数列をとる写像}
+  写像$\Delta \colon K^n \to K^{n-1}$を，階差数列を対応させる写像
+  \[
+    \Delta \bm{a} =
+    \begin{pmatrix}
+      a_2 - a_1 \\ a_3 - a_2 \\ \vdots \\ a_n - a_{n-1}
+    \end{pmatrix}
+  \]
+  で定める．このとき$\Delta$は線型写像である．
+  実際，第$i$成分だけを見れば
+  \[
+    (a_{i+1} + b_{i+1}) - (a_i + b_i) = (a_{i+1} - a_i) + (b_{i+1} - b_i), \qquad
+    \alpha a_{i+1} - \alpha a_i = \alpha (a_{i+1} - a_i)
+  \]
+  であり，これがすべての$i$について成り立つからである．
+
+  「$2$つの数列を足してから階差をとっても，それぞれ階差をとってから足しても同じ」という，
+  高校で意識せずに使っている事実が，この写像の線型性にほかならない．
+\end{example}
+
+\begin{example}{部分和をとる写像}{部分和をとる写像}
+  写像$\Sigma \colon K^n \to K^n$を，初項から第$k$項までの和
+  \[
+    S_k = a_1 + a_2 + \cdots + a_k \quad (1 \le k \le n)
+  \]
+  を並べたベクトルを対応させる写像
+  \[
+    \Sigma \bm{a} = \begin{pmatrix} S_1 \\ S_2 \\ \vdots \\ S_n \end{pmatrix}
+  \]
+  で定める．各$S_k$は$a_1, \dots, a_n$の線型結合であるから，$\Sigma$は線型変換である．
+  これは，和の記号についての性質
+  \[
+    \sum_{i=1}^{k} (a_i + b_i) = \sum_{i=1}^{k} a_i + \sum_{i=1}^{k} b_i, \qquad
+    \sum_{i=1}^{k} \alpha a_i = \alpha \sum_{i=1}^{k} a_i
+  \]
+  の言い換えである．
+
+  なお，$\Delta$が微分の，$\Sigma$が積分の離散版にあたることに注意しよう．
+  高校で学ぶ関係式$a_n = S_n - S_{n-1}$は，「部分和をとってから階差をとると元に戻る」ことを述べており，
+  微分積分学の基本定理の数列版とみることができる．
+\end{example}
+
+\begin{example}{等差数列を作る写像}{等差数列を作る写像}
+  初項$a$と公差$d$の組$\begin{pmatrix} a \\ d \end{pmatrix} \in K^2$に対して，
+  等差数列の第$n$項までを並べたベクトルを対応させる写像$\varphi \colon K^2 \to K^n$を
+  \[
+    \varphi \begin{pmatrix} a \\ d \end{pmatrix}
+    = \begin{pmatrix} a \\ a + d \\ a + 2d \\ \vdots \\ a + (n-1)d \end{pmatrix}
+  \]
+  で定める．各成分は$a$と$d$の線型結合であるから，$\varphi$は線型写像である．
+
+  すなわち，「初項どうし・公差どうしを足した等差数列は，もとの$2$つの等差数列を項ごとに足したものに等しい」ということである．
+
+  一方，初項$a$と公比$r$の組から等比数列を作る写像
+  \[
+    \psi \begin{pmatrix} a \\ r \end{pmatrix} = \begin{pmatrix} a \\ ar \\ ar^2 \end{pmatrix}
+  \]
+  は線型写像ではない．実際，$\bm{x} = \begin{pmatrix} 1 \\ 2 \end{pmatrix}$に対して
+  \[
+    \psi(2\bm{x}) = \begin{pmatrix} 2 \\ 8 \\ 32 \end{pmatrix}, \qquad
+    2\psi(\bm{x}) = \begin{pmatrix} 2 \\ 4 \\ 8 \end{pmatrix}
+  \]
+  であり，一致しない．
+  公比が数列の「作られ方」そのものに関わるため，公比を変数とみるかぎり線型性は失われるのである．
+  ただし，公比$r$を固定して初項だけを動かす写像$a \mapsto (a, ar, ar^2)$は線型写像である．
+\end{example}
+
+\begin{example}{数列に関する線型でない操作}{数列と線型でない操作}
+  次の$2$つは，数列に対するごく自然な操作であるが，線型写像ではない．
+  \begin{enumerate}[label=(\arabic*),leftmargin=3.2em]
+    \item 各項を$2$乗する写像$\bm{a} \mapsto (a_1^2, a_2^2, \dots, a_n^2)$．
+      $\alpha$倍すると各成分は$\alpha^2$倍になるので，$f(\alpha\bm{a}) = \alpha f(\bm{a})$が成り立たない．
+    \item 隣り合う項の比$\bm{a} \mapsto (a_2/a_1, \dots, a_n/a_{n-1})$．
+      そもそも$a_i = 0$のとき定義されず，$K^n$全体で定義された写像にすらならない．
+  \end{enumerate}
+  等差数列（差が一定）が線型な世界となじみ，等比数列（比が一定）がなじまないのは，このあたりの事情による．
+\end{example}
+
+\begin{mycolumn}
+  \exref{多項式の微分と定積分}では多項式を係数の並びとみなし，本項の数列の例では数列を項の並びとみなすことで，それぞれ数ベクトルに翻訳した．
+  同様の翻訳は，関数などさまざまな対象に対して可能である．
+  第3章では，このような「翻訳」を経由せずに，多項式全体や関数全体をそのまま扱える枠組みとして\textbf{線型空間}を導入する．
+  そこでは，微分や積分は線型空間のあいだの線型写像として，改めて位置づけられることになる．
+\end{mycolumn}
+
 次に，線型写像から新しい線型写像をつくる操作として，和・スカラー倍・合成を考える．
 
 \begin{definition}{線型写像の和とスカラー倍}{線型写像の和とスカラー倍}
@@ -884,6 +1225,12 @@
 まとめると，行列$A$が与えられたとき，それに対応する写像$T_A$は線型写像であり，逆に，$n$次元のベクトルを$m$次元のベクトルにうつす任意の線型写像は，必ずただひとつの行列によって表される．
 この意味で，「$K^n$から$K^m$への線型写像」と「$m \times n$行列」は同一視できる．
 
+\begin{mycolumn}
+  \thref{線型写像の行列表示}の証明の核心は，「線型写像は標準基底ベクトルの行き先だけで完全に決まる」という点にある．
+  実際，任意のベクトルは標準基底ベクトルの線型結合（次節で定義する）として表せるので，線型性を用いれば，$T(\bm{e}_1), T(\bm{e}_2), \dots, T(\bm{e}_n)$の値から$T(\bm{x})$の値がすべて復元できる．
+  この「基底での値がすべてを決める」という考え方は，線型代数の随所で現れる重要な視点である．
+\end{mycolumn}
+
 この同一視のもとで，行列の積は写像の合成に対応する．
 
 \begin{prop}{行列の積と写像の合成}{行列の積と写像の合成}
@@ -911,10 +1258,193 @@
 \prref{行列の積と写像の合成}によって，一見複雑に見えた行列の積の定義（\deref{行列の積}）が，「写像の合成に対応するように定められたもの」として自然に理解できる．
 行列の積が交換律を満たさないのは，写像の合成が交換律を満たさないことの反映なのである．
 
+\thref{線型写像の行列表示}の証明は，行列$A$の第$j$列が$T(\bm{e}_j)$であることを教えてくれる．
+これを用いれば，前節で見た線型変換を表す行列は，標準基底ベクトルの行き先を調べるだけで求められる．
+
+\begin{example}{図形の移動を表す行列}{図形の移動を表す行列}
+  $K = \mathbb{R}$とする．
+  \exref{対称移動と正射影}の$f_1$（$x$軸に関する対称移動）については，
+  \[
+    f_1(\bm{e}_1) = \begin{pmatrix} 1 \\ 0 \end{pmatrix}, \quad
+    f_1(\bm{e}_2) = \begin{pmatrix} 0 \\ -1 \end{pmatrix}
+  \]
+  であるから，これらを列として並べて
+  \[
+    f_1(\bm{x}) = \begin{pmatrix} 1 & 0 \\ 0 & -1 \end{pmatrix} \bm{x}
+  \]
+  となる．同様にして，
+  \[
+    f_2(\bm{x}) = \begin{pmatrix} 0 & 1 \\ 1 & 0 \end{pmatrix} \bm{x}
+    \quad \text{（直線$y = x$に関する対称移動）}, \qquad
+    f_3(\bm{x}) = \begin{pmatrix} 1 & 0 \\ 0 & 0 \end{pmatrix} \bm{x}
+    \quad \text{（$x$軸への正射影）}
+  \]
+  が得られる．
+  また，\exref{原点のまわりの回転}の回転については，
+  \[
+    f(\bm{e}_1) = \begin{pmatrix} \cos\theta \\ \sin\theta \end{pmatrix}, \quad
+    f(\bm{e}_2) = \begin{pmatrix} -\sin\theta \\ \cos\theta \end{pmatrix}
+  \]
+  であるから，
+  \[
+    R(\theta) = \begin{pmatrix} \cos\theta & -\sin\theta \\ \sin\theta & \cos\theta \end{pmatrix}
+  \]
+  とおけば$f(\bm{x}) = R(\theta)\bm{x}$である．この$R(\theta)$を\textbf{回転行列}\index{かいてんぎょうれつ@回転行列}という．
+\end{example}
+
+\begin{example}{回転行列と加法定理}{回転行列と加法定理}
+  角$\varphi$の回転をしてから角$\theta$の回転をすれば，全体としては角$\theta + \varphi$の回転になる．
+  これを\prref{行列の積と写像の合成}によって行列の言葉に翻訳すると，
+  \[
+    R(\theta) R(\varphi) = R(\theta + \varphi)
+  \]
+  となる．左辺を\deref{行列の積}に従って計算すれば，
+  \[
+    R(\theta)R(\varphi) =
+    \begin{pmatrix}
+      \cos\theta\cos\varphi - \sin\theta\sin\varphi & -(\cos\theta\sin\varphi + \sin\theta\cos\varphi) \\
+      \sin\theta\cos\varphi + \cos\theta\sin\varphi & \cos\theta\cos\varphi - \sin\theta\sin\varphi
+    \end{pmatrix}
+  \]
+  であり，右辺は
+  \[
+    R(\theta + \varphi) =
+    \begin{pmatrix}
+      \cos(\theta + \varphi) & -\sin(\theta + \varphi) \\
+      \sin(\theta + \varphi) & \cos(\theta + \varphi)
+    \end{pmatrix}
+  \]
+  である．両辺の成分を比較すれば，三角関数の加法定理
+  \[
+    \cos(\theta + \varphi) = \cos\theta\cos\varphi - \sin\theta\sin\varphi, \qquad
+    \sin(\theta + \varphi) = \sin\theta\cos\varphi + \cos\theta\sin\varphi
+  \]
+  が得られる．
+  行列の積という「一見複雑な定義」が，写像の合成という自然な操作を正確に写し取っていることの，ひとつの現れである．
+\end{example}
+
+\begin{example}{回転行列の逆行列}{回転行列の逆行列}
+  角$\theta$の回転を打ち消すのは角$-\theta$の回転であるから，
+  \[
+    R(\theta) R(-\theta) = R(0) = E_2
+  \]
+  が成り立つ．よって$R(\theta)$は正則であり，
+  \[
+    R(\theta)^{-1} = R(-\theta) = \begin{pmatrix} \cos\theta & \sin\theta \\ -\sin\theta & \cos\theta \end{pmatrix}
+    = R(\theta)^\mathsf{T}
+  \]
+  である．
+  一方，\exref{対称移動と正射影}の正射影$f_3$を表す行列$\begin{pmatrix} 1 & 0 \\ 0 & 0 \end{pmatrix}$は正則でない．
+  実際，$\bm{e}_2 \ne \bm{0}$が$\bm{0}$にうつるため，$f_3$は逆をもちえない．
+  「つぶれてしまう変換は元に戻せない」という直観が，逆行列の存在・非存在に対応しているのである．
+\end{example}
+
 \begin{mycolumn}
-  \thref{線型写像の行列表示}の証明の核心は，「線型写像は標準基底ベクトルの行き先だけで完全に決まる」という点にある．
-  実際，任意のベクトルは標準基底ベクトルの線型結合（次節で定義する）として表せるので，線型性を用いれば，$T(\bm{e}_1), T(\bm{e}_2), \dots, T(\bm{e}_n)$の値から$T(\bm{x})$の値がすべて復元できる．
-  この「基底での値がすべてを決める」という考え方は，線型代数の随所で現れる重要な視点である．
+  複素数平面もまた，線型変換の例を与える．
+  $\alpha = p + qi$を定数とし，複素数$z = x + yi$に$\alpha z$を対応させる写像を考えよう．
+  \[
+    \alpha z = (p + qi)(x + yi) = (px - qy) + (qx + py)i
+  \]
+  であるから，$z = x + yi$を$\begin{pmatrix} x \\ y \end{pmatrix} \in \mathbb{R}^2$と同一視すれば，この対応は
+  \[
+    \begin{pmatrix} x \\ y \end{pmatrix} \longmapsto
+    \begin{pmatrix} p & -q \\ q & p \end{pmatrix}
+    \begin{pmatrix} x \\ y \end{pmatrix}
+  \]
+  という$\mathbb{R}^2$の線型変換にほかならない．
+  とくに$\alpha = \cos\theta + i\sin\theta$のとき，この行列は回転行列$R(\theta)$と一致する．
+  「複素数を極形式でかけ算すると偏角が足される」という高校で学ぶ事実と，
+  \exref{回転行列と加法定理}の$R(\theta)R(\varphi) = R(\theta + \varphi)$とが，同じ内容を述べていることがわかる．
+\end{mycolumn}
+
+数列に関する例も，行列の言葉で見直してみよう．
+
+\begin{example}{階差行列と部分和行列}{階差行列と部分和行列}
+  \exref{部分和をとる写像}の$\Sigma \colon K^n \to K^n$を表す行列を求めよう．
+  $\Sigma \bm{e}_j$は「第$j$項だけが$1$で他が$0$の数列」の部分和であるから，
+  第$j$成分以降がすべて$1$，それより前が$0$のベクトルである．
+  これらを列として並べると，$n = 4$のとき
+  \[
+    L =
+    \begin{pmatrix}
+      1 & 0 & 0 & 0 \\
+      1 & 1 & 0 & 0 \\
+      1 & 1 & 1 & 0 \\
+      1 & 1 & 1 & 1
+    \end{pmatrix}
+  \]
+  となる（対角成分より下がすべて$1$の行列である）．
+
+  一方，\exref{階差数列をとる写像}の$\Delta$を少し変形し，「第$1$項はそのまま残し，第$2$項以降は階差をとる」写像
+  \[
+    \widetilde{\Delta} \bm{a} =
+    \begin{pmatrix} a_1 \\ a_2 - a_1 \\ a_3 - a_2 \\ a_4 - a_3 \end{pmatrix}
+  \]
+  を考えると，これは$K^4$の線型変換であり，その行列は
+  \[
+    D =
+    \begin{pmatrix}
+      1 & 0 & 0 & 0 \\
+      -1 & 1 & 0 & 0 \\
+      0 & -1 & 1 & 0 \\
+      0 & 0 & -1 & 1
+    \end{pmatrix}
+  \]
+  である．実際に積を計算すれば
+  \[
+    DL = LD = E_4
+  \]
+  となり，$D = L^{-1}$であることがわかる．
+  これは，「部分和をとってから階差をとると元の数列に戻る」という\exref{部分和をとる写像}の観察を，
+  逆行列の言葉で述べ直したものである．
+\end{example}
+
+\begin{example}{漸化式が定める線型変換}{漸化式が定める線型変換}
+  $p, q \in K$を定数とし，数列$\{a_n\}$が三項間漸化式
+  \[
+    a_{n+2} = p\,a_{n+1} + q\,a_n
+  \]
+  を満たすとする．
+  連続する$2$項を並べたベクトル$\begin{pmatrix} a_n \\ a_{n+1} \end{pmatrix} \in K^2$に着目すると，
+  漸化式は
+  \[
+    \begin{pmatrix} a_{n+1} \\ a_{n+2} \end{pmatrix}
+    = \begin{pmatrix} 0 & 1 \\ q & p \end{pmatrix}
+      \begin{pmatrix} a_{n} \\ a_{n+1} \end{pmatrix}
+  \]
+  と表される．
+  すなわち，「$1$項だけ先へ進める」という操作が$K^2$の線型変換にほかならない．
+
+  この行列を$A$とおくと，\prref{行列の積と写像の合成}をくり返し用いて
+  \[
+    \begin{pmatrix} a_{n+1} \\ a_{n+2} \end{pmatrix}
+    = A^{n} \begin{pmatrix} a_{1} \\ a_{2} \end{pmatrix}
+  \]
+  が得られる．
+  たとえばフィボナッチ数列（$F_1 = F_2 = 1$，$F_{n+2} = F_{n+1} + F_n$）であれば，
+  \[
+    A = \begin{pmatrix} 0 & 1 \\ 1 & 1 \end{pmatrix}, \qquad
+    \begin{pmatrix} F_{n+1} \\ F_{n+2} \end{pmatrix}
+    = A^{n} \begin{pmatrix} 1 \\ 1 \end{pmatrix}
+  \]
+  である．漸化式を$n$回追いかける代わりに，行列の$n$乗を計算すればよいことになる．
+\end{example}
+
+\begin{mycolumn}
+  \exref{漸化式が定める線型変換}によって，数列の一般項を求める問題は「行列$A$の$n$乗を求める問題」に翻訳された．
+  では，$A^n$はどう計算すればよいのだろうか．
+
+  鍵となるのは，$A\bm{x} = \lambda \bm{x}$を満たすベクトル$\bm{x} \ne \bm{0}$である．
+  このような$\bm{x}$に対しては$A^n \bm{x} = \lambda^n \bm{x}$となり，べき乗が一気に見通しよくなる．
+  この$\lambda$を$A$の固有値とよび，第4章で詳しく扱う．
+  高校で三項間漸化式を解くときに現れる$2$次方程式$t^2 = pt + q$（特性方程式）は，
+  実は$A$の固有値を求める方程式にほかならない．
+
+  また，漸化式$a_{n+2} = p a_{n+1} + q a_n$を満たす数列全体の集合を考えると，
+  これは項ごとの和とスカラー倍について閉じている．
+  高校で学ぶ「$2$つの解の線型結合もまた解である」という事実は，この集合が線型空間をなすことを意味しており，
+  さらにその次元が$2$である（初項と第$2$項で解が決まる）ことが，一般解が$2$つの解の線型結合でつくされる理由である．
+  これらの概念は第3章で整備される．
 \end{mycolumn}
 
 \phantomsection
@@ -1432,8 +1962,5 @@
   \deref{階数}の「線型独立な列の最大個数」という定義は，その次元の値をあらかじめ直接に取り出したものにあたる．
 \end{mycolumn}
 
-
-
 ここまでで，線型代数の基礎となる概念についての議論を終えた．
 次章ではこれらの概念を踏まえて，行列式を定義しよう．
-
