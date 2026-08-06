@@ -7,6 +7,8 @@
   一方，線型代数学では，ベクトルを「ある条件を満たす集合の元」として抽象的に扱う．
   この考え方により，数ベクトルだけでなく，行列や関数なども同じ枠組みで議論できるようになる．
   また，ベクトルの集合から生成される線型部分空間として，線型包を導入する．
+  線型部分空間の重要な例としては，第1章で定義した線型写像の像と核を取り上げる．
+  そのうえで基底と次元を定義し，部分空間の次元に関する次元公式，および像と核の次元を結びつける線型写像の次元公式を証明する．
 \end{abstract}
 
 \phantomsection
@@ -222,6 +224,68 @@
 \]
 となる．
 \end{mycolumn}
+
+線型部分空間の例をいくつか見よう．
+
+\begin{example}{線型部分空間の例}{線型部分空間の例}
+  \begin{enumerate}[label=(\arabic*),leftmargin=3.2em]
+    \item 任意の線型空間$V$に対して，$\{\bm{0}_V\}$と$V$自身は，いずれも$V$の線型部分空間である．
+    \item $K = \mathbb{R}$とする．原点を通る直線
+      \[
+        W = \left\{ \begin{pmatrix} x \\ y \end{pmatrix} \in \mathbb{R}^2 ~\middle|~ 2x - y = 0 \right\}
+      \]
+      は$\mathbb{R}^2$の線型部分空間である．
+      実際，$\bm{0} \in W$であり，$2x_1 - y_1 = 0$かつ$2x_2 - y_2 = 0$ならば$2(x_1 + x_2) - (y_1 + y_2) = 0$，また任意の$\alpha \in \mathbb{R}$に対して$2(\alpha x_1) - \alpha y_1 = \alpha(2x_1 - y_1) = 0$となるからである．
+      一方，原点を通らない直線（たとえば$2x - y = 1$で定まる直線）は$\bm{0}$を含まないので，線型部分空間ではない．
+    \item 次数が$n$以下の実数係数多項式全体（零多項式を含む）は，$\mathbb{R}[x]$の線型部分空間である．
+      次数$n$以下の多項式どうしの和や，そのスカラー倍によって，次数が$n$を超えることはないからである．
+  \end{enumerate}
+\end{example}
+
+さらに，第1章で導入した線型写像の像と核（\deref{像と核}）は，線型部分空間の重要な例を与える\footnote{第1章では$K$を$\mathbb{R}$または$\mathbb{C}$としていたが，線型写像とその像・核の定義（\deref{線型写像}，\deref{像と核}），および\prref{線型写像と零ベクトル}や\prref{線型写像と線型結合}などの基本性質は，一般の体$K$に対してもそのまま通用する．}．
+
+\begin{prop}{像と核の線型部分空間性}{像と核の線型部分空間性}
+  $f \colon K^n \to K^m$を線型写像とする．このとき，次が成り立つ．
+  \begin{enumerate}[label=(\roman*),leftmargin=3.2em]
+    \item $\Ker f$は$K^n$の線型部分空間である．
+    \item $\Im f$は$K^m$の線型部分空間である．
+  \end{enumerate}
+\end{prop}
+
+\begin{leftbar}
+\begin{proof}
+  (i)について示す．
+  \prref{線型写像と零ベクトル}より$f(\bm{0}) = \bm{0}$であるから，$\bm{0} \in \Ker f$であり，$\Ker f$は空でない．
+  $\bm{x}, \bm{y} \in \Ker f$とすると，$f$の線型性より
+  \[
+    f(\bm{x} + \bm{y}) = f(\bm{x}) + f(\bm{y}) = \bm{0} + \bm{0} = \bm{0}
+  \]
+  であるから，$\bm{x} + \bm{y} \in \Ker f$である．
+  また，任意の$\alpha \in K$に対して
+  \[
+    f(\alpha\bm{x}) = \alpha f(\bm{x}) = \alpha\bm{0} = \bm{0}
+  \]
+  であるから，$\alpha\bm{x} \in \Ker f$である．
+  よって$\Ker f$は$K^n$の線型部分空間である．
+
+  (ii)について示す．
+  $\bm{0} = f(\bm{0}) \in \Im f$であるから，$\Im f$は空でない．
+  $\bm{v}, \bm{w} \in \Im f$とすると，$\bm{v} = f(\bm{x})$，$\bm{w} = f(\bm{y})$となる$\bm{x}, \bm{y} \in K^n$がとれる．$f$の線型性より
+  \[
+    \bm{v} + \bm{w} = f(\bm{x}) + f(\bm{y}) = f(\bm{x} + \bm{y}) \in \Im f
+  \]
+  であり，また任意の$\alpha \in K$に対して
+  \[
+    \alpha\bm{v} = \alpha f(\bm{x}) = f(\alpha\bm{x}) \in \Im f
+  \]
+  である．よって$\Im f$は$K^m$の線型部分空間である．
+  これが証明すべきことであった．
+\end{proof}
+\end{leftbar}
+
+とくに，斉次連立一次方程式$A\bm{x} = \bm{0}$の解全体は$\Ker T_A$であったから（\prref{連立一次方程式と像と核}），$K^n$の線型部分空間である．
+これを$A\bm{x} = \bm{0}$の\textbf{解空間}\index{かいくうかん@解空間}という．
+「$2$つの解の和はふたたび解であり，解のスカラー倍もまた解である」という重ね合わせの性質こそが，部分空間性の意味するところである．
 
 線型部分空間どうしから新たな線型部分空間を作る方法として，
 共通部分と和が重要である．
@@ -1225,6 +1289,130 @@ $V\oplus W$
   となる．この場合，和$W_1 + W_2$は（それ自身を一つの線型空間とみて）$W_1$と$W_2$の内部直和$W_1 \oplus W_2$である（\deref{内部直和}）．
   このとき各元が$\bm{w}_1 + \bm{w}_2$（$\bm{w}_i \in W_i$）の形にただ一通りに表されることは，\prref{内部直和と分解の一意性}で見た通りである．
   すなわち上の等式は，「内部直和の次元は各成分の次元の和である」と読むことができる．
+\end{mycolumn}
+
+本項の締めくくりとして，もう一つの次元公式を証明しよう．
+第1章で，線型写像$f \colon K^n \to K^m$に対して像$\Im f$と核$\Ker f$を定義した（\deref{像と核}）．
+本章では，これらがそれぞれ$K^m$，$K^n$の線型部分空間であることを確かめた（\prref{像と核の線型部分空間性}）ので，その次元を考えることができる．
+
+\begin{theorem}{線型写像の次元公式}{線型写像の次元公式}
+  $f \colon K^n \to K^m$を線型写像とする．このとき，
+  \[
+    \dim \Ker f + \dim \Im f = n
+  \]
+  が成り立つ．
+\end{theorem}
+
+\begin{leftbar}
+\begin{proof}
+  $K^n$は有限生成であり（標準基底，\exref{基底の例}），$\Ker f$はその線型部分空間であるから，\prref{部分空間の次元}より$\Ker f$も有限生成である．
+  $\dim \Ker f = k$とおき，$\Ker f$の基底を$(\bm{u}_1, \dots, \bm{u}_k)$とする（$k = 0$のときは空の組をとる）．
+  \thref{基底の延長}より，これを延長して$K^n$の基底
+  \[
+    (\bm{u}_1, \dots, \bm{u}_k, \bm{w}_1, \dots, \bm{w}_l)
+  \]
+  がとれる．$\dim K^n = n$（\exref{次元の例}）であるから，\thref{基底の個数の一意性}より$k + l = n$である．
+
+  ここで，$(f(\bm{w}_1), \dots, f(\bm{w}_l))$が$\Im f$の基底であることを示す．
+
+  生成性について，任意の$\bm{v} \in \Im f$は，ある$\bm{x} \in K^n$を用いて$\bm{v} = f(\bm{x})$と表せる．
+  $\bm{x}$を上の$K^n$の基底で
+  \[
+    \bm{x} = \sum_{i=1}^{k} a_i \bm{u}_i + \sum_{j=1}^{l} b_j \bm{w}_j
+  \]
+  と表すと，\prref{線型写像と線型結合}と$f(\bm{u}_i) = \bm{0}$（$\bm{u}_i \in \Ker f$）より，
+  \[
+    \bm{v} = f(\bm{x})
+    = \sum_{i=1}^{k} a_i f(\bm{u}_i) + \sum_{j=1}^{l} b_j f(\bm{w}_j)
+    = \sum_{j=1}^{l} b_j f(\bm{w}_j)
+  \]
+  となる．よって$\Im f = \Span\bigl(f(\bm{w}_1), \dots, f(\bm{w}_l)\bigr)$である．
+
+  線型独立性について，
+  \[
+    \sum_{j=1}^{l} c_j f(\bm{w}_j) = \bm{0}
+  \]
+  とする．\prref{線型写像と線型結合}より$f\left(\sum_{j=1}^{l} c_j \bm{w}_j\right) = \bm{0}$，すなわち
+  \[
+    \sum_{j=1}^{l} c_j \bm{w}_j \in \Ker f
+  \]
+  である．$(\bm{u}_1, \dots, \bm{u}_k)$は$\Ker f$の基底であるから，
+  \[
+    \sum_{j=1}^{l} c_j \bm{w}_j = \sum_{i=1}^{k} d_i \bm{u}_i
+  \]
+  と表せる．移項すると
+  \[
+    \sum_{i=1}^{k} d_i \bm{u}_i - \sum_{j=1}^{l} c_j \bm{w}_j = \bm{0}
+  \]
+  となり，$(\bm{u}_1, \dots, \bm{u}_k, \bm{w}_1, \dots, \bm{w}_l)$の線型独立性より，とくに$c_1 = \cdots = c_l = 0$である．
+
+  以上より$(f(\bm{w}_1), \dots, f(\bm{w}_l))$は$\Im f$の基底であり，$\dim \Im f = l$である．
+  したがって，
+  \[
+    \dim \Ker f + \dim \Im f = k + l = n
+  \]
+  が成り立つ．これが証明すべきことであった．
+\end{proof}
+\end{leftbar}
+
+第1章で「線型独立な列の最大個数」として導入した階数（\deref{階数}）は，この公式を通じて「像の次元」として捉え直される．
+
+\begin{cor}{階数と像・核の次元}{階数と像の次元}
+  $A$を$m \times n$行列とし，$T_A \colon K^n \to K^m$を$A$の定める線型写像とする．このとき，
+  \[
+    \dim \Im T_A = \rank A,
+    \qquad
+    \dim \Ker T_A = n - \rank A
+  \]
+  が成り立つ．
+\end{cor}
+
+\begin{leftbar}
+\begin{proof}
+  $A$の列ベクトルを$\bm{a}_1, \dots, \bm{a}_n \in K^m$とする．
+  任意の$\bm{x} \in K^n$に対して，$\bm{x} = \sum_{j=1}^{n} x_j \bm{e}_j$，$A\bm{e}_j = \bm{a}_j$と\prref{線型写像と線型結合}より
+  \[
+    A\bm{x} = \sum_{j=1}^{n} x_j \bm{a}_j
+  \]
+  であるから，$\Im T_A = \Span(\bm{a}_1, \dots, \bm{a}_n)$である．
+
+  $r = \rank A$とおく．
+  階数の定義（\deref{階数}）より，$\bm{a}_1, \dots, \bm{a}_n$のうちから線型独立な$r$本$\bm{a}_{j_1}, \dots, \bm{a}_{j_r}$が選べる．
+  任意の列$\bm{a}_j$に対して，$r + 1$本の組$\bm{a}_{j_1}, \dots, \bm{a}_{j_r}, \bm{a}_j$は$r$の最大性より線型従属であるから，\lemref{一般の線型独立な組の拡大}の対偶より
+  \[
+    \bm{a}_j \in \Span(\bm{a}_{j_1}, \dots, \bm{a}_{j_r})
+  \]
+  である．よって\prref{線型包の最小性}より
+  \[
+    \Im T_A = \Span(\bm{a}_1, \dots, \bm{a}_n)
+    \subset \Span(\bm{a}_{j_1}, \dots, \bm{a}_{j_r})
+    \subset \Im T_A
+  \]
+  となり，$\Im T_A = \Span(\bm{a}_{j_1}, \dots, \bm{a}_{j_r})$である．
+  $(\bm{a}_{j_1}, \dots, \bm{a}_{j_r})$は線型独立かつ$\Im T_A$を生成するから，$\Im T_A$の基底であり，$\dim \Im T_A = r = \rank A$である．
+
+  後半の等式は，\thref{線型写像の次元公式}より
+  \[
+    \dim \Ker T_A = n - \dim \Im T_A = n - \rank A
+  \]
+  として従う．これが証明すべきことであった．
+\end{proof}
+\end{leftbar}
+
+\begin{mycolumn}
+  \thref{線型写像の次元公式}は，定義域のもつ$n$次元分の情報が，「核としてつぶれる分」と「像として生き残る分」とに過不足なく分かれることを述べている．
+  \exref{像と核の例}の正射影$f_3$でいえば，$\dim \Ker f_3 = 1$（$y$軸方向がつぶれる）と$\dim \Im f_3 = 1$（$x$軸が残る）の和が，定義域$\mathbb{R}^2$の次元$2$に一致している．
+  文献によっては，\thref{次元公式}ではなくこちらを指して「次元公式」あるいは「次元定理」とよぶことも多い．
+
+  また，\coref{階数と像の次元}の$\dim \Ker T_A = n - \rank A$は，連立一次方程式の解の様子を定量的に述べている．
+  斉次連立一次方程式$A\bm{x} = \bm{0}$の解空間は$\Ker T_A$であり（\prref{連立一次方程式と像と核}），その次元$n - \rank A$は，解を表すのに必要なパラメータの個数（解の自由度）にあたる．
+  とくに$\rank A = n$のときは$\Ker T_A = \{\bm{0}\}$となり，\prref{単射性と核}より$T_A$は単射，すなわち$A\bm{x} = \bm{0}$は自明な解$\bm{x} = \bm{0}$しかもたない．
+
+  なお，のちに一般の線型空間のあいだの線型写像を導入すれば，有限次元の線型空間$V$から線型空間$W$への線型写像$f$に対しても，まったく同じ証明によって
+  \[
+    \dim \Ker f + \dim \Im f = \dim V
+  \]
+  が成り立つ．
 \end{mycolumn}
 
 \phantomsection
