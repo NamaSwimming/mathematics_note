@@ -1,4 +1,4 @@
-\phantomsection
+\phantomsection 
 \part{線型空間}
 
 \begin{abstract}
@@ -36,9 +36,9 @@
   \]
   および\textbf{スカラー倍}とよばれる演算
   \[
-    K\times V\to V,
+    \scalmul\colon K\times V\to V,
     \qquad
-    (\alpha,\bm{v})\mapsto\alpha\bm{v}
+    (\alpha,\bm{v})\mapsto\alpha\scalmul\bm{v}
   \]
   が定められているとする．
   これらの演算が次の条件を満たすとき，
@@ -46,6 +46,7 @@
 
 また，体$K$の加法と線型空間$V$の加法は，文脈から区別できるものとして，ともに演算記号$+$で表すことにする
 \footnote{すなわち，$\alpha+\beta$に現れる$+$と$\alpha\bm{v}+\beta\bm{w}$に現れる$+$とを異なる記号で表さず，同じ記号で記述する．}．
+一方，体$K$の乗法は，スカラー倍$\scalmul$と区別して，記号を省略し$\alpha\beta$のようにかく．
 \begin{enumerate}[label=(\roman*),leftmargin=3.2em]
   \item \textbf{加法に関して可換群} 
   
@@ -54,22 +55,42 @@
  
   任意の$\bm{v},\bm{w}\in V$および任意の$\alpha,\beta\in K$に対して，
   \[
-  1_K \bm{v}=\bm{v}
+  1_K \scalmul \bm{v}=\bm{v},
   \]
   \[
-  (\alpha+\beta) \bm{v}=\alpha \bm{v}+\beta \bm{v},
+  (\alpha+\beta) \scalmul \bm{v}=\alpha \scalmul \bm{v}+\beta \scalmul \bm{v},
   \]
   \[
-  \alpha(\bm{v}+\bm{w})=\alpha \bm{v}+\alpha \bm{w},
+  \alpha \scalmul (\bm{v}+\bm{w})=\alpha \scalmul \bm{v}+\alpha \scalmul \bm{w},
   \]
   \[
-  (\alpha\beta)\bm{v}=\alpha(\beta \bm{v})
+  (\alpha\beta) \scalmul \bm{v}=\alpha \scalmul (\beta \scalmul \bm{v})
   \]
   が成り立つ．
   \end{enumerate}
 
   $V$の元を\textbf{ベクトル}という．
 \end{definition}
+
+以下では，スカラー倍の演算記号$\scalmul$を省略し，
+\[
+  \alpha\scalmul\bm{v}
+  \quad\text{を単に}\quad
+  \alpha\bm{v}
+\]
+とかく\footnote{記号$\scalmul$をいったん導入したのは，スカラー倍が$K\times V\to V$という，$K$の乗法$K\times K\to K$とは異なる演算であることを明示するためである．両者を混同するおそれのない場面では，体の乗法$\alpha\beta$と同様に記号を省略するのが慣習である．}．
+この約束のもとで，スカラー倍に関する条件は
+\[
+  1_K\bm{v}=\bm{v},
+  \qquad
+  (\alpha+\beta)\bm{v}=\alpha\bm{v}+\beta\bm{v},
+\]
+\[
+  \alpha(\bm{v}+\bm{w})=\alpha\bm{v}+\alpha\bm{w},
+  \qquad
+  (\alpha\beta)\bm{v}=\alpha(\beta\bm{v})
+\]
+と表される．
 
 なお，加法とスカラー倍を「終域が$V$である写像」として定めたので，$\bm{v}+\bm{w}$や$\alpha\bm{v}$がふたたび$V$の元であること，すなわち$V$がこれらの演算について閉じていることは，定義に含まれている．
 
