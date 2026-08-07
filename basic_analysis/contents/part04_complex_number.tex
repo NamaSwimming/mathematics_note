@@ -1,5 +1,8 @@
 \part{\texorpdfstring{$\mathbb{R}^n$と$\mathbb{C}$}{Rn と C}}
 
+\begin{abstract}
+この章では，$n$次元数空間 $\mathbb{R}^n$ と複素数体 $\mathbb{C}$ を導入する．まず直積集合として $\mathbb{R}^n$ を定義し，ベクトルの和・スカラー倍・内積といった演算とその性質を確認する．次に，$\mathbb{R}^2$ に加法と乗法を定めることで複素数体 $\mathbb{C}$ を構成し，虚数単位 $i$ が $i^2 = -1$ を満たすことを示す．最後に，$\mathbb{R}^n$ の点列を定義し，点列の収束・コーシー列といった概念が成分ごとの議論に帰着されることを確認する．
+\end{abstract}
 
 \phantomsection
 \section{\texorpdfstring{$n$次元数空間}{n次元数空間}}
@@ -11,6 +14,8 @@
 	\]
 	を$n$次元数空間といい，その元を$n$次元数ベクトルという．
 \end{definition}
+
+新しい対象を定義したら，次に「2つの対象がいつ等しいとみなされるのか」を約束しておく必要がある．ベクトルについては，次のように定める．
 
 \begin{definition}{ベクトルの相等}{}
 	2つのベクトル
@@ -113,7 +118,7 @@
 \end{definition}
 
 \begin{theorem}{}{}
-	\deref{R2の和と積}における$\mathbb{R}^2$は可換体である．．
+	\deref{R2の和と積}における$\mathbb{R}^2$は可換体である．
 	乗法の単位元は$(1,0)$であり，乗法の逆元に関して$(a,b)^{-1}=(a/(a^2+b^2),-b/(a^2+b^2))$である．ただし$(a,b) \ne (0,0)$とする．
 \end{theorem}
 
@@ -129,15 +134,15 @@
 	\[
 		\left( \frac{a}{a^2+b^2},\frac{-b}{a^2+b^2} \right)
 	\]
-	である\footnote{計算は省略する．}
+	である\footnote{計算は省略する．}．これが証明すべきことであった．
 \end{proof}
 \end{tleftbar}
 
 \begin{definition}{虚数単位}{}
 	\[
-		(0,1)=i
+		i \coloneqq (0,1)
 	\]
-	と記し，$i$を虚数単位とよぶ．
+	と定め，$i$を虚数単位とよぶ．
 \end{definition}
 
 \begin{prop}{}{}
@@ -151,6 +156,7 @@
 		\[
 			i^2 = (0,1)(0,1) = (0 \cdot 0 - 1 \cdot 1 , 0 \cdot 1 + 1 \cdot 0) = (-1,0) = -1
 		\]
+		である．これが証明すべきことであった．
 	\end{proof}
 \end{tleftbar}
 
@@ -209,20 +215,20 @@
 \begin{definition}{点列の収束}{点列の収束}
 	点列$(a_m)_{m \in \mathbb{N}}$が$a \in \mathbb{R}^n$に収束するとは，任意の$\varepsilon >0$に対して，ある$N \in \mathbb{N}$が存在して，任意の$m \in \mathbb{N}$に対して，
 	\[
-		m \ge N \Rightarrow \abs{a_m -a} < \varepsilon
+		m \geqq N \implies \abs{a_m -a} < \varepsilon
 	\]
 	が成り立つことである．
 \end{definition}
 
 \begin{definition}{$\mathbb{R}^n$におけるコーシー列}{Rnにおけるコーシー列}
-	点列$(a_m)_{m \in \mathbb{N}}$が$\mathbb{R}^n$においてコーシー列であるとは，任意の$\varepsilon >0$に対して，ある$N \in \mathbb{N}$が存在して，任意の$m，n \in \mathbb{N}$に対して，
+	点列$(a_m)_{m \in \mathbb{N}}$が$\mathbb{R}^n$においてコーシー列であるとは，任意の$\varepsilon >0$に対して，ある$N \in \mathbb{N}$が存在して，任意の$m,n \in \mathbb{N}$に対して，
 	\[
-		m，n \ge N \Rightarrow \abs{a_m -a_n} < \varepsilon
+		m,n \geqq N \implies \abs{a_m -a_n} < \varepsilon
 	\]
 	が成り立つことである．
 \end{definition}
 
-以下では$\mathbb{R}^n$の点列$(a_m)_{m \mathbb{N}}$を
+以下では$\mathbb{R}^n$の点列$(a_m)_{m \in \mathbb{N}}$を
 \[
 	a_m = (a_{m,1},a_{m,2},\ldots,a_{m,n})
 \]
@@ -243,10 +249,10 @@
 	必要条件であることを示す．$\lim_{m \to \infty} a_m = a \in \mathbb{R}^n$とする．
 	このとき，任意の$\varepsilon >0$に対して，ある$N \in \mathbb{N}$が存在して，任意の$m \in \mathbb{N}$に対して，
 	\[
-		m \ge N \Rightarrow \abs{a_m -a} < \varepsilon
+		m \geqq N \implies \abs{a_m -a} < \varepsilon
 	\]
 	が成り立つ．
-	ここで，$m \ge N$とすると，
+	ここで，$m \geqq N$とすると，
 	\[
 		\abs{a_m -a} = \left \{ \sum_{i=1}^{n} (a_{m,i} -a_i)^2 \right \}^\frac{1}{2}  < \varepsilon
 	\]
@@ -256,16 +262,14 @@
 	十分条件であることを示す．$\lim_{m \to \infty} a_{m,i} = a_i \in \mathbb{R} \quad (i=1,2,\ldots,n)$とする．
 	任意の$\varepsilon >0$に対して，ある$N_i \in \mathbb{N}$が存在して，任意の$m \in \mathbb{N}$に対して，
 	\[
-		m \ge N_i \Rightarrow \abs{a_{m,i} -a_i} < \frac{\varepsilon}{\sqrt{n}}
+		m \geqq N_i \implies \abs{a_{m,i} -a_i} < \frac{\varepsilon}{\sqrt{n}}
 	\]
 	が成り立つ．
-	ここで，$N \coloneqq \max \{ N_1,N_2,\ldots,N_n \}$とすると，$m \ge N$のとき，
+	ここで，$N \coloneqq \max \{ N_1,N_2,\ldots,N_n \}$とすると，$m \geqq N$のとき，
 	\[
 		\abs{a_m -a} =\left \{ \sum_{i=1}^{n} (a_{m,i} -a_i)^2 \right \}^{\frac{1}{2}}  < \left \{ \sum_{i=1}^{n} \left( \frac{\varepsilon}{\sqrt{n}} \right)^2 \right \}^\frac{1}{2} = \varepsilon
 		\] 
-		となり，$\lim_{m \to \infty} a_m = a \in \mathbb{R}^n$である．
-
-		以上の考察により証明された．
+		となり，$\lim_{m \to \infty} a_m = a \in \mathbb{R}^n$である．これが証明すべきことであった．
 \end{proof}
 \end{leftbar}
 
@@ -280,34 +284,32 @@
 
 \begin{leftbar}
 	\begin{proof}
-		必要条件であること，十分条件であることを分けて証明する，
+		必要条件であること，十分条件であることを分けて証明する．
 
 		必要条件であることを示す．$(a_m)_{m \in \mathbb{N}}$がコーシー列であるとする．
 		このとき，任意の$\varepsilon >0$に対して，$N \in \mathbb{N}$が存在し，任意の$m,l \in \mathbb{N}$に対して
 		\[
-			m,l  \ge N \Rightarrow \abs{a_m - a_l}<\varepsilon 
+			m,l  \geqq N \implies \abs{a_m - a_l}<\varepsilon 
 		\]
 		が成り立つ．
 
 		ここで，
 		\[
-			\abs{a_m - a_l} = \left \{ \sum_{i=1}^{n} \abs{a_{m,i}-a_{l,i}}^2 \right \}^\frac{1}{2}=\varepsilon 
+			\abs{a_m - a_l} = \left \{ \sum_{i=1}^{n} \abs{a_{m,i}-a_{l,i}}^2 \right \}^\frac{1}{2} < \varepsilon 
 		\]
-		であるから，$ l,m \ge N$のとき$\abs{a_{m,i}-a_{l,i}}<\varepsilon$~$(i=1,2,\ldots,n)$であり，ここまでで必要条件であることが示された．
+		であるから，$ l,m \geqq N$のとき$\abs{a_{m,i}-a_{l,i}}<\varepsilon$~$(i=1,2,\ldots,n)$であり，ここまでで必要条件であることが示された．
 
 		十分条件であることを示す．$(a_{m,i})_{m \in \mathbb{N}}$~$(i=1,2,\ldots,n)$がコーシー列であるとする．
 
 		このとき，任意の$\varepsilon /\sqrt{n}>0$に対して，ある$N_i \in \mathbb{N}$が存在して，任意の$m,l \in \mathbb{N}$に対して，
 		\[
-			m ,l\ge N_i \Rightarrow \abs{a_{m,i}-a_{l,i}}<\frac{\varepsilon}{\sqrt{n}}
+			m ,l\geqq N_i \implies \abs{a_{m,i}-a_{l,i}}<\frac{\varepsilon}{\sqrt{n}}
 		\]
-		である．ここで，$N \coloneqq \{ N_1 ,N_2,\ldots,N_n \}$とすると，$m,l \geqq N$のとき
+		である．ここで，$N \coloneqq \max \{ N_1 ,N_2,\ldots,N_n \}$とすると，$m,l \geqq N$のとき
 		\[
-			\abs{a_m - a_l }=\left  \{ \sum_{i=1}^{n} \abs{a_{m,i}-a_{l,i}} \right \}^\frac{1}{2} < \left \{ \sum_{i=1}^{n} \left (  \frac{\varepsilon}{\sqrt{n}} \right )^2 \right \}^\frac{1}{2}=\varepsilon 
+			\abs{a_m - a_l }=\left  \{ \sum_{i=1}^{n} \abs{a_{m,i}-a_{l,i}}^2 \right \}^\frac{1}{2} < \left \{ \sum_{i=1}^{n} \left (  \frac{\varepsilon}{\sqrt{n}} \right )^2 \right \}^\frac{1}{2}=\varepsilon 
 		\]
-		となり，ここまでで十分条件であることも示された．
-
-		以上の考察により，この命題が示された．
+		となり，ここまでで十分条件であることも示された．これが証明すべきことであった．
 	\end{proof}
 \end{leftbar}
 
@@ -322,13 +324,14 @@
 
 \begin{leftbar}
 	\begin{proof}
-		以下のように証明される．
+		これまでに示した事実を並べると，
 \begin{align*} 
 	& (a_m)_{m \in \mathbb{N}}~ {:} \text{収束} \\
 	\iff & (a_{m,i})_{m \in \mathbb{N}}~ {:} \text{収束} \quad (i=1,2,\ldots,n) \\
 	\iff & (a_{m,i})_{m \in \mathbb{N}}~{:} \text{コーシー列}\quad (i=1,2,\ldots,n)  \\
 	\iff & (a_m)_{m \in \mathbb{N}} ~{:} \text{コーシー列}
 \end{align*} 
+となる．これが証明すべきことであった．
 \end{proof}
 \end{leftbar}
 
@@ -336,7 +339,7 @@
 	$\mathbb{R}^n$の点列$(a_m)_{m \in \mathbb{N}}$とその部分列$(a_{m(k)})_{k \in \mathbb{N}}$に関して，次のことが成り立つ．
 	\begin{align*}
 		&\lim_{m \to \infty} a_m = b \in \mathbb{R}^n \\
-		\Rightarrow & \lim_{k \to \infty} a_{m(k)} = b \in \mathbb{R}^n
+		\implies & \lim_{k \to \infty} a_{m(k)} = b \in \mathbb{R}^n
 	\end{align*} 
 \end{theorem} 
 
@@ -344,14 +347,14 @@
 \begin{proof} 
 	任意の$\varepsilon >0$に対して，ある$N \in \mathbb{N}$が存在して，任意の$m \in \mathbb{N}$に対して，
 	\[
-		m \ge N \Rightarrow \abs{a_m -b} < \varepsilon
+		m \geqq N \implies \abs{a_m -b} < \varepsilon
 	\]
 	が成り立つ．
 	ここで，$k \in \mathbb{N}$に対して，$m(k) \geqq k$であるから，
 	\[
-		k \ge N \Rightarrow m(k) \ge N \Rightarrow \abs{a_{m(k)} -b} < \varepsilon
+		k \geqq N \implies m(k) \geqq N \implies \abs{a_{m(k)} -b} < \varepsilon
 	\]
-	であるから，$\lim_{k \to \infty} a_{m(k)} = b \in \mathbb{R}^n$である．
+	であるから，$\lim_{k \to \infty} a_{m(k)} = b \in \mathbb{R}^n$である．これが証明すべきことであった．
 \end{proof}
 \end{leftbar}
 
@@ -359,7 +362,7 @@
 	$\mathbb{R}^n$の点列$(a_m)_{m \in \mathbb{N}}$に関して，次のことが成り立つ．
 	\begin{align*}
 		& (a_m)_{m \in \mathbb{N}}~ {:}  \text{収束} \\
-		\Rightarrow  & (a_m)_{m \in \mathbb{N}} ~{:}  \text{有界}
+		\implies  & (a_m)_{m \in \mathbb{N}} ~{:}  \text{有界}
 	\end{align*}
 \end{theorem}
 
@@ -367,6 +370,6 @@
 	\begin{proof}
 		各$k \in \{ 1,2,\ldots,n \}$に対し$(a_{m,k})_{m \in \mathbb{N}}$は収束するので，
 		先の命題により，$(a_{m,k})_{m \in \mathbb{N}}$は有界である．
-		よって，$(a_m)_{m \in \mathbb{N}}$も有界である．
+		よって，$(a_m)_{m \in \mathbb{N}}$も有界である．これが証明すべきことであった．
 	\end{proof}
 \end{leftbar}
