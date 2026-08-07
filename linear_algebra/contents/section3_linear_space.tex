@@ -14,55 +14,39 @@
 \subsection{線型空間の定義}
 
 
-線型代数学では「ある条件を満たす集合の元」を「ベクトル」とする．
+線型代数学では，ある条件を満たす集合の元を「ベクトル」として扱う．
+そこで，その枠組みとなる\textbf{線型空間}\index{せんけいくうかん@線型空間}を定義する．
 
-そこでまず，抽象的にベクトルを再定義するために必要な概念として，
-\textbf{線型空間}\index{せんけいくうかん@線型空間}
-を定義する．
+第1章と第2章では$K=\mathbb{R}$または$K=\mathbb{C}$としていたが，
+本章では$K$を任意の\textbf{体}\index{たい@体}（field）とする%
+\footnote{体とは，大まかにいえば，加法・減法・乗法，および$0$でない元による除法が自由に行える代数系である．
+$\mathbb{R}$や$\mathbb{C}$はその代表例である．}．
 
-なお，第1章と第2章では，スカラーの範囲$K$として$\mathbb{R}$または$\mathbb{C}$を考えるという約束をしていた．
-本章では議論を一般化し，$K$は任意の\textbf{体}\index{たい@体}（field）であるとする\footnote{体とは，大まかにいえば，加法・減法・乗法，および$0$でない元による除法が自由に行える代数系のことである（$0$による除法は許されない）．$\mathbb{R}$や$\mathbb{C}$はその代表例であり，本書では，体の典型例として$\mathbb{R}$と$\mathbb{C}$を思い浮かべておけば十分である．}．
-ただし，具体例の多くでは，引き続き$K = \mathbb{R}$または$K = \mathbb{C}$の場合を扱う．
-
-線型空間の定義には，体$K$がもともともっている$2$つの演算と，
-$V$に新たに定める$2$つの演算，あわせて$4$つの演算が現れる．
-これらを混同しないよう，次の定義では，
-$K$の演算を桃色の記号で，$V$がかかわる演算を黒の記号で表す．
+次の定義では，体$K$の加法・乗法と
+$V$の加法・スカラー倍を区別するため，それぞれ異なる記号を用いる．
 
 \begin{definition}{線型空間}{線型空間}
-  $K$を体とする．
-  体$K$には，\textbf{加法}および\textbf{乗法}とよばれる演算
+  $K$を体とし，その加法と乗法をそれぞれ
   \[
     \Kadd\colon K\times K\to K,
     \qquad
     \Kmul\colon K\times K\to K
   \]
-  が備わっており，加法の零元を$0_K$，乗法の単位元を$1_K$で表す．
+  とする．また，加法の零元を$0_K$，乗法の単位元を$1_K$とする．
 
-  さらに，集合$V$に，\textbf{加法}とよばれる演算
+  集合$V$に，加法とスカラー倍
   \[
     \Vadd\colon V\times V\to V,
     \qquad
-    (\bm{v},\bm{w})\mapsto\bm{v}\Vadd\bm{w}
-  \]
-  および\textbf{スカラー倍}とよばれる演算
-  \[
-    \scalmul\colon K\times V\to V,
-    \qquad
-    (\alpha,\bm{v})\mapsto\alpha\scalmul\bm{v}
+    \scalmul\colon K\times V\to V
   \]
   が定められているとする．
-  これらの演算が次の条件を満たすとき，
-  $V$を（これらの演算を込めて）体$K$上の\textbf{線型空間}という．
+  このとき，次の条件を満たす$V$を体$K$上の\textbf{線型空間}という．
 
   \begin{enumerate}[label=(\roman*),leftmargin=3.2em]
-    \item \textbf{加法に関して可換群}
+    \item $V$は加法$\Vadd$に関して可換群をなす．
 
-    集合$V$は，加法$\Vadd$に関して可換群をなす．
-
-    \item \textbf{スカラー倍に関する性質}
-
-    任意の$\bm{v},\bm{w}\in V$および任意の$\alpha,\beta\in K$に対して，
+    \item 任意の$\bm{v},\bm{w}\in V$および$\alpha,\beta\in K$に対して，
     \[
       1_K\scalmul\bm{v}=\bm{v},
     \]
@@ -89,47 +73,28 @@ $K$の演算を桃色の記号で，$V$がかかわる演算を黒の記号で�
 
 この定義では，$4$つの演算を区別するために，
 一時的に$\Kadd$，$\Kmul$，$\Vadd$，$\scalmul$という記号を用いた．
-しかし，どの演算であるかは，記号の左右におかれた対象が$K$の元か$V$の元かによって
-文脈から判断できる．
-そこで以下では，$2$つの加法をいずれも通常の演算記号$+$で表し，
-$K$の乗法とスカラー倍の記号は省略する．
-すなわち
+しかし，どの演算であるかは文脈から判断できるため，以下では
 \[
-  \alpha\Kadd\beta,\qquad
-  \bm{v}\Vadd\bm{w},\qquad
-  \alpha\Kmul\beta,\qquad
+  \alpha\Kadd\beta,\quad
+  \bm{v}\Vadd\bm{w},\quad
+  \alpha\Kmul\beta,\quad
   \alpha\scalmul\bm{v}
 \]
 を，それぞれ
 \[
-  \alpha+\beta,\qquad
-  \bm{v}+\bm{w},\qquad
-  \alpha\beta,\qquad
+  \alpha+\beta,\quad
+  \bm{v}+\bm{w},\quad
+  \alpha\beta,\quad
   \alpha\bm{v}
 \]
 と表す．
-この約束のもとで，スカラー倍に関する条件は
+たとえば
 \[
-  1_K\bm{v}=\bm{v},
-  \qquad
-  (\alpha+\beta)\bm{v}=\alpha\bm{v}+\beta\bm{v},
+  (\alpha+\beta)\bm{v}
+  =
+  \alpha\bm{v}+\beta\bm{v}
 \]
-\[
-  \alpha(\bm{v}+\bm{w})=\alpha\bm{v}+\alpha\bm{w},
-  \qquad
-  (\alpha\beta)\bm{v}=\alpha(\beta\bm{v})
-\]
-と表される．
-ここで，同じ記号が異なる演算を表していることに注意してほしい．
-たとえば$(\alpha+\beta)\bm{v}=\alpha\bm{v}+\beta\bm{v}$では，
-左辺の$+$は$K$の加法，右辺の$+$は$V$の加法である．
-また$(\alpha\beta)\bm{v}=\alpha(\beta\bm{v})$では，
-左辺の$\alpha\beta$は$K$の乗法であり，
-それ以外の並置はすべてスカラー倍である．
-
-なお，加法とスカラー倍を「終域が$V$である写像」として定めたので，
-$\bm{v}+\bm{w}$や$\alpha\bm{v}$がふたたび$V$の元であること，
-すなわち$V$がこれらの演算について閉じていることは，定義に含まれている．
+では，左辺の$+$は$K$の加法，右辺の$+$は$V$の加法である．
 
 \begin{mycolumn}
 線型空間の公理のうち，
