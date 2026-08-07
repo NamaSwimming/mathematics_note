@@ -1039,7 +1039,12 @@
 \let\Im\relax
 \DeclareMathOperator{\Im}{Im}
 
-\newcommand{\scalmul}{\mathbin{\bullet}}
+% ---- 線型空間の演算を区別するための記号 ----
+\newcommand{\Kadd}{\mathbin{\textcolor{magenta}{+}}}   % K の加法
+\newcommand{\Vadd}{\mathbin{+}}                        % V の加法
+\newcommand{\Kmul}{\mathbin{\textcolor{magenta}{\bullet}}} % K の乗法
+\newcommand{\scalmul}{\mathbin{\bullet}}               % スカラー倍
+
 
 % ---- 不等号を二重線に統一 ----
 \renewcommand{\le} {\leqq}
