@@ -311,8 +311,39 @@
   で与えられる$l \times n$行列$C = (c_{ik})$として定義する．
 \end{definition}
 
+
+\begin{wrapfigure}[7]{r}{0.5\textwidth}
+  \centering
+  \vspace{-\baselineskip}
+  \begin{tikzpicture}[
+      mat/.style={matrix of math nodes,
+                  left delimiter=(, right delimiter=),
+                  nodes={inner sep=1.5pt, font=\scriptsize},
+                  column sep=5pt, row sep=4pt},
+      waku/.style={draw, magenta, thick, rounded corners=2pt, inner sep=2.5pt}]
+    \matrix (A) [mat] {
+      a_{11} & \cdots & a_{1m} \\
+      \vdots &        & \vdots \\
+      |[magenta]| a_{i1} & |[magenta]| \cdots & |[magenta]| a_{im} \\
+      a_{l1} & \cdots & a_{lm} \\
+    };
+    \matrix (B) [mat, right=14pt of A] {
+      b_{11} & \cdots & |[magenta]| b_{1k} & \cdots & b_{1n} \\
+      \vdots &        & |[magenta]| \vdots &        & \vdots \\
+      b_{m1} & \cdots & |[magenta]| b_{mk} & \cdots & b_{mn} \\
+    };
+    \node[waku, fit=(A-3-1)(A-3-3)] (row) {};
+    \node[waku, fit=(B-1-3)(B-3-3)] (col) {};
+    \node[magenta, font=\tiny, left=8pt of row] {第$i$行};
+    \node[magenta, font=\tiny, above=4pt of col] {第$k$列};
+  \end{tikzpicture}
+    \caption{行列の積の計算}
+  \label{fig:matrix-product}
+  \vspace{-.5\baselineskip}
+\end{wrapfigure}
+
 積$AB$が定義されるのは，左の行列$A$の列の数と，右の行列$B$の行の数が一致するときに限ることに注意したい．
-そして，$AB$の$(i, k)$成分は，$A$の第$i$行と$B$の第$k$列の成分どうしを順にかけて足し合わせたもの
+そして，$AB$の$(i, k)$成分は，$A$の第$i$行と$B$の第$k$列の成分どうしを順にかけて足し合わせたもの，すなわち
 \[
   a_{i1}b_{1k} + a_{i2}b_{2k} + \cdots + a_{im}b_{mk}
 \]
