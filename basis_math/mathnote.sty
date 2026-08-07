@@ -1039,10 +1039,12 @@
 \let\Im\relax
 \DeclareMathOperator{\Im}{Im}
 
-\newcommand{\Kadd}{\mathbin{+_{\scriptscriptstyle K}}}
-\newcommand{\Vadd}{\mathbin{+_{\scriptscriptstyle V}}}
-\newcommand{\Kmul}{\mathbin{\ast_{\scriptscriptstyle K}}}
-\newcommand{\scalmul}{\mathbin{\ast_{\scriptscriptstyle V}}}
+\newcommand{\opsub}[1]{\scalebox{0.85}{$\scriptscriptstyle #1$}}
+
+\newcommand{\Kadd}{\mathbin{\underset{\opsub{K}}{+}}}
+\newcommand{\Vadd}{\mathbin{\underset{\opsub{V}}{+}}}
+\newcommand{\Kmul}{\mathbin{\underset{\opsub{K}}{\ast}}}
+\newcommand{\scalmul}{\mathbin{\underset{\opsub{V}}{\ast}}}
 
 % ---- 不等号を二重線に統一 ----
 \renewcommand{\le} {\leqq}

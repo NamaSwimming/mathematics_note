@@ -1039,11 +1039,12 @@
 \let\Im\relax
 \DeclareMathOperator{\Im}{Im}
 
-% ---- 線型空間の演算を区別するための記号 ----
-\newcommand{\Kadd}{\mathbin{+_{K}}}
-\newcommand{\Vadd}{\mathbin{+_{V}}}
-\newcommand{\Kmul}{\mathbin{\ast_{K}}}
-\newcommand{\Vmul}{\mathbin{\ast_{V}}}   % scalmul → Vmul で命名も揃う
+\newcommand{\opsub}[1]{\scalebox{0.85}{$\scriptscriptstyle #1$}}
+
+\newcommand{\Kadd}{\mathbin{\underset{\opsub{K}}{+}}}
+\newcommand{\Vadd}{\mathbin{\underset{\opsub{V}}{+}}}
+\newcommand{\Kmul}{\mathbin{\underset{\opsub{K}}{\ast}}}
+\newcommand{\scalmul}{\mathbin{\underset{\opsub{V}}{\ast}}}
 
 % ---- 不等号を二重線に統一 ----
 \renewcommand{\le} {\leqq}
