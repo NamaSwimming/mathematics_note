@@ -2,19 +2,20 @@
 \part{数}
 
 \begin{abstract}
-解析学を学習するにあたって，日本の大学の講義においてはまず，「数列の極限」を定義し直すことから始めることが多い．
-大学で学ぶ「実数列の収束」の定義は以下のようなものである：
+この章では，解析学の議論の土台となる「数」に関する用語や概念を整理する．まず高校までに学んだ数の体系を振り返り，自然数から複素数へと数を拡張してきた動機を確認する．次に，実数の順序構造に注目し，最大元・最小元，上界・下界といった概念を定義する．そのうえで，最大元・最小元の一般化として上限・下限を導入し，その判定条件をいくつかの形で与える．これらの概念は，のちに「実数の連続性」を述べるための言葉として不可欠なものである．
+
+なお，解析学を学習するにあたって，日本の大学の講義においてはまず「数列の極限」を定義し直すことから始めることが多い．大学で学ぶ「実数列の収束」の定義は次のようなものである：
   \begin{quotation}
   実数列 $(a_n)_{n \in \mathbb{N}}$ が $a \in \mathbb{R}$ に収束するとは，次が成り立つことである：
   
-  任意の $\varepsilon > 0$ に対して，ある $n_0 \in \mathbb{N}$ が存在し，すべての $n \in \mathbb{N}$ に対して $n \ge n_0$ ならば
+  任意の $\varepsilon > 0$ に対して，ある $n_0 \in \mathbb{N}$ が存在し，すべての $n \in \mathbb{N}$ に対して $n \geqq n_0$ ならば
   \[
     \abs{a_n - a} < \varepsilon
   \]
   が成立する．
   \end{quotation}
-この定義は，いわゆる$\varepsilon$--$N$論法と呼ばれるものであり，高校で学んだ「数列がある値に限りなく近づく」という直感的な説明を厳密に表現したものである．
-まず，このような数列の極限の定義を学ぶことを前提に，「数」についていくつかの用語を定義することからはじめてみよう．
+この定義は，いわゆる$\varepsilon$--$N$論法とよばれるものであり，高校で学んだ「数列がある値に限りなく近づく」という直感的な説明を厳密に表現したものである．
+この定義を正確に理解するためにも，まずは「数」についていくつかの用語を定義することからはじめよう．
 \end{abstract}
 
 \section{実数}
@@ -43,7 +44,7 @@
   \end{tabular}
 \end{reviewbox}
 
-高校まではあまりなかった視点かもしれないが，これから少し筆者の考察に付き合ってほしい．
+高校まではあまりなかった視点かもしれないが，ここで少し考察に付き合ってほしい．
 $n,m\in\mathbb{N}$とすると $m+n\in\mathbb{N}$，$mn\in\mathbb{N}$である．大学で学ぶ言葉を使うと，このことは「$\mathbb{N}$は加法と乗法に関して閉じている」という\footnote{「閉じている」とは，ある集合に対して，その集合の要素同士で演算を行ったときに，結果もその集合の要素になることを指す．}．
 しかし $n-m$ や $n\div m$ は $\mathbb{N}$ に属さない場合がある（たとえば $2-3$ や $2\div 3$）．
 
@@ -79,7 +80,7 @@ $\mathbb{R}$ に存在することを，\textbf{実数の連続性の公理}と�
 \[
 a < c < b 
 \]
-をみたす $c \in \mathbb{R}$ が存在する．
+を満たす $c \in \mathbb{R}$ が存在する．
 \end{prop}
 
 \begin{tleftbar}
@@ -115,12 +116,12 @@ $c = (a+b)/2$ とおけば，これは $a < c < b$ を満たす．
 $a \neq 0$ と仮定する．
 $a \geqq 0$ であるから，このとき $a > 0$ である．
 
-命題\prref{real_dense}より，$0 < \varepsilon < a$ をみたす
+命題\prref{real_dense}より，$0 < \varepsilon < a$ を満たす
 $\varepsilon \in \mathbb{R}$ が存在する．
 特に $\varepsilon > 0$ であるが，仮定より $a < \varepsilon$ でなければならない．
 これは $\varepsilon < a$ に矛盾する．
 
-したがって，$a = 0$ である．
+したがって，$a = 0$ である．これが証明すべきことであった．
 \end{proof}
 \end{tleftbar}
 
@@ -197,12 +198,12 @@ $\varepsilon \in \mathbb{R}$ が存在する．
     \]
     が成り立つ．したがって，$m = m'$である．
 
-    同様にして，最小元についても一意性が示される．
+    同様にして，最小元についても一意性が示される．これが証明すべきことであった．
   \end{proof}
 \end{tleftbar}
 
 
-ただ，最大元および最小元は，$\mathbb{R}$の部分集合すべてに存在するとは限らない．そこで，$[0,1)$や$(0,1]$のような最大元（最小元）のない集合にも，似た概念を与えたい．「最大元」および「最小元」に似た概念として「上限」と「下限」を定義しようと思うが，，そのためにまず上界・下界を定義する．
+ただ，最大元および最小元は，$\mathbb{R}$の部分集合すべてに存在するとは限らない．そこで，$[0,1)$や$(0,1]$のような最大元（最小元）のない集合にも，似た概念を与えたい．「最大元」および「最小元」に似た概念として「上限」と「下限」を定義しよう．そのために，まず上界・下界を定義する．
 
 \begin{definition}{上界・下界・有界}{上界・下界・有界}
   \index{じょうかい@上界}\index{かかい@下界}\index{ゆうかい@有界} 
@@ -288,9 +289,7 @@ $\varepsilon \in \mathbb{R}$ が存在する．
     \quad\Longleftrightarrow\quad
     L(A) \neq \varnothing
   \]
-  が成り立つ．
-
-  以上の議論により，証明された．
+  が成り立つ．これが証明すべきことであった．
 \end{proof}
 \end{leftbar}
 
@@ -381,7 +380,7 @@ $\varepsilon \in \mathbb{R}$ が存在する．
     m = \sup A
     \quad\Longleftrightarrow\quad
     \begin{cases}
-      \textup{(1)}\ \forall x \in A,\ x \leq m,\\
+      \textup{(1)}\ \forall x \in A,\ x \leqq m,\\
       \textup{(2)}\ \forall a < m,\ \exists x \in A,\ a < x
     \end{cases}
   \]
@@ -392,7 +391,7 @@ $\varepsilon \in \mathbb{R}$ が存在する．
     m = \inf A
     \quad\Longleftrightarrow\quad
     \begin{cases}
-      \textup{(1)}\ \forall x \in A,\ m \leq x,\\
+      \textup{(1)}\ \forall x \in A,\ m \leqq x,\\
       \textup{(2)}\ \forall a > m,\ \exists x \in A,\ x < a
     \end{cases}
   \]
@@ -416,12 +415,12 @@ $\varepsilon \in \mathbb{R}$ が存在する．
     \quad\Longleftrightarrow\quad
     \begin{cases}
       \textup{(1)}\ m \in U(A),\\
-      \textup{(2)}\ \forall a \in U(A),\ m \leq a
+      \textup{(2)}\ \forall a \in U(A),\ m \leqq a
     \end{cases}
   \]
   である．ここで，(2)の対偶をとると，
   \[
-    \forall a \in U(A),\ m \leq a
+    \forall a \in U(A),\ m \leqq a
     \quad\Longleftrightarrow\quad
     a < m\ \text{ならば}\ a \notin U(A)
   \]
@@ -440,7 +439,7 @@ $\varepsilon \in \mathbb{R}$ が存在する．
   \[
     m \in U(A)
     \quad\Longleftrightarrow\quad
-    \forall x \in A,\ x \leq m
+    \forall x \in A,\ x \leqq m
   \]
   であり，また
   \[
@@ -453,7 +452,7 @@ $\varepsilon \in \mathbb{R}$ が存在する．
     m = \sup A
     \quad\Longleftrightarrow\quad
     \begin{cases}
-      \textup{(1)}\ \forall x \in A,\ x \leq m,\\
+      \textup{(1)}\ \forall x \in A,\ x \leqq m,\\
       \textup{(2)}\ a < m\ \text{ならば}\ \exists x \in A,\ a < x
     \end{cases}
   \]
@@ -471,12 +470,12 @@ $\varepsilon \in \mathbb{R}$ が存在する．
     \quad\Longleftrightarrow\quad
     \begin{cases}
       \textup{(1)}\ m \in L(A),\\
-      \textup{(2)}\ \forall a \in L(A),\ a \leq m
+      \textup{(2)}\ \forall a \in L(A),\ a \leqq m
     \end{cases}
   \]
   である．(2)の対偶をとると，
   \[
-    \forall a \in L(A),\ a \leq m
+    \forall a \in L(A),\ a \leqq m
     \quad\Longleftrightarrow\quad
     m < a\ \text{ならば}\ a \notin L(A)
   \]
@@ -486,7 +485,7 @@ $\varepsilon \in \mathbb{R}$ が存在する．
   \[
     m \in L(A)
     \quad\Longleftrightarrow\quad
-    \forall x \in A,\ m \leq x
+    \forall x \in A,\ m \leqq x
   \]
   であり，また
   \[
@@ -499,11 +498,11 @@ $\varepsilon \in \mathbb{R}$ が存在する．
     m = \inf A
     \quad\Longleftrightarrow\quad
     \begin{cases}
-      \textup{(1)}\ \forall x \in A,\ m \leq x,\\
+      \textup{(1)}\ \forall x \in A,\ m \leqq x,\\
       \textup{(2)}\ \forall a > m,\ \exists x \in A,\ x < a
     \end{cases}
   \]
-  が成り立つ．
+  が成り立つ．これが証明すべきことであった．
 \end{proof}
 \end{tleftbar}
 
@@ -541,14 +540,14 @@ $\varepsilon \in \mathbb{R}$ が存在する．
 
 \begin{description}[labelwidth=6\zw, leftmargin=6.5\zw]
     \item[上限 $\sup A$：] 
-    まず上界集合 $U(A)$ を特定する ．任意の $a \in A$ に対して $a < 1$ であるから，$1$ は $A$ の上界である．よって $1 \in U(A)$ となる．
+    まず上界集合 $U(A)$ を特定する．任意の $a \in A$ に対して $a < 1$ であるから，$1$ は $A$ の上界である．よって $1 \in U(A)$ となる．
     次に $x < 1$ とすると，$a \coloneqq (x+1)/2$ とおけば $x < a < 1$ より $a \in A$ かつ $a > x$ となるため，$x$ は上界ではない．
     これより $U(A) = [1, \infty)$ であり，その最小元（定義 \deref{最大元・最小元}）が上限であるから，$\sup A = \min U(A) = 1$ を得る．
 
     \item[下限 $\inf A$：] 
-    同様に下界集合 $L(A)$ を特定する．任意の $a \in A$ に対して $a \ge 0$ であるから，$0$ は $A$ の下界である．よって $0 \in L(A)$ となる．
-    次に $y > 0$ とすると，$a \coloneqq y/2$ とおけば $0 \le a < y$ より $a \in A$ かつ $a < y$ となるため，$y$ は下界ではない．
-    これより $L(A) = (-\infty, 0]$ であり，その最大元が下限であるから，$\inf A = \max L(A) = 0$ である ．
+    同様に下界集合 $L(A)$ を特定する．任意の $a \in A$ に対して $a \geqq 0$ であるから，$0$ は $A$ の下界である．よって $0 \in L(A)$ となる．
+    次に $y > 0$ とすると，$a \coloneqq y/2$ とおけば $0 \leqq a < y$ より $a \in A$ かつ $a < y$ となるため，$y$ は下界ではない．
+    これより $L(A) = (-\infty, 0]$ であり，その最大元が下限であるから，$\inf A = \max L(A) = 0$ である．
 \end{description}
 
 \medskip
@@ -557,15 +556,15 @@ $\varepsilon \in \mathbb{R}$ が存在する．
 \begin{description}[labelwidth=6\zw, leftmargin=6.5\zw]
     \item[上限 $\sup A$：] $m=1$ とおく．
     \begin{itemize}
-        \item \textbf{上界の条件}：任意の $a \in A = [0, 1)$ に対して $a < 1 \le 1$ より成り立つ．
+        \item \textbf{上界の条件}：任意の $a \in A = [0, 1)$ に対して $a < 1 \leqq 1$ より成り立つ．
         \item \textbf{最小性}：$x < 1$ とすると，$a \coloneqq (x+1)/2$ は $x < a < 1$ を満たし，$a \in A$ かつ $x < a$ となる要素が存在する．
     \end{itemize}
     よって，定理 \thref{characterization} より $1 = \sup A$ である．
 
     \item[下限 $\inf A$：] $m=0$ とおく．
     \begin{itemize}
-        \item \textbf{下界の条件}：任意の $a \in A = [0, 1)$ に対して $a \ge 0$ より成り立つ．
-        \item \textbf{最大性}：$x > 0$ とすると，$a \coloneqq x/2$ は $0 \le a < x$ を満たし，$a \in A$ かつ $x > a$ となる要素が存在する．
+        \item \textbf{下界の条件}：任意の $a \in A = [0, 1)$ に対して $a \geqq 0$ より成り立つ．
+        \item \textbf{最大性}：$x > 0$ とすると，$a \coloneqq x/2$ は $0 \leqq a < x$ を満たし，$a \in A$ かつ $x > a$ となる要素が存在する．
     \end{itemize}
     よって，定理 \thref{characterization} より $0 = \inf A$ である．
 \end{description}
@@ -574,12 +573,12 @@ $\varepsilon \in \mathbb{R}$ が存在する．
 \noindent\textbf{(3) 「$\varepsilon$ を用いた特徴づけ」（定理 \thref{epsilon_delta}）による証明}
 
 \begin{description}[labelwidth=6\zw, leftmargin=6.5\zw]
-    \item[上限 $\sup A$：] $m=1$ とおく ．
+    \item[上限 $\sup A$：] $m=1$ とおく．
     \begin{enumerate}
-        \item 任意の $a \in A$ に対して $a \le 1$ である（上界の性質）．
+        \item 任意の $a \in A$ に対して $a \leqq 1$ である（上界の性質）．
         \item 任意の $\varepsilon > 0$ に対して，$a \in A$ を以下のように選ぶ：
         \[
-            a \coloneqq \begin{cases} 1 - \dfrac{\varepsilon}{2} & (0 < \varepsilon \le 1) \\[6pt] 0 & (\varepsilon > 1) \end{cases}
+            a \coloneqq \begin{cases} 1 - \dfrac{\varepsilon}{2} & (0 < \varepsilon \leqq 1) \\[6pt] 0 & (\varepsilon > 1) \end{cases}
         \]
         このとき $a \in [0, 1)$ であり，いずれの場合も $1 - \varepsilon < a$ が成り立つ．
     \end{enumerate}
@@ -588,14 +587,15 @@ $\varepsilon \in \mathbb{R}$ が存在する．
     \item[下限 $\inf A$：] $m=0$ とおく．
     \begin{enumerate}
         \setcounter{enumi}{2}
-        \item 任意の $a \in A$ に対して $a \ge 0$ である（下界の性質）．
+        \item 任意の $a \in A$ に対して $a \geqq 0$ である（下界の性質）．
         \item 任意の $\varepsilon > 0$ に対して，$a \coloneqq \min\{\varepsilon/2, 1/2\}$ とおけば，$a \in A$ かつ $a < 0 + \varepsilon$ が常に成り立つ．
     \end{enumerate}
     よって，定理 \thref{epsilon_delta} より $\inf A = 0$ である．
 \end{description}
 
-以上より結論として，次を得る：
+以上より，結論として
 \[
-\sup A = 1, \quad \inf A = 0.
+\sup A = 1, \quad \inf A = 0
 \]
+を得る．どの視点から導いても同じ結論に到達することを確認してほしい．
 \end{example}
