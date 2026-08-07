@@ -16,12 +16,26 @@
 % § 0. ベースクラスの読み込み
 % ==============================================================
 
+% oneside / twoside はこのクラスで受け取る（既定は twoside）
+%   \ExecuteOptions は「このクラスで \DeclareOption したオプション」しか
+%   実行しないため，\DeclareOption* 経由で ltjsarticle に転送されない．
+%   （＝従来の \ExecuteOptions{...,twoside} は無効で片面組のままだった）
+\newif\ifmathnote@oneside
+\DeclareOption{oneside}{\mathnote@onesidetrue}
+\DeclareOption{twoside}{\mathnote@onesidefalse}
+
 % 未知のオプションはすべて ltjsarticle に転送する
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{ltjsarticle}}
 
-% デフォルトオプション（ユーザー指定で上書き可能）
-\ExecuteOptions{a4paper,fleqn,11pt,twoside}
 \ProcessOptions\relax
+
+% デフォルトオプション（\documentclass[...] の指定が優先される）
+\ifmathnote@oneside
+  \PassOptionsToClass{oneside}{ltjsarticle}
+\else
+  \PassOptionsToClass{twoside}{ltjsarticle}
+\fi
+\PassOptionsToClass{a4paper,fleqn,11pt}{ltjsarticle}
 
 \LoadClass{ltjsarticle}
 
@@ -78,9 +92,11 @@
 % § 2. ページレイアウト（余白・用紙サイズ）
 % ==============================================================
 
+% twoside 時は inner = ノド側，outer = 小口側（geometry はクラスの
+% twoside 設定を自動的に引き継ぐ）．綴じ代が要るなら inner を増やす．
 \RequirePackage[
-  left           = 20truemm,
-  right          = 20truemm,
+  inner          = 20truemm,
+  outer          = 20truemm,
   top            = 23truemm,
   bottom         = 22truemm,
   headheight     = 12truemm,
