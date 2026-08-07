@@ -258,26 +258,24 @@ $\delta$は選んだ$\varepsilon$に応じて決めてよいことを表して�
 \phantomsection
 \begin{example}[
     sidebyside,
-    lefthand width=8.5cm,  % 文章側
-    righthand width=5cm,   % 図側
+    lefthand width=8.5cm,
+    righthand width=5cm,
     sidebyside gap=4mm,
   ]{証明（三平方の定理）}{証明（三平方の定理）}
-  辺の長さが$a$と$b$の直角三角形を$4$つ用意する．
-  これらの三角形を組み合わせて，辺の長さが$a + b$の正方形を作る．
-  このとき，大きな正方形の面積は$(a + b)^2$である．
+  辺の長さが$a$と$b$の直角三角形を$4$つ用意し，
+  これらを組み合わせて，辺の長さが$a + b$の正方形を作る．
+  この正方形は，中央の辺の長さが$c$の正方形と$4$つの三角形からなる．
 
-  一方で，大きな正方形は中央に辺の長さが$c$の小さな正方形と，$4$つの三角形で構成されている．
-
-  よって，大きな正方形の面積は，小さい正方形の面積と4つの三角形の面積の和に等しい．ゆえに
+  したがって，面積を2通りに計算すると
   \[
-    (a + b)^2 = c^2 + 4 \left( \frac{1}{2}ab \right),
-    \quad \therefore ~(a + b)^2 = c^2 + 2ab
+    (a + b)^2
+    = c^2 + 4\left(\frac{1}{2}ab\right)
+    = c^2 + 2ab
   \]
-  である．
-  これにより，
+  である．これを展開して
   \[
     a^2 + 2ab + b^2 = c^2 + 2ab,
-    \quad \therefore ~a^2 + b^2 = c^2
+    \quad \therefore\quad a^2 + b^2 = c^2
   \]
   を得る．
   これが証明すべきことであった．\qed
@@ -286,15 +284,13 @@ $\delta$は選んだ$\varepsilon$に応じて決めてよいことを表して�
 
   \centering
   \begin{tikzpicture}[scale=0.58]
-    % 辺の長さの定義
     \def\a{3}
     \def\b{4}
-    \def\c{5}
 
-    % 大きな正方形の描画
+    % 大きな正方形
     \draw (0,0) rectangle (\a+\b,\a+\b);
 
-    % 4つの直角三角形の描画
+    % 4つの直角三角形
     \draw (0,0) -- (\b,0) -- (0,\a) -- cycle;
     \draw (0,\a) -- node[midway,above] {$c$} (\b,0);
 
@@ -307,14 +303,14 @@ $\delta$は選んだ$\varepsilon$に応じて決めてよいことを表して�
     \draw (\a,\a+\b) -- (0,\a+\b) -- (0,\a) -- cycle;
     \draw (0,\a) -- node[midway,above] {$c$} (\a,\a+\b);
 
-    % 中央の小さな正方形の描画
+    % 中央の正方形
     \draw (\b,0) -- (\a+\b,\b) -- (\a,\a+\b) -- (0,\a) -- cycle;
 
-    % 寸法のラベル
-    \draw [<->] (-0.5,0) -- (-0.5,\a) node[midway,left] {$a$};
-    \draw [<->] (-0.5,\a) -- (-0.5,\a+\b) node[midway,left] {$b$};
-    \draw [<->] (0,-0.5) -- (\b,-0.5) node[midway,below] {$b$};
-    \draw [<->] (\b,-0.5) -- (\a+\b,-0.5) node[midway,below] {$a$};
+    % 寸法
+    \draw[<->] (-0.5,0) -- (-0.5,\a) node[midway,left] {$a$};
+    \draw[<->] (-0.5,\a) -- (-0.5,\a+\b) node[midway,left] {$b$};
+    \draw[<->] (0,-0.5) -- (\b,-0.5) node[midway,below] {$b$};
+    \draw[<->] (\b,-0.5) -- (\a+\b,-0.5) node[midway,below] {$a$};
   \end{tikzpicture}
 \end{example}
 
