@@ -1040,10 +1040,11 @@
 \DeclareMathOperator{\Im}{Im}
 
 % ---- 線型空間の演算を区別するための記号 ----
-\newcommand{\Kadd}{\mathbin{\textcolor{magenta}{+}}}   % K の加法
-\newcommand{\Vadd}{\mathbin{+}}                        % V の加法
-\newcommand{\Kmul}{\mathbin{\textcolor{magenta}{\bullet}}} % K の乗法
-\newcommand{\scalmul}{\mathbin{\bullet}}               % スカラー倍
+
+\newcommand{\Kadd}{\mathbin{+_{\scriptscriptstyle\mathrm K}}}
+\newcommand{\Vadd}{\mathbin{+_{\scriptscriptstyle\mathrm V}}}
+\newcommand{\Kmul}{\mathbin{\ast_{\scriptscriptstyle\mathrm K}}}
+\newcommand{\scalmul}{\mathbin{\ast_{\scriptscriptstyle\mathrm V}}}
 
 
 % ---- 不等号を二重線に統一 ----
