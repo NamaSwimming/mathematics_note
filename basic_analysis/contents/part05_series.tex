@@ -1,5 +1,9 @@
 \part{級数}
 
+\begin{abstract}
+この章では，数列の項を限りなく足し合わせた「級数」を導入し，その収束・発散を部分和の数列の極限として定義する．まず級数の収束に関するコーシーの収束条件を確認し，収束級数の一般項が $0$ に収束することを導く．次に，絶対収束の概念を導入し，絶対収束する級数は収束することを示す．そのうえで，級数の線型性や項のまとめ方に関する性質を確認する．最後に，各項が非負である正項級数を扱い，その収束判定に有効な比較定理を証明する．
+\end{abstract}
+
 \phantomsection
 \section{級数の定義}
 
@@ -17,20 +21,20 @@
 	\[
 		s=\sum_{n=0}^{\infty} a_n =a_0+a_1+\cdots+a_n+\cdots
 	\]
-	と記す．
+	とかく．
 \end{definition}
 
 \begin{theorem}{級数に関するコーシーの収束条件}{級数に関するコーシーの収束条件}
-	$\sum_{n=0}^{\infty} a_n$が収束することと，任意の$\varepsilon>0$に対し，ある$n_0 \in \mathbb{N}$が存在して，任意の$m，n \in \mathbb{N}$に対して，
+	$\sum_{n=0}^{\infty} a_n$が収束することと，任意の$\varepsilon>0$に対し，ある$n_0 \in \mathbb{N}$が存在して，任意の$m,n \in \mathbb{N}$に対して，
 	\[
-		m,n \ge n_0 \Rightarrow \abs{a_{m+1}+a_{m+2}+\cdots+a_{n}}<\varepsilon
+		m,n \geqq n_0 \implies \abs{a_{m+1}+a_{m+2}+\cdots+a_{n}}<\varepsilon
 	\]
 	となることは同値である．
 \end{theorem}
 
 \begin{leftbar}
 	\begin{proof}
-		前半の主張は，部分和の数列$(s_n)_{n \in \mathbb{N}}$が収束するということであり，このときコーシーの収束条件により，$(s_n)_{n \in \mathbb{N}}$はコーシー列である．ゆえにただちに主張が従う，
+		前半の主張は，部分和の数列$(s_n)_{n \in \mathbb{N}}$が収束するということであり，このときコーシーの収束条件により，$(s_n)_{n \in \mathbb{N}}$はコーシー列である．ゆえにただちに主張が従う．
 	\end{proof}
 \end{leftbar}
 
@@ -111,15 +115,15 @@
 
 \begin{leftbar}
 	\begin{proof}
-		$\sum_{n=0}^{\infty} \abs{a_n}$が収束するとき，\thref{級数に関するコーシーの収束条件}により，任意の$\varepsilon >0$に対して，ある$n_0 \in \mathbb{N}$が存在して，任意の$m ，n \in \mathbb{N}$に対して，
+		$\sum_{n=0}^{\infty} \abs{a_n}$が収束するとき，\thref{級数に関するコーシーの収束条件}により，任意の$\varepsilon >0$に対して，ある$n_0 \in \mathbb{N}$が存在して，任意の$m,n \in \mathbb{N}$に対して，
 		\[
-			m,n \ge n_0 \Rightarrow \abs{a_{m+1}} +\abs{a_{m+2}} + \cdots + \abs{a_n}<\varepsilon
+			m,n \geqq n_0 \implies \abs{a_{m+1}} +\abs{a_{m+2}} + \cdots + \abs{a_n}<\varepsilon
 		\]
 		である．ここで，絶対値の性質により，
 		\[
 			\abs{a_{m+1}+a_{m+2}+\cdots + a_n } \leqq  \abs{a_{m+1}} +\abs{a_{m+2}} + \cdots + \abs{a_n}
 		\]
-		であるから，以上の議論により，$\sum_{n=0}^{\infty} a_n$も収束する．
+		であるから，$\sum_{n=0}^{\infty} a_n$も収束する．これが証明すべきことであった．
 	\end{proof}
 \end{leftbar}
 
@@ -136,7 +140,7 @@
 	\[
 		(a_0+a_1) + (a_2+a_3+a_4)+(a_5+a_6)+ \cdots
 	\]
-	のように項を括弧でくくって得られる級数，つまり，
+	のように項を括弧でくくって得られる級数，すなわち，
 	\[
 		b_0 = a_0 + a_1 , \quad b_1 =a_2 + a_3 + a_4 ,\quad b_2 =a_5 + a_6 , \cdots 
 	\]
@@ -150,7 +154,7 @@
 	\end{align*}
 	となり，$(t_n)_{n \in \mathbb{N}}$は$(s_n)_{n \in \mathbb{N}}$の部分列である．
 	
-	ゆえに．以下の定理により，
+	ゆえに，以下の定理により，
 	$\lim_{n \to \infty} s_n=s$ならば$\lim_{n \to \infty} t_n =s$である．
 \end{example}
 
@@ -171,7 +175,7 @@
 	\end{align*} 
 	となり，$(t_n)_{n \in \mathbb{N}}$は$(s_n)_{n \in \mathbb{N}}$の部分列である．
 	
-	ゆえに．先の定理により，
+	ゆえに，先の定理により，
 	$\lim_{n \to \infty} s_n=s$ならば$\lim_{n \to \infty} t_n =s$である．
 \end{example}
 
@@ -185,7 +189,7 @@
 \section{正項級数}
 
 \begin{definition}{正項級数}{正項級数}
-	任意の$n \in \mathbb{N}$に対して，$a_n \ge 0$である級数$\sum_{n=0}^{\infty} a_n$を正項級数という．
+	任意の$n \in \mathbb{N}$に対して，$a_n \geqq 0$である級数$\sum_{n=0}^{\infty} a_n$を正項級数という．
 \end{definition}
 
 \begin{theorem}{}{}
@@ -194,7 +198,7 @@
 
 \begin{leftbar}
 	\begin{proof}
-		\deref{正項級数}により，$a_n \ge 0$であるから，部分和$(s_n)_{n \in \mathbb{N}}$について，任意の$n \in \mathbb{N}$に対して，
+		\deref{正項級数}により，$a_n \geqq 0$であるから，部分和$(s_n)_{n \in \mathbb{N}}$について，任意の$n \in \mathbb{N}$に対して，
 		\[
 			s_n \leqq s_{n+1}
 		\]
@@ -205,7 +209,7 @@
 \begin{theorem}{比較定理(1)}{比較定理(1)}
 	\begin{align*}
 		& \forall n \in \mathbb{N} \left [ (a_n \geqq 0 )\land (c_n \geqq 0 )\land (a_n \leqq c_n)\land \left( \sum_{n=0}^{\infty} c_n ~{:}\text{収束} \right) \right ] \\ 
-		& \Longrightarrow  \left( \sum_{n=0}^{\infty} a_n~ {:} \text{収束} \right)
+		& \implies  \left( \sum_{n=0}^{\infty} a_n~ {:} \text{収束} \right)
 	\end{align*}
 \end{theorem}
 
@@ -220,7 +224,7 @@
 	\[
 		\lim_{n \to \infty} A_n =a ,\quad \lim_{n \to \infty} C_n =c
 	\]
-	なので，$\sum_{n=0}^{\infty} a_n$は収束する．
+	なので，$\sum_{n=0}^{\infty} a_n$は収束する．これが証明すべきことであった．
 \end{proof}
 \end{tleftbar}
 
@@ -228,7 +232,7 @@
 \begin{theorem}{比較定理(2)}{比較定理(2)}
 	\begin{align*}
 		& \forall n \in \mathbb{N} \left [ (a_n \geqq 0 )\land (d_n \geqq 0 )\land (d_n \leqq a_n)\land \left( \sum_{n=0}^{\infty} d_n ~{:}\text{発散} \right) \right ] \\ 
-		& \Longrightarrow  \left( \sum_{n=0}^{\infty} a_n~ {:} \text{発散} \right)
+		& \implies  \left( \sum_{n=0}^{\infty} a_n~ {:} \text{発散} \right)
 	\end{align*}
 \end{theorem}
 
@@ -240,7 +244,7 @@
 
 	このとき，\thref{比較定理(1)}で示したことから，$\sum d_n$も収束するが，これは$\sum d_n$が発散することに矛盾する．
 
-	よって，先の仮定が誤りであり，$\sum a_n$は収束する．
+	よって，先の仮定が誤りであり，$\sum a_n$は発散する．これが証明すべきことであった．
 \end{proof}
 \end{tleftbar}
 
@@ -250,7 +254,7 @@
 \begin{theorem}{コーシー積}{コーシー積}
 	\begin{align*}
 		& \left (\sum a_n ~{:} \text{絶対収束} \right)\land \left (\sum b_n ~{:} \text{絶対収束} \right) \\
-		\Longrightarrow & \left (\sum_{n=0}^{\infty} \sum_{k=0}^{n} a_k b_{n-k} ~{:} \text{絶対収束} \right ) \land \sum_{n=0}^{\infty} \sum_{k=0}^{n} a_k b_{n-k} = \left( \sum_{n=0}^{\infty} a_n \right) \left( \sum_{n=0}^{\infty} b_n \right)
+		\implies & \left (\sum_{n=0}^{\infty} \sum_{k=0}^{n} a_k b_{n-k} ~{:} \text{絶対収束} \right ) \land \sum_{n=0}^{\infty} \sum_{k=0}^{n} a_k b_{n-k} = \left( \sum_{n=0}^{\infty} a_n \right) \left( \sum_{n=0}^{\infty} b_n \right)
 	\end{align*}
 \end{theorem}
 
