@@ -290,7 +290,10 @@
 % ---- 脚注のカスタマイズ ----
 % 番号形式を「†1」「†2」... に変更
 \renewcommand\thefootnote  {{\dag}\arabic{footnote}}
-\renewcommand{\thempfootnote}{{\dag}\arabic{mpfootnote}}
+% ボックス（tcolorbox＝minipage 扱い）内の脚注は各ボックスで 1 から
+% 振り直される（LaTeX の既定挙動）．本文の †1 と紛れないよう，
+% 記号を「‡1」「‡2」... に変えて区別する．
+\renewcommand{\thempfootnote}{{\ddag}\arabic{mpfootnote}}
 % 脚注が改ページをまたぐのを極力避ける
 \interfootnotelinepenalty=10000
 
