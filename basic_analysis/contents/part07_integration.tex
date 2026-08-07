@@ -1,23 +1,27 @@
 
 
 \part{積分}
+
+\begin{abstract}
+この章では，定積分を厳密に定義するための準備として，まず一様連続の概念を導入し，有界閉区間上の連続関数が一様連続であることを示す．次に，区間の分割・上方和・下方和を定義し，細分によって上方和が減少し下方和が増加することを確認する．そのうえで，有界閉区間上の連続関数が積分可能であることを証明し，定積分の基本的な性質とリーマン和を導入する．最後に，$n$次元の有界閉区間に対する体積と分割を定義し，多次元の積分への足がかりとする．
+\end{abstract}
 \phantomsection
 \section{一様収束}
 
 区間$I=[a,b]$で定義された関数$f$が$I$上で連続であるとする．これを論理記号で表すと，
 \[
-   \forall \alpha \in I , ~ \forall \varepsilon >0 , ~ \exists \delta >0,~ \forall x \in I : (\abs{x-\alpha}<\delta \to \abs{f(x)-\alpha}<\varepsilon)
+   \forall \alpha \in I , ~ \forall \varepsilon >0 , ~ \exists \delta >0,~ \forall x \in I : (\abs{x-\alpha}<\delta \to \abs{f(x)-f(\alpha)}<\varepsilon)
 \]
 となる．つまり，\emph{$\alpha$の位置が変われば$\delta$も変化する．}ここで，一様連続という概念を導入する．
 
 \begin{definition}{一様連続}{一様連続}
 \begin{align*} 
     & \text{$f$が$I$上で一様連続} \\
-  \iff &  \forall \varepsilon >0 , ~ \exists \delta >0 ,~\forall \alpha \in I ,~ \forall x \in I : (\abs{x-\alpha}<\delta \to \abs{f(x)-\alpha}<\varepsilon).
+  \iff &  \forall \varepsilon >0 , ~ \exists \delta >0 ,~\forall \alpha \in I ,~ \forall x \in I : (\abs{x-\alpha}<\delta \to \abs{f(x)-f(\alpha)}<\varepsilon).
 \end{align*}
 \end{definition}
 
-一様連続の定義では，\emph{$\alpha$の位置にかかわらず$\abs{x-\alpha}<\delta$をみたす$\delta$をとることができる．}
+一様連続の定義では，\emph{$\alpha$の位置にかかわらず$\abs{x-\alpha}<\delta$を満たす$\delta$をとることができる．}
 
 \begin{figure}[h]
     \centering
@@ -52,7 +56,7 @@
 
 \begin{tleftbar}
     \begin{proof}
-        $1>0$に対して，どのような$\delta >0$をとっても，$1/ \alpha \coloneqq \delta $かつ$x  \coloneqq \alpha + \delta/2$となるように$\alpha$，$x$をとると，
+        $1>0$に対して，どのような$\delta >0$をとっても，$\alpha \coloneqq 1/\delta$かつ$x \coloneqq \alpha + \delta/2$となるように$\alpha$，$x$をとると，
         \[
             \abs{x-\alpha} = \abs{ \left (\alpha +\frac{\delta}{2} \right)-\frac{1}{\delta}} =\abs{\frac{\delta}{2}}<\delta
         \]
@@ -64,7 +68,7 @@
         \[
             \abs{f(x)-f(\alpha)}=\abs{x^2 -\alpha^2}=\abs{x+\alpha}\abs{x-\alpha}= \abs{\frac{\delta}{2}+\frac{2}{\delta}} \cdot \frac{\delta}{2}=1+\frac{\delta^2}{4}>1
         \]
-        なので，$f$は一様連続ではない．
+        なので，$f$は一様連続ではない．これが証明すべきことであった．
     \end{proof}
 \end{tleftbar}
 
@@ -95,7 +99,7 @@
         \begin{align*} 
             \abs{\sqrt{x}-\sqrt{y}} & = \abs{\sqrt{x}}-\abs{\sqrt{y}} \\
             & < \sqrt{y+\delta}-\sqrt{y} \\
-            & \leqq (\sqrt{y}+\sqrt{\delta})-\sqrt{y}　\quad (\text{$\because$ $y=\sqrt{x}$は上に凸}) \\
+            & \leqq (\sqrt{y}+\sqrt{\delta})-\sqrt{y} \quad (\text{$\because$ $y=\sqrt{x}$は上に凸}) \\
             & = \sqrt{\delta} \\
             & =\varepsilon
         \end{align*}
@@ -123,7 +127,7 @@
         さらに，$c$は$I$の点なので，$f$は点$c$で連続で，ある$N\in\mathbb{N}$について$\abs{f(x_N)-f(c)}<\varepsilon /2$かつ$\abs{f(y_N)-f(c)}<\varepsilon /2$となり，
         これは$\abs{f(x_n)-f(y_n)} \geqq \varepsilon$であることに矛盾する．よって背理法の仮定が誤りである．
 
-        以上の議論により，有界閉区間$I$で連続な関数$f$は$I$において一様連続である．
+        以上の議論により，有界閉区間$I$で連続な関数$f$は$I$において一様連続である．これが証明すべきことであった．
     \end{proof}
 \end{tleftbar}
 
@@ -159,7 +163,7 @@
 \end{definition}
     
 \begin{definition}{上方和・下方和}{上方和・下方和}
-    $f$を$[a,b]$で有界な関数とする，
+    $f$を$[a,b]$で有界な関数とする．
     \deref{分割}における$(x_i)_{i \in \{ 0, 1,2,\ldots,n \} }$について，実数の連続性より
     \[
         \inf_{x_{i-1} \leqq x \leqq x_i} f(x),\quad \sup_{x_{i-1} \leqq x \leqq x_i} f(x)
@@ -227,7 +231,7 @@
 	\begin{proof} 
 		上方和について証明する．
 
-		分割$P$に，$x_{i-1} \leqq x^{\ast} \leqq x_i$をみたす点$x^{\ast}$を付け加えた細分を$P^{\ast}$とする．
+		分割$P$に，$x_{i-1} \leqq x^{\ast} \leqq x_i$を満たす点$x^{\ast}$を付け加えた細分を$P^{\ast}$とする．
 
 		このとき，$U(f,P)$と$U(f,P^{\ast})$は，前者の$M_i (x_i-x_{i-1})$の項が後者だと
 		\[
@@ -249,7 +253,7 @@
 		\[
 			U(f,P^\ast) \leqq U(f,P)
 		\]
-		が従う．下方和についても同様である．
+		が従う．下方和についても同様である．これが証明すべきことであった．
 	\end{proof}
 \end{tleftbar}
 	
@@ -274,7 +278,7 @@
 		\]
 		となる．
 
-		ここで，$L(f,P) \leqq L(f) \leqq U(f) \leqq U(f,P)$なので，$L(f)=U(f)$となり，$f$は積分可能である．
+		ここで，$L(f,P) \leqq L(f) \leqq U(f) \leqq U(f,P)$なので，$L(f)=U(f)$となり，$f$は積分可能である．これが証明すべきことであった．
 	\end{proof}
 \end{tleftbar}
 \phantomsection
@@ -288,7 +292,7 @@
 	が成立する．
 \end{prop}
 
-証明略．
+証明は省略する．
 
 \begin{prop}{線型性}{線型性}
 	連続関数$f$，$g$に対して，
@@ -298,7 +302,7 @@
 	が成立する．
 \end{prop}
 
-証明略．
+証明は省略する．
 
 
 \begin{definition}{リーマン和}{リーマン和}
@@ -371,6 +375,6 @@
 			\]
 			となる$(x_i)_{i \in \{1,\ldots,n-1 \}} \in D(I)$が存在し，$f$は全射である．
 		\end{description}
-		以上の考察により，$f$は単射かつ全射，すなわち全単射である．
+		以上の考察により，$f$は単射かつ全射，すなわち全単射である．これが証明すべきことであった．
 	\end{proof}
 \end{tleftbar}
