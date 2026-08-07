@@ -2,11 +2,7 @@
 \part{極限}
 
 \begin{abstract}
-解析学の学習において，高校で「数列の極限」を定義する際に用いられた「限りなく近づく」という表現は，厳密な議論を行う上では曖昧さを残すものである．
-本章では，この曖昧な表現を論理的に厳格な形へと再定義した $\varepsilon$--$N$ 論法を導入し，実数列の収束と発散を定義する．
-さらに，数列を自然数から実数への「写像」として捉え直し，「極限の一意性」を証明する ．
-また，極限操作が順序関係を保存することや，未知の数列の収束を判定する強力な手法である「はさみうちの原理」について，具体例を丁寧に確認していく．
-このような厳密な議論は，次章以降において「実数の連続性」を数学的に記述するために不可欠である．
+この章では，実数列の極限を厳密に定義し，その基本性質を確認する．高校で「数列の極限」を定義する際に用いられた「限りなく近づく」という表現は，厳密な議論を行ううえでは曖昧さを残すものである．そこでまず，この曖昧な表現を論理的に厳格な形へと定義し直した $\varepsilon$--$N$ 論法を導入し，実数列の収束と発散を定義する．次に，数列を自然数から実数への「写像」として捉え直し，極限の一意性を証明する．そのうえで，極限の四則演算や，極限操作が順序関係を保存することを示し，未知の数列の収束を判定する強力な手法である「はさみうちの原理」を具体例とともに確認する．このような厳密な議論は，次章以降において「実数の連続性」を数学的に記述するために不可欠である．
 \end{abstract}
 
 \phantomsection
@@ -24,7 +20,7 @@
   \[
     \lim_{n \to \infty} a_n = a
   \]
-  と記す．
+  とかく．
 \end{quotation}
 
 しかし，この「限りなく大きくする」「限りなく近づく」といった表現は直感的ではあるものの，数学的に厳密な定義とは言い難い．何をもって「限りなく」とするのか，その基準が曖昧だからである．
@@ -33,7 +29,7 @@
 \begin{definition}{実数列の収束}{実数列の収束} \index{じっすうれつのしゅうそく@実数列の収束}
   実数列 $(a_n)_{n \in \mathbb{N}}$ が $a \in \mathbb{R}$ に収束するとは，次が成り立つことである：
   
-  任意の $\varepsilon > 0$ に対して，ある $n_0 \in \mathbb{N}$ が存在し，すべての $n \in \mathbb{N}$ に対して $n \ge n_0$ ならば
+  任意の $\varepsilon > 0$ に対して，ある $n_0 \in \mathbb{N}$ が存在し，すべての $n \in \mathbb{N}$ に対して $n \geqq n_0$ ならば
   \[
     \abs*{a_n - a} < \varepsilon
   \]
@@ -49,7 +45,7 @@
 \end{definition}
 
 \begin{definition}{実数列の $+\infty$ への発散}{}
-  実数列 $(a_n)_{n \in \mathbb{N}}$ が $+\infty$ に発散するとは，任意の $M \in \mathbb{R}$ に対して，ある $n_0 \in \mathbb{N}$ が存在し，すべての $n \in \mathbb{N}$ に対して $n \ge n_0$ ならば
+  実数列 $(a_n)_{n \in \mathbb{N}}$ が $+\infty$ に発散するとは，任意の $M \in \mathbb{R}$ に対して，ある $n_0 \in \mathbb{N}$ が存在し，すべての $n \in \mathbb{N}$ に対して $n \geqq n_0$ ならば
   \[
     a_n > M
   \]
@@ -58,15 +54,15 @@
 
 \subsection{実数列と極限の性質}
 
-ここで，実数列を集合論的な観点から再定義しておく．数列とは，各自然数に対して一つの実数を割り当てる規則に他ならない．
+ここで，実数列を集合論的な観点から再定義しておく．数列とは，各自然数に対して一つの実数を割り当てる規則にほかならない．
 
 \begin{definition}{実数列}{実数列}
-  写像 $a \colon \mathbb{N} \to \mathbb{R}$ を実数列と呼ぶ．自然数 $n \in \mathbb{N}$ による像 $a(n)$ を $a_n$ と書き，数列そのものを $(a_n)_{n \in \mathbb{N}}$ と表記する．
+  写像 $a \colon \mathbb{N} \to \mathbb{R}$ を実数列とよぶ．自然数 $n \in \mathbb{N}$ による像 $a(n)$ を $a_n$ と書き，数列そのものを $(a_n)_{n \in \mathbb{N}}$ と表記する．
 \end{definition}
 
 
 \begin{prop}{実数列の極限の一意性}{実数列の極限の一意性}
-  数列 $(a_n)_{n \in \mathbb{N}}$ が収束するとき，その収束先（極限値）はただ一つに限る．
+  数列 $(a_n)_{n \in \mathbb{N}}$ が収束するとき，その収束先（極限値）はただひとつに限る．
 \end{prop}
 
 \begin{leftbar}
@@ -75,13 +71,13 @@
   $\varepsilon \coloneqq \frac{\abs*{b-a}}{2}$ とおくと，$a \ne b$ より $\varepsilon > 0$ である．
   収束の定義より，ある $n_0, n_1 \in \mathbb{N}$ が存在して，すべての $n \in \mathbb{N}$ に対して次が成り立つ：
   \[
-    n \ge n_0 \implies \abs{a_n - a} < \varepsilon, \quad n \ge n_1 \implies \abs{a_n - b} < \varepsilon
+    n \geqq n_0 \implies \abs{a_n - a} < \varepsilon, \quad n \geqq n_1 \implies \abs{a_n - b} < \varepsilon
   \]
-  ここで $n \ge \max\{n_0, n_1\}$ を満たす $n$ を任意にとると，三角不等式より
+  ここで $n \geqq \max\{n_0, n_1\}$ を満たす $n$ を任意にとると，三角不等式より
   \[
-    \abs{b-a} = \abs{(b - a_n) + (a_n - a)} \le \abs{a_n - b} + \abs{a_n - a} < \varepsilon + \varepsilon = 2\varepsilon = \abs{b-a}
+    \abs{b-a} = \abs{(b - a_n) + (a_n - a)} \leqq \abs{a_n - b} + \abs{a_n - a} < \varepsilon + \varepsilon = 2\varepsilon = \abs{b-a}
   \]
-  となり，$\abs{b-a} < \abs{b-a}$ という矛盾が生じる．したがって，収束先はただ一つである．
+  となり，$\abs{b-a} < \abs{b-a}$ という矛盾が生じる．したがって，収束先はただひとつである．これが証明すべきことであった．
 \end{proof}
 \end{leftbar}
 
@@ -124,7 +120,7 @@
   \[
     \abs{a_n}\leqq M
   \]
-  が成り立つ．したがって，実数列$(a_n)_{n \in \mathbb{N}}$は有界である．
+  が成り立つ．したがって，実数列$(a_n)_{n \in \mathbb{N}}$は有界である．これが証明すべきことであった．
 \end{proof}
 \end{tleftbar}
 
@@ -267,7 +263,7 @@
   \[
     \frac{a_n}{b_n}\to\frac{a}{b}
   \]
-  が成り立つ．
+  が成り立つ．これが証明すべきことであった．
 \end{proof}
 \end{tleftbar}
 
@@ -288,9 +284,9 @@
 \begin{theorem}{極限の不等式}{極限の不等式}
   収束する実数列 $(a_n)_{n \in \mathbb{N}}, (b_n)_{n \in \mathbb{N}}$ について，その極限をそれぞれ $a, b$ とする．
   
-  すべての $n \in \mathbb{N}$ に対して $a_n \le b_n$ が成り立つならば，
+  すべての $n \in \mathbb{N}$ に対して $a_n \leqq b_n$ が成り立つならば，
   \[
-    a \le b
+    a \leqq b
   \]
   である．
 \end{theorem}
@@ -298,7 +294,7 @@
 \begin{leftbar}
 \begin{proof}
   背理法を用いる．$a > b$ と仮定し，$\varepsilon \coloneqq \frac{a-b}{2} > 0$ とおく．
-  収束の定義より，ある $n_0 \in \mathbb{N}$ が存在して，$n \ge n_0$ ならば
+  収束の定義より，ある $n_0 \in \mathbb{N}$ が存在して，$n \geqq n_0$ ならば
   \[
     \abs{a_n - a} < \varepsilon \implies a - \varepsilon < a_n < a + \varepsilon
   \]
@@ -309,12 +305,12 @@
   \[
     b_n < b + \varepsilon = a - \varepsilon < a_n
   \]
-  となり，すべての $n$ で $a_n \le b_n$ とした仮定に矛盾する．ゆえに $a \le b$ である．
+  となり，すべての $n$ で $a_n \leqq b_n$ とした仮定に矛盾する．ゆえに $a \leqq b$ である．これが証明すべきことであった．
 \end{proof}
 \end{leftbar}
 
 注意すべき点は，元の数列の間に厳密な不等号 $a_n < b_n$ が成り立っていても，極限において不等号が維持されるとは限らないことである．
-例えば，$a_n \coloneqq 1 - \frac{1}{n}$ および $b_n \coloneqq 1 + \frac{1}{n}$ とすると，任意の $n \in \mathbb{N}$ において $a_n < b_n$ が成立するが，極限値はともに $1$ となり，$a = b$ が成立してしまう．このように，極限操作によって不等号の「ゆとり」が消滅し，等号が成立する可能性がある．
+たとえば，$a_n \coloneqq 1 - \frac{1}{n}$ および $b_n \coloneqq 1 + \frac{1}{n}$ とすると，任意の $n \in \mathbb{N}$ において $a_n < b_n$ が成立するが，極限値はともに $1$ となり，$a = b$ が成立してしまう．このように，極限操作によって不等号の「ゆとり」が消滅し，等号が成立する可能性がある．
 
 \begin{theorem}{はさみうちの原理}{} \index{はさみうちのげんり@はさみうちの原理}
   実数列 $(a_n)_{n \in \mathbb{N}}, (b_n)_{n \in \mathbb{N}}$ がともに $a \in \mathbb{R}$ に収束するとする：
@@ -323,7 +319,7 @@
   \]
   このとき，別の数列 $(c_n)_{n \in \mathbb{N}}$ について，ある番号以上のすべての $n \in \mathbb{N}$ に対して
   \[
-    a_n \le c_n \le b_n
+    a_n \leqq c_n \leqq b_n
   \]
   が成り立つならば，数列 $(c_n)_{n \in \mathbb{N}}$ もまた $a$ に収束する．すなわち，$(c_n) \in \mathcal{C}$ であり\footnote{ここでの $\mathcal{C}$ は，収束する実数列全体の集合を表す}，$\lim_{n \to \infty} c_n = a$ が成立する．
 \end{theorem}
@@ -335,19 +331,19 @@
   任意の $\varepsilon > 0$ をとる．
   仮定より $\lim_{n \to \infty} a_n = a$ および $\lim_{n \to \infty} b_n = a$ であるから，この $\varepsilon$ に対してある $n_1, n_2 \in \mathbb{N}$ が存在し，次を満たす：
   \begin{align}
-    n \ge n_1 &\implies a - \varepsilon < a_n < a + \varepsilon \\
-    n \ge n_2 &\implies a - \varepsilon < b_n < a + \varepsilon
+    n \geqq n_1 &\implies a - \varepsilon < a_n < a + \varepsilon \\
+    n \geqq n_2 &\implies a - \varepsilon < b_n < a + \varepsilon
   \end{align}
-  ここで $n_0 \coloneqq \max \{ n_1, n_2 \}$ と定めると，$n \ge n_0$ においては上の 2 つの不等式が同時に成立する．
-  さらに，仮定 $a_n \le c_n \le b_n$ を合わせると， $n \ge n_0$ において
+  ここで $n_0 \coloneqq \max \{ n_1, n_2 \}$ と定めると，$n \geqq n_0$ においては上の 2 つの不等式が同時に成立する．
+  さらに，仮定 $a_n \leqq c_n \leqq b_n$ を合わせると， $n \geqq n_0$ において
   \[
-    a - \varepsilon < a_n \le c_n \le b_n < a + \varepsilon
-  \in \]
-  が成り立つ．したがって，$n \ge n_0$ ならば常に
+    a - \varepsilon < a_n \leqq c_n \leqq b_n < a + \varepsilon
+  \]
+  が成り立つ．したがって，$n \geqq n_0$ ならば常に
   \[
     a - \varepsilon < c_n < a + \varepsilon \iff \abs{c_n - a} < \varepsilon
   \]
-  が成立する．これは，数列 $(c_n)_{n \in \mathbb{N}}$ が $a$ に収束することの定義そのものである．
+  が成立する．これは，数列 $(c_n)_{n \in \mathbb{N}}$ が $a$ に収束することの定義そのものである．これが証明すべきことであった．
 \end{proof}
 \end{leftbar}
 
@@ -366,10 +362,11 @@
 	\[
 	-\frac{1}{n} \leqq a_n \leqq \frac{1}{n}
 	\]
-	となり，$\lim_{n \to \infty} (-1/n)=0$，$\lim_{n \to \infty} 1/n =0$であるから，はさみうちの原理により，
+	となり，$\lim_{n \to \infty} (-1/n)=0$，$\lim_{n \to \infty} 1/n =0$であるから，はさみうちの原理により
 	\[
-	\lim_{n \to \infty} a_n =0.
+	\lim_{n \to \infty} a_n =0
 	\]
+	を得る．
 \end{example}
 
 \begin{example}{はさみうちの原理（ガウス記号の例）}{はさみうちの原理_ガウス}
@@ -378,15 +375,15 @@
   \]
   とする．このとき，任意の実数 $x$ に対して
   \[
-    [x] \le x < [x] + 1
+    [x] \leqq x < [x] + 1
   \]
   が成り立つから，$x=\sqrt{n}$ とおくと
   \[
-    \sqrt{n}-1 < \bigl[\sqrt{n}\bigr] \le \sqrt{n}
+    \sqrt{n}-1 < \bigl[\sqrt{n}\bigr] \leqq \sqrt{n}
   \]
   となる．よって両辺を $n$ で割れば
   \[
-    \frac{\sqrt{n}-1}{n} < a_n \le \frac{\sqrt{n}}{n}
+    \frac{\sqrt{n}-1}{n} < a_n \leqq \frac{\sqrt{n}}{n}
   \]
   を得る．ここで
   \[
@@ -398,7 +395,8 @@
   \]
   であるから，はさみうちの原理により
   \[
-    \lim_{n\to\infty} a_n = 0.
+    \lim_{n\to\infty} a_n = 0
   \]
+  を得る．
 \end{example}
 
