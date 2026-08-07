@@ -197,8 +197,8 @@
 \definecolor{appleLineGray} {RGB}{134,134,139}
 
 % ---- グラフ塗りつぶし用（上側・下側の面積） ----
-\definecolor{CupertinoBlue}  {HTML}{0A84FF}   % System Blue
-\definecolor{CupertinoIndigo}{HTML}{5E5CE6}   % System Indigo
+\definecolor{CupertinoBlue}  {HTML}{D6006D}   % Magenta（旧 System Blue）
+\definecolor{CupertinoIndigo}{HTML}{8E8E93}   % Gray（旧 System Indigo）
 \colorlet{upperfill}{CupertinoBlue!28}
 \colorlet{lowerfill}{CupertinoIndigo!28}
 
@@ -843,14 +843,14 @@
 \newtcolorbox{mondai}[1][]{%
   enhanced, boxrule=1pt,
   top=2pt, left=44pt, right=4pt, bottom=2pt, arc=0mm,
-  colframe=blue!30!gray,
+  colframe=magenta!30!gray,
   underlay={%
-    \node[inner sep=1pt, blue!50!black, fill=blue!10!white]
+    \node[inner sep=1pt, magenta!50!black, fill=magenta!10!white]
       at ([xshift=22pt,yshift=-9pt]interior.north west)
       {\stepcounter{mondaibangou}\bfseries\gtfamily 問題\themondaibangou};},
   segmentation code={%
     \draw[dashed] (segmentation.west) -- (segmentation.east);
-    \node[inner sep=1pt, blue!50!black, fill=blue!10!white]
+    \node[inner sep=1pt, magenta!50!black, fill=magenta!10!white]
       at ([xshift=22pt,yshift=-8pt]segmentation.south west)
       {\bfseries\gtfamily 解答};},
   before upper={\setlength{\parindent}{1\zw}},
@@ -942,9 +942,9 @@
 \RequirePackage{hyperref}
 \hypersetup{
   colorlinks = true,
-  citecolor  = {mypurple!40!black},
-  linkcolor  = {mypurple!40!black},
-  urlcolor   = {mypurple!70!black},
+  citecolor  = {magenta!40!black},
+  linkcolor  = {magenta!40!black},
+  urlcolor   = {magenta!70!black},
 }
 % PDF ブックマークに節番号を付与
 \RequirePackage[numbered]{bookmark}
@@ -1027,7 +1027,7 @@
 
 % ---- 執筆中マーカー ----
 \newcommand{\draftnote}[1]{%
-  \begin{center}\textbf{\textcolor{red}{執筆中：~#1}}\end{center}}
+  \begin{center}\textbf{\textcolor{magenta}{執筆中：~#1}}\end{center}}
 
 % ---- 数学演算子 ----
 \newcommand{\kaijou}{\ensuremath{\mkern1mu!\mkern1mu}}  % 階乗 !
