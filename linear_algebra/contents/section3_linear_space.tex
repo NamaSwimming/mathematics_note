@@ -44,13 +44,16 @@ $V$の加法・スカラー倍を区別するため，それぞれ異なる記�
   このとき，次の条件を満たす$V$を体$K$上の\textbf{線型空間}という．
 
   \begin{enumerate}[label=(\roman*),leftmargin=3.2em]
-    \item $V$は加法$\Vadd$に関して可換群をなす．
+    \item \textbf{加法に関して可換群}
 
-    \item 任意の$\bm{v},\bm{w}\in V$および$\alpha,\beta\in K$に対して，
+    $V$は，加法$\Vadd$に関して可換群をなす．
+
+    \item \textbf{スカラー倍に関する性質}
+
+    任意の$\bm{v},\bm{w}\in V$および$\alpha,\beta\in K$に対して，
     \[
       1_K\scalmul\bm{v}=\bm{v},
-    \]
-    \[
+      \qquad
       (\alpha\Kadd\beta)\scalmul\bm{v}
       =
       (\alpha\scalmul\bm{v})\Vadd(\beta\scalmul\bm{v}),
@@ -59,8 +62,7 @@ $V$の加法・スカラー倍を区別するため，それぞれ異なる記�
       \alpha\scalmul(\bm{v}\Vadd\bm{w})
       =
       (\alpha\scalmul\bm{v})\Vadd(\alpha\scalmul\bm{w}),
-    \]
-    \[
+      \qquad
       (\alpha\Kmul\beta)\scalmul\bm{v}
       =
       \alpha\scalmul(\beta\scalmul\bm{v})
