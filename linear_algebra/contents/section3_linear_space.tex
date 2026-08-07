@@ -2,13 +2,9 @@
 \part{線型空間}
 
 \begin{abstract}
-  この章では「線型空間」について学ぶ．
-  高校までの学習では「ベクトル」を「平面や空間内で，向きと大きさを持った量」として説明することが多かった．
-  一方，線型代数学では，ベクトルを「ある条件を満たす集合の元」として抽象的に扱う．
-  この考え方により，数ベクトルだけでなく，行列や関数なども同じ枠組みで議論できるようになる．
-  また，ベクトルの集合から生成される線型部分空間として，線型包を導入する．
-  線型部分空間の重要な例としては，第1章で定義した線型写像の像と核を取り上げる．
-  そのうえで基底と次元を定義し，部分空間の次元に関する次元公式，および像と核の次元を結びつける線型写像の次元公式を証明する．
+  この章では，線型空間を導入し，ベクトルを抽象的な立場から捉える．
+  これにより，数ベクトルだけでなく，行列や関数なども同じ枠組みで扱えるようになる．
+  さらに，線型部分空間，基底，次元などの基本概念を導入し，線型空間の構造について考察する．
 \end{abstract}
 
 \phantomsection
@@ -28,13 +24,26 @@
 本章では議論を一般化し，$K$は任意の\textbf{体}\index{たい@体}（field）であるとする\footnote{体とは，大まかにいえば，加法・減法・乗法，および$0$でない元による除法が自由に行える代数系のことである（$0$による除法は許されない）．$\mathbb{R}$や$\mathbb{C}$はその代表例であり，本書では，体の典型例として$\mathbb{R}$と$\mathbb{C}$を思い浮かべておけば十分である．}．
 ただし，具体例の多くでは，引き続き$K = \mathbb{R}$または$K = \mathbb{C}$の場合を扱う．
 
+線型空間の定義には，体$K$がもともともっている$2$つの演算と，
+$V$に新たに定める$2$つの演算，あわせて$4$つの演算が現れる．
+これらを混同しないよう，次の定義では，
+$K$の演算を桃色の記号で，$V$がかかわる演算を黒の記号で表す．
+
 \begin{definition}{線型空間}{線型空間}
   $K$を体とする．
-  集合$V$に，\textbf{加法}とよばれる演算
+  体$K$には，\textbf{加法}および\textbf{乗法}とよばれる演算
   \[
-    +\colon V\times V\to V,
+    \Kadd\colon K\times K\to K,
     \qquad
-    (\bm{v},\bm{w})\mapsto\bm{v}+\bm{w}
+    \Kmul\colon K\times K\to K
+  \]
+  が備わっており，加法の零元を$0_K$，乗法の単位元を$1_K$で表す．
+
+  さらに，集合$V$に，\textbf{加法}とよばれる演算
+  \[
+    \Vadd\colon V\times V\to V,
+    \qquad
+    (\bm{v},\bm{w})\mapsto\bm{v}\Vadd\bm{w}
   \]
   および\textbf{スカラー倍}とよばれる演算
   \[
@@ -46,41 +55,59 @@
   これらの演算が次の条件を満たすとき，
   $V$を（これらの演算を込めて）体$K$上の\textbf{線型空間}という．
 
-また，体$K$の加法と線型空間$V$の加法は，文脈から区別できるものとして，ともに演算記号$+$で表すことにする
-\footnote{すなわち，$\alpha+\beta$に現れる$+$と$\alpha\bm{v}+\beta\bm{w}$に現れる$+$とを異なる記号で表さず，同じ記号で記述する．}．
-一方，体$K$の乗法は，スカラー倍$\scalmul$と区別して，記号を省略し$\alpha\beta$のようにかく．
-\begin{enumerate}[label=(\roman*),leftmargin=3.2em]
-  \item \textbf{加法に関して可換群} 
-  
-  集合$V$は，加法に関して可換群をなす．
-  \item \textbf{スカラー倍に関する性質} 
- 
-  任意の$\bm{v},\bm{w}\in V$および任意の$\alpha,\beta\in K$に対して，
-  \[
-  1_K \scalmul \bm{v}=\bm{v},
-  \]
-  \[
-  (\alpha+\beta) \scalmul \bm{v}=\alpha \scalmul \bm{v}+\beta \scalmul \bm{v},
-  \]
-  \[
-  \alpha \scalmul (\bm{v}+\bm{w})=\alpha \scalmul \bm{v}+\alpha \scalmul \bm{w},
-  \]
-  \[
-  (\alpha\beta) \scalmul \bm{v}=\alpha \scalmul (\beta \scalmul \bm{v})
-  \]
-  が成り立つ．
+  \begin{enumerate}[label=(\roman*),leftmargin=3.2em]
+    \item \textbf{加法に関して可換群}
+
+    集合$V$は，加法$\Vadd$に関して可換群をなす．
+
+    \item \textbf{スカラー倍に関する性質}
+
+    任意の$\bm{v},\bm{w}\in V$および任意の$\alpha,\beta\in K$に対して，
+    \[
+      1_K\scalmul\bm{v}=\bm{v},
+    \]
+    \[
+      (\alpha\Kadd\beta)\scalmul\bm{v}
+      =
+      (\alpha\scalmul\bm{v})\Vadd(\beta\scalmul\bm{v}),
+    \]
+    \[
+      \alpha\scalmul(\bm{v}\Vadd\bm{w})
+      =
+      (\alpha\scalmul\bm{v})\Vadd(\alpha\scalmul\bm{w}),
+    \]
+    \[
+      (\alpha\Kmul\beta)\scalmul\bm{v}
+      =
+      \alpha\scalmul(\beta\scalmul\bm{v})
+    \]
+    が成り立つ．
   \end{enumerate}
 
   $V$の元を\textbf{ベクトル}という．
 \end{definition}
 
-以下では，スカラー倍の演算記号$\scalmul$を省略し，
+この定義では，$4$つの演算を区別するために，
+一時的に$\Kadd$，$\Kmul$，$\Vadd$，$\scalmul$という記号を用いた．
+しかし，どの演算であるかは，記号の左右におかれた対象が$K$の元か$V$の元かによって
+文脈から判断できる．
+そこで以下では，$2$つの加法をいずれも通常の演算記号$+$で表し，
+$K$の乗法とスカラー倍の記号は省略する．
+すなわち
 \[
+  \alpha\Kadd\beta,\qquad
+  \bm{v}\Vadd\bm{w},\qquad
+  \alpha\Kmul\beta,\qquad
   \alpha\scalmul\bm{v}
-  \quad\text{を単に}\quad
+\]
+を，それぞれ
+\[
+  \alpha+\beta,\qquad
+  \bm{v}+\bm{w},\qquad
+  \alpha\beta,\qquad
   \alpha\bm{v}
 \]
-とかく\footnote{記号$\scalmul$をいったん導入したのは，スカラー倍が$K\times V\to V$という，$K$の乗法$K\times K\to K$とは異なる演算であることを明示するためである．両者を混同するおそれのない場面では，体の乗法$\alpha\beta$と同様に記号を省略するのが慣習である．}．
+と表す．
 この約束のもとで，スカラー倍に関する条件は
 \[
   1_K\bm{v}=\bm{v},
@@ -93,34 +120,53 @@
   (\alpha\beta)\bm{v}=\alpha(\beta\bm{v})
 \]
 と表される．
+ここで，同じ記号が異なる演算を表していることに注意してほしい．
+たとえば$(\alpha+\beta)\bm{v}=\alpha\bm{v}+\beta\bm{v}$では，
+左辺の$+$は$K$の加法，右辺の$+$は$V$の加法である．
+また$(\alpha\beta)\bm{v}=\alpha(\beta\bm{v})$では，
+左辺の$\alpha\beta$は$K$の乗法であり，
+それ以外の並置はすべてスカラー倍である．
 
-なお，加法とスカラー倍を「終域が$V$である写像」として定めたので，$\bm{v}+\bm{w}$や$\alpha\bm{v}$がふたたび$V$の元であること，すなわち$V$がこれらの演算について閉じていることは，定義に含まれている．
+なお，加法とスカラー倍を「終域が$V$である写像」として定めたので，
+$\bm{v}+\bm{w}$や$\alpha\bm{v}$がふたたび$V$の元であること，
+すなわち$V$がこれらの演算について閉じていることは，定義に含まれている．
 
 \begin{mycolumn}
 線型空間の公理のうち，
 「加法に関して可換群である」という条件には，
 
 \begin{itemize}
-\item 結合法則
-\item 交換法則
-\item 零ベクトルの存在
-\item 加法逆元の存在
+  \item 結合法則
+  \item 交換法則
+  \item 零ベクトルの存在
+  \item 加法逆元の存在
 \end{itemize}
 
-が含まれている．具体的には，任意の$\bm{v},\bm{w},\bm{u}\in V$に対して，
+が含まれている．
+具体的には，任意の$\bm{v},\bm{w},\bm{u}\in V$に対して，
 \[
-(\bm{v}+\bm{w})+\bm{u}=\bm{v}+(\bm{w}+\bm{u}),
+  (\bm{v}+\bm{w})+\bm{u}
+  =
+  \bm{v}+(\bm{w}+\bm{u}),
 \]
 \[
-\bm{v}+\bm{w}=\bm{w}+\bm{v},
+  \bm{v}+\bm{w}
+  =
+  \bm{w}+\bm{v},
 \]
 \[
-\bm{v}+\bm{0}_V=\bm{v},
+  \bm{v}+\bm{0}_V
+  =
+  \bm{v},
 \]
 \[
-\bm{v}+(-\bm{v})=\bm{0}_V
+  \bm{v}+(-\bm{v})
+  =
+  \bm{0}_V
 \]
 が成り立つ．
+ここではすでに通常の表記に戻しているため，
+$V$の加法には通常の$+$を用いている．
 \end{mycolumn}
 
 \begin{example}{線型空間の例}{線型空間の例}
