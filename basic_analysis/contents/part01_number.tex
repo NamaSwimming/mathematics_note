@@ -450,31 +450,56 @@ $f$が最大値をとる点という．
 
 % --- TikZ による図解 ---
 \begin{figure}[htbp]
-    \centering
-    \begin{tikzpicture}[scale=0.8, >=stealth]
-        % 領域の塗りつぶし
-        \fill[red!10] (2,0) rectangle (7,1);
-        \fill[blue!10] (-7,0) rectangle (-2,1);
-        \fill[gray!10] (-2,0) rectangle (2,1);
-        
-        % 数直線
-        \draw[->, thick] (-7.5,0) -- (7.5,0) node[right] {$\mathbb{R}$};
-        
-        % 境界線と区間
-        \draw[red, thick] (2,0) -- (2,1.2) node[above] {$\sup A$};
-        \draw[blue, thick] (-2,0) -- (-2,1.2) node[above] {$\inf A$};
-        \draw[thick] (-7,1) -- (-2,1) (2,1) -- (7,1);
-        
-        % ラベル
-        \node at (0,0.5) {$A$};
-        \node[red] at (4.5,0.5) {$U(A)$ (上界)};
-        \node[blue] at (-4.5,0.5) {$L(A)$ (下界)};
-        
-        % 点の強調
-        \filldraw[red] (2,0) circle (2pt);
-        \filldraw[blue] (-2,0) circle (2pt);
-    \end{tikzpicture}
-    \caption{上限・下限と上界・下界のイメージ}
+  \centering
+  \begin{tikzpicture}[scale=0.8, >=stealth]
+    % ==================================================
+    % 領域
+    % ==================================================
+    % 下界・上界の領域を薄いマゼンタで表示
+    \fill[magenta!8] (-7,0) rectangle (-2,1);
+    \fill[magenta!8] (2,0) rectangle (7,1);
+    % 集合 A の領域
+    \fill[black!7] (-2,0) rectangle (2,1);
+    % ==================================================
+    % 数直線
+    % ==================================================
+    \draw[->, thick, black]
+      (-7.5,0) -- (7.5,0)
+      node[right] {$\mathbb{R}$};
+    % ==================================================
+    % inf A, sup A
+    % ==================================================
+    % 下限
+    \draw[magenta, thick]
+      (-2,0) -- (-2,1.2)
+      node[above] {$\inf A$};
+    % 上限
+    \draw[magenta, thick]
+      (2,0) -- (2,1.2)
+      node[above] {$\sup A$};
+    % 境界点
+    \filldraw[magenta] (-2,0) circle (2pt);
+    \filldraw[magenta] ( 2,0) circle (2pt);
+    % ==================================================
+    % 上界・下界を表す上辺
+    % ==================================================
+    \draw[thick, black]
+      (-7,1) -- (-2,1);
+    \draw[thick, black]
+      (2,1) -- (7,1);
+    % ==================================================
+    % ラベル
+    % ==================================================
+    % 集合 A
+    \node at (0,0.5) {$A$};
+    % 下界全体
+    \node[magenta] at (-4.5,0.5)
+      {$L(A)$（下界）};
+    % 上界全体
+    \node[magenta] at (4.5,0.5)
+      {$U(A)$（上界）};
+  \end{tikzpicture}
+  \caption{上限・下限と上界・下界のイメージ}
 \end{figure}
 
 \deref{sup_inf}と\prref{max_min_uniqueness}により，$\sup A$および$\inf A$は存在すればただひとつである（上限・下限の一意性）．
