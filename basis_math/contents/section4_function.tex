@@ -8,11 +8,27 @@
 \phantomsection
 \section{写像の定義と例}
 
+% --- この章の写像図で共通して使う TikZ スタイル ---
+\tikzset{
+  mapfig/.style     ={>=Latex, font=\small, line cap=round, line join=round},
+  mapset/.style     ={draw=black!60, fill=black!4, line width=0.7pt},
+  mapsub/.style     ={draw=black!50, fill=black!14, line width=0.5pt},
+  mapelem/.style    ={circle, fill=black!85, inner sep=1.3pt},
+  maparrow/.style   ={-{Latex[length=1.8mm,width=1.3mm]}, draw=black!70,
+                      line width=0.55pt, shorten <=2.5pt, shorten >=3pt},
+  mapleader/.style  ={draw=black!50, line width=0.4pt},
+  mapsetname/.style ={font=\small, text=black!70},
+  maplabL/.style    ={anchor=east, xshift=-2.5pt},
+  maplabR/.style    ={anchor=west, xshift=2.5pt},
+}
+
 \phantomsection
 \subsection{写像の定義}
 
 いままでの数学の学習の過程で「関数\index{かんすう@関数}」という言葉に出会ったことがある読者もいるかもしれない．
-そのような経験がある読者は「関数」と言われると，どのようなものが思い浮かぶであろうか．
+「関数」と言われると，$y = \sin x$や$y = x^3 + 1$のような「$x$と$y$を結ぶ式」，あるいはそのグラフを思い浮かべる読者が多いであろう．
+しかし，これから見るように，関数の本質は式やグラフそのものではなく，「元にただひとつの元を対応させる規則」である．
+式やグラフは，この規則を表現し，視覚化するための手段にすぎない．
 
 関数の一般的な表現として「写像」がある\footnote{写像の始集合・終集合が$\mathbb{R}$など「数」の集合であるときに「関数」とよぶことが多い．}．厳密な写像の定義はのちに述べるとして，まず簡潔な定義を提示しよう．
 
@@ -36,63 +52,38 @@
   とかく\footnote{これを$ f \colon A \ni a \mapsto b \in B$とかくときもある．}．
 \end{definition}
 
-$A=\{ 1,2 ,3 \}$， $B=\{ a, b,c \}$とする．$f(1) = a$，$f(2) = b$，$f(3) = a$とすると，この写像$f$は下図のように表現できる．
-\begin{figure}[h]
+\begin{wrapfigure}{r}{6.0cm}
   \centering
-  \begin{tikzpicture}[
-    >=Latex,
-    font=\small,
-    scale=1.10, transform shape,
-    set/.style   ={draw=black!70, fill=black!6, line width=0.8pt},
-    elem/.style  ={circle, fill=black, inner sep=1.6pt},
-    map/.style   ={-{Latex[length=2.0mm,width=1.4mm]}, draw=black!75, line width=0.6pt},
-    labA/.style  ={anchor=east, xshift=-2pt},
-    labB/.style  ={anchor=west, xshift= 2pt}
-  ]
-    \useasboundingbox (-5.0,-2.6) rectangle (6.0,2.85);
-
-    % 集合（同サイズ）
-    \draw[set] (-2,0) ellipse (1.5cm and 2cm);
-    \node[black!80] at (-2,2.25) {$A$};
-
-    \draw[set] ( 3,0) ellipse (1.5cm and 2cm);
-    \node[black!80] at ( 3,2.25) {$B$};
-
-    % 要素（座標に名前を付ける）
-    \coordinate (A1) at (-2, 1);
-    \coordinate (A2) at (-2, 0);
-    \coordinate (A3) at (-2,-1);
-
-    \coordinate (Ba) at ( 3, 1);
-    \coordinate (Bb) at ( 3, 0);
-    \coordinate (Bc) at ( 3,-1);
-
-    \node[elem] at (A1) {};
-    \node[elem] at (A2) {};
-    \node[elem] at (A3) {};
-    \node[elem] at (Ba) {};
-    \node[elem] at (Bb) {};
-    \node[elem] at (Bc) {};
-
-    \node[labA] at (A1) {$1$};
-    \node[labA] at (A2) {$2$};
-    \node[labA] at (A3) {$3$};
-
-    \node[labB] at (Ba) {$a$};
-    \node[labB] at (Bb) {$b$};
-    \node[labB] at (Bc) {$c$};
-
-    % 写像（重なりにくい曲げ方）
-    \draw[map] (A1) to[out=10,  in=170] (Ba); % 1 -> a
-    \draw[map] (A2) -- (Bb);                 % 2 -> b
-    \draw[map] (A3) to[out=20,  in=190] (Ba); % 3 -> a
-
-    % 写像名（任意）
-    \node[black!70] at (0.5,1.55) {$f$};
-
+  \begin{tikzpicture}[mapfig]
+    % 集合
+    \draw[mapset] (-1.75,0) ellipse [x radius=0.95, y radius=1.25];
+    \draw[mapset] ( 1.75,0) ellipse [x radius=0.95, y radius=1.25];
+    \node[mapsetname] at (-1.75,1.55) {$A$};
+    \node[mapsetname] at ( 1.75,1.55) {$B$};
+    \node[mapsetname] at (0,1.35) {$f$};
+    % 要素
+    \coordinate (A1) at (-1.75, 0.75);
+    \coordinate (A2) at (-1.75, 0);
+    \coordinate (A3) at (-1.75,-0.75);
+    \coordinate (Ba) at ( 1.75, 0.75);
+    \coordinate (Bb) at ( 1.75, 0);
+    \coordinate (Bc) at ( 1.75,-0.75);
+    \foreach \p in {A1,A2,A3,Ba,Bb,Bc} \node[mapelem] at (\p) {};
+    \node[maplabL] at (A1) {$1$};
+    \node[maplabL] at (A2) {$2$};
+    \node[maplabL] at (A3) {$3$};
+    \node[maplabR] at (Ba) {$a$};
+    \node[maplabR] at (Bb) {$b$};
+    \node[maplabR] at (Bc) {$c$};
+    % 対応
+    \draw[maparrow] (A1) to[bend left=10] (Ba);
+    \draw[maparrow] (A2) -- (Bb);
+    \draw[maparrow] (A3) to[bend left=12] (Ba);
   \end{tikzpicture}
   \caption{写像 $f \colon A \to B$}
-\end{figure}
+\end{wrapfigure}
+
+$A=\{ 1,2 ,3 \}$， $B=\{ a, b,c \}$とする．$f(1) = a$，$f(2) = b$，$f(3) = a$とすると，この写像$f$は右図のように表現できる．
 
 
 この例では，$1$と$3$がともに$a$に対応しているが，上記の写像の定義ではこのような場合があってもよい．
@@ -107,16 +98,31 @@ $A=\{ 1,2 ,3 \}$， $B=\{ a, b,c \}$とする．$f(1) = a$，$f(2) = b$，$f(3) 
 ここでは直感的な理解を深めるために，具体例を挙げてみよう．
 
 \begin{example}{自動販売機}{自動販売機}
-  自動販売機には複数のボタンがあり，それぞれが特定の飲み物に対応している\footnote{ボタンをひとつ押しただけで何種類も飲み物が出てくる自動販売機はまずないであろう．}．
-
-  集合$A$を自動販売機のボタンの集合，集合$B$を提供される飲み物の集合としよう．各ボタン $a \in A$ に対して，そのボタンを押すと出てくる飲み物を $b \in B$ とする．
-
-  このとき，
-  \[
-    b=f(a)
-  \]
-  とかくと，$f$ は写像の定義を満たす．
+  自動販売機のボタンの集合を$A$，提供される飲み物の集合を$B$とする．
+  各ボタン$a \in A$に，そのボタンを押すと出てくる飲み物$f(a) \in B$を対応させる．
+  どのボタンにも飲み物がただひとつ定まるから，$f \colon A \to B$は写像である．
 \end{example}
+
+\begin{example}{写像の例と写像でない例}{写像の例と写像でない例}
+  \begin{itemize}
+    \item $f \colon \mathbb{R} \ni x \mapsto x^2 \in \mathbb{R}$は写像である．
+          各実数$x$に対して，$x^2$がただひとつ定まるからである．
+    \item 各正の実数$x$に「2乗すると$x$になる実数」を対応させる規則は，写像ではない．
+          たとえば$x = 4$には$2$と$-2$の2つが対応し，「ただひとつ対応させる」という条件を満たさないからである．
+  \end{itemize}
+\end{example}
+
+\begin{mycolumn}
+  「多項式$x^2 + x$は関数である」という言い方をすることがあるが，正確には，式$x^2 + x$それ自体は単なる多項式であって，写像ではない．始集合と終集合を定め，
+  \[
+    f \colon \mathbb{R} \ni x \mapsto x^2 + x \in \mathbb{R}
+  \]
+  のように対応の規則を与えてはじめて写像となる．同じ式を用いても，始集合を$[0, 1]$に変えれば，写像としては別のものである．
+  逆に，\exref{自動販売機}のように，ひとつの式では表されない写像も存在する．すなわち，「写像であること」と「式で表されること」は別のことがらである．
+
+  また，関数をグラフでとらえる見方も有用であるが，グラフ（点$(x, f(x))$全体のなす集合）だけでは終集合の情報は定まらないことに注意したい．
+  同じ式・同じグラフでも，終集合の取り方によって写像の性質は変わりうる（この違いは，\deref{全射}のあとの例で実際に現れる）．
+\end{mycolumn}
 
 
 \subsection{像と値域，逆像}
@@ -153,130 +159,82 @@ $A=\{ 1,2 ,3 \}$， $B=\{ a, b,c \}$とする．$f(1) = a$，$f(2) = b$，$f(3) 
   逆像と紛らわしい単語に「逆写像」があるが，逆写像は$f$が全単射であるときに定義される写像である．その一方で，逆像は$f$が全単射でなくても定義される．
 \end{mycolumn}
 
-\begin{figure}[h]
+\begin{figure}[ht]
   \centering
-  \begin{tikzpicture}[
-    >=Latex,
-    font=\small,
-    scale=1.10, transform shape,
-    set/.style   ={draw=black!70, fill=black!6, line width=0.8pt},
-    subA/.style  ={draw=black!65, fill=black!18, line width=0.6pt},
-    subB/.style  ={draw=black!65, fill=black!18, line width=0.6pt},
-    elem/.style  ={circle, fill=black, inner sep=1.6pt},
-    map/.style   ={-{Latex[length=2.0mm,width=1.4mm]}, draw=black!75, line width=0.6pt},
-    labA/.style  ={anchor=east, xshift=-2pt},
-    labB/.style  ={anchor=west, xshift= 2pt}
-  ]
-    \useasboundingbox (-5.0,-2.6) rectangle (6.0,2.85);
-    % 集合（他の図と同じ大きさ・配置）
-    \draw[set] (-2,0) ellipse (1.5cm and 2cm);
-    \node[black!80] at (-2,2.25) {$A$};
-
-    \draw[set] ( 3,0) ellipse (1.5cm and 2cm);
-    \node[black!80] at ( 3,2.25) {$B$};
-
-    % A' と f(A')
-    \draw[subA] (-2,0) ellipse (0.75cm and 1.25cm);
-    \node[black!70, anchor=east] at (-3.55,0.55) {$A'$};
-
-    \draw[subB] ( 3,0) ellipse (0.70cm and 0.95cm);
-    \node[black!70, anchor=west] at ( 4.55,0.55) {$f(A')$};
-
-    % 要素（座標）
-    \coordinate (A1) at (-2, 1);
-    \coordinate (A2) at (-2, 0);
-    \coordinate (A3) at (-2,-1);
-
-    \coordinate (Ba) at ( 3, 0.5);
-    \coordinate (Bb) at ( 3,-0.5);
-
-    \node[elem] at (A1) {};
-    \node[elem] at (A2) {};
-    \node[elem] at (A3) {};
-    \node[elem] at (Ba) {};
-    \node[elem] at (Bb) {};
-
-    \node[labA] at (A1) {$1$};
-    \node[labA] at (A2) {$2$};
-    \node[labA] at (A3) {$3$};
-
-    \node[labB] at (Ba) {$a$};
-    \node[labB] at (Bb) {$b$};
-
-    % 矢印
-    \draw[map] (A1) to[out=10, in=170] (Ba);
-    \draw[map] (A2) -- (Bb);
-    \draw[map] (A3) to[out=20, in=190] (Ba);
-
-    % 写像名（任意）
-    \node[black!70] at (0.5,1.55) {$f$};
-  \end{tikzpicture}
-  \caption{像}
-\end{figure}
-
-\begin{figure}[h]
-  \centering
-  \begin{tikzpicture}[
-    >=Latex,
-    font=\small,
-    scale=1.10, transform shape,
-    set/.style   ={draw=black!70, fill=black!6, line width=0.8pt},
-    subA/.style  ={draw=black!65, fill=black!18, line width=0.6pt},
-    subB/.style  ={draw=black!65, fill=black!18, line width=0.6pt},
-    elem/.style  ={circle, fill=black, inner sep=1.6pt},
-    map/.style   ={-{Latex[length=2.0mm,width=1.4mm]}, draw=black!75, line width=0.6pt},
-    labA/.style  ={anchor=east, xshift=-2pt},
-    labB/.style  ={anchor=west, xshift= 2pt}
-  ]
-    \useasboundingbox (-5.0,-2.6) rectangle (6.0,2.85);
-    % 集合（他の図と同じ大きさ・配置）
-    \draw[set] (-2,0) ellipse (1.5cm and 2cm);
-    \node[black!80] at (-2,2.25) {$A$};
-
-    \draw[set] ( 3,0) ellipse (1.5cm and 2cm);
-    \node[black!80] at ( 3,2.25) {$B$};
-
-    % B' と f^{-1}(B')
-    \draw[subB] ( 3,0) ellipse (0.65cm and 0.95cm);
-    \node[black!70, anchor=west] at ( 4.55,0.55) {$B'$};
-
-    \draw[subA] (-2,0) ellipse (0.80cm and 1.55cm);
-    \node[black!70, anchor=east] at (-3.55,0.55) {$f^{-1}(B')$};
-
-    % 要素（座標：楕円内に収まるよう圧縮）
-    \coordinate (A1) at (-2, 1.2);
-    \coordinate (A2) at (-2, 0.4);
-    \coordinate (A3) at (-2,-0.4);
-    \coordinate (A4) at (-2,-1.2);
-
-    \coordinate (Ba) at ( 3, 0.5);
-    \coordinate (Bb) at ( 3,-0.5);
-
-    \node[elem] at (A1) {};
-    \node[elem] at (A2) {};
-    \node[elem] at (A3) {};
-    \node[elem] at (A4) {};
-    \node[elem] at (Ba) {};
-    \node[elem] at (Bb) {};
-
-    \node[labA] at (A1) {$1$};
-    \node[labA] at (A2) {$2$};
-    \node[labA] at (A3) {$3$};
-    \node[labA] at (A4) {$4$};
-
-    \node[labB] at (Ba) {$a$};
-    \node[labB] at (Bb) {$b$};
-
-    % 矢印
-    \draw[map] (A1) to[out=10,  in=170] (Ba);
-    \draw[map] (A2) -- (Ba);
-    \draw[map] (A3) to[out=-10, in=-170] (Bb);
-    \draw[map] (A4) to[out=0,   in=180] (Ba);
-
-    % 写像名（任意）
-    \node[black!70] at (0.5,1.65) {$f$};
-  \end{tikzpicture}
-  \caption{逆像}
+  \begin{minipage}[t]{0.48\linewidth}
+    \centering
+    \begin{tikzpicture}[mapfig]
+      % 集合
+      \draw[mapset] (-1.75,0) ellipse [x radius=0.95, y radius=1.25];
+      \draw[mapset] ( 1.75,0) ellipse [x radius=0.95, y radius=1.25];
+      \node[mapsetname] at (-1.75,-1.55) {$A$};
+      \node[mapsetname] at ( 1.75,-1.55) {$B$};
+      \node[mapsetname] at (0,1.35) {$f$};
+      % A' = {1, 2} とその像 f(A') = {a, b}
+      \draw[mapsub] (-1.75,0.375) ellipse [x radius=0.55, y radius=0.85];
+      \draw[mapsub] ( 1.75,0.125) ellipse [x radius=0.50, y radius=0.85];
+      \draw[mapleader] (-2.14,0.98) -- (-2.45,1.35)
+        node[anchor=south, font=\small] {$A'$};
+      \draw[mapleader] ( 2.10,0.72) -- ( 2.45,1.35)
+        node[anchor=south, font=\small] {$f(A')$};
+      % 要素
+      \coordinate (A1) at (-1.75, 0.75);
+      \coordinate (A2) at (-1.75, 0);
+      \coordinate (A3) at (-1.75,-0.75);
+      \coordinate (Ba) at ( 1.75, 0.5);
+      \coordinate (Bb) at ( 1.75,-0.25);
+      \foreach \p in {A1,A2,A3,Ba,Bb} \node[mapelem] at (\p) {};
+      \node[maplabL] at (A1) {$1$};
+      \node[maplabL] at (A2) {$2$};
+      \node[maplabL] at (A3) {$3$};
+      \node[maplabR] at (Ba) {$a$};
+      \node[maplabR] at (Bb) {$b$};
+      % 対応
+      \draw[maparrow] (A1) to[bend left=10] (Ba);
+      \draw[maparrow] (A2) -- (Bb);
+      \draw[maparrow] (A3) to[bend left=12] (Ba);
+    \end{tikzpicture}
+    \caption{$A' = \{1, 2\}$ の像 $f(A') = \{a, b\}$}
+  \end{minipage}
+  \hfill
+  \begin{minipage}[t]{0.48\linewidth}
+    \centering
+    \begin{tikzpicture}[mapfig]
+      % 集合
+      \draw[mapset] (-1.75,0) ellipse [x radius=0.95, y radius=1.35];
+      \draw[mapset] ( 1.75,0) ellipse [x radius=0.95, y radius=1.35];
+      \node[mapsetname] at (-1.75,-1.65) {$A$};
+      \node[mapsetname] at ( 1.75,-1.65) {$B$};
+      \node[mapsetname] at (0,1.35) {$f$};
+      % B' = {a} とその逆像 f^{-1}(B') = {1, 2, 3}
+      \draw[mapsub] ( 1.75,0.5) ellipse [x radius=0.45, y radius=0.42];
+      \draw[mapsub] (-1.75,0.30) ellipse [x radius=0.60, y radius=1.00];
+      \draw[mapleader] (-2.17,1.01) -- (-2.45,1.45)
+        node[anchor=south, font=\small] {$f^{-1}(B')$};
+      \draw[mapleader] ( 2.07,0.80) -- ( 2.40,1.45)
+        node[anchor=south, font=\small] {$B'$};
+      % 要素
+      \coordinate (A1) at (-1.75, 0.95);
+      \coordinate (A2) at (-1.75, 0.30);
+      \coordinate (A3) at (-1.75,-0.35);
+      \coordinate (A4) at (-1.75,-1.00);
+      \coordinate (Ba) at ( 1.75, 0.5);
+      \coordinate (Bb) at ( 1.75,-0.5);
+      \foreach \p in {A1,A2,A3,A4,Ba,Bb} \node[mapelem] at (\p) {};
+      \node[maplabL] at (A1) {$1$};
+      \node[maplabL] at (A2) {$2$};
+      \node[maplabL] at (A3) {$3$};
+      \node[maplabL] at (A4) {$4$};
+      \node[maplabR] at (Ba) {$a$};
+      \node[maplabR] at (Bb) {$b$};
+      % 対応
+      \draw[maparrow] (A1) to[bend left=10] (Ba);
+      \draw[maparrow] (A2) -- (Ba);
+      \draw[maparrow] (A3) to[bend right=8] (Ba);
+      \draw[maparrow] (A4) to[bend right=12] (Bb);
+    \end{tikzpicture}
+    \caption{$B' = \{a\}$ の逆像 $f^{-1}(B') = \{1, 2, 3\}$}
+  \end{minipage}
 \end{figure}
 
 
@@ -287,96 +245,64 @@ $A=\{ 1,2 ,3 \}$， $B=\{ a, b,c \}$とする．$f(1) = a$，$f(2) = b$，$f(3) 
   写像$f$が$A$から$B$への単射であるとは，異なる要素$a_1, a_2 \in A$に対して，$f(a_1) \ne f(a_2)$が成り立つことである\footnote{この定義は，対偶を考えると「$f(a_1) =f(a_2)$ならば$a_1=a_2$が成り立つ」とも言い換えられる．}．
 \end{definition}
 
-集合 $A = \{1, 2, 3\}$，$B = \{a, b, c, d\}$ を考え，写像 $f$ を以下のように定義する．
-\[
-  f(1) = a, \quad f(2) = b, \quad f(3) = c
-\]
-\begin{figure}[h]
+\phantomsection
+\begin{example}[
+    sidebyside,
+    lefthand width=7.4cm,
+    righthand width=6.2cm,
+    sidebyside gap=4mm,
+  ]{単射の図解}{単射の図解}
+  集合$A = \{1, 2, 3\}$，$B = \{a, b, c, d\}$と写像
+  \[
+    f(1) = a, \quad f(2) = b, \quad f(3) = c
+  \]
+  を考える．
+  $A$の異なる元は$B$の異なる元にうつるから，$f$は単射である．
+  しかし，この$f$は全射でない．
+
+  \tcblower
+
   \centering
-  \begin{tikzpicture}[
-    >=Latex,
-    font=\small,
-    scale=1.10, transform shape,
-    set/.style   ={draw=black!70, fill=black!6, line width=0.8pt},
-    elem/.style  ={circle, fill=black, inner sep=1.6pt},
-    map/.style   ={-{Latex[length=2.0mm,width=1.4mm]}, draw=black!75, line width=0.6pt},
-    labA/.style  ={anchor=east, xshift=-2pt},
-    labB/.style  ={anchor=west, xshift= 2pt}
-  ]
-    \useasboundingbox (-5.0,-2.6) rectangle (6.0,2.85);
+  \begin{tikzpicture}[mapfig]
     % 集合
-    \draw[set] (-2,0) ellipse (1.5cm and 2cm);
-    \node[black!80] at (-2,2.25) {$A$};
-
-    \draw[set] ( 3,0) ellipse (1.5cm and 2cm);
-    \node[black!80] at ( 3,2.25) {$B$};
-
-    % 要素（座標）
-    \coordinate (A1) at (-2, 1);
-    \coordinate (A2) at (-2, 0);
-    \coordinate (A3) at (-2,-1);
-
-    \coordinate (Ba) at ( 3, 1.5);
-    \coordinate (Bb) at ( 3, 0.5);
-    \coordinate (Bc) at ( 3,-0.5);
-    \coordinate (Bd) at ( 3,-1.5);
-
-    % 点
-    \node[elem] at (A1) {};
-    \node[elem] at (A2) {};
-    \node[elem] at (A3) {};
-    \node[elem] at (Ba) {};
-    \node[elem] at (Bb) {};
-    \node[elem] at (Bc) {};
-    \node[elem] at (Bd) {};
-
-    % ラベル
-    \node[labA] at (A1) {$1$};
-    \node[labA] at (A2) {$2$};
-    \node[labA] at (A3) {$3$};
-
-    \node[labB] at (Ba) {$a$};
-    \node[labB] at (Bb) {$b$};
-    \node[labB] at (Bc) {$c$};
-    \node[labB] at (Bd) {$d$};
-
-    % 矢印（重なりにくく）
-    \draw[map] (A1) to[out=10,  in=170] (Ba);
-    \draw[map] (A2) to[out=5,   in=175] (Bb);
-    \draw[map] (A3) -- (Bc);
-
-    % 写像名（任意）
-    \node[black!70] at (0.5,2.05) {$f$};
+    \draw[mapset] (-1.75,0) ellipse [x radius=0.95, y radius=1.35];
+    \draw[mapset] ( 1.75,0) ellipse [x radius=0.95, y radius=1.35];
+    \node[mapsetname] at (-1.75,1.65) {$A$};
+    \node[mapsetname] at ( 1.75,1.65) {$B$};
+    \node[mapsetname] at (0,1.4) {$f$};
+    % 要素
+    \coordinate (A1) at (-1.75, 0.75);
+    \coordinate (A2) at (-1.75, 0);
+    \coordinate (A3) at (-1.75,-0.75);
+    \coordinate (Ba) at ( 1.75, 0.95);
+    \coordinate (Bb) at ( 1.75, 0.32);
+    \coordinate (Bc) at ( 1.75,-0.32);
+    \coordinate (Bd) at ( 1.75,-0.95);
+    \foreach \p in {A1,A2,A3,Ba,Bb,Bc,Bd} \node[mapelem] at (\p) {};
+    \node[maplabL] at (A1) {$1$};
+    \node[maplabL] at (A2) {$2$};
+    \node[maplabL] at (A3) {$3$};
+    \node[maplabR] at (Ba) {$a$};
+    \node[maplabR] at (Bb) {$b$};
+    \node[maplabR] at (Bc) {$c$};
+    \node[maplabR] at (Bd) {$d$};
+    % 対応
+    \draw[maparrow] (A1) to[bend left=8] (Ba);
+    \draw[maparrow] (A2) to[bend left=6] (Bb);
+    \draw[maparrow] (A3) to[bend right=6] (Bc);
   \end{tikzpicture}
-  \caption{単射の例}
-\end{figure}
+\end{example}
 
-
-この$f$は単射だが，全射でない．
+\begin{example}{単射の例}{単射の例}
+  \[
+    f \colon \mathbb{N} \ni n \mapsto 2n \in \mathbb{N}
+  \]
+  は単射である．実際，$2n_1 = 2n_2$ならば$n_1 = n_2$である．
+\end{example}
 
 \begin{example}{電話番号と電話機}{電話番号と電話機}
-  現代では，各電話番号は特定の電話機に対応している．この対応関係を写像として考えてみよう．
-
-  集合$A$を電話番号の集合，集合$B$を実際の電話機の集合とする．
-  また，電話番号 $a \in A$ に対して，$f$という規則で対応する電話機を $b \in B$ とする．
-
-  このとき，
-  \[
-    b = f(a)
-  \]
-  とかくと，$f$ は写像の定義を満たす．
-
-  また，現代では各電話番号が唯一の電話機に割り当てられることが多いため，異なる電話番号が同じ電話機を指し示すことはない．
-
-  たとえば，$A = \{\text{090-1234-5678}, \text{080-9876-5432}, \text{070-1111-2222}\}$，
-  $B = \{\text{Phone1}, \text{Phone2}, \text{Phone3}\}$ とし，写像 $f$ を次のように定義する．
-  \[
-    f(\text{090-1234-5678}) = \text{Phone1}, \quad
-    f(\text{080-9876-5432}) = \text{Phone2}, \quad
-    f(\text{070-1111-2222}) = \text{Phone3}
-  \]
-
-  このとき，$f$は単射である．
+  電話番号の集合を$A$，電話機の集合を$B$とし，各電話番号$a \in A$に対応する電話機$f(a) \in B$を対応させる写像$f \colon A \to B$を考える．
+  異なる電話番号が同じ電話機を指すことはないから，$f$は単射である．
 \end{example}
 
 \subsection{全射\index{ぜんしゃ@全射}}
@@ -385,92 +311,64 @@ $A=\{ 1,2 ,3 \}$， $B=\{ a, b,c \}$とする．$f(1) = a$，$f(2) = b$，$f(3) 
   写像$f$が$A$から$B$への全射であるとは，任意の$b \in B$に対して，ある$a \in A$が存在して，$f(a) = b$が成り立つことである．
 \end{definition}
 
-集合 $A = \{1, 2, 3\}$，$B = \{a, b\}$ を考え，写像 $f$ を以下のように定義する．
-\[
-  f(1) = a, \quad f(2) = a, \quad f(3) = b
-\]
-\begin{figure}[h]
+\phantomsection
+\begin{example}[
+    sidebyside,
+    lefthand width=7.4cm,
+    righthand width=6.2cm,
+    sidebyside gap=4mm,
+  ]{全射の図解}{全射の図解}
+  集合$A = \{1, 2, 3\}$，$B = \{a, b\}$と写像
+  \[
+    f(1) = a, \quad f(2) = a, \quad f(3) = b
+  \]
+  を考える．
+  $B$のどの元も$A$のある元の像になっているから，$f$は全射である．
+  しかし，$f(1) = f(2) = a$であるから，$f$は単射でない．
+
+  \tcblower
+
   \centering
-  \begin{tikzpicture}[
-    >=Latex,
-    font=\small,
-    scale=1.10, transform shape,
-    set/.style   ={draw=black!70, fill=black!6, line width=0.8pt},
-    elem/.style  ={circle, fill=black, inner sep=1.6pt},
-    map/.style   ={-{Latex[length=2.0mm,width=1.4mm]}, draw=black!75, line width=0.6pt},
-    labA/.style  ={anchor=east, xshift=-2pt},
-    labB/.style  ={anchor=west, xshift= 2pt}
-  ]
-    \useasboundingbox (-5.0,-2.6) rectangle (6.0,2.85);
+  \begin{tikzpicture}[mapfig]
     % 集合
-    \draw[set] (-2,0) ellipse (1.5cm and 2cm);
-    \node[black!80] at (-2,2.25) {$A$};
-
-    \draw[set] ( 3,0) ellipse (1.5cm and 2cm);
-    \node[black!80] at ( 3,2.25) {$B$};
-
-    % 要素（座標）
-    \coordinate (A1) at (-2, 1);
-    \coordinate (A2) at (-2, 0);
-    \coordinate (A3) at (-2,-1);
-
-    \coordinate (Ba) at ( 3, 0.5);
-    \coordinate (Bb) at ( 3,-0.5);
-
-    % 点
-    \node[elem] at (A1) {};
-    \node[elem] at (A2) {};
-    \node[elem] at (A3) {};
-    \node[elem] at (Ba) {};
-    \node[elem] at (Bb) {};
-
-    % ラベル
-    \node[labA] at (A1) {$1$};
-    \node[labA] at (A2) {$2$};
-    \node[labA] at (A3) {$3$};
-
-    \node[labB] at (Ba) {$a$};
-    \node[labB] at (Bb) {$b$};
-
-    % 矢印（a に 2 本集め、b に 1 本）
-    \draw[map] (A1) to[out=10,  in=170] (Ba);
-    \draw[map] (A2) to[out=0,   in=180] (Ba);
-    \draw[map] (A3) -- (Bb);
-
-    % 写像名（任意）
-    \node[black!70] at (0.5,2.05) {$f$};
+    \draw[mapset] (-1.75,0) ellipse [x radius=0.95, y radius=1.25];
+    \draw[mapset] ( 1.75,0) ellipse [x radius=0.95, y radius=1.25];
+    \node[mapsetname] at (-1.75,1.55) {$A$};
+    \node[mapsetname] at ( 1.75,1.55) {$B$};
+    \node[mapsetname] at (0,1.35) {$f$};
+    % 要素
+    \coordinate (A1) at (-1.75, 0.75);
+    \coordinate (A2) at (-1.75, 0);
+    \coordinate (A3) at (-1.75,-0.75);
+    \coordinate (Ba) at ( 1.75, 0.5);
+    \coordinate (Bb) at ( 1.75,-0.5);
+    \foreach \p in {A1,A2,A3,Ba,Bb} \node[mapelem] at (\p) {};
+    \node[maplabL] at (A1) {$1$};
+    \node[maplabL] at (A2) {$2$};
+    \node[maplabL] at (A3) {$3$};
+    \node[maplabR] at (Ba) {$a$};
+    \node[maplabR] at (Bb) {$b$};
+    % 対応
+    \draw[maparrow] (A1) to[bend left=10] (Ba);
+    \draw[maparrow] (A2) -- (Ba);
+    \draw[maparrow] (A3) to[bend right=8] (Bb);
   \end{tikzpicture}
-  \caption{全射の例}
-\end{figure}
+\end{example}
 
+\begin{example}{全射の例}{全射の例}
+  \[
+    f \colon \mathbb{R} \ni x \mapsto x^2 \in [0, \infty)
+  \]
+  は全射である．実際，任意の$b \in [0, \infty)$に対して，$x = \sqrt{b}$とおけば$f(x) = b$である．
+  一方，$f(-1) = f(1) = 1$であるから，$f$は単射でない．
 
-この$f$は全射だが，単射でない．
+  なお，\exref{写像の例と写像でない例}の$x \mapsto x^2$とは式が同じで終集合だけが異なるが，終集合を$\mathbb{R}$とすると全射でなくなる．写像の性質は，式だけでなく始集合・終集合を込めて定まるのである．
+\end{example}
 
 \begin{example}{分類コードと本}{分類コードと本}
-  公共図書館では，各本に分類コードが割り当てられており，本を分類している．この対応関係を写像として考えてみよう．
-
-  集合$A$を図書館にある本の集合，集合$B$を使用されている分類コードの集合とする．
-  また，本 $a \in A$ に対して，分類コード $b \in B$ を割り当てる規則$f$を定める．
-
-  このとき，
-  \[
-    b = f(a)
-  \]
-  とかくと，$f$ は写像の定義を満たす．
-
-  図書館では，複数の本が同じ分類コードを持つことが一般的である．つまり，異なる本が同じ分類コードに対応することがある．
-
-  たとえば，$A = \{\text{『数学入門』}, \text{『微分積分』}, \text{『物理学基礎』}, \text{『統計学』}\}$，
-  $B = \{\text{410}, \text{420}, \text{350}\}$ とし，写像 $f$ を次のように定義する．
-  \[
-    f(\text{『数学入門』}) = 410, \quad
-    f(\text{『微分積分』}) = 410, \quad
-    f(\text{『物理学基礎』}) = 420, \quad
-    f(\text{『統計学』}) = 350
-  \]
-
-  このとき，$f$は全射である．なぜなら，$B$の要素である$410$，$420$，$350$のいずれもが，$A$のある要素の像になっているからである．しかし，$f$は単射ではない．なぜなら，$\text{『数学入門』}$と$\text{『微分積分』}$がともに410に対応しており，異なる本が同じ分類コードに対応しているからである．
-
+  図書館にある本の集合を$A$，使用されている分類コードの集合を$B$とし，各本$a \in A$にその分類コード$f(a) \in B$を対応させる写像$f \colon A \to B$を考える．
+  $B$は使用されているコード全体であるから，どのコード$b \in B$に対しても，それが割り当てられた本$a \in A$が存在する．よって$f$は全射である．
+  一方，同じ分類コードを持つ本は複数ありうるから，$f$は一般に単射でない．
 \end{example}
 
 
@@ -480,89 +378,55 @@ $A=\{ 1,2 ,3 \}$， $B=\{ a, b,c \}$とする．$f(1) = a$，$f(2) = b$，$f(3) 
   写像$f$が$A$から$B$への全単射であるとは，$f$が単射かつ全射となることである．
 \end{definition}
 
-集合 $A = \{1, 2, 3\}$，$B = \{a, b, c\}$ を考え，写像 $f$ を以下のように定義する．
-\[
-  f(1) = c, \quad f(2) = b, \quad f(3) = a
-\]
+\phantomsection
+\begin{example}[
+    sidebyside,
+    lefthand width=7.4cm,
+    righthand width=6.2cm,
+    sidebyside gap=4mm,
+  ]{全単射の図解}{全単射の図解}
+  集合$A = \{1, 2, 3\}$，$B = \{a, b, c\}$と写像
+  \[
+    f(1) = c, \quad f(2) = b, \quad f(3) = a
+  \]
+  を考える．
+  この$f$は単射かつ全射，すなわち全単射である．
+  $A$の元と$B$の元が，$f$によって過不足なく1対1に対応している．
 
-\begin{figure}[ht]
+  \tcblower
+
   \centering
-  \begin{tikzpicture}[
-    >=Latex,
-    font=\small,
-    scale=1.10, transform shape,
-    set/.style   ={draw=black!70, fill=black!6, line width=0.8pt},
-    elem/.style  ={circle, fill=black, inner sep=1.6pt},
-    map/.style   ={-{Latex[length=2.0mm,width=1.4mm]}, draw=black!75, line width=0.6pt},
-    labA/.style  ={anchor=east, xshift=-2pt},
-    labB/.style  ={anchor=west, xshift= 2pt}
-  ]
-    \useasboundingbox (-5.0,-2.6) rectangle (6.0,2.85);
+  \begin{tikzpicture}[mapfig]
     % 集合
-    \draw[set] (-2,0) ellipse (1.5cm and 2cm);
-    \node[black!80] at (-2,2.25) {$A$};
-
-    \draw[set] ( 3,0) ellipse (1.5cm and 2cm);
-    \node[black!80] at ( 3,2.25) {$B$};
-
-    % 要素（座標）
-    \coordinate (A1) at (-2, 1);
-    \coordinate (A2) at (-2, 0);
-    \coordinate (A3) at (-2,-1);
-
-    \coordinate (Ba) at ( 3, 1);
-    \coordinate (Bb) at ( 3, 0);
-    \coordinate (Bc) at ( 3,-1);
-
-    % 点
-    \node[elem] at (A1) {};
-    \node[elem] at (A2) {};
-    \node[elem] at (A3) {};
-    \node[elem] at (Ba) {};
-    \node[elem] at (Bb) {};
-    \node[elem] at (Bc) {};
-
-    % ラベル
-    \node[labA] at (A1) {$1$};
-    \node[labA] at (A2) {$2$};
-    \node[labA] at (A3) {$3$};
-
-    \node[labB] at (Ba) {$a$};
-    \node[labB] at (Bb) {$b$};
-    \node[labB] at (Bc) {$c$};
-
-    % 矢印（1->c, 2->b, 3->a）
-    \draw[map] (A1) to[out=10,  in=170] (Bc);
-    \draw[map] (A2) -- (Bb);
-    \draw[map] (A3) to[out=-10, in=-170] (Ba);
-
-    % 写像名（任意）
-    \node[black!70] at (0.5,2.05) {$f$};
+    \draw[mapset] (-1.75,0) ellipse [x radius=0.95, y radius=1.25];
+    \draw[mapset] ( 1.75,0) ellipse [x radius=0.95, y radius=1.25];
+    \node[mapsetname] at (-1.75,1.55) {$A$};
+    \node[mapsetname] at ( 1.75,1.55) {$B$};
+    \node[mapsetname] at (0,1.35) {$f$};
+    % 要素
+    \coordinate (A1) at (-1.75, 0.75);
+    \coordinate (A2) at (-1.75, 0);
+    \coordinate (A3) at (-1.75,-0.75);
+    \coordinate (Ba) at ( 1.75, 0.75);
+    \coordinate (Bb) at ( 1.75, 0);
+    \coordinate (Bc) at ( 1.75,-0.75);
+    \foreach \p in {A1,A2,A3,Ba,Bb,Bc} \node[mapelem] at (\p) {};
+    \node[maplabL] at (A1) {$1$};
+    \node[maplabL] at (A2) {$2$};
+    \node[maplabL] at (A3) {$3$};
+    \node[maplabR] at (Ba) {$a$};
+    \node[maplabR] at (Bb) {$b$};
+    \node[maplabR] at (Bc) {$c$};
+    % 対応（1→c, 2→b, 3→a）
+    \draw[maparrow] (A1) -- (Bc);
+    \draw[maparrow] (A2) -- (Bb);
+    \draw[maparrow] (A3) -- (Ba);
   \end{tikzpicture}
-  \caption{全単射の例}
-\end{figure}
-
-
-この $f$ は単射かつ全射，すなわち全単射である．
+\end{example}
 
 \begin{example}{学籍番号と学生}{学籍番号と学生}
-  あるクラスの学生とその学籍番号の対応を考える．
-  集合 $A$ を学生の集合，集合 $B$ を学籍番号の集合とする．
-  ここでは，
-  \[
-    A = \{\text{Alice}, \text{Bob}, \text{Charlie}\}, \quad
-    B = \{\text{2024001}, \text{2024002}, \text{2024003}\}
-  \]
-  とする．
-
-  そして，学生 $a \in A$ に対して学籍番号 $b \in B$ を一意的に割り当てる規則 $f$ を次のように定義する．
-  \[
-    f(\text{Alice}) = \text{2024001}, \quad
-    f(\text{Bob}) = \text{2024002}, \quad
-    f(\text{Charlie}) = \text{2024003}
-  \]
-
-  この写像 $f$ は単射かつ全射，すなわち全単射である．
+  あるクラスの学生の集合を$A$，そのクラスで使われている学籍番号の集合を$B$とし，各学生$a \in A$にその学籍番号$f(a) \in B$を対応させる写像$f \colon A \to B$を考える．
+  異なる学生が同じ学籍番号を持つことはないから$f$は単射であり，どの学籍番号もある学生に割り当てられているから$f$は全射である．よって$f$は全単射である．
 \end{example}
 
 \begin{example}{単射・全射・全単射}{単射・全射・全単射}
