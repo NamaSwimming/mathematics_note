@@ -8,14 +8,9 @@
 
 %\include{Preambulo/Capa}
 
-\thispagestyle{empty}
-
-\newpage
+\cleardoublepage
 \pagenumbering{arabic}
 \pagecolor{white}
-
-% 目次の表示
-\localtableofcontents
 
 \newpage
 \input{contents/section1_linear_basis.tex}
@@ -48,5 +43,11 @@
   \pagestyle{empty}
   \printindex
 \endgroup
+
+% 裏表紙を空白にする
+\clearpage
+\thispagestyle{empty}
+\null
+\clearpage
 
 \end{document}
