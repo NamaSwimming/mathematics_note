@@ -201,8 +201,81 @@
   \end{itemize}
 \end{example}
 
-\subsection{入れ子の量化子}
 
+\subsection{入れ子の量化子\index{いれこのりょうかし@入れ子の量化子}}
+ 
+ここまでは変数がひとつの述語を扱ってきたが，$P(x, y)$のように変数を2つ以上含む述語も考えられる．
+このとき，命題を作るにはすべての変数を量化する必要があり，量化子が
+\[
+  \forall x,\, \exists y \, : \, P(x, y)
+\]
+のように2つ以上並ぶことになる．これを量化子の\emph{入れ子}\index{いれこのりょうかし@入れ子の量化子}という．
+ 
+入れ子になった量化子は，\textbf{左から順に}読む．
+すなわち，上の例は「任意の$x$に対して，ある$y$が存在して，$P(x, y)$が成り立つ」と読む．
+このとき重要なのは，\textbf{内側（右側）の変数は，外側（左側）の変数に依存してよい}ということである．
+上の例でいえば，$y$は$x$に応じて選び直してよい．
+ 
+\phantomsection
+\subsubsection{同種の量化子の入れ子}
+ 
+まず，同じ種類の量化子が並ぶ場合を考えよう．この場合，量化子の順序を入れ替えても命題の意味は変わらない：
+ 
+\begin{prop}{同種の量化子の交換}{同種の量化子の交換}
+  $P(x, y)$を2変数の述語とする．このとき，次が成り立つ：
+  \begin{align*}
+    \forall x,\, \forall y \, : \, P(x, y) & \equiv \forall y,\, \forall x \, : \, P(x, y) \\
+    \exists x,\, \exists y \, : \, P(x, y) & \equiv \exists y,\, \exists x \, : \, P(x, y)
+  \end{align*}
+\end{prop}
+ 
+直観的には，$\forall x,\, \forall y$は「どの$x$とどの$y$の組合せについても」，
+$\exists x,\, \exists y$は「うまい$x$と$y$の組がひとつでもあれば」という意味であり，
+いずれも$x$と$y$のどちらを先に述べるかは関係ない．
+ 
+\phantomsection
+\begin{example}{同種の量化子の例}{同種の量化子の例}
+  \begin{itemize}
+    \item $\forall x \in \mathbb{R},\, \forall y \in \mathbb{R} \, : \, x^2 + y^2 \geqq 2xy$\\
+          「任意の実数$x$と任意の実数$y$について，$x^2 + y^2 \geqq 2xy$が成り立つ．」\\
+          これは$x^2 + y^2 - 2xy = (x - y)^2 \geqq 0$からわかる．
+          $x$と$y$の役割を入れ替えても主張は変わらない．
+    \item $\exists x \in \mathbb{Z},\, \exists y \in \mathbb{Z} \, : \, x^2 + y^2 = 5$\\
+          「ある整数$x$とある整数$y$が存在して，$x^2 + y^2 = 5$となる．」\\
+          実際，$(x, y) = (1, 2)$がその一例である．
+          こちらも，$x$と$y$のどちらを先に見つけるかは問題にならない．
+  \end{itemize}
+\end{example}
+ 
+\phantomsection
+\subsubsection{異種の量化子の入れ子}
+ 
+一方，$\forall$と$\exists$が混在する場合には，順序が本質的に重要になる．
+\[
+  \forall x,\, \exists y \, : \, P(x, y)
+\]
+は「任意の$x$に対して，（$x$に応じた）$y$が存在する」という意味であり，$y$は$x$ごとに選び直してよい．
+これに対して，
+\[
+  \exists y,\, \forall x \, : \, P(x, y)
+\]
+は「ある$y$が存在して，その$y$は任意の$x$に対して$P(x, y)$を満たす」という意味であり，
+$y$は$x$によらず\textbf{ひとつに固定}されていなければならない．
+後者のほうが強い主張であり，一般に次の一方向の含意のみが成り立つ：
+ 
+\begin{prop}{異種の量化子の順序}{異種の量化子の順序}
+  $P(x, y)$を2変数の述語とする．このとき，次が成り立つ：
+  \[
+    \bigl( \exists y,\, \forall x \, : \, P(x, y) \bigr)
+    \to
+    \bigl( \forall x,\, \exists y \, : \, P(x, y) \bigr)
+  \]
+  この逆は，一般には成り立たない．
+\end{prop}
+ 
+すなわち，「全員に共通のうまい$y$がある」ならば「各人に応じたうまい$y$がある」のは当然だが，
+その逆は保証されない．逆が成り立たない例として，次のアルキメデスの原理を見てみよう．
+ 
 学部1年の微分積分学の講義で，アルキメデスの原理
 \[
   \forall a>0,\, \exists n\in\mathbb{N} : n>a
@@ -216,7 +289,7 @@
 とかき換えると，意味は大きく変わってしまう．
 こちらは「ある自然数$n$が存在して，すべての正の実数$a$より大きい」
 という意味になるが，そのような自然数は存在しないので偽である．
-
+ 
 このように，量化記号の順序を入れ替えると，
 命題の意味だけでなく真偽まで変わることがある．
 $\varepsilon$-$\delta$論法では，
@@ -225,6 +298,34 @@ $\varepsilon$-$\delta$論法では，
 \]
 という形で量化記号が入れ子になっており，
 $\delta$は選んだ$\varepsilon$に応じて決めてよいことを表している．
+ 
+\phantomsection
+\subsubsection{入れ子の量化子の否定}
+ 
+最後に，量化子を含む命題の否定について述べる．
+量化子の否定は，$\lnot$が量化子を通過するたびに$\forall$と$\exists$が入れ替わる，という規則に従う：
+ 
+\begin{prop}{量化子の否定}{量化子の否定}
+  $P(x)$を述語とする．このとき，次が成り立つ：
+  \begin{align*}
+    \lnot \bigl( \forall x \, : \, P(x) \bigr) & \equiv \exists x \, : \, \lnot P(x) \\
+    \lnot \bigl( \exists x \, : \, P(x) \bigr) & \equiv \forall x \, : \, \lnot P(x)
+  \end{align*}
+\end{prop}
+ 
+これはド・モルガンの法則の量化子版とみなせる．
+実際，「すべての$x$で$P(x)$が成り立つ」の否定は「$P(x)$が成り立たない$x$が（少なくともひとつ）存在する」であり，
+「$P(x)$が成り立つ$x$が存在する」の否定は「すべての$x$で$P(x)$が成り立たない」である．
+ 
+この規則を入れ子の量化子に対して\textbf{外側から順に}適用すれば，入れ子になった命題の否定も機械的に作ることができる：
+\begin{align*}
+  \lnot \bigl( \forall x,\, \exists y \, : \, P(x, y) \bigr)
+  & \equiv \exists x,\, \lnot \bigl( \exists y \, : \, P(x, y) \bigr) \\
+  & \equiv \exists x,\, \forall y \, : \, \lnot P(x, y)
+\end{align*}
+すなわち，量化子の列$\forall x,\, \exists y$を$\exists x,\, \forall y$にすべて反転させ，
+最後に内側の述語を否定すればよい．
+この操作は，$\varepsilon$-$\delta$論法で「収束しないこと」を定式化する際などに繰り返し現れる．
 
 \phantomsection
 \section{証明}
