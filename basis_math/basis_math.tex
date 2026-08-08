@@ -9,9 +9,7 @@
 
 %\include{Preambulo/Capa}
 
-\thispagestyle{empty}
-
-\newpage
+\cleardoublepage
 \pagenumbering{arabic}
 \pagecolor{white}
 
@@ -51,5 +49,11 @@
   \pagestyle{empty}
   \printindex
 \endgroup
+
+% 裏表紙を空白にする
+\clearpage
+\thispagestyle{empty}
+\null
+\clearpage
 
 \end{document}
