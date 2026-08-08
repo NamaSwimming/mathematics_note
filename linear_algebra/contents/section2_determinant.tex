@@ -32,6 +32,64 @@ $\sigma$が$1$を$2$，$2$を$3$，$3$を$1$に対応させるとする．
 \[
 \sigma \colon 1 \mapsto 2, \quad 2 \mapsto 3, \quad 3 \mapsto 1
 \]
+この対応を図示すると，次のようになる：
+\begin{center}
+\begin{tikzpicture}[
+  elem/.style={
+    circle,
+    draw=black,
+    fill=white,
+    minimum size=1.9em,
+    inner sep=0pt,
+    font=\small,
+    text=black
+  },
+  maparrow/.style={
+    -{Stealth[length=2mm]},
+    thick,
+    magenta,
+    shorten <=2pt,
+    shorten >=2pt
+  },
+  setbox/.style={
+    draw=black,
+    rounded corners=8pt,
+    inner sep=6pt
+  },
+  setlabel/.style={
+    font=\small,
+    text=black
+  }
+]
+  % 定義域
+  \node[elem] (d1) at (0, 1.6) {$1$};
+  \node[elem] (d2) at (0, 0.8) {$2$};
+  \node[elem] (d3) at (0, 0.0) {$3$};
+
+  % 終域
+  \node[elem] (c1) at (3, 1.6) {$1$};
+  \node[elem] (c2) at (3, 0.8) {$2$};
+  \node[elem] (c3) at (3, 0.0) {$3$};
+
+  % 集合の枠
+  \node[setbox, fit=(d1)(d3)] (dbox) {};
+  \node[setbox, fit=(c1)(c3)] (cbox) {};
+
+  % 集合のラベル
+  \node[setlabel, above=2pt of dbox] {$\{1,2,3\}$};
+  \node[setlabel, above=2pt of cbox] {$\{1,2,3\}$};
+
+  % 対応
+  \draw[maparrow] (d1) -- (c2);
+  \draw[maparrow] (d2) -- (c3);
+  \draw[maparrow] (d3) -- (c1);
+
+  % 写像のラベル
+  \node[font=\small, text=black] at (1.5, 2.75) {$\sigma$};
+  \draw[-{Stealth[length=1.6mm]}, black]
+    (0.7, 2.5) -- (2.3, 2.5);
+\end{tikzpicture}
+\end{center}
 このとき，$\sigma$は$3$次の置換であり，次のように表すことができる：
 \[
 \sigma = \chikan{1, 2, 3}{2, 3, 1}
@@ -66,7 +124,41 @@ P_\sigma =
 3\mapsto1,\quad
 4\mapsto1
 \]
-を考える．この写像では，$3$と$4$ がともに$1$に移るため単射ではない．
+を考える．この写像を図示すると，次のようになる：
+\begin{center}
+\begin{tikzpicture}[
+  elem/.style={circle, draw=appleGray, fill=white, minimum size=1.9em, inner sep=0pt, font=\small},
+  maparrow/.style={-{Stealth[length=2mm]}, thick, appleBlue500, shorten <=2pt, shorten >=2pt},
+  badarrow/.style={-{Stealth[length=2mm]}, thick, appleMagenta, shorten <=2pt, shorten >=2pt},
+  setbox/.style={draw=appleLine, rounded corners=8pt, inner sep=6pt},
+  setlabel/.style={font=\small, text=appleGray}
+]
+  % 定義域
+  \node[elem] (d1) at (0, 2.4) {$1$};
+  \node[elem] (d2) at (0, 1.6) {$2$};
+  \node[elem] (d3) at (0, 0.8) {$3$};
+  \node[elem] (d4) at (0, 0.0) {$4$};
+  % 終域
+  \node[elem] (c1) at (3, 2.4) {$1$};
+  \node[elem] (c2) at (3, 1.6) {$2$};
+  \node[elem] (c3) at (3, 0.8) {$3$};
+  \node[elem, draw=appleMagenta, text=appleMagenta] (c4) at (3, 0.0) {$4$};
+  % 集合の枠
+  \node[setbox, fit=(d1)(d4)] (dbox) {};
+  \node[setbox, fit=(c1)(c4)] (cbox) {};
+  \node[setlabel, above=2pt of dbox] {$\{1,2,3,4\}$};
+  \node[setlabel, above=2pt of cbox] {$\{1,2,3,4\}$};
+  % 対応
+  \draw[maparrow] (d1) -- (c2);
+  \draw[maparrow] (d2) -- (c3);
+  \draw[badarrow] (d3) -- (c1);
+  \draw[badarrow] (d4) -- (c1);
+  % 注釈
+  \node[font=\scriptsize, text=appleMagenta, anchor=west] at (3.9, 2.4) {$3$と$4$がともに$1$へ移る};
+  \node[font=\scriptsize, text=appleMagenta, anchor=west] at (3.9, 0.0) {どの元も$4$へは移らない};
+\end{tikzpicture}
+\end{center}
+この写像では，$3$と$4$ がともに$1$に移るため単射ではない．
 また，どの元も$4$には移らないため，全射でもない．したがって，この写像は置換ではない．
 置換では，異なる元は異なる元へ移り，かつ移り先の各元がちょうど一度ずつ現れなければならない．このことをまとめて表すのが「全単射」という条件である．
 なお，有限集合 $\{1,2,\dots,n\}$ からそれ自身への写像については，単射であることと全射であることは同値である．
