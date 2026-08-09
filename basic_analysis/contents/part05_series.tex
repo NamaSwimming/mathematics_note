@@ -66,7 +66,7 @@
 \section{絶対収束}
 
 \begin{prop}{絶対収束}{絶対収束}
-	$\sum_{n=0}^{\infty} \abs{a_n}$が収束すれば，$\sum_{n=0}^{\infty} a_n$も収束する\footnote{この定理の逆は成り立たない．たとえば，$\sum_{n=1}^{\infty} \frac{(-1)^n}{n}$の場合などである．}．
+	$\sum_{n=0}^{\infty} \abs{a_n}$が収束すれば，$\sum_{n=0}^{\infty} a_n$も収束する．
 \end{prop}
 
 \begin{leftbar}
@@ -77,6 +77,12 @@
 		より従う．
 	\end{proof}
 \end{leftbar}
+
+\begin{remark}[逆は成り立たない]
+  \prref{絶対収束}の逆は成り立たない．
+  たとえば，$\sum_{n=1}^{\infty} \frac{(-1)^n}{n}$は収束することが知られているが，各項の絶対値の和$\sum_{n=1}^{\infty} \frac{1}{n}$（調和級数）は発散する．
+  すなわち，「収束するが，絶対収束はしない」という級数が存在するのである．
+\end{remark}
 
 \begin{definition}{絶対収束}{絶対収束}
 	$\sum_{n=0}^{\infty} \abs{a_n}$が収束するとき，$\sum_{n=0}^{\infty} a_n$は絶対収束するという．命題\prref{絶対収束}により，絶対収束する級数は収束する．
