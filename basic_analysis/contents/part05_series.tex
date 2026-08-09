@@ -32,7 +32,7 @@
 \begin{theorem}{級数に関するコーシーの収束条件}{級数に関するコーシーの収束条件}
   $\sum_{n=0}^{\infty} a_n$が収束することと，任意の$\varepsilon>0$に対し，ある$n_0 \in \mathbb{N}$が存在して，任意の$m,n \in \mathbb{N}$に対して，
   \[
-    m,n \geqq n_0 \implies \abs{a_{m+1}+a_{m+2}+\cdots+a_{n}}<\varepsilon
+    m,n \geqq n_0 \limp \abs{a_{m+1}+a_{m+2}+\cdots+a_{n}}<\varepsilon
   \]
   となることは同値である．
 \end{theorem}
@@ -128,7 +128,7 @@
   \begin{proof}
     $\sum_{n=0}^{\infty} \abs{a_n}$が収束するとき，\thref{級数に関するコーシーの収束条件}により，任意の$\varepsilon >0$に対して，ある$n_0 \in \mathbb{N}$が存在して，任意の$m,n \in \mathbb{N}$に対して，
     \[
-      m,n \geqq n_0 \implies \abs{a_{m+1}} +\abs{a_{m+2}} + \cdots + \abs{a_n}<\varepsilon
+      m,n \geqq n_0 \limp \abs{a_{m+1}} +\abs{a_{m+2}} + \cdots + \abs{a_n}<\varepsilon
     \]
     である．ここで，絶対値の性質により，
     \[
@@ -218,10 +218,8 @@
 \end{leftbar}
 
 \begin{theorem}{比較定理(1)}{比較定理(1)}
-  \begin{align*}
-    & \forall n \in \mathbb{N} \left [ (a_n \geqq 0 )\land (c_n \geqq 0 )\land (a_n \leqq c_n)\land \left( \sum_{n=0}^{\infty} c_n ~{:}\text{収束} \right) \right ] \\
-    & \implies  \left( \sum_{n=0}^{\infty} a_n~ {:} \text{収束} \right)
-  \end{align*}
+  任意の$n \in \mathbb{N}$に対して，$a_n \geqq 0$，$c_n \geqq 0$，$a_n \leqq c_n$が成り立つとする．
+  このとき，$\sum_{n=0}^{\infty} c_n$が収束するならば，$\sum_{n=0}^{\infty} a_n$も収束する．
 \end{theorem}
 
 \begin{tleftbar}
@@ -240,10 +238,8 @@
 \end{tleftbar}
 
 \begin{theorem}{比較定理(2)}{比較定理(2)}
-  \begin{align*}
-    & \forall n \in \mathbb{N} \left [ (a_n \geqq 0 )\land (d_n \geqq 0 )\land (d_n \leqq a_n)\land \left( \sum_{n=0}^{\infty} d_n ~{:}\text{発散} \right) \right ] \\
-    & \implies  \left( \sum_{n=0}^{\infty} a_n~ {:} \text{発散} \right)
-  \end{align*}
+  任意の$n \in \mathbb{N}$に対して，$a_n \geqq 0$，$d_n \geqq 0$，$d_n \leqq a_n$が成り立つとする．
+  このとき，$\sum_{n=0}^{\infty} d_n$が発散するならば，$\sum_{n=0}^{\infty} a_n$も発散する．
 \end{theorem}
 
 \begin{tleftbar}
@@ -259,8 +255,15 @@
 \newpage
 
 \begin{theorem}{コーシー積}{コーシー積}
-  \begin{align*}
-    & \left (\sum a_n ~{:} \text{絶対収束} \right)\land \left (\sum b_n ~{:} \text{絶対収束} \right) \\
-    \implies & \left (\sum_{n=0}^{\infty} \sum_{k=0}^{n} a_k b_{n-k} ~{:} \text{絶対収束} \right ) \land \sum_{n=0}^{\infty} \sum_{k=0}^{n} a_k b_{n-k} = \left( \sum_{n=0}^{\infty} a_n \right) \left( \sum_{n=0}^{\infty} b_n \right)
-  \end{align*}
+  級数$\sum_{n=0}^{\infty} a_n$と$\sum_{n=0}^{\infty} b_n$がともに絶対収束するとする．
+  このとき，級数
+  \[
+    \sum_{n=0}^{\infty} \sum_{k=0}^{n} a_k b_{n-k}
+  \]
+  も絶対収束し，
+  \[
+    \sum_{n=0}^{\infty} \sum_{k=0}^{n} a_k b_{n-k}
+    = \left( \sum_{n=0}^{\infty} a_n \right) \left( \sum_{n=0}^{\infty} b_n \right)
+  \]
+  が成り立つ．
 \end{theorem}
