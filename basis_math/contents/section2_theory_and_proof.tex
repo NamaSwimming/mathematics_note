@@ -301,52 +301,6 @@
   は\textbf{偽}である．実際，$\alpha = \beta = 0$とすれば，仮定の等式は成り立つが，$\alpha + \beta = 0 \ne \pi$である．
 \end{remark}
 
-\begin{mycolumn}
-  \textbf{「本物の加法定理の逆」はあるか？}\quad
-  加法定理
-  \[
-    \sin (\alpha + \beta) = \sin \alpha \cos \beta + \cos \alpha \sin \beta
-  \]
-  は，実数$\alpha$，$\beta$に対して成り立つ等式として述べられる．このとき，「$\alpha$，$\beta$が実数である」というのは，命題の仮定というよりも，変数$\alpha$，$\beta$の動く範囲（\textbf{議論領域}）の指定である．加法定理は含意$P \to Q$の形をしていないのだから，そもそも「逆」を作る対象ではない．
-
-  もっとも，あらかじめ議論領域を複素数まで広げておけば\footnote{複素数に対する$\sin$，$\cos$は，べき級数や複素指数関数を用いて定義することができる．}，「$\alpha$，$\beta$が実数である」を仮定の位置に置いた含意
-  \[
-    \alpha, \beta \in \mathbb{R}
-    \quad \Longrightarrow \quad
-    \sin (\alpha + \beta) = \sin \alpha \cos \beta + \cos \alpha \sin \beta
-  \]
-  を人為的に作り，形式的にはその逆
-  \[
-    \sin (\alpha + \beta) = \sin \alpha \cos \beta + \cos \alpha \sin \beta
-    \quad \Longrightarrow \quad
-    \alpha, \beta \in \mathbb{R}
-  \]
-  を考えることもできる．しかし，加法定理の等式は\textbf{すべての複素数}$\alpha$，$\beta$に対して成り立つことが知られているので，この逆は偽である（反例：$\alpha = i$，$\beta = 0$）．いずれにせよ，このような「逆」は加法定理の本質を捉えた主張にはならない．
-
-  「加法定理の逆」の名にふさわしいのは，むしろ加法定理をある種の\textbf{条件}とみなし，「この条件を満たす関数はどのような関数か」と問うことである．すなわち，「三角関数ならば加法定理を満たす」の向きを反転させて，「加法定理を満たすならば三角関数か」と問うのである．実際，次のことが知られている：連続関数$f, g \colon \mathbb{R} \to \mathbb{R}$が，任意の$x, y \in \mathbb{R}$に対して
-  \[
-    f(x + y) = f(x)\, g(y) + g(x)\, f(y),
-    \qquad
-    g(x + y) = g(x)\, g(y) - f(x)\, f(y)
-  \]
-  および$f(x)^2 + g(x)^2 = 1$を満たすなら，ある定数$k \in \mathbb{R}$が存在して
-  \[
-    f(x) = \sin kx,
-    \qquad
-    g(x) = \cos kx
-  \]
-  となる．つまり，$\sin$と$\cos$が加法定理を満たすだけでなく，加法定理とピタゴラスの関係を満たす連続関数は，本質的に$\sin$と$\cos$に限られる．この意味で，加法定理は三角関数を\textbf{特徴づけて}いるのである．
-
-  証明の鍵は，$h(x) = g(x) + i f(x)$とおくことである．すると，2つの加法定理は指数法則
-  \[
-    h(x + y) = h(x)\, h(y)
-  \]
-  という1つの式にまとめられ，$f(x)^2 + g(x)^2 = 1$は$\abs{h(x)} = 1$を意味する．このような連続関数$h$，すなわち実数の加法を絶対値$1$の複素数の乗法に移す連続な写像は，ある$k \in \mathbb{R}$を用いて
-  \[
-    h(x) = e^{ikx}
-  \]
-  と表されることが知られている．実部と虚部を比較すれば，$g(x) = \cos kx$，$f(x) = \sin kx$が得られる\footnote{連続性などの正則性に関する仮定を外すと，通常の三角関数では表せない非連続な解が存在しうる．}．
-\end{mycolumn}
 
 \phantomsection
 \subsection{述語論理\index{じゅつごろんり@述語論理}}
