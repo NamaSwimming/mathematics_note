@@ -824,6 +824,98 @@
   overlay last    ={\columnAccentLine{0mm}{5mm}}
 }
 
+%% ==============================================================
+% remark：Apple風の補足・注意環境
+% 使用色：白・黒・マゼンタのみ
+%
+% 見出し帯はすべて overlay で描画し，本文は top で場所を空ける．
+% （tcolorbox の attach boxed title は本文位置の補正が絡んで
+%   ずれやすいため，見出しは自前で組んでいる．）
+%
+%   frame.north west を原点として，上辺からの距離で位置を指定する：
+%     \remarkHeadY     … アクセントドットの中心
+%     \remarkTitleBase … 見出し文字のベースライン
+%     \remarkRuleY     … 区切り罫線
+%     top              … 本文の先頭（罫線より下）
+%
+% !! この { } の中に空行を入れないこと（pgfkeys が \par で壊れる）!!
+% ==============================================================
+
+\colorlet{remarkMagenta}{magenta!72!black}
+\colorlet{remarkInk}{black!88}
+\colorlet{remarkBackground}{black!2.0}
+\colorlet{remarkRule}{black!18}
+\colorlet{remarkSubtitle}{black!52}
+
+% ---- 見出し帯の寸法（調整はここ1か所で） ----
+\newlength{\remarkPad}        \setlength{\remarkPad}{6mm}      % 左右の内側余白
+\newlength{\remarkDotR}       \setlength{\remarkDotR}{1.1mm}   % ドットの半径
+\newlength{\remarkDotX}       \setlength{\remarkDotX}{7.1mm}   % ドット中心の x（左端が \remarkPad に揃う）
+\newlength{\remarkHeadY}      \setlength{\remarkHeadY}{5.9mm}  % ドット中心の深さ
+\newlength{\remarkTitleX}     \setlength{\remarkTitleX}{10.4mm}% 見出し文字の左端
+\newlength{\remarkTitleBase}  \setlength{\remarkTitleBase}{7.0mm}
+\newlength{\remarkRuleY}      \setlength{\remarkRuleY}{10.2mm}
+
+% ---- 見出しの中身 ----
+\makeatletter
+\newcommand{\remark@head}[1]{%
+  \sffamily\bfseries\fontsize{9.5pt}{11pt}\selectfont
+  \color{remarkInk}Remark%
+  \ifstrempty{#1}{}{%
+    \hspace{0.72em}%
+    {\color{remarkRule}\rule[-0.14em]{0.4pt}{0.92em}}%
+    \hspace{0.72em}%
+    {\normalfont\sffamily\color{remarkSubtitle}#1}%
+  }%
+}
+
+\newtcolorbox{remark}[1][]{
+  enhanced,
+  breakable,
+  %
+  % ---- 基本色（枠線は出さず，面だけで見せる） ----
+  colback=remarkBackground,
+  colframe=remarkBackground,
+  coltext=remarkInk,
+  %
+  % ---- 外形 ----
+  boxrule=0pt,
+  arc=3mm,
+  outer arc=3mm,
+  boxsep=0pt,
+  %
+  % ---- 余白（top は見出し帯のぶんを含む） ----
+  left=\remarkPad,
+  right=\remarkPad,
+  top=13.6mm,
+  bottom=5.5mm,
+  %
+  before skip=1.0\baselineskip,
+  after skip=1.0\baselineskip,
+  %
+  % ---- 本文 ----
+  before upper={%
+    \setlength{\parindent}{1\zw}%
+  },
+  %
+  % ---- 見出し帯（1ページ目・分割しない場合のみ） ----
+  overlay unbroken and first={%
+    \fill[remarkMagenta]
+      ([xshift=\remarkDotX, yshift=-\remarkHeadY]frame.north west)
+      circle[radius=\remarkDotR];
+    \node[anchor=base west, inner sep=0pt, outer sep=0pt]
+      at ([xshift=\remarkTitleX, yshift=-\remarkTitleBase]frame.north west)
+      {\remark@head{#1}};
+    \draw[remarkRule, line width=0.4pt]
+      ([xshift=\remarkPad,  yshift=-\remarkRuleY]frame.north west) --
+      ([xshift=-\remarkPad, yshift=-\remarkRuleY]frame.north east);%
+  },
+  %
+  % ---- 改ページ時 ----
+  pad at break*=2mm
+}
+\makeatother
+
 % ---- reviewbox: 丸角・影付きの復習ボックス（オプションでタイトル） ----
 \newtcolorbox{reviewbox}[1][]{
   enhanced, breakable,
