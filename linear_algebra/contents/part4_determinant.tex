@@ -296,7 +296,7 @@ i \xmapsto{\tau} \tau(i) \xmapsto{\sigma} \sigma(\tau(i))
 \begin{definition}{逆置換}{逆置換}
   $\sigma\in S_n$に対して，逆写像$\sigma^{-1}$を$\sigma$の\textbf{逆置換}\index{ぎゃくちかん@逆置換}とよび，次のように定義する：
   \[
-  \sigma^{-1}(\sigma(i)) = i, \quad \forall i \in \{1, 2, \dots, n\}
+  \lall{i \in \{1, 2, \dots, n\}} \lst \sigma^{-1}(\sigma(i)) = i
   \]
 \end{definition}
 
@@ -392,7 +392,7 @@ $\sigma, \tau, \rho \in S_n$と写像$\circ \colon S_n \times S_n \to S_n$に対
   \]
   かつ
   \[
-  \sigma(k) = k, \quad \forall k \in \{1, 2, \dots, n\} \setminus \{i, j\}
+  \lall{k \in \{1, 2, \dots, n\} \setminus \{i, j\}} \lst \sigma(k) = k
   \]
   を満たすとき，$\sigma$を\textbf{互換}\index{ごかん@互換}とよぶ． このとき互換$\sigma$は
   \[
@@ -1658,7 +1658,7 @@ $F$ は列に関して多重線型である．
 \begin{prop}{行列式と階数}{行列式と階数}
   $n$次正方行列$A$に対して，次が成り立つ：
   \[
-  \det A \ne 0 \iff \rank A = n
+  \det A \ne 0 \lequiv \rank A = n
   \]
 \end{prop}
 
