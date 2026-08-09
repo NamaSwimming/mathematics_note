@@ -68,7 +68,37 @@
 \phantomsection
 \subsection{集合の表記}
 
-数学では，よく使われる集合に固有の記号を用いることがある．
+集合を表す方法には，おもに次の2つがある．
+
+\begin{description}
+  \item[外延的記法\index{がいえんてききほう@外延的記法}（列挙形式）]
+        $\{a,b,c\}$のように，要素を列挙して表す．
+  \item[内包的記法\index{ないほうてききほう@内包的記法}（条件形式）]
+        $\{x\in\mathbb{N}\mid x\leqq5\}$のように，
+        要素が満たす条件を用いて表す．
+\end{description}
+
+\begin{example}{集合の表記}{集合の表記}
+  集合は，外延的記法と内包的記法のどちらを用いても表すことができる．
+  たとえば，次の等式が成り立つ．
+  \begin{align*}
+    \{1,2,3\}
+      &=
+      \{n\in\mathbb{N}\mid n^2-4n+3\leqq0\},\\
+    \{-2,-1,0,1,2\}
+      &=
+      \{n\in\mathbb{Z}\mid n^2\leqq4\},\\
+    \{2,4,6,8,\dots\}
+      &=
+      \{2n\mid n\in\mathbb{N}\},\\
+    \{1,4,9,16,25,\dots\}
+      &=
+      \{n^2\mid n\in\mathbb{N}\},\\
+      \{-1,1\} &= \{x\in\mathbb{R}\mid x^{2026}=1\}.
+  \end{align*}
+\end{example}
+
+また数学では，よく使われる集合に固有の記号を用いることがある．
 
 \begin{reviewbox}[数の集合]
   \small
@@ -94,8 +124,21 @@
 $\mathbb{N}$，$\mathbb{R}$，$\mathbb{C}$は，それぞれ natural number，real number，complex number に由来する記号である．
 また，$\mathbb{Z}$はドイツ語の Zahl（数）に，$\mathbb{Q}$は quotient（商）に由来する．
 
-数の集合以外にも，特定の集合を表すために固有の記号を用いることがある．
 
+集合の表記は文脈により省略されることがある．たとえば，以下のような問題があったとする．
+\begin{quotation}
+  2次方程式
+  \[
+    x^2 - 3x -4 =0
+  \]
+  を解け．
+\end{quotation}
+$x$が属する全体集合は定められていないが，この場合だと「$x \in \mathbb{C}$」とされることが多い．
+よってこの方程式の解は$x = -1 , 4$とする場合が多い．
+だが，もちろん$ x \in \mathbb{N}$とするなら，$ -1 \notin \mathbb{N}$なので，この場合の解は$ x= 4$のみである．
+ただ，$x$が属する全体集合は，文脈でわかったり明記されていたりする場合が多いので，あまり心配はいらないであろう．
+
+数の集合以外にも，特定の集合を表すために固有の記号を用いることがある．
 
 \phantomsection
 \begin{definition}{空集合}{空集合}
@@ -110,12 +153,32 @@ $\mathbb{N}$，$\mathbb{R}$，$\mathbb{C}$は，それぞれ natural number，re
 
 \phantomsection
 \begin{example}{空集合の例}{空集合の例}
+  空集合は，外延的記法では
   \[
     \{\}
-    \qquad\text{や}\qquad
-    \{x \in \mathbb{R} \mid x^2 = -1\}
   \]
-  は，いずれも要素をひとつも持たないため，空集合である．
+  と表される．一方，内包的記法では，たとえば
+  \[
+    \{x \in \mathbb{R} \mid x^2=-1\},
+    \qquad
+    \{n \in \mathbb{N} \mid n<0\},
+    \qquad
+    \{x \in \mathbb{R} \mid x<x\}
+  \]
+  は，いずれも条件を満たす要素をひとつも持たないため，空集合である．
+  したがって，
+  \[
+    \{\}
+    =
+    \{x \in \mathbb{R} \mid x^2=-1\}
+    =
+    \{n \in \mathbb{N} \mid n<0\}
+    =
+    \{x \in \mathbb{R} \mid x<x\}
+    =
+    \varnothing
+  \]
+  である．
 \end{example}
 
 \begin{remark}[空集合に関する注意]
@@ -185,28 +248,6 @@ $\mathbb{N}$，$\mathbb{R}$，$\mathbb{C}$は，それぞれ natural number，re
 
 
 
-集合の表記は文脈により省略されることがある．たとえば，以下のような問題があったとする．
-\begin{quotation}
-  2次方程式
-  \[
-    x^2 - 3x -4 =0
-  \]
-  を解け．
-\end{quotation}
-$x$が属する全体集合は定められていないが，この場合だと「$x \in \mathbb{C}$」とされることが多い．
-よってこの方程式の解は$x = -1 , 4$とする場合が多い．
-だが，もちろん$ x \in \mathbb{N}$とするなら，$ -1 \notin \mathbb{N}$なので，この場合の解は$ x= 4$のみである．
-ただ，$x$が属する全体集合は，文脈でわかったり明記されていたりする場合が多いので，あまり心配はいらないであろう．
-
-
-また，集合はしばしば条件を用いて記述される．
-
-\begin{description}
-  \item[外延的記法\index{がいえんてききほう@外延的記法}（列挙形式）]
-        $\{ a, b, c \}$のように要素を列挙して表す．
-  \item[内包的記法\index{ないほうてききほう@内包的記法}（条件形式）]
-        $\{ x \in \mathbb{N} \mid x \leqq 5 \}$のように条件を用いて表す．
-\end{description}
 
 
 \phantomsection
@@ -240,92 +281,114 @@ $x$が属する全体集合は定められていないが，この場合だと�
 
 \begin{figure}[ht]
   \centering
+  % --- ベン図の共通設定 ---
+  \tikzset{
+    venn frame/.style={
+      draw=black!75,
+      line width=0.7pt
+    },
+    venn circle/.style={
+      draw=black!85,
+      line width=0.8pt
+    },
+    venn fill/.style={
+      fill=magenta!15
+    },
+    venn label/.style={
+      font=\small
+    }
+  }
+  % --- 共通部分 ---
   \begin{minipage}{0.45\linewidth}
     \centering
-    % A∩B のベン図
-    \scalebox{0.9}{
-      \begin{tikzpicture}
-        % 全体集合の長方形
-        \draw (0,0) rectangle (6,4) node[below left] {$X$};
-        % 集合Aの円
-        \draw (2,2) circle (1.5) node[left] {$A$};
-        % 集合Bの円
-        \draw (4,2) circle (1.5) node[right] {$B$};
-        % 共通部分を塗りつぶす
-        \begin{scope}
-          \clip (2,2) circle (1.5);
-          \fill[gray] (4,2) circle (1.5);
-        \end{scope}
-      \end{tikzpicture}
-    }
-    \caption{$A \cap B$ のベン図}
+    \begin{tikzpicture}[scale=0.9]
+      % 塗り
+      \begin{scope}
+        \clip (2.2,2) circle (1.45);
+        \fill[venn fill] (3.8,2) circle (1.45);
+      \end{scope}
+
+      % 輪郭
+      \draw[venn frame] (0,0) rectangle (6,4);
+      \draw[venn circle] (2.2,2) circle (1.45);
+      \draw[venn circle] (3.8,2) circle (1.45);
+
+      % ラベル
+      \node[venn label] at (1.35,2.9) {$A$};
+      \node[venn label] at (4.65,2.9) {$B$};
+      \node[venn label, anchor=north east] at (5.85,3.85) {$X$};
+    \end{tikzpicture}
+    \caption{共通部分 $A \cap B$}
   \end{minipage}
   \hfill
+  % --- 和集合 ---
   \begin{minipage}{0.45\linewidth}
     \centering
-    % A∪B のベン図
-    \scalebox{0.9}{
-      \begin{tikzpicture}
-        % 全体集合の長方形
-        \draw (0,0) rectangle (6,4) node[below left] {$X$};
-        % 集合Aの円を塗りつぶす
-        \fill[gray] (2,2) circle (1.5);
-        % 集合Bの円を塗りつぶす
-        \fill[gray] (4,2) circle (1.5);
-        % 集合Aの円の輪郭
-        \draw (2,2) circle (1.5) node[left] {$A$};
-        % 集合Bの円の輪郭
-        \draw (4,2) circle (1.5) node[right] {$B$};
-      \end{tikzpicture}
-    }
-    \caption{$A \cup B$ のベン図}
+    \begin{tikzpicture}[scale=0.9]
+      % 塗り
+      \fill[venn fill] (2.2,2) circle (1.45);
+      \fill[venn fill] (3.8,2) circle (1.45);
+
+      % 輪郭
+      \draw[venn frame] (0,0) rectangle (6,4);
+      \draw[venn circle] (2.2,2) circle (1.45);
+      \draw[venn circle] (3.8,2) circle (1.45);
+
+      % ラベル
+      \node[venn label] at (1.35,2.9) {$A$};
+      \node[venn label] at (4.65,2.9) {$B$};
+      \node[venn label, anchor=north east] at (5.85,3.85) {$X$};
+    \end{tikzpicture}
+    \caption{和集合 $A \cup B$}
   \end{minipage}
 
-  \vspace{2mm}
+  \vspace{3mm}
 
+  % --- 差集合 ---
   \begin{minipage}{0.45\linewidth}
     \centering
-    % A - B のベン図
-    \scalebox{0.9}{
-      \begin{tikzpicture}
-        % 全体集合の長方形
-        \draw (0,0) rectangle (6,4) node[below left] {$X$};
-        % 集合Aの円
-        \draw (2,2) circle (1.5) node[left] {$A$};
-        % 集合Bの円
-        \draw (4,2) circle (1.5) node[right] {$B$};
-        % A - B を塗りつぶす
-        \begin{scope}
-          \clip (2,2) circle (1.5);
-          \fill[gray] (0,0) rectangle (6,4);
-        \end{scope}
-        \begin{scope}
-          \clip (4,2) circle (1.5);
-          \fill[white] (0,0) rectangle (6,4);
-        \end{scope}
-        % 集合Aの円の輪郭
-        \draw (2,2) circle (1.5) node[left] {$A$};
-      \end{tikzpicture}
-    }
-    \caption{$A \setminus B$ のベン図}
+    \begin{tikzpicture}[scale=0.9]
+      % A を塗る
+      \fill[venn fill] (2.2,2) circle (1.45);
+
+      % A \cap B の部分を白く戻す
+      \begin{scope}
+        \clip (2.2,2) circle (1.45);
+        \fill[white] (3.8,2) circle (1.45);
+      \end{scope}
+
+      % 輪郭
+      \draw[venn frame] (0,0) rectangle (6,4);
+      \draw[venn circle] (2.2,2) circle (1.45);
+      \draw[venn circle] (3.8,2) circle (1.45);
+
+      % ラベル
+      \node[venn label] at (1.35,2.9) {$A$};
+      \node[venn label] at (4.65,2.9) {$B$};
+      \node[venn label, anchor=north east] at (5.85,3.85) {$X$};
+    \end{tikzpicture}
+    \caption{差集合 $A \setminus B$}
   \end{minipage}
   \hfill
+  % --- 補集合 ---
   \begin{minipage}{0.45\linewidth}
     \centering
-    % A^c のベン図
-    \scalebox{0.9}{
-      \begin{tikzpicture}
-        % 全体集合の長方形を塗りつぶす
-        \fill[gray] (0,0) rectangle (6,4);
-        % 集合Aの円を白で塗りつぶす
-        \fill[white] (2,2) circle (1.5);
-        % 全体集合の枠
-        \draw (0,0) rectangle (6,4) node[below left] {$X$};
-        % 集合Aの円の輪郭
-        \draw (2,2) circle (1.5) node[left] {$A$};
-      \end{tikzpicture}
-    }
-    \caption{$A^c$ のベン図}
+    \begin{tikzpicture}[scale=0.9]
+      % X 全体を塗る
+      \fill[venn fill] (0,0) rectangle (6,4);
+
+      % A を白く抜く
+      \fill[white] (2.2,2) circle (1.45);
+
+      % 輪郭
+      \draw[venn frame] (0,0) rectangle (6,4);
+      \draw[venn circle] (2.2,2) circle (1.45);
+
+      % ラベル
+      \node[venn label] at (1.35,2.9) {$A$};
+      \node[venn label, anchor=north east] at (5.85,3.85) {$X$};
+    \end{tikzpicture}
+    \caption{補集合 $A^c$}
   \end{minipage}
 \end{figure}
 
