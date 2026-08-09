@@ -268,15 +268,38 @@
 \end{tleftbar}
 
 \begin{remark}[四則演算は収束列に限る]
-  ここで，$(a_n)$と$(b_n)$がともに収束する場合に，上の定理が成り立つことに注意しよう．
-  たとえば，
-  \[
-    a_n \coloneqq n,
-    \qquad
-    b_n \coloneqq -n
-  \]
-  とすると，数列$(a_n+b_n)$は$0$に収束するが，数列$(a_n)$と$(b_n)$はともに発散する．
-  このように，極限の四則演算は，収束する数列に対して適用されるものである．
+ここで，$(a_n)$と$(b_n)$がともに収束する場合に，上の定理が成り立つことに注意しよう．
+たとえば，
+\[
+a_n \coloneqq n+\sin^2 n,
+\qquad
+b_n \coloneqq -n+\cos^2 n+\frac{\sin n}{n}
+\]
+とすると，数列$(a_n)$と$(b_n)$はともに発散する．
+一方，
+\[
+a_n+b_n
+=\sin^2 n+\cos^2 n+\frac{\sin n}{n}
+=1+\frac{\sin n}{n}
+\longrightarrow1
+\]
+である．
+
+もっとも，このことはより簡単な例からも容易にわかる．
+実際，
+\[
+a_n\coloneqq n,
+\qquad
+b_n\coloneqq -n+1+\frac1n
+\]
+とすれば，$(a_n)$と$(b_n)$はともに発散するが，
+\[
+a_n+b_n=1+\frac1n\longrightarrow1
+\]
+である．
+
+このように，数列$(a_n+b_n)$が収束するからといって，$(a_n)$と$(b_n)$がそれぞれ収束するとは限らない．
+極限の四則演算は，もとの数列が収束することを仮定して適用するものである．
 \end{remark}
 
 次に，極限操作が順序関係を保存することを示す．
@@ -400,4 +423,52 @@
     \lim_{n\to\infty} a_n = 0
   \]
   を得る．
+\end{example}
+
+\begin{example}{はさみうちの原理（複雑な和の例）}{はさみうちの原理_複雑な和}
+\[
+a_n
+\coloneqq
+\sum_{k=1}^{n}\frac{\sin k}{n^2+k}
+=
+\frac{\sin 1}{n^2+1}
++\frac{\sin 2}{n^2+2}
++\cdots
++\frac{\sin n}{n^2+n}
+\]
+とする．一見すると，この数列の極限を直接求めることは難しそうに見える．
+
+ここで，任意の $k\in\mathbb{N}$ に対して
+\[
+\abs{\sin k}\leqq 1
+\]
+であるから，
+\[
+\abs{a_n}
+\leqq
+\sum_{k=1}^{n}\frac{\abs{\sin k}}{n^2+k}
+\leqq
+\sum_{k=1}^{n}\frac{1}{n^2+k}
+<
+\sum_{k=1}^{n}\frac{1}{n^2}
+=
+\frac{1}{n}.
+\]
+したがって，
+\[
+-\frac{1}{n} < a_n< \frac{1}{n}
+\]
+が成り立つ．
+
+ここで
+\[
+\lim_{n\to\infty}\left(-\frac{1}{n}\right)=0,
+\qquad
+\lim_{n\to\infty}\frac{1}{n}=0
+\]
+であるから，はさみうちの原理により
+\[
+\lim_{n\to\infty}a_n=0
+\]
+を得る．
 \end{example}
