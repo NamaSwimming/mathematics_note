@@ -96,20 +96,22 @@ $\sigma$が$1$を$2$，$2$を$3$，$3$を$1$に対応させるとする．
 \]
 \end{example}
 
-ここで，\exref{置換}の$\sigma$は
-\[
-P_\sigma = 
-\begin{pmatrix}
-  0 & 1 & 0 \\
-  0 & 0 & 1\\ 
-  1 & 0 & 0 
-\end{pmatrix}
-\]
-とは異なる概念であることに注意したい．たしかに
-\[
- P_\sigma \begin{pmatrix} 1 \\ 2 \\ 3 \end{pmatrix} = \begin{pmatrix} 2 \\ 3\\ 1 \end{pmatrix}
-\]
-ではあるが，$\sigma$は行列ではなく，$P_\sigma$とは異なるものである．
+\begin{remark}[置換と置換行列]
+  \exref{置換}の$\sigma$は
+  \[
+  P_\sigma = 
+  \begin{pmatrix}
+    0 & 1 & 0 \\
+    0 & 0 & 1\\ 
+    1 & 0 & 0 
+  \end{pmatrix}
+  \]
+  とは異なる概念であることに注意したい．たしかに
+  \[
+   P_\sigma \begin{pmatrix} 1 \\ 2 \\ 3 \end{pmatrix} = \begin{pmatrix} 2 \\ 3\\ 1 \end{pmatrix}
+  \]
+  ではあるが，$\sigma$はあくまで写像であって行列ではなく，$P_\sigma$とは区別すべきものである．
+\end{remark}
 
 また，置換を議論する際には「動かさない文字は省略してよい」とすることが多い．たとえば，以下のような例である：
 \[
@@ -336,10 +338,10 @@ $\sigma, \tau, \rho \in S_n$と写像$\circ \colon S_n \times S_n \to S_n$に対
   $n \geqq 3$のとき，$(S_n,\circ)$は可換群ではない．
   \end{mycolumn}
 
-\begin{mycolumn}
+\begin{remark}[$S_n$は空でない]
   任意の$n \in \mathbb{N}$に対して，$S_n \ne \varnothing$である．
   恒等置換$1_n$が$S_n$の元としてただひとつ存在するからである．
-\end{mycolumn}
+\end{remark}
 
 \begin{prop}{置換の性質}{置換の性質}
   任意の関数$ f \colon S_n \to \mathbb{C} $に対して，次が成り立つ：
@@ -1194,7 +1196,7 @@ $4$次以上の行列式にこれを適用してはならない．
   \]
   の形に表すことができ，しかもこの表し方はただ一通りである．
   実際，$\bm{b} = \sum_{k=1}^{n} x_k \bm{a}_k = \sum_{k=1}^{n} x'_k \bm{a}_k$と二通りに表せたとすると，$\sum_{k=1}^{n} (x_k - x'_k) \bm{a}_k = \bm{0}$となるから，線型独立性より$x_k = x'_k$である．
-  第1章のコラムで見たように$A\bm{x} = x_1 \bm{a}_1 + x_2 \bm{a}_2 + \dots + x_n \bm{a}_n$であるから，以上のことは，連立一次方程式$A\bm{x} = \bm{b}$がただ一つの解をもつことを意味している．
+  第1章のRemarkで見たように$A\bm{x} = x_1 \bm{a}_1 + x_2 \bm{a}_2 + \dots + x_n \bm{a}_n$であるから，以上のことは，連立一次方程式$A\bm{x} = \bm{b}$がただ一つの解をもつことを意味している．
 
   次に，この解の具体的な形を求めよう．上の等式を用いると，
   \begin{align*}
@@ -1603,7 +1605,7 @@ $F$ は列に関して多重線型である．
 \begin{proof}[2]
   $A=(\bm{a}_1,\bm{a}_2,\dots,\bm{a}_n)$，$X=(x_{ij})$ とおき，$X$ の第 $j$ 列を $\bm{x}_j$ とかく．
   行列の積の定義より $AX=(A\bm{x}_1,A\bm{x}_2,\dots,A\bm{x}_n)$ であり，
-  第1章のコラムで見たように，その各列は
+  第1章のRemarkで見たように，その各列は
   \[
     A\bm{x}_j=\sum_{i_j=1}^{n} x_{i_j j}\bm{a}_{i_j}
   \]
