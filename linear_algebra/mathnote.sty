@@ -336,6 +336,14 @@
   \thispagestyle{empty}%  % part ページは柱を出さない
 }
 
+% \part@autolabel{タイトル}
+%   \part{タイトル} の直後に \label{part:タイトル} を自動的に張る．
+%   これにより，本文中で \partref{タイトル} と書くだけで
+%   「第 3 章」のような相互参照が得られる（§ 5.1 を参照）．
+%   同じタイトルの章がふたつあると "multiply defined" 警告が出るので，
+%   その場合は \part[短縮タイトル]{表示タイトル} で短縮側を一意にすること．
+\def\part@autolabel#1{\label{\partrefprefix #1}}
+
 % オプション引数なし版
 \def\part@noopt#1{%
   \part@newpage
@@ -347,6 +355,7 @@
   }%
   \origpart{#1}%
   \let\addcontentsline\saved@addcontentsline
+  \part@autolabel{#1}%
   \gdef\CurrentPartTitle{第\thepart 章\quad #1}%
 }
 
@@ -360,6 +369,7 @@
   }%
   \origpart[#1]{#2}%
   \let\addcontentsline\saved@addcontentsline
+  \part@autolabel{#1}%
   \gdef\CurrentPartTitle{第\thepart 章\quad #1}%
 }
 
@@ -371,6 +381,43 @@
 }
 
 \makeatother
+
+% ==============================================================
+% § 5.1 章・節の相互参照（\partref / \secref）
+% ==============================================================
+%
+% 本書では \part を「第 n 章」として組んでいる（§ 7 の \titleformat）．
+% 章番号を本文に直接書くと，章を追加・分割・入れ替えたときに
+% すべて手で直すことになるため，ラベルによる参照を用意する．
+%
+%   \part{線型空間}          % ← \label{part:線型空間} が自動で張られる
+%   ...
+%   \partref{線型空間}       % → 「第 5 章」（リンク付き）
+%   \partref*{線型空間}      % → 「第 5 章「線型空間」」
+%
+% 節を参照したい場合は，\section の直後に自分で \label を張る：
+%   \section{行列の積}\label{sec:行列の積}
+%   \secref{行列の積}        % → 「第 1.3 節」
+%   \subsecref{ラベル}       % → 「第 1.3.2 項」（\label{subsec:...} が必要）
+%
+% ラベルの接頭辞を変えたい場合は \renewcommand{\partrefprefix}{...} とする
+% （\part の自動ラベルもこの接頭辞を用いる）．
+
+\newcommand{\partrefprefix}{part:}
+
+\makeatletter
+\DeclareRobustCommand{\partref}{\@ifstar\partref@star\partref@plain}
+% 「第 n 章」全体をひとつのリンクにする（\ref* は番号のみを返す）
+\newcommand{\partref@plain}[1]{%
+  \hyperref[\partrefprefix #1]{第\ref*{\partrefprefix #1}章}%
+}
+\newcommand{\partref@star}[1]{%
+  \hyperref[\partrefprefix #1]{第\ref*{\partrefprefix #1}章「\nameref*{\partrefprefix #1}」}%
+}
+\makeatother
+
+\newcommand{\secref}   [1]{\hyperref[sec:#1]{第\ref*{sec:#1}節}}
+\newcommand{\subsecref}[1]{\hyperref[subsec:#1]{第\ref*{subsec:#1}項}}
 
 % rule/caps color and bar fill/outline
 \colorlet{secrule}{appleLineGray}
