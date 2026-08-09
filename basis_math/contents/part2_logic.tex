@@ -15,16 +15,27 @@
   \caption{命題論理の記号}
   \begin{tabular}{c|c}
     \hline
-    記号                & 意味                       \\
+    記号      & 意味                                     \\
     \hline
-    $\land$           & かつ（論理積\index{ろんりせき@論理積}） \\
-    $\lor$            & または（論理和\index{ろんりわ@論理和}） \\
-    $\lnot$           & 否定\index{ひてい@否定}         \\
-    $\to$             & ならば（含意\index{がんい@含意}）    \\
-    $\leftrightarrow$ & 同値 \index{どうち@同値} \\
+    $\land$   & かつ（論理積\index{ろんりせき@論理積}）   \\
+    $\lor$    & または（論理和\index{ろんりわ@論理和}）  \\
+    $\lnot$   & 否定\index{ひてい@否定}                  \\
+    $\limp$   & ならば（含意\index{がんい@含意}）        \\
+    $\lequiv$ & 同値\index{どうち@同値}                  \\
     \hline
   \end{tabular}
 \end{table}
+
+なお，含意を$\to$，同値を$\leftrightarrow$とかく文献も多い．本書でこれらを用いないのは，$\to$をのちに現れる写像$f \colon A \to B$や極限$\lim_{n \to \infty} a_n$の矢印に予約しておくためである．ひとつの記号にひとつの意味だけを担わせておくと，読み間違いが起こりにくい．
+
+\begin{remark}[記号を使う場面と，日本語で書く場面]
+  論理記号は，論理式そのものを組み立てて論じるための道具である．そこで本書では，これらを使う場面をつぎのように定めておく．
+  \begin{itemize}
+    \item 定義や命題の主張，証明の地の文は，原則として\textbf{日本語}で書く．すなわち「かつ」「または」「〜ならば」「任意の$x$に対して」「〜が存在して」と述べる．
+    \item 論理式そのものを数式として書き下すときは，\textbf{論理記号だけ}を用いる．このとき，数式のなかに日本語の接続詞を混ぜない．
+  \end{itemize}
+  たとえば「$A \subset B$かつ$B \subset A$」は日本語の文のなかでの言い方であり，同じ内容を論理式として書くときは$(A \subset B) \land (B \subset A)$とする．どちらの書き方も正しいが，ひとつの数式のなかで両者を混ぜると，同じ「かつ」が2通りの姿で現れて読みにくくなる．
+\end{remark}
 
 これらの論理記号を用いて，命題を結合し，複雑な論理式を構成することができる．
 以下に，基本的な命題の真理値表を載せよう．
@@ -81,7 +92,7 @@
 \caption{「含意」の真理値表}
 \label{tab:含意の真理値表}
 \begin{tabular}{|c|c|c|} \hline
-  $P$          & $Q$          & $P \to Q$    \\ \hline
+  $P$          & $Q$          & $P \limp Q$  \\ \hline
   $\mathrm{T}$ & $\mathrm{T}$ & $\mathrm{T}$ \\ \hline
   $\mathrm{T}$ & $\mathrm{F}$ & $\mathrm{F}$ \\ \hline
   $\mathrm{F}$ & $\mathrm{T}$ & $\mathrm{T}$ \\ \hline
@@ -94,7 +105,7 @@
 \caption{「同値」の真理値表}
 \label{tab:同値の真理値表}
 \begin{tabular}{|c|c|c|} \hline
-  $P$          & $Q$          & $P \leftrightarrow Q$ \\ \hline
+  $P$          & $Q$          & $P \lequiv Q$ \\ \hline
   $\mathrm{T}$ & $\mathrm{T}$ & $\mathrm{T}$          \\ \hline
   $\mathrm{T}$ & $\mathrm{F}$ & $\mathrm{F}$          \\ \hline
   $\mathrm{F}$ & $\mathrm{T}$ & $\mathrm{F}$          \\ \hline
@@ -106,9 +117,9 @@
 
 上記の真理値表によって，命題論理の記号を定義する．
 
-以下，ふたつの論理式$P$，$Q$について，それらに含まれる命題（命題変数）の真偽を\textbf{どのように定めても}$P$と$Q$の真理値がつねに一致するとき，$P$と$Q$は\emph{論理的に同値}\index{ろんりてきどうち@論理的同値}であるといい，$P \equiv Q$と表す\footnote{$P \leftrightarrow Q$がそれ自体ひとつの論理式であるのに対し，$P \equiv Q$は「$P \leftrightarrow Q$がつねに真である」という，論理式についての主張である点で，両者は区別される．}．
+以下，ふたつの論理式$P$，$Q$について，それらに含まれる命題（命題変数）の真偽を\textbf{どのように定めても}$P$と$Q$の真理値がつねに一致するとき，$P$と$Q$は\emph{論理的に同値}\index{ろんりてきどうち@論理的同値}であるといい，$P \equiv Q$と表す\footnote{$P \lequiv Q$がそれ自体ひとつの論理式であるのに対し，$P \equiv Q$は「$P \lequiv Q$がつねに真である」という，論理式についての主張である点で，両者は区別される．}．
 
-たとえば，のちに示す$P \to Q \equiv \lnot P \lor Q$は，「$P$，$Q$の真偽の組合せ$4$通りの\textbf{すべて}において，$P \to Q$と$\lnot P \lor Q$の真理値が一致する」ことを主張している．ある特定の場合にたまたま真偽が一致するだけでは，論理的に同値であるとはいわないことに注意しよう．
+たとえば，のちに示す$P \limp Q \equiv \lnot P \lor Q$は，「$P$，$Q$の真偽の組合せ$4$通りの\textbf{すべて}において，$P \limp Q$と$\lnot P \lor Q$の真理値が一致する」ことを主張している．ある特定の場合にたまたま真偽が一致するだけでは，論理的に同値であるとはいわないことに注意しよう．
 
 \begin{prop}{}{}
   命題$P$，$Q$，$R$に対して，次の式が成り立つ：
@@ -141,11 +152,11 @@
   \begin{description}
     \item[含意の等価表現] 
           \[
-            P \to Q \equiv \lnot P \lor Q
+            P \limp Q \equiv \lnot P \lor Q
           \]
     \item[同値の等価表現]
           \[
-            P \leftrightarrow Q \equiv (P \to Q) \land (Q \to P)
+            P \lequiv Q \equiv (P \limp Q) \land (Q \limp P)
           \]
   \end{description}
 \end{prop}
@@ -153,11 +164,11 @@
 \phantomsection
 \subsection{含意の真偽と逆・裏・対偶}
 
-含意$P \to Q$は，慣れないうちは真偽の判定にとまどうことが多い．そこで，表\ref{tab:含意の真理値表}にしたがって，$P$と$Q$の真偽の組合せ$4$通りをすべて列挙して確認しておこう．
+含意$P \limp Q$は，慣れないうちは真偽の判定にとまどうことが多い．そこで，表\ref{tab:含意の真理値表}にしたがって，$P$と$Q$の真偽の組合せ$4$通りをすべて列挙して確認しておこう．
 
 \begin{center}
   \begin{tabular}{|c|c|c|l|} \hline
-    $P$ & $Q$ & $P \to Q$   & 備考                                   \\ \hline
+    $P$ & $Q$ & $P \limp Q$ & 備考                                   \\ \hline
     真  & 真  & 真          & 約束は守られている                     \\ \hline
     真  & 偽  & \textbf{偽} & 偽となるのは，この場合\textbf{だけ}    \\ \hline
     偽  & 真  & 真          & $P$が成り立たないので，約束は破られない \\ \hline
@@ -165,9 +176,9 @@
   \end{tabular}
 \end{center}
 
-とくに注意したいのが3行目，すなわち「$P$でない，かつ$Q$である」（$\lnot P \land Q$）という場合である．このときにも$P \to Q$は真とされる．
-これは，含意$P \to Q$が「$P$が成り立つ場合に，$Q$も成り立つ」ということのみを主張しており，$P$が成り立たない場合については\textbf{なにも主張していない}からである．
-「約束が破られるのは，$P$が成り立ったのに$Q$が成り立たなかったときだけ」と考えるとよい\footnote{このように，仮定$P$が偽であるために$P \to Q$が無条件に真となることを，\emph{空虚な真}（vacuous truth）ということがある．}．
+とくに注意したいのが3行目，すなわち「$P$でない，かつ$Q$である」（$\lnot P \land Q$）という場合である．このときにも$P \limp Q$は真とされる．
+これは，含意$P \limp Q$が「$P$が成り立つ場合に，$Q$も成り立つ」ということのみを主張しており，$P$が成り立たない場合については\textbf{なにも主張していない}からである．
+「約束が破られるのは，$P$が成り立ったのに$Q$が成り立たなかったときだけ」と考えるとよい\footnote{このように，仮定$P$が偽であるために$P \limp Q$が無条件に真となることを，\emph{空虚な真}（vacuous truth）ということがある．}．
 
 \phantomsection
 \begin{example}{含意の真偽}{含意の真偽}
@@ -184,18 +195,18 @@
   どの$x$についても「$x>2$が成り立つのに$x>0$が成り立たない」ということは起こらないので，この命題は真である．
 \end{example}
 
-次に，含意$P \to Q$から作られる命題に名前をつけよう．
+次に，含意$P \limp Q$から作られる命題に名前をつけよう．
 
 \phantomsection
 \begin{definition}{否定・逆・裏・対偶}{否定・逆・裏・対偶}
-  命題$P \to Q$に対して，以下を定義する．
+  命題$P \limp Q$に対して，以下を定義する．
   \begin{center}
     \begin{tabular}{|l|c|} \hline
       名称                      & 命題                  \\ \hline
-      否定\index{ひてい@否定}   & $\lnot ( P \to Q )$   \\ \hline
-      逆\index{ぎゃく@逆}       & $Q \to P$             \\ \hline
-      裏\index{うら@裏}         & $\lnot P \to \lnot Q$ \\ \hline
-      対偶\index{たいぐう@対偶} & $\lnot Q \to \lnot P$ \\ \hline
+      否定\index{ひてい@否定}   & $\lnot ( P \limp Q )$     \\ \hline
+      逆\index{ぎゃく@逆}       & $Q \limp P$               \\ \hline
+      裏\index{うら@裏}         & $\lnot P \limp \lnot Q$   \\ \hline
+      対偶\index{たいぐう@対偶} & $\lnot Q \limp \lnot P$   \\ \hline
     \end{tabular}
   \end{center}
 \end{definition}
@@ -205,16 +216,16 @@
 \begin{prop}{含意の否定}{含意の否定}
   命題$P$，$Q$に対して，
   \[
-    \lnot ( P \to Q ) \equiv P \land \lnot Q
+    \lnot ( P \limp Q ) \equiv P \land \lnot Q
   \]
   である．
 \end{prop}
 
 \begin{tleftbar}
   \begin{proof}
-    含意の等価表現$P \to Q \equiv \lnot P \lor Q$とド・モルガンの法則を用いると，
+    含意の等価表現$P \limp Q \equiv \lnot P \lor Q$とド・モルガンの法則を用いると，
     \[
-      \lnot ( P \to Q )
+      \lnot ( P \limp Q )
       \equiv \lnot ( \lnot P \lor Q )
       \equiv \lnot \lnot P \land \lnot Q
       \equiv P \land \lnot Q
@@ -223,18 +234,18 @@
   \end{proof}
 \end{tleftbar}
 
-すなわち，「$P$ならば$Q$」の否定は「$P$であるのに$Q$でない」である．「$P$ならば$Q$でない」（$P \to \lnot Q$）ではないことに注意しよう．
+すなわち，「$P$ならば$Q$」の否定は「$P$であるのに$Q$でない」である．「$P$ならば$Q$でない」（$P \limp \lnot Q$）ではないことに注意しよう．
 
 続いて，逆・裏・対偶と元の命題の関係を，真理値表を用いて調べよう．
 
 \begin{prop}{対偶との同値}{対偶との同値}
   命題$P$，$Q$に対して，
   \[
-    P \to Q \equiv \lnot Q \to \lnot P
+    P \limp Q \equiv \lnot Q \limp \lnot P
   \]
-  である．すなわち，命題とその対偶の真偽は一致する．同様に，逆$Q \to P$と裏$\lnot P \to \lnot Q$の真偽も一致する．
+  である．すなわち，命題とその対偶の真偽は一致する．同様に，逆$Q \limp P$と裏$\lnot P \limp \lnot Q$の真偽も一致する．
 
-  一方，$P \to Q$と逆$Q \to P$の真偽は，一般には一致\textbf{しない}．
+  一方，$P \limp Q$と逆$Q \limp P$の真偽は，一般には一致\textbf{しない}．
 \end{prop}
 
 \begin{tleftbar}
@@ -242,21 +253,21 @@
     $P$，$Q$の真偽の組合せ$4$通りすべてについて，各命題の真偽を列挙する：
     \begin{center}
       \begin{tabular}{|c|c||c|c||c|c|c|c|} \hline
-        $P$          & $Q$          & $\lnot P$    & $\lnot Q$    & $P \to Q$    & $\lnot Q \to \lnot P$ & $Q \to P$    & $\lnot P \to \lnot Q$ \\ \hline
+        $P$          & $Q$          & $\lnot P$    & $\lnot Q$    & $P \limp Q$  & $\lnot Q \limp \lnot P$ & $Q \limp P$  & $\lnot P \limp \lnot Q$ \\ \hline
         $\mathrm{T}$ & $\mathrm{T}$ & $\mathrm{F}$ & $\mathrm{F}$ & $\mathrm{T}$ & $\mathrm{T}$          & $\mathrm{T}$ & $\mathrm{T}$          \\ \hline
         $\mathrm{T}$ & $\mathrm{F}$ & $\mathrm{F}$ & $\mathrm{T}$ & $\mathrm{F}$ & $\mathrm{F}$          & $\mathrm{T}$ & $\mathrm{T}$          \\ \hline
         $\mathrm{F}$ & $\mathrm{T}$ & $\mathrm{T}$ & $\mathrm{F}$ & $\mathrm{T}$ & $\mathrm{T}$          & $\mathrm{F}$ & $\mathrm{F}$          \\ \hline
         $\mathrm{F}$ & $\mathrm{F}$ & $\mathrm{T}$ & $\mathrm{T}$ & $\mathrm{T}$ & $\mathrm{T}$          & $\mathrm{T}$ & $\mathrm{T}$          \\ \hline
       \end{tabular}
     \end{center}
-    表より，$P \to Q$の列と$\lnot Q \to \lnot P$の列は$4$通りすべての場合で一致しているので，$P \to Q \equiv \lnot Q \to \lnot P$である．同様に，$Q \to P$の列と$\lnot P \to \lnot Q$の列も一致している．
+    表より，$P \limp Q$の列と$\lnot Q \limp \lnot P$の列は$4$通りすべての場合で一致しているので，$P \limp Q \equiv \lnot Q \limp \lnot P$である．同様に，$Q \limp P$の列と$\lnot P \limp \lnot Q$の列も一致している．
 
-    一方，$P \to Q$の列と$Q \to P$の列は，$2$行目・$3$行目で真偽が異なっている．よって$P \to Q$と$Q \to P$は同値でない．これが証明すべきことであった．
+    一方，$P \limp Q$の列と$Q \limp P$の列は，$2$行目・$3$行目で真偽が異なっている．よって$P \limp Q$と$Q \limp P$は同値でない．これが証明すべきことであった．
   \end{proof}
 \end{tleftbar}
 
 \begin{remark}[対偶と背理法]
-  命題とその対偶の真偽が一致することから，$P \to Q$を直接示す代わりに，対偶$\lnot Q \to \lnot P$を示してもよい．これを\emph{対偶法}\index{たいぐうほう@対偶法}（対偶による証明）という．のちに紹介する背理法と並んで，重要な証明法のひとつである．
+  命題とその対偶の真偽が一致することから，$P \limp Q$を直接示す代わりに，対偶$\lnot Q \limp \lnot P$を示してもよい．これを\emph{対偶法}\index{たいぐうほう@対偶法}（対偶による証明）という．のちに紹介する背理法と並んで，重要な証明法のひとつである．
 \end{remark}
 
 \phantomsection
@@ -278,12 +289,12 @@
   \[
     \sin (\alpha + \beta) = \sin \alpha \cos \beta + \cos \alpha \sin \beta
   \]
-  を右辺から左辺へ向けて用いて，$\sin \alpha \cos \beta + \cos \alpha \sin \beta$を$\sin (\alpha + \beta)$にまとめる変形を「加法定理の逆」とよぶのは誤りである．等式$A = B$と$B = A$は同じ内容を表しており，等式をどちら向きに用いても「加法定理そのもの」だからである．\deref{否定・逆・裏・対偶}で定義したとおり，「逆」とは含意$P \to Q$の仮定と結論を入れ替えた$Q \to P$のことをいうのであって，等式を用いる向きを指す言葉ではない．
+  を右辺から左辺へ向けて用いて，$\sin \alpha \cos \beta + \cos \alpha \sin \beta$を$\sin (\alpha + \beta)$にまとめる変形を「加法定理の逆」とよぶのは誤りである．等式$A = B$と$B = A$は同じ内容を表しており，等式をどちら向きに用いても「加法定理そのもの」だからである．\deref{否定・逆・裏・対偶}で定義したとおり，「逆」とは含意$P \limp Q$の仮定と結論を入れ替えた$Q \limp P$のことをいうのであって，等式を用いる向きを指す言葉ではない．
 
   一方，加法定理を用いて\textbf{得られる含意}については，通常の意味で逆を考えることができる．たとえば，実数$\alpha$，$\beta$に関する命題
   \[
     \alpha + \beta = \pi
-    \quad \Longrightarrow \quad
+    \quad \limp \quad
     \sin \alpha \cos \beta + \cos \alpha \sin \beta = 0
   \]
   は加法定理から従う．実際，仮定$\alpha + \beta = \pi$のもとで
@@ -296,7 +307,7 @@
   となる．この命題の逆
   \[
     \sin \alpha \cos \beta + \cos \alpha \sin \beta = 0
-    \quad \Longrightarrow \quad
+    \quad \limp \quad
     \alpha + \beta = \pi
   \]
   は\textbf{偽}である．実際，$\alpha = \beta = 0$とすれば，仮定の等式は成り立つが，$\alpha + \beta = 0 \ne \pi$である．
@@ -334,7 +345,7 @@
 \begin{definition}{全称命題}{全称命題}
   $P(x)$を述語とする．
   \[
-    \forall\, x \, : \, P(x)
+    \lall{x} \lst P(x)
   \]
   は，「すべての$x$について，$P(x)$が成り立つ」という意味であり，これを\emph{全称命題}\index{ぜんしょうめいだい@全称命題}という．
 \end{definition}
@@ -343,7 +354,7 @@
 \begin{definition}{存在命題}{存在命題}
   $Q(x)$を述語とする．
   \[
-    \exists \,  x\, : \, Q(x)
+    \lex{x} \lst Q(x)
   \]
   は，「$Q(x)$が成り立つような$x$が存在する」という意味であり，これを\emph{存在命題}\index{そんざいめいだい@存在命題}という．
 \end{definition}
@@ -351,9 +362,9 @@
 \phantomsection
 \begin{example}{量化記号の例}{量化記号の例}
   \begin{itemize}
-    \item $\forall x \in \mathbb{R}\, : \, x^2 \geqq 0$\\
+    \item $\lall{x \in \mathbb{R}} \lst x^2 \geqq 0$\\
           「任意の実数$x$について，$x^2$は$0$以上である．」
-    \item $\exists x \in \mathbb{Z} \, : \, x^2 = 4$\\
+    \item $\lex{x \in \mathbb{Z}} \lst x^2 = 4$\\
           「ある整数$x$が存在して，$x^2 = 4$となる．」
   \end{itemize}
 \end{example}
@@ -361,21 +372,21 @@
 \begin{remark}[量化子つき記法の意味]
   本書で用いる
   \[
-    \forall x \in \mathbb{R} \, : \, P(x)
+    \lall{x \in \mathbb{R}} \lst P(x)
   \]
   という記法は，厳密には
   \[
-    \forall x \, \bigl( x \in \mathbb{R} \to P(x) \bigr)
+    \lall{x} \bigl( x \in \mathbb{R} \limp P(x) \bigr)
   \]
   の略記である．すなわち，「どの$x$についても，それが実数であるならば$P(x)$が成り立つ」という含意の形をしている．一方，
   \[
-    \exists x \in \mathbb{R} \, : \, P(x)
+    \lex{x \in \mathbb{R}} \lst P(x)
   \]
   は
   \[
-    \exists x \, \bigl( x \in \mathbb{R} \land P(x) \bigr)
+    \lex{x} \bigl( x \in \mathbb{R} \land P(x) \bigr)
   \]
-  の略記であり，こちらは含意ではなく「かつ」であることに注意したい．全称は$\to$と，存在は$\land$と組になる，というこの対応は，のちに述べる量化子の否定の規則とも整合的である\footnote{実際，$\lnot \forall x \, ( x \in \mathbb{R} \to P(x) ) \equiv \exists x \, \lnot ( x \in \mathbb{R} \to P(x) ) \equiv \exists x \, ( x \in \mathbb{R} \land \lnot P(x) )$となり，「$P(x)$を満たさない実数$x$が存在する」という正しい否定が得られる（含意の否定$\lnot(P \to Q) \equiv P \land \lnot Q$を用いた）．}．
+  の略記であり，こちらは含意ではなく「かつ」であることに注意したい．全称は$\limp$と，存在は$\land$と組になる，というこの対応は，のちに述べる量化子の否定の規則とも整合的である\footnote{実際，$\lnot \lall{x} ( x \in \mathbb{R} \limp P(x) ) \equiv \lex{x} \lnot ( x \in \mathbb{R} \limp P(x) ) \equiv \lex{x} ( x \in \mathbb{R} \land \lnot P(x) )$となり，「$P(x)$を満たさない実数$x$が存在する」という正しい否定が得られる（含意の否定$\lnot(P \limp Q) \equiv P \land \lnot Q$を用いた）．}．
 \end{remark}
 
 \phantomsection
@@ -385,15 +396,15 @@
 
 一方，
 \[
-  \forall x \in \mathbb{R} \, : \, x^2 \geqq 0
+  \lall{x \in \mathbb{R}} \lst x^2 \geqq 0
 \]
 における$x$は，量化子$\forall$によって\emph{束縛}されているといい，このような変数を\emph{束縛変数}\index{そくばくへんすう@束縛変数}という．束縛変数を含む文は，変数に値を代入する余地がすでにないので，全体として真偽の定まった命題となりうる．
 
 束縛変数は，文字を付け替えても命題の意味が変わらない．たとえば，
 \[
-  \forall x \in \mathbb{R} \, : \, x^2 \geqq 0
+  \lall{x \in \mathbb{R}} \lst x^2 \geqq 0
   \qquad \text{と} \qquad
-  \forall y \in \mathbb{R} \, : \, y^2 \geqq 0
+  \lall{y \in \mathbb{R}} \lst y^2 \geqq 0
 \]
 はまったく同じ命題である\footnote{同様の現象は，定積分$\int_0^1 x^2 \, dx = \int_0^1 t^2 \, dt$や総和$\sum_{k=1}^{n} k = \sum_{j=1}^{n} j$の変数にも見られる．これらの変数も「束縛」されており，\emph{ダミー変数}とよばれることがある．}．
 
@@ -405,7 +416,7 @@
 ここまでは変数がひとつの述語を扱ってきたが，$P(x, y)$のように変数を2つ以上含む述語も考えられる．
 このとき，命題を作るにはすべての変数を量化する必要があり，量化子が
 \[
-  \forall x,\, \exists y \, : \, P(x, y)
+  \lall{x} \lsep \lex{y} \lst P(x, y)
 \]
 のように2つ以上並ぶことになる．これを量化子の\emph{入れ子}\index{いれこのりょうかし@入れ子の量化子}という．
  
@@ -422,23 +433,23 @@
 \begin{prop}{同種の量化子の交換}{同種の量化子の交換}
   $P(x, y)$を2変数の述語とする．このとき，次が成り立つ：
   \begin{align*}
-    \forall x,\, \forall y \, : \, P(x, y) & \equiv \forall y,\, \forall x \, : \, P(x, y) \\
-    \exists x,\, \exists y \, : \, P(x, y) & \equiv \exists y,\, \exists x \, : \, P(x, y)
+    \lall{x} \lsep \lall{y} \lst P(x, y) & \equiv \lall{y} \lsep \lall{x} \lst P(x, y) \\
+    \lex{x} \lsep \lex{y} \lst P(x, y) & \equiv \lex{y} \lsep \lex{x} \lst P(x, y)
   \end{align*}
 \end{prop}
  
-直観的には，$\forall x,\, \forall y$は「どの$x$とどの$y$の組合せについても」，
-$\exists x,\, \exists y$は「うまい$x$と$y$の組がひとつでもあれば」という意味であり，
+直観的には，$\lall{x} \lsep \lall{y}$は「どの$x$とどの$y$の組合せについても」，
+$\lex{x} \lsep \lex{y}$は「うまい$x$と$y$の組がひとつでもあれば」という意味であり，
 いずれも$x$と$y$のどちらを先に述べるかは関係ない．
  
 \phantomsection
 \begin{example}{同種の量化子の例}{同種の量化子の例}
   \begin{itemize}
-    \item $\forall x \in \mathbb{R},\, \forall y \in \mathbb{R} \, : \, x^2 + y^2 \geqq 2xy$\\
+    \item $\lall{x \in \mathbb{R}} \lsep \lall{y \in \mathbb{R}} \lst x^2 + y^2 \geqq 2xy$\\
           「任意の実数$x$と任意の実数$y$について，$x^2 + y^2 \geqq 2xy$が成り立つ．」\\
           これは$x^2 + y^2 - 2xy = (x - y)^2 \geqq 0$からわかる．
           $x$と$y$の役割を入れ替えても主張は変わらない．
-    \item $\exists x \in \mathbb{Z},\, \exists y \in \mathbb{Z} \, : \, x^2 + y^2 = 5$\\
+    \item $\lex{x \in \mathbb{Z}} \lsep \lex{y \in \mathbb{Z}} \lst x^2 + y^2 = 5$\\
           「ある整数$x$とある整数$y$が存在して，$x^2 + y^2 = 5$となる．」\\
           実際，$(x, y) = (1, 2)$がその一例である．
           こちらも，$x$と$y$のどちらを先に見つけるかは問題にならない．
@@ -450,12 +461,12 @@ $\exists x,\, \exists y$は「うまい$x$と$y$の組がひとつでもあれ�
  
 一方，$\forall$と$\exists$が混在する場合には，順序が本質的に重要になる．
 \[
-  \forall x,\, \exists y \, : \, P(x, y)
+  \lall{x} \lsep \lex{y} \lst P(x, y)
 \]
 は「任意の$x$に対して，（$x$に応じた）$y$が存在する」という意味であり，$y$は$x$ごとに選び直してよい．
 これに対して，
 \[
-  \exists y,\, \forall x \, : \, P(x, y)
+  \lex{y} \lsep \lall{x} \lst P(x, y)
 \]
 は「ある$y$が存在して，その$y$は任意の$x$に対して$P(x, y)$を満たす」という意味であり，
 $y$は$x$によらず\textbf{ひとつに固定}されていなければならない．
@@ -464,9 +475,9 @@ $y$は$x$によらず\textbf{ひとつに固定}されていなければなら�
 \begin{prop}{異種の量化子の順序}{異種の量化子の順序}
   $P(x, y)$を2変数の述語とする．このとき，次が成り立つ：
   \[
-    \bigl( \exists y,\, \forall x \, : \, P(x, y) \bigr)
-    \to
-    \bigl( \forall x,\, \exists y \, : \, P(x, y) \bigr)
+    \bigl( \lex{y} \lsep \lall{x} \lst P(x, y) \bigr)
+    \limp
+    \bigl( \lall{x} \lsep \lex{y} \lst P(x, y) \bigr)
   \]
   この逆は，一般には成り立たない．
 \end{prop}
@@ -476,13 +487,13 @@ $y$は$x$によらず\textbf{ひとつに固定}されていなければなら�
  
 学部1年の微分積分学の講義で，アルキメデスの原理
 \[
-  \forall a>0,\, \exists n\in\mathbb{N} : n>a
+  \lall{a>0} \lsep \lex{n\in\mathbb{N}} \lst n>a
 \]
 を学ぶことがある．この命題を学習する際には，$\forall$と$\exists$が入れ子になっていることに注意しよう．
 アルキメデスの原理の主張の解釈は「任意の正の実数$a$に対して，それより大きい自然数$n$が存在する」
 である．これを
 \[
-  \exists n\in\mathbb{N},\, \forall a>0 : n>a
+  \lex{n\in\mathbb{N}} \lsep \lall{a>0} \lst n>a
 \]
 とかき換えると，意味は大きく変わってしまう．
 こちらは「ある自然数$n$が存在して，すべての正の実数$a$より大きい」
@@ -492,7 +503,7 @@ $y$は$x$によらず\textbf{ひとつに固定}されていなければなら�
 命題の意味だけでなく真偽まで変わることがある．
 $\varepsilon$-$\delta$論法では，
 \[
-  \forall \varepsilon>0,\, \exists \delta>0
+  \lall{\varepsilon>0} \lsep \lex{\delta>0}
 \]
 という形で量化記号が入れ子になっており，
 $\delta$は選んだ$\varepsilon$に応じて決めてよいことを表している．
@@ -506,8 +517,8 @@ $\delta$は選んだ$\varepsilon$に応じて決めてよいことを表して�
 \begin{prop}{量化子の否定}{量化子の否定}
   $P(x)$を述語とする．このとき，次が成り立つ：
   \begin{align*}
-    \lnot \bigl( \forall x \, : \, P(x) \bigr) & \equiv \exists x \, : \, \lnot P(x) \\
-    \lnot \bigl( \exists x \, : \, P(x) \bigr) & \equiv \forall x \, : \, \lnot P(x)
+    \lnot \bigl( \lall{x} \lst P(x) \bigr) & \equiv \lex{x} \lst \lnot P(x) \\
+    \lnot \bigl( \lex{x} \lst P(x) \bigr) & \equiv \lall{x} \lst \lnot P(x)
   \end{align*}
 \end{prop}
  
@@ -517,11 +528,11 @@ $\delta$は選んだ$\varepsilon$に応じて決めてよいことを表して�
  
 この規則を入れ子の量化子に対して\textbf{外側から順に}適用すれば，入れ子になった命題の否定も機械的に作ることができる：
 \begin{align*}
-  \lnot \bigl( \forall x,\, \exists y \, : \, P(x, y) \bigr)
-  & \equiv \exists x,\, \lnot \bigl( \exists y \, : \, P(x, y) \bigr) \\
-  & \equiv \exists x,\, \forall y \, : \, \lnot P(x, y)
+  \lnot \bigl( \lall{x} \lsep \lex{y} \lst P(x, y) \bigr)
+  & \equiv \lex{x} \lsep \lnot \bigl( \lex{y} \lst P(x, y) \bigr) \\
+  & \equiv \lex{x} \lsep \lall{y} \lst \lnot P(x, y)
 \end{align*}
-すなわち，量化子の列$\forall x,\, \exists y$を$\exists x,\, \forall y$にすべて反転させ，
+すなわち，量化子の列$\lall{x} \lsep \lex{y}$を$\lex{x} \lsep \lall{y}$にすべて反転させ，
 最後に内側の述語を否定すればよい．
 この操作は，$\varepsilon$-$\delta$論法で「収束しないこと」を定式化する際などに繰り返し現れる．
 
