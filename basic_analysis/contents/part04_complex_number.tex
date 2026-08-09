@@ -110,9 +110,9 @@
     \item $\langle \bm{x} , \bm{y} \rangle = \langle \bm{y} , \bm{x} \rangle$
     \item $\langle \bm{x} , \bm{y} + \bm{z} \rangle = \langle \bm{x} , \bm{y} \rangle + \langle \bm{x} , \bm{z} \rangle$
     \item $\langle a \cdot \bm{x} , \bm{y} \rangle = a \cdot \langle \bm{x} , \bm{y} \rangle$
-    \item $\langle \bm{x} , \bm{x} \rangle \geqq 0$，$\langle \bm{x} , \bm{x} \rangle = 0 \iff \bm{x} = \bm{0}$
+    \item $\langle \bm{x} , \bm{x} \rangle \geqq 0$，$\langle \bm{x} , \bm{x} \rangle = 0 \lequiv \bm{x} = \bm{0}$
     \item $\abs{\langle \bm{x} , \bm{y} \rangle} \leqq \sqrt{\langle \bm{x} , \bm{x} \rangle} \sqrt{\langle \bm{y} , \bm{y} \rangle}$
-    \item $\langle \bm{x} , \bm{y} \rangle = 0 \iff \bm{x} \perp \bm{y}$
+    \item $\langle \bm{x} , \bm{y} \rangle = 0 \lequiv \bm{x} \perp \bm{y}$
   \end{enumerate}
 \end{theorem}
 \phantomsection
@@ -225,17 +225,29 @@
 \begin{definition}{点列の収束}{点列の収束}
   点列$(a_m)_{m \in \mathbb{N}}$が$a \in \mathbb{R}^n$に収束するとは，任意の$\varepsilon >0$に対して，ある$N \in \mathbb{N}$が存在して，任意の$m \in \mathbb{N}$に対して，
   \[
-    m \geqq N \implies \abs{a_m -a} < \varepsilon
+    m \geqq N \limp \abs{a_m -a} < \varepsilon
   \]
   が成り立つことである．
+
+  これを論理記号で書けば，つぎのようになる：
+  \[
+    \lall{\varepsilon > 0} \lsep \lex{N \in \mathbb{N}} \lsep \lall{m \in \mathbb{N}} \lst
+    \bigl( m \geqq N \limp \abs{a_m - a} < \varepsilon \bigr)
+  \]
 \end{definition}
 
 \begin{definition}{$\mathbb{R}^n$におけるコーシー列}{Rnにおけるコーシー列}
   点列$(a_m)_{m \in \mathbb{N}}$が$\mathbb{R}^n$においてコーシー列であるとは，任意の$\varepsilon >0$に対して，ある$N \in \mathbb{N}$が存在して，任意の$m,n \in \mathbb{N}$に対して，
   \[
-    m,n \geqq N \implies \abs{a_m -a_n} < \varepsilon
+    m,n \geqq N \limp \abs{a_m -a_n} < \varepsilon
   \]
   が成り立つことである．
+
+  これを論理記号で書けば，つぎのようになる：
+  \[
+    \lall{\varepsilon > 0} \lsep \lex{N \in \mathbb{N}} \lsep \lall{m, n \in \mathbb{N}} \lst
+    \bigl( m, n \geqq N \limp \abs{a_m - a_n} < \varepsilon \bigr)
+  \]
 \end{definition}
 
 以下では$\mathbb{R}^n$の点列$(a_m)_{m \in \mathbb{N}}$を
@@ -248,7 +260,7 @@
   $\mathbb{R}^n$の点列$(a_m)_{m \in \mathbb{N}}$に関して，次のことが成り立つ．
 \begin{align*}
   & \lim_{m \to \infty} a_m = a \in \mathbb{R}^n \\
-  \iff & \lim_{m \to \infty} a_{m,i} = a_i \in \mathbb{R} \quad (i=1,2,\ldots,n)
+  \lequiv & \lim_{m \to \infty} a_{m,i} = a_i \in \mathbb{R} \quad (i=1,2,\ldots,n)
 \end{align*}
 \end{theorem}
 
@@ -259,7 +271,7 @@
   必要条件であることを示す．$\lim_{m \to \infty} a_m = a \in \mathbb{R}^n$とする．
   このとき，任意の$\varepsilon >0$に対して，ある$N \in \mathbb{N}$が存在して，任意の$m \in \mathbb{N}$に対して，
   \[
-    m \geqq N \implies \abs{a_m -a} < \varepsilon
+    m \geqq N \limp \abs{a_m -a} < \varepsilon
   \]
   が成り立つ．
   ここで，$m \geqq N$とすると，
@@ -272,7 +284,7 @@
   十分条件であることを示す．$\lim_{m \to \infty} a_{m,i} = a_i \in \mathbb{R} \quad (i=1,2,\ldots,n)$とする．
   任意の$\varepsilon >0$に対して，ある$N_i \in \mathbb{N}$が存在して，任意の$m \in \mathbb{N}$に対して，
   \[
-    m \geqq N_i \implies \abs{a_{m,i} -a_i} < \frac{\varepsilon}{\sqrt{n}}
+    m \geqq N_i \limp \abs{a_{m,i} -a_i} < \frac{\varepsilon}{\sqrt{n}}
   \]
   が成り立つ．
   ここで，$N \coloneqq \max \{ N_1,N_2,\ldots,N_n \}$とすると，$m \geqq N$のとき，
@@ -284,11 +296,8 @@
 \end{leftbar}
 
 \begin{theorem}{}{}
-  $\mathbb{R}^n$の点列$(a_m)_{m \in \mathbb{N}}$に関して，次のことが成り立つ．
-\begin{align*}
-  & (a_m)_{m \in \mathbb{N}} ~{:}  \text{コーシー列} \\
-  \iff & (a_{m,i})_{m \in \mathbb{N}} ~{:} \text{コーシー列}\quad (i=1,2,\ldots,n)
-\end{align*}
+  $\mathbb{R}^n$の点列$(a_m)_{m \in \mathbb{N}}$がコーシー列であるための必要十分条件は，
+  各$i = 1,2,\ldots,n$に対して実数列$(a_{m,i})_{m \in \mathbb{N}}$がコーシー列であることである．
 \end{theorem}
 
 \begin{leftbar}
@@ -298,7 +307,7 @@
     必要条件であることを示す．$(a_m)_{m \in \mathbb{N}}$がコーシー列であるとする．
     このとき，任意の$\varepsilon >0$に対して，$N \in \mathbb{N}$が存在し，任意の$m,l \in \mathbb{N}$に対して
     \[
-      m,l  \geqq N \implies \abs{a_m - a_l}<\varepsilon
+      m,l  \geqq N \limp \abs{a_m - a_l}<\varepsilon
     \]
     が成り立つ．
 
@@ -312,7 +321,7 @@
 
     このとき，任意の$\varepsilon /\sqrt{n}>0$に対して，ある$N_i \in \mathbb{N}$が存在して，任意の$m,l \in \mathbb{N}$に対して，
     \[
-      m ,l\geqq N_i \implies \abs{a_{m,i}-a_{l,i}}<\frac{\varepsilon}{\sqrt{n}}
+      m ,l\geqq N_i \limp \abs{a_{m,i}-a_{l,i}}<\frac{\varepsilon}{\sqrt{n}}
     \]
     である．ここで，$N \coloneqq \max \{ N_1 ,N_2,\ldots,N_n \}$とすると，$m,l \geqq N$のとき
     \[
@@ -323,23 +332,19 @@
 \end{leftbar}
 
 \begin{theorem}{}{}
-  $\mathbb{R}^n$の点列$(a_m)_{m \in \mathbb{N}}$に関して，次のことが成り立つ．
-\begin{align*}
-  & (a_m)_{m \in \mathbb{N}}~ {:}  \text{収束} \\
-  \iff & (a_m)_{m \in \mathbb{N}} ~{:}  \text{コーシー列}
-\end{align*}
+  $\mathbb{R}^n$の点列$(a_m)_{m \in \mathbb{N}}$が収束するための必要十分条件は，
+  $(a_m)_{m \in \mathbb{N}}$がコーシー列であることである．
 \end{theorem}
 
 \begin{leftbar}
   \begin{proof}
-    これまでに示した事実を並べると，
-\begin{align*}
-  & (a_m)_{m \in \mathbb{N}}~ {:} \text{収束} \\
-  \iff & (a_{m,i})_{m \in \mathbb{N}}~ {:} \text{収束} \quad (i=1,2,\ldots,n) \\
-  \iff & (a_{m,i})_{m \in \mathbb{N}}~{:} \text{コーシー列}\quad (i=1,2,\ldots,n)  \\
-  \iff & (a_m)_{m \in \mathbb{N}} ~{:} \text{コーシー列}
-\end{align*}
-となる．これが証明すべきことであった．
+    これまでに示した事実を並べると，つぎの3つの同値性が得られる．
+    \begin{enumerate}
+      \item $(a_m)_{m \in \mathbb{N}}$が収束することは，各$i$に対して$(a_{m,i})_{m \in \mathbb{N}}$が収束することと同値である．
+      \item 各$i$に対して$(a_{m,i})_{m \in \mathbb{N}}$が収束することは，各$i$に対して$(a_{m,i})_{m \in \mathbb{N}}$がコーシー列であることと同値である．
+      \item 各$i$に対して$(a_{m,i})_{m \in \mathbb{N}}$がコーシー列であることは，$(a_m)_{m \in \mathbb{N}}$がコーシー列であることと同値である．
+    \end{enumerate}
+    これらをつなげば，$(a_m)_{m \in \mathbb{N}}$が収束することと，$(a_m)_{m \in \mathbb{N}}$がコーシー列であることとが同値であるとわかる．これが証明すべきことであった．
 \end{proof}
 \end{leftbar}
 
@@ -347,7 +352,7 @@
   $\mathbb{R}^n$の点列$(a_m)_{m \in \mathbb{N}}$とその部分列$(a_{m(k)})_{k \in \mathbb{N}}$に関して，次のことが成り立つ．
   \begin{align*}
     &\lim_{m \to \infty} a_m = b \in \mathbb{R}^n \\
-    \implies & \lim_{k \to \infty} a_{m(k)} = b \in \mathbb{R}^n
+    \limp & \lim_{k \to \infty} a_{m(k)} = b \in \mathbb{R}^n
   \end{align*}
 \end{theorem}
 
@@ -355,23 +360,19 @@
 \begin{proof}
   任意の$\varepsilon >0$に対して，ある$N \in \mathbb{N}$が存在して，任意の$m \in \mathbb{N}$に対して，
   \[
-    m \geqq N \implies \abs{a_m -b} < \varepsilon
+    m \geqq N \limp \abs{a_m -b} < \varepsilon
   \]
   が成り立つ．
   ここで，$k \in \mathbb{N}$に対して，$m(k) \geqq k$であるから，
   \[
-    k \geqq N \implies m(k) \geqq N \implies \abs{a_{m(k)} -b} < \varepsilon
+    k \geqq N \limp m(k) \geqq N \limp \abs{a_{m(k)} -b} < \varepsilon
   \]
   であるから，$\lim_{k \to \infty} a_{m(k)} = b \in \mathbb{R}^n$である．これが証明すべきことであった．
 \end{proof}
 \end{leftbar}
 
 \begin{theorem}{}{}
-  $\mathbb{R}^n$の点列$(a_m)_{m \in \mathbb{N}}$に関して，次のことが成り立つ．
-  \begin{align*}
-    & (a_m)_{m \in \mathbb{N}}~ {:}  \text{収束} \\
-    \implies  & (a_m)_{m \in \mathbb{N}} ~{:}  \text{有界}
-  \end{align*}
+  $\mathbb{R}^n$の点列$(a_m)_{m \in \mathbb{N}}$が収束するならば，$(a_m)_{m \in \mathbb{N}}$は有界である．
 \end{theorem}
 
 \begin{leftbar}
