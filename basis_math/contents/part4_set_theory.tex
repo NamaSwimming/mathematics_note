@@ -72,21 +72,21 @@
   集合$A$，$B$に対して，
   \[
     A = B
-    \iff
-    A \subset B \text{ かつ } B \subset A
+    \lequiv
+    (A \subset B) \land (B \subset A)
   \]
-  である．また，論理記号を用いれば，
+  である．また，量化子を用いれば，
   \[
     A = B
-    \iff
-    \forall x \, : \, ( x \in A \leftrightarrow x \in B )
+    \lequiv
+    \lall{x} \lst ( x \in A \lequiv x \in B )
   \]
   と表すこともできる．
 \end{prop}
 
 \begin{tleftbar}
   \begin{proof}
-    \deref{集合の相等}より，$A = B$とは$A$と$B$のすべての要素が一致すること，すなわち「任意の$x$について，$x \in A$と$x \in B$の真偽が一致する」ことである．一方，$A \subset B$は「任意の$x$について，$x \in A$ならば$x \in B$」を，$B \subset A$は「任意の$x$について，$x \in B$ならば$x \in A$」を意味する．同値の等価表現$P \leftrightarrow Q \equiv (P \to Q) \land (Q \to P)$により，両者は一致する．これが証明すべきことであった．
+    \deref{集合の相等}より，$A = B$とは$A$と$B$のすべての要素が一致すること，すなわち「任意の$x$について，$x \in A$と$x \in B$の真偽が一致する」ことである．一方，$A \subset B$は「任意の$x$について，$x \in A$ならば$x \in B$」を，$B \subset A$は「任意の$x$について，$x \in B$ならば$x \in A$」を意味する．同値の等価表現$P \lequiv Q \equiv (P \limp Q) \land (Q \limp P)$により，両者は一致する．これが証明すべきことであった．
   \end{proof}
 \end{tleftbar}
 
@@ -314,14 +314,14 @@ $x$が動く集合は，文脈から読み取れたり明記されていたり�
 \begin{remark}[論理記号による言い換え]
   集合の演算は，\partref{論理}で学んだ論理記号を用いて次のように言い換えられる：
   \begin{align*}
-    x \in A \cap B & \iff (x \in A) \land (x \in B), \\
-    x \in A \cup B & \iff (x \in A) \lor (x \in B), \\
-    x \in A \setminus B & \iff (x \in A) \land \lnot (x \in B), \\
-    x \in A^c & \iff \lnot (x \in A) \qquad (x \in X)
+    x \in A \cap B & \lequiv (x \in A) \land (x \in B), \\
+    x \in A \cup B & \lequiv (x \in A) \lor (x \in B), \\
+    x \in A \setminus B & \lequiv (x \in A) \land \lnot (x \in B), \\
+    x \in A^c & \lequiv \lnot (x \in A) \qquad (x \in X)
   \end{align*}
   すなわち，$\cap$は$\land$に，$\cup$は$\lor$に，補集合は$\lnot$に対応している．また，部分集合についても
   \[
-    A \subset B \iff \forall x \, : \, ( x \in A \to x \in B )
+    A \subset B \lequiv \lall{x} \lst ( x \in A \limp x \in B )
   \]
   である．この対応により，命題論理の法則から集合の法則を導くことができる（のちのド・モルガンの法則の証明で実際に用いる）．
 \end{remark}
@@ -576,9 +576,9 @@ $x$が動く集合は，文脈から読み取れたり明記されていたり�
     いずれも定義から確かめられる．例として$(A^c)^c = A$を示す．$x \in X$に対して，
     \[
       x \in (A^c)^c
-      \iff \lnot ( x \in A^c )
-      \iff \lnot \lnot ( x \in A )
-      \iff x \in A
+      \lequiv \lnot ( x \in A^c )
+      \lequiv \lnot \lnot ( x \in A )
+      \lequiv x \in A
     \]
     である（最後の同値は二重否定$\lnot \lnot P \equiv P$による）．よって$(A^c)^c = A$である．残りも同様に示される．
   \end{proof}
@@ -600,10 +600,10 @@ $x$が動く集合は，文脈から読み取れたり明記されていたり�
     前半を示す．$x \in X$に対して，
     \begin{align*}
       x \in (A \cup B)^c
-      & \iff \lnot ( x \in A \cup B ) \\
-      & \iff \lnot \bigl( (x \in A) \lor (x \in B) \bigr) \\
-      & \iff \lnot (x \in A) \land \lnot (x \in B) \\
-      & \iff x \in A^c \cap B^c
+      & \lequiv \lnot ( x \in A \cup B ) \\
+      & \lequiv \lnot \bigl( (x \in A) \lor (x \in B) \bigr) \\
+      & \lequiv \lnot (x \in A) \land \lnot (x \in B) \\
+      & \lequiv x \in A^c \cap B^c
     \end{align*}
     である．途中，3つ目の同値で命題論理のド・モルガンの法則$\lnot (P \lor Q) \equiv \lnot P \land \lnot Q$を用いた．\prref{相等と相互包含}の論理式による特徴づけにより，$(A \cup B)^c = A^c \cap B^c$である．後半も同様に示される．これが証明すべきことであった．
   \end{proof}
