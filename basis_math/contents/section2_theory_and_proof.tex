@@ -112,39 +112,241 @@
 \begin{prop}{}{}
   命題$P$，$Q$，$R$に対して，次の式が成り立つ：
   \begin{description}
-    \item[交換律] 
-    \[
-      P \land Q \equiv Q \land P,\quad P \lor Q \equiv Q \lor P
-    \]
-    \item[結合律] 
-    \[
-      (P \land Q) \land R \equiv P \land (Q \land R),\quad (P \lor Q) \lor R \equiv P \lor (Q \lor R)
-    \]
-    \item[分配律] 
-    \[
-      P \land (Q \lor R) \equiv (P \land Q) \lor (P \land R), \quad P \lor (Q \land R) \equiv (P \lor Q) \land (P \lor R)
-    \]
+    \item[交換律]
+          \[
+            P \land Q \equiv Q \land P,\quad
+            P \lor Q \equiv Q \lor P
+          \]
+    \item[結合律]
+          \[
+            (P \land Q) \land R \equiv P \land (Q \land R),\quad
+            (P \lor Q) \lor R \equiv P \lor (Q \lor R)
+          \]
+    \item[分配律]
+          \[
+            P \land (Q \lor R) \equiv (P \land Q) \lor (P \land R),\quad
+            P \lor (Q \land R) \equiv (P \lor Q) \land (P \lor R)
+          \]
     \item[ド・モルガンの法則]
-    \[
-      \lnot (P \land Q) \equiv \lnot P \lor \lnot Q, \quad \lnot (P \lor Q) \equiv \lnot P \land \lnot Q
-    \]
+          \[
+            \lnot (P \land Q) \equiv \lnot P \lor \lnot Q,\quad
+            \lnot (P \lor Q) \equiv \lnot P \land \lnot Q
+          \]
   \end{description}
 \end{prop}
 
 \begin{prop}{}{}
   命題$P$，$Q$に対して，次の式が成り立つ：
   \begin{description}
-    \item[含意の等価表現]
-    \[
-      P \to Q \equiv \lnot P \lor Q
-    \]
+    \item[含意の等価表現] 
+          \[
+            P \to Q \equiv \lnot P \lor Q
+          \]
     \item[同値の等価表現]
-    \[
-      P \leftrightarrow Q \equiv (P \to Q) \land (Q \to P)
-    \]
-\end{description}
+          \[
+            P \leftrightarrow Q \equiv (P \to Q) \land (Q \to P)
+          \]
+  \end{description}
 \end{prop}
 
+\phantomsection
+\subsection{含意の真偽と逆・裏・対偶}
+
+含意$P \to Q$は，慣れないうちは真偽の判定にとまどうことが多い．そこで，表\ref{tab:含意の真理値表}にしたがって，$P$と$Q$の真偽の組合せ$4$通りをすべて列挙して確認しておこう．
+
+\begin{center}
+  \begin{tabular}{|c|c|c|l|} \hline
+    $P$ & $Q$ & $P \to Q$   & 備考                                   \\ \hline
+    真  & 真  & 真          & 約束は守られている                     \\ \hline
+    真  & 偽  & \textbf{偽} & 偽となるのは，この場合\textbf{だけ}    \\ \hline
+    偽  & 真  & 真          & $P$が成り立たないので，約束は破られない \\ \hline
+    偽  & 偽  & 真          & 同上                                   \\ \hline
+  \end{tabular}
+\end{center}
+
+とくに注意したいのが3行目，すなわち「$P$でない，かつ$Q$である」（$\lnot P \land Q$）という場合である．このときにも$P \to Q$は真とされる．
+これは，含意$P \to Q$が「$P$が成り立つ場合に，$Q$も成り立つ」ということのみを主張しており，$P$が成り立たない場合については\textbf{なにも主張していない}からである．
+「約束が破られるのは，$P$が成り立ったのに$Q$が成り立たなかったときだけ」と考えるとよい\footnote{このように，仮定$P$が偽であるために$P \to Q$が無条件に真となることを，\emph{空虚な真}（vacuous truth）ということがある．}．
+
+\phantomsection
+\begin{example}{含意の真偽}{含意の真偽}
+  実数$x$に関する命題「$x > 2$ならば$x > 0$」は真である．このことを，いくつかの$x$の値で確認してみよう．
+  \begin{center}
+    \begin{tabular}{|c|c|c|l|} \hline
+      $x$  & $x > 2$（$P$） & $x > 0$（$Q$） & 約束は守られているか                     \\ \hline
+      $3$  & 真             & 真             & 守られている                             \\ \hline
+      $1$  & 偽             & 真             & 仮定が成り立たないので，破られてはいない \\ \hline
+      $-1$ & 偽             & 偽             & 同上                                     \\ \hline
+    \end{tabular}
+  \end{center}
+  $x = 1$の場合が「$P$でない，かつ$Q$である」場合にあたるが，$x > 2$が成り立っていない以上，約束が破られたわけではない．
+  どの$x$についても「$x>2$が成り立つのに$x>0$が成り立たない」ということは起こらないので，この命題は真である．
+\end{example}
+
+次に，含意$P \to Q$から作られる命題に名前をつけよう．
+
+\phantomsection
+\begin{definition}{否定・逆・裏・対偶}{否定・逆・裏・対偶}
+  命題$P \to Q$に対して，以下を定義する．
+  \begin{center}
+    \begin{tabular}{|l|c|} \hline
+      名称                      & 命題                  \\ \hline
+      否定\index{ひてい@否定}   & $\lnot ( P \to Q )$   \\ \hline
+      逆\index{ぎゃく@逆}       & $Q \to P$             \\ \hline
+      裏\index{うら@裏}         & $\lnot P \to \lnot Q$ \\ \hline
+      対偶\index{たいぐう@対偶} & $\lnot Q \to \lnot P$ \\ \hline
+    \end{tabular}
+  \end{center}
+\end{definition}
+
+まず，含意の否定について次が成り立つ．
+
+\begin{prop}{含意の否定}{含意の否定}
+  命題$P$，$Q$に対して，
+  \[
+    \lnot ( P \to Q ) \equiv P \land \lnot Q
+  \]
+  である．
+\end{prop}
+
+\begin{tleftbar}
+  \begin{proof}
+    含意の等価表現$P \to Q \equiv \lnot P \lor Q$とド・モルガンの法則を用いると，
+    \[
+      \lnot ( P \to Q )
+      \equiv \lnot ( \lnot P \lor Q )
+      \equiv \lnot \lnot P \land \lnot Q
+      \equiv P \land \lnot Q
+    \]
+    である．これが証明すべきことであった．
+  \end{proof}
+\end{tleftbar}
+
+すなわち，「$P$ならば$Q$」の否定は「$P$であるのに$Q$でない」である．「$P$ならば$Q$でない」（$P \to \lnot Q$）ではないことに注意しよう．
+
+続いて，逆・裏・対偶と元の命題の関係を，真理値表を用いて調べよう．
+
+\begin{prop}{対偶との同値}{対偶との同値}
+  命題$P$，$Q$に対して，
+  \[
+    P \to Q \equiv \lnot Q \to \lnot P
+  \]
+  である．すなわち，命題とその対偶の真偽は一致する．同様に，逆$Q \to P$と裏$\lnot P \to \lnot Q$の真偽も一致する．
+
+  一方，$P \to Q$と逆$Q \to P$の真偽は，一般には一致\textbf{しない}．
+\end{prop}
+
+\begin{tleftbar}
+  \begin{proof}
+    $P$，$Q$の真偽の組合せ$4$通りすべてについて，各命題の真偽を列挙する：
+    \begin{center}
+      \begin{tabular}{|c|c||c|c||c|c|c|c|} \hline
+        $P$          & $Q$          & $\lnot P$    & $\lnot Q$    & $P \to Q$    & $\lnot Q \to \lnot P$ & $Q \to P$    & $\lnot P \to \lnot Q$ \\ \hline
+        $\mathrm{T}$ & $\mathrm{T}$ & $\mathrm{F}$ & $\mathrm{F}$ & $\mathrm{T}$ & $\mathrm{T}$          & $\mathrm{T}$ & $\mathrm{T}$          \\ \hline
+        $\mathrm{T}$ & $\mathrm{F}$ & $\mathrm{F}$ & $\mathrm{T}$ & $\mathrm{F}$ & $\mathrm{F}$          & $\mathrm{T}$ & $\mathrm{T}$          \\ \hline
+        $\mathrm{F}$ & $\mathrm{T}$ & $\mathrm{T}$ & $\mathrm{F}$ & $\mathrm{T}$ & $\mathrm{T}$          & $\mathrm{F}$ & $\mathrm{F}$          \\ \hline
+        $\mathrm{F}$ & $\mathrm{F}$ & $\mathrm{T}$ & $\mathrm{T}$ & $\mathrm{T}$ & $\mathrm{T}$          & $\mathrm{T}$ & $\mathrm{T}$          \\ \hline
+      \end{tabular}
+    \end{center}
+    表より，$P \to Q$の列と$\lnot Q \to \lnot P$の列は$4$通りすべての場合で一致しているので，$P \to Q \equiv \lnot Q \to \lnot P$である．同様に，$Q \to P$の列と$\lnot P \to \lnot Q$の列も一致している．
+
+    一方，$P \to Q$の列と$Q \to P$の列は，$2$行目・$3$行目で真偽が異なっている．よって$P \to Q$と$Q \to P$は同値でない．これが証明すべきことであった．
+  \end{proof}
+\end{tleftbar}
+
+\begin{remark}[対偶と背理法]
+  命題とその対偶の真偽が一致することから，$P \to Q$を直接示す代わりに，対偶$\lnot Q \to \lnot P$を示してもよい．これを\emph{対偶法}\index{たいぐうほう@対偶法}（対偶による証明）という．のちに紹介する背理法と並んで，重要な証明法のひとつである．
+\end{remark}
+
+\phantomsection
+\begin{example}{逆・裏・対偶の例}{逆・裏・対偶の例}
+  実数$x$に関する命題「$x > 2$ならば$x > 0$」（真）について，
+  \begin{center}
+    \begin{tabular}{|l|c|l|} \hline
+      名称 & 命題                                  & 真偽                 \\ \hline
+      逆   & 「$x > 0$ならば$x > 2$」              & 偽（反例：$x = 1$）  \\ \hline
+      裏   & 「$x \leqq 2$ならば$x \leqq 0$」      & 偽（反例：$x = 1$）  \\ \hline
+      対偶 & 「$x \leqq 0$ならば$x \leqq 2$」      & 真（元の命題と同じ） \\ \hline
+    \end{tabular}
+  \end{center}
+  このように，元の命題が真であっても，その逆・裏は偽でありうる．
+\end{example}
+
+\begin{remark}[「逆」の誤用に注意]
+  「逆」という言葉は，日常語では「向きを反対にすること」全般を指すため，数学の議論において誤用されやすい．たとえば，三角関数の加法定理
+  \[
+    \sin (\alpha + \beta) = \sin \alpha \cos \beta + \cos \alpha \sin \beta
+  \]
+  を右辺から左辺へ向けて用いて，$\sin \alpha \cos \beta + \cos \alpha \sin \beta$を$\sin (\alpha + \beta)$にまとめる変形を「加法定理の逆」とよぶのは誤りである．等式$A = B$と$B = A$は同じ内容を表しており，等式をどちら向きに用いても「加法定理そのもの」だからである．\deref{否定・逆・裏・対偶}で定義したとおり，「逆」とは含意$P \to Q$の仮定と結論を入れ替えた$Q \to P$のことをいうのであって，等式を用いる向きを指す言葉ではない．
+
+  一方，加法定理を用いて\textbf{得られる含意}については，通常の意味で逆を考えることができる．たとえば，実数$\alpha$，$\beta$に関する命題
+  \[
+    \alpha + \beta = \pi
+    \quad \Longrightarrow \quad
+    \sin \alpha \cos \beta + \cos \alpha \sin \beta = 0
+  \]
+  は加法定理から従う．実際，仮定$\alpha + \beta = \pi$のもとで
+  \[
+    \sin \alpha \cos \beta + \cos \alpha \sin \beta
+    = \sin (\alpha + \beta)
+    = \sin \pi
+    = 0
+  \]
+  となる．この命題の逆
+  \[
+    \sin \alpha \cos \beta + \cos \alpha \sin \beta = 0
+    \quad \Longrightarrow \quad
+    \alpha + \beta = \pi
+  \]
+  は\textbf{偽}である．実際，$\alpha = \beta = 0$とすれば，仮定の等式は成り立つが，$\alpha + \beta = 0 \ne \pi$である．
+\end{remark}
+
+\begin{mycolumn}
+  \textbf{「本物の加法定理の逆」はあるか？}\quad
+  加法定理
+  \[
+    \sin (\alpha + \beta) = \sin \alpha \cos \beta + \cos \alpha \sin \beta
+  \]
+  は，実数$\alpha$，$\beta$に対して成り立つ等式として述べられる．このとき，「$\alpha$，$\beta$が実数である」というのは，命題の仮定というよりも，変数$\alpha$，$\beta$の動く範囲（\textbf{議論領域}）の指定である．加法定理は含意$P \to Q$の形をしていないのだから，そもそも「逆」を作る対象ではない．
+
+  もっとも，あらかじめ議論領域を複素数まで広げておけば\footnote{複素数に対する$\sin$，$\cos$は，べき級数や複素指数関数を用いて定義することができる．}，「$\alpha$，$\beta$が実数である」を仮定の位置に置いた含意
+  \[
+    \alpha, \beta \in \mathbb{R}
+    \quad \Longrightarrow \quad
+    \sin (\alpha + \beta) = \sin \alpha \cos \beta + \cos \alpha \sin \beta
+  \]
+  を人為的に作り，形式的にはその逆
+  \[
+    \sin (\alpha + \beta) = \sin \alpha \cos \beta + \cos \alpha \sin \beta
+    \quad \Longrightarrow \quad
+    \alpha, \beta \in \mathbb{R}
+  \]
+  を考えることもできる．しかし，加法定理の等式は\textbf{すべての複素数}$\alpha$，$\beta$に対して成り立つことが知られているので，この逆は偽である（反例：$\alpha = i$，$\beta = 0$）．いずれにせよ，このような「逆」は加法定理の本質を捉えた主張にはならない．
+
+  「加法定理の逆」の名にふさわしいのは，むしろ加法定理をある種の\textbf{条件}とみなし，「この条件を満たす関数はどのような関数か」と問うことである．すなわち，「三角関数ならば加法定理を満たす」の向きを反転させて，「加法定理を満たすならば三角関数か」と問うのである．実際，次のことが知られている：連続関数$f, g \colon \mathbb{R} \to \mathbb{R}$が，任意の$x, y \in \mathbb{R}$に対して
+  \[
+    f(x + y) = f(x)\, g(y) + g(x)\, f(y),
+    \qquad
+    g(x + y) = g(x)\, g(y) - f(x)\, f(y)
+  \]
+  および$f(x)^2 + g(x)^2 = 1$を満たすなら，ある定数$k \in \mathbb{R}$が存在して
+  \[
+    f(x) = \sin kx,
+    \qquad
+    g(x) = \cos kx
+  \]
+  となる．つまり，$\sin$と$\cos$が加法定理を満たすだけでなく，加法定理とピタゴラスの関係を満たす連続関数は，本質的に$\sin$と$\cos$に限られる．この意味で，加法定理は三角関数を\textbf{特徴づけて}いるのである．
+
+  証明の鍵は，$h(x) = g(x) + i f(x)$とおくことである．すると，2つの加法定理は指数法則
+  \[
+    h(x + y) = h(x)\, h(y)
+  \]
+  という1つの式にまとめられ，$f(x)^2 + g(x)^2 = 1$は$\abs{h(x)} = 1$を意味する．このような連続関数$h$，すなわち実数の加法を絶対値$1$の複素数の乗法に移す連続な写像は，ある$k \in \mathbb{R}$を用いて
+  \[
+    h(x) = e^{ikx}
+  \]
+  と表されることが知られている．実部と虚部を比較すれば，$g(x) = \cos kx$，$f(x) = \sin kx$が得られる\footnote{連続性などの正則性に関する仮定を外すと，通常の三角関数では表せない非連続な解が存在しうる．}．
+\end{mycolumn}
 
 \phantomsection
 \subsection{述語論理\index{じゅつごろんり@述語論理}}
@@ -331,7 +533,7 @@ $\delta$は選んだ$\varepsilon$に応じて決めてよいことを表して�
 \section{証明}
 
 \phantomsection
-\subsubsection{証明とは}
+\subsection{証明とは}
 数学において，主張が正しいことを示すプロセスを\emph{証明}\index{しょうめい@証明}（\emph{proof}）という．
 
 \begin{remark}[定義は「証明すべきこと」ではない]
@@ -422,50 +624,22 @@ $\delta$は選んだ$\varepsilon$に応じて決めてよいことを表して�
 \end{mycolumn}
 
 \phantomsection
-\subsection{命題の反証と反例}
-
-数学において，「すべての$n$に対して$P(n)$が成り立つ」という全称命題が偽であることを証明するには，\textbf{反例}をひとつ示すだけで十分である．これは，全称命題が「すべての場合において成り立つ」ことを主張しているため，ひとつでも例外があれば命題全体が偽となるからである．
-
-\phantomsection
-\begin{example}{反例による反証}{反例による反証}
-  次の命題を考える：
-  \[
-    \forall n \in \mathbb{N}\, : \, \frac{n^3}{24} + 84 \geqq n^2
-  \]
-  この命題が成り立たないことを示すためには，ある$n$について不等式が成立しないことを示せばよい．実際に，$n = 15$のとき，
-  \[
-    \frac{15^3}{24} + 84 = \frac{3375}{24} + 84 = 140.625 + 84 = 224.625
-  \]
-  である．
-  一方，
-  \[
-    15^2 = 225
-  \]
-  である．
-  したがって，
-  \[
-    \frac{15^3}{24} + 84 = 224.625 < 225 = 15^2
-  \]
-  が成り立つ．
-  このように，$n = 15$において不等式が成り立たないため，元の命題は偽であることがわかる．
-\end{example}
-
-また，全称命題が偽であることを証明する際には，「反例をどう見つけたか」ということは明記しない場合が多い．
-たとえば\exref{反例による反証}の場合に$n=15$を見つけるには，微分法を用いて議論したりさまざまな方法があるが，そのような「反例を見つけるまでの過程」を説明する必要はなく，「$n=15$の場合に命題が成り立たないこと」のみを証明として書けばよい．
-
-\phantomsection
 \subsection{さまざまな証明法}
 
-\begin{description}
-  \item[帰納法\index{きのうほう@帰納法}] \mbox{} \\
+命題が真であることを示す方法にも，偽であることを示す方法にも，さまざまなものがある．代表的なものを挙げてみよう．
+
+\begin{description}[descnext]
+  \item[帰納法\index{きのうほう@帰納法}]
         たとえば数学的帰納法は，数学的な主張が自然数全体に対して成り立つことを示すための証明法である．
-  \item[背理法\index{はいりほう@背理法}] \mbox{} \\
+  \item[背理法\index{はいりほう@背理法}]
         「$P$が成り立たないと仮定すると矛盾が生じる」という論理的な構造を用いて証明を行う方法である．
-  \item[直接証明\index{ちょくせつしょうめい@直接証明}] \mbox{} \\
+  \item[直接証明\index{ちょくせつしょうめい@直接証明}]
         「$P$が成り立つことを示す」という形式で証明を行う方法である．
+  \item[反例による反証\index{はんれい@反例}]
+        全称命題「すべての$x$について$P(x)$が成り立つ」が\textbf{偽}であることを示すには，$P(x)$が成り立たない$x$，すなわち\emph{反例}をひとつ挙げれば十分である．
 \end{description}
 
-以下では，「$n \geqq 2$ を満たす任意の自然数について，$2^n > n$である」という命題を3通りのやり方で証明してみよう．
+以下では，まず「$n \geqq 2$ を満たす任意の自然数について，$2^n > n$である」という命題を3通りのやり方で証明してみよう．
 
 \phantomsection
 \begin{example}{帰納法}{帰納法}
@@ -524,3 +698,32 @@ $\delta$は選んだ$\varepsilon$に応じて決めてよいことを表して�
   である．
   これと$n+1 >n$であることを併せると，$n \geqq 2$のとき$2^n > n$である．これが証明すべきことであった．\qed
 \end{example}
+
+最後に，反例による反証の例を見てみよう．全称命題は「すべての場合において成り立つ」ことを主張しているため，ひとつでも例外があれば命題全体が偽となる．したがって，命題が偽であることの証明としては，反例をひとつ示すだけで十分なのである．
+
+\phantomsection
+\begin{example}{反例による反証}{反例による反証}
+  次の命題を考える：
+  \[
+    \forall n \in \mathbb{N}\, : \, \frac{n^3}{24} + 84 \geqq n^2
+  \]
+  この命題が成り立たないことを示すためには，ある$n$について不等式が成立しないことを示せばよい．実際に，$n = 15$のとき，
+  \[
+    \frac{15^3}{24} + 84 = \frac{3375}{24} + 84 = 140.625 + 84 = 224.625
+  \]
+  である．
+  一方，
+  \[
+    15^2 = 225
+  \]
+  である．
+  したがって，
+  \[
+    \frac{15^3}{24} + 84 = 224.625 < 225 = 15^2
+  \]
+  が成り立つ．
+  このように，$n = 15$において不等式が成り立たないため，元の命題は偽であることがわかる．
+\end{example}
+
+また，全称命題が偽であることを証明する際には，「反例をどう見つけたか」ということは明記しない場合が多い．
+たとえば\exref{反例による反証}の場合に$n=15$を見つけるには，微分法を用いて議論したりさまざまな方法があるが，そのような「反例を見つけるまでの過程」を説明する必要はなく，「$n=15$の場合に命題が成り立たないこと」のみを証明として書けばよい．
