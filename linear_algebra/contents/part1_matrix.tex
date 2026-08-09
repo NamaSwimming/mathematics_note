@@ -1,0 +1,705 @@
+\phantomsection
+\part{行列と連立一次方程式}
+
+\begin{abstract}
+  この章では，線型代数の出発点となる\textbf{行列}を定義し，その基本的な扱いを整理する．
+  まず行列とその相等・転置などの基本的な用語を確認し，和・スカラー倍・積という演算を定義して，
+  その計算規則を調べる．とくに，行列の積が交換律を満たさないことに注意する．
+  次に，正方行列に対して逆行列を定義し，その一意性と$2$次正方行列における具体形を確かめる．
+  最後に，連立一次方程式を係数行列を用いて表し，加減法が行基本変形として言い換えられること，
+  および逆行列を用いた解法を見る．
+\end{abstract}
+
+\section{行列}
+
+\phantomsection
+\subsection{行列の定義}
+
+以下，本書では$K$は$\mathbb{R}$または$\mathbb{C}$を表すと約束する．
+また，本書では自然数に$0$を含めない．すなわち，自然数とは正の整数$1, 2, 3, \dots$のことであり，自然数全体の集合を$\mathbb{N} = \{1, 2, 3, \dots\}$と表す．
+
+まず，本書を通じて主役となる\textbf{行列}\index{ぎょうれつ@行列}を定義しよう．
+
+\begin{definition}{行列}{行列}
+  $mn$個の数$a_{ij} \in K$~$(1 \le i \le m,~1 \le j \le n)$を，縦に$m$個，横に$n$個並べた表
+  \[
+    A =
+    \begin{pmatrix}
+      a_{11} & a_{12} & \cdots & a_{1n} \\
+      a_{21} & a_{22} & \cdots & a_{2n} \\
+      \vdots & \vdots & \ddots & \vdots \\
+      a_{m1} & a_{m2} & \cdots & a_{mn}
+    \end{pmatrix}
+  \]
+  を\textbf{$m \times n$行列}（$m \times n$型の行列）という．
+  横の並びを\textbf{行}\index{ぎょう@行}，縦の並びを\textbf{列}\index{れつ@列}とよび，第$i$行と第$j$列の交わる位置にある数$a_{ij}$を$A$の\textbf{$(i, j)$成分}\index{せいぶん@成分}という．
+  また，この$A$を$A = (a_{ij})$と略記することがある．
+\end{definition}
+
+高校までの学習で，列ベクトル
+\[
+  \begin{pmatrix} x_1 \\ x_2 \\ \vdots \\ x_n \end{pmatrix}
+\]
+を学ぶが，これは$n \times 1$行列である．同様に行ベクトル
+\[
+  \begin{pmatrix} x_1 & x_2 & \cdots & x_n \end{pmatrix}
+\]
+は$1 \times n$行列である．なお，以下では行ベクトルを
+\[
+  (x_1, x_2, \dots, x_n)
+\]
+のようにカンマ区切りで表す表記も用いることにする．
+
+\begin{example}{行列}{行列}
+  \[
+    A =
+    \begin{pmatrix}
+      -1 & 5 & 3 & 4 \\
+      9 & -2 & 4 & 1 \\
+      6 & -10 & -3 & 5
+    \end{pmatrix}
+  \]
+  としたとき，$A$は$3 \times 4$行列である．
+  \[
+    \begin{pmatrix} -1 & 5 & 3 & 4 \end{pmatrix}
+  \]
+  を第$1$行といい，同様に第$2$行，第$3$行が定まる．
+  また，
+  \[
+    \begin{pmatrix} -1 \\ 9 \\ 6 \end{pmatrix}
+  \]
+  を第$1$列といい，同様に第$2$列から第$4$列までが定まる．
+  たとえば，$A$の$(2, 3)$成分は$4$である．
+\end{example}
+
+\begin{mycolumn}
+  行列を単なる「数の表」として定義したことに，戸惑うかもしれない．
+  また，このあと「2つの行列が等しい」と定めたり，行列どうしの和や積を定義したりすることにも，
+  はじめは人為的な印象を受けるだろう．
+  しかし，これらの定義の意味は，のちに\textbf{線型写像}を学ぶことで明らかになる．
+  行列とは線型写像を数の表として書き下したものであり，たとえば行列の積は写像の合成に対応するように定められている．
+  当面は天下り的に見える定義も，この見通しを頭の片隅に置いて読み進めてほしい．
+\end{mycolumn}
+
+新しい対象を定義したら，次に「$2$つの対象がいつ等しいとみなされるのか」を約束しておく必要がある．
+行列については，次のように定める．
+ 
+\begin{definition}{行列の相等}{行列の相等}
+  $2$つの行列$A = (a_{ij})$，$B = (b_{ij})$が\textbf{等しい}\index{ぎょうれつのそうとう@行列の相等}とは，$A$と$B$の型が等しく，かつ対応するすべての成分が等しいこと，すなわち$A$，$B$がともに$m \times n$行列であって
+  \[
+    a_{ij} = b_{ij} \quad (1 \le i \le m,~1 \le j \le n)
+  \]
+  が成り立つことをいう．このとき$A = B$とかく．
+\end{definition}
+ 
+型が等しいことも条件に含まれている点に注意してほしい．
+たとえば，$2 \times 2$の零行列と$2 \times 3$の零行列は，どちらも$O$という同じ記号で表されるが，等しい行列ではない．
+ 
+また，この定義によって，$1$つの行列の等式$A = B$は$mn$個の数の等式$a_{ij} = b_{ij}$を束ねたものとなる．
+のちに逆行列を求める場面などで，行列の等式から成分を比較して連立方程式を取り出す議論が現れるが，それを支えているのがこの定義である．
+ 
+\begin{remark}[行列の相等を考える意義]
+  「等しい」という関係をわざわざ定義することを，不思議に思う方もいるかもしれない．
+  しかし，これは数学の議論を始めるうえで欠かせない約束である．
+ 
+  実数の世界を思い出してみよう．円周率$\pi$は，小数表示$3.1415\ldots$のほかに，無限級数
+  \[
+    4 \left( 1 - \frac{1}{3} + \frac{1}{5} - \frac{1}{7} + \cdots \right)
+  \]
+  としても，積分
+  \[
+    \int_0^1 \frac{4}{1 + x^2} \, dx
+  \]
+  としてもかける．見た目のまったく異なるこれらの式を「$=$」で結べるのは，実数における「$=$」が「表記のかたちが同じ」ではなく「同じ数を表している」という意味に定められているからである．
+ 
+  行列でも事情は同じで，$1$つの行列がさまざまな計算の結果として現れうる．
+  そこで，どのような経緯で得られた行列であっても，「型が等しく，すべての成分が等しければ同じ行列とみなす」と約束しておくのである．
+  逆にいえば，この約束があるからこそ，これから定義する和や積の計算結果を$1$つの行列として自信をもって「$=$」で結ぶことができる．
+\end{remark}
+
+\begin{definition}{正方行列}{正方行列}
+  行の数と列の数が等しい行列を\textbf{正方行列}\index{せいほうぎょうれつ@正方行列}という．
+  すなわち，$n$を自然数として，$n \times n$行列を\textbf{$n$次正方行列}という．
+\end{definition}
+
+\begin{example}{正方行列}{正方行列}
+  \[
+    \begin{pmatrix} 2 & 5 \\ -8 & 7 \end{pmatrix}, \quad
+    \begin{pmatrix} -1 & 4 & 0 \\ 2 & 1 & 9 \\ -8 & 5 & 1 \end{pmatrix}
+  \]
+  はそれぞれ$2$次，$3$次の正方行列である．
+\end{example}
+
+行列全体の集合にも記号を用意しておこう．
+
+\begin{definition}{行列全体の集合}{行列全体の集合}
+  $K$の元\footnote{集合に属する個々の対象を，その集合の\textbf{元}（\textbf{要素}）とよぶ．本書では「元」の語に統一する．}を成分とする$m \times n$行列全体の集合を
+  \[
+    M_{m,n}(K)
+  \]
+  と表す．とくに，$n$次正方行列全体の集合を
+  \[
+    M_n(K) = M_{n,n}(K)
+  \]
+  と表す．
+\end{definition}
+
+この記法は，のちに「行列を変数とする写像」を考える場面（たとえば行列式）や，「$m \times n$行列全体が一つの線型空間をなす」ことを述べる場面（\partref{線型空間}）で用いられる．
+
+のちの議論で頻繁に現れる「特別な行列」にも名前をつけておこう．
+
+\begin{definition}{零行列と単位行列}{零行列と単位行列}
+  すべての成分が$0$である行列を\textbf{零行列}\index{れいぎょうれつ@零行列}とよび，$O$と表す．
+
+  また，$(1,1)$成分から$(n,n)$成分までの対角線上の成分がすべて$1$で，他の成分がすべて$0$である$n$次正方行列
+  \[
+    E_n =
+    \begin{pmatrix}
+      1 & 0 & \cdots & 0 \\
+      0 & 1 & \cdots & 0 \\
+      \vdots & \vdots & \ddots & \vdots \\
+      0 & 0 & \cdots & 1
+    \end{pmatrix}
+  \]
+  を\textbf{$n$次単位行列}\index{たんいぎょうれつ@単位行列}とよぶ\footnote{単位行列を表す文字は$E$のほかに$I$も使われる．英語表記の``Identity Matrix''の頭文字の$I$をとるか，もしくはドイツ語表記の``Einheitsmatrix''の頭文字をとるかの選択である．}．
+  サイズが文脈から明らかなときは，単に$E$とかく．
+\end{definition}
+
+\begin{definition}{転置行列}{転置行列}
+  $m \times n$行列$A = (a_{ij})$に対して，$A$の行と列を入れ替えて得られる$n \times m$行列，すなわち$(i, j)$成分が$a_{ji}$である行列を$A$の\textbf{転置行列}\index{てんちぎょうれつ@転置行列}とよび，$A^\mathsf{T}$と表す\footnote{行列$A$の転置行列の表記として，$A^\mathsf{T}$のほかに${}^t A$もよく使われる．}．
+\end{definition}
+
+\begin{example}{転置行列}{転置行列}
+  \[
+    A = \begin{pmatrix} 1 & 2 & 3 \\ 4 & 5 & 6 \end{pmatrix}
+    \quad \text{のとき，} \quad
+    A^\mathsf{T} = \begin{pmatrix} 1 & 4 \\ 2 & 5 \\ 3 & 6 \end{pmatrix}
+  \]
+  である．$A$の第$1$行が$A^\mathsf{T}$の第$1$列になっていることに注意してほしい．
+\end{example}
+
+いきなり行列という概念が出てきて，戸惑っている方も多いと思う．
+これから行列の計算規則や意味などを確認していこう．
+
+\phantomsection
+\subsection{行列の和とスカラー倍}
+
+\begin{definition}{行列の和}{行列の和}
+  $m \times n$行列$A = (a_{ij})$，$B = (b_{ij})$に対して，その\textbf{和}\index{ぎょうれつのわ@行列の和}$A + B$を
+  \[
+    A + B =
+    \begin{pmatrix}
+      a_{11} + b_{11} & a_{12} + b_{12} & \cdots & a_{1n} + b_{1n} \\
+      a_{21} + b_{21} & a_{22} + b_{22} & \cdots & a_{2n} + b_{2n} \\
+      \vdots & \vdots & \ddots & \vdots \\
+      a_{m1} + b_{m1} & a_{m2} + b_{m2} & \cdots & a_{mn} + b_{mn}
+    \end{pmatrix}
+  \]
+  と定義する．すなわち，成分ごとに和をとる．
+\end{definition}
+
+型の異なる行列に対しては，和は定義されない．
+
+\begin{definition}{行列のスカラー倍}{行列のスカラー倍}
+  $\alpha \in K$と$m \times n$行列$A = (a_{ij})$に対して，$A$の\textbf{スカラー倍}\index{ぎょうれつのすからーばい@行列のスカラー倍}$\alpha A$を
+  \[
+    \alpha A =
+    \begin{pmatrix}
+      \alpha a_{11} & \alpha a_{12} & \cdots & \alpha a_{1n} \\
+      \alpha a_{21} & \alpha a_{22} & \cdots & \alpha a_{2n} \\
+      \vdots & \vdots & \ddots & \vdots \\
+      \alpha a_{m1} & \alpha a_{m2} & \cdots & \alpha a_{mn}
+    \end{pmatrix}
+  \]
+  と定義する．すなわち，すべての成分を$\alpha$倍する．
+\end{definition}
+
+\begin{example}{行列のスカラー倍}{行列のスカラー倍}
+  $A = \begin{pmatrix} 2 & 3 \\ 9 & 1 \\ -8 & 3 \end{pmatrix}$に$5$をかけると，
+  \[
+    5A =
+    \begin{pmatrix}
+      5 \cdot 2 & 5 \cdot 3 \\
+      5 \cdot 9 & 5 \cdot 1 \\
+      5 \cdot (-8) & 5 \cdot 3
+    \end{pmatrix}
+    =
+    \begin{pmatrix}
+      10 & 15 \\
+      45 & 5 \\
+      -40 & 15
+    \end{pmatrix}
+  \]
+  となる．
+\end{example}
+
+\begin{remark}[スカラー倍の定義の設計]
+  行列のスカラー倍を，たとえば「第$1$行だけを$\alpha$倍する」操作として定めることも，定義としては可能である．
+  この操作を仮に$\alpha \ast A$とかくと，$1 \ast A = A$や$\alpha \ast (A + B) = \alpha \ast A + \alpha \ast B$は成り立つが，
+  \[
+    (\alpha + \beta) \ast A = \alpha \ast A + \beta \ast A
+  \]
+  は一般に成り立たない．実際，左辺の第$2$行以降は$A$のままであるのに対し，右辺の第$2$行以降は$A$の対応する行の$2$倍になる．
+  \deref{行列のスカラー倍}が「すべての成分を$\alpha$倍する」という形をしているのは，こうした計算規則が成り立つように選ばれた結果である．
+  定義は天下りに与えられるものではなく，望ましい性質から逆算して設計されるものである．
+\end{remark}
+
+\begin{definition}{行列の減法}{行列の減法}
+  $A$，$B$を型の等しい行列とする．
+  \deref{行列のスカラー倍}に従って行列$(-1)B$を考え，
+  \[
+    A + (-1)B
+  \]
+  を$A - B$とかく．
+  以下，$(-1)B$を$-B$と略記する．
+\end{definition}
+
+\deref{行列の減法}は，減法を和とスカラー倍から組み立てる定義である．
+実際に成分を計算すれば，$A - B$の$(i, j)$成分は$a_{ij} - b_{ij}$であり，成分ごとに差をとることと一致する．
+
+\begin{example}{行列の和と差の計算}{行列の和と差の計算}
+  \[
+    A = \begin{pmatrix} 2 & 0 & -1 \\ 1 & 1 & 4 \end{pmatrix}, \quad
+    B = \begin{pmatrix} 1 & 2 & 3 \\ 0 & 1 & -2 \end{pmatrix}, \quad
+    C = \begin{pmatrix} 0 & 1 \\ 3 & 5 \\ 2 & 0 \end{pmatrix}
+  \]
+  としたとき，
+  \[
+    A + B =
+    \begin{pmatrix}
+      2 + 1 & 0 + 2 & -1 + 3 \\
+      1 + 0 & 1 + 1 & 4 + (-2)
+    \end{pmatrix}
+    =
+    \begin{pmatrix}
+      3 & 2 & 2 \\
+      1 & 2 & 2
+    \end{pmatrix}, \quad
+    A - B =
+    \begin{pmatrix}
+      1 & -2 & -4 \\
+      1 & 0 & 6
+    \end{pmatrix}
+  \]
+  である．一方，$A$と$C$は型が異なるので，$A + C$や$A - C$は定義されない．
+\end{example}
+
+行列の和について成り立つ計算規則をまとめておこう．
+
+\begin{prop}{行列の和の計算規則}{行列の和の計算規則}
+  $A$，$B$，$C$を型の等しい行列とし，$O$を同じ型の零行列とする．このとき，次が成り立つ：
+  \begin{align*}
+    (A + B) + C &= A + (B + C) && \text{（和の結合律）} \\
+    A + B &= B + A && \text{（和の交換律）} \\
+    A + O &= A && \text{（加法単位元の存在）} \\
+    A + (-A) &= O && \text{（加法逆元の存在）}
+  \end{align*}
+\end{prop}
+
+\begin{leftbar}
+\begin{proof}
+  行列の和とスカラー倍は成分ごとの計算として定義されているから，いずれの等式も，両辺の$(i, j)$成分を比較すれば，数$a_{ij}, b_{ij}, c_{ij} \in K$についての対応する等式に帰着される．
+  たとえば第$1$式については，両辺の$(i, j)$成分はともに$a_{ij} + b_{ij} + c_{ij}$であり，これは数の和の結合律にほかならない．
+  他の式も同様である．
+\end{proof}
+\end{leftbar}
+
+つまり，行列の加法については，両辺が定義されるかぎり，結合律および交換律が成り立つ．
+次節では行列の積を定義し，積についてもこれらの性質が成り立つかを考えることにする．
+
+\phantomsection
+\subsection{行列の積}
+
+\begin{definition}{行列の積}{行列の積}
+  $l \times m$行列$A = (a_{ij})$と$m \times n$行列$B = (b_{jk})$に対して，$A$と$B$の\textbf{積}\index{ぎょうれつのせき@行列の積}$AB$を，$(i, k)$成分が
+  \[
+    c_{ik} = \sum_{j=1}^{m} a_{ij} b_{jk}
+    \quad (i = 1, 2, \dots, l,~ k = 1, 2, \dots, n)
+  \]
+  で与えられる$l \times n$行列$C = (c_{ik})$として定義する．
+\end{definition}
+
+\begin{wrapfigure}[7]{r}{0.5\textwidth}
+  \centering
+  \vspace{-\baselineskip}
+  \begin{tikzpicture}[
+      mat/.style={matrix of math nodes,
+                  left delimiter=(, right delimiter=),
+                  nodes={inner sep=1.5pt, font=\scriptsize},
+                  column sep=5pt, row sep=4pt},
+      waku/.style={draw, magenta, thick, rounded corners=2pt, inner sep=2.5pt}]
+    \matrix (A) [mat] {
+      a_{11} & \cdots & a_{1m} \\
+      \vdots &        & \vdots \\
+      |[magenta]| a_{i1} & |[magenta]| \cdots & |[magenta]| a_{im} \\
+      a_{l1} & \cdots & a_{lm} \\
+    };
+    \matrix (B) [mat, right=14pt of A] {
+      b_{11} & \cdots & |[magenta]| b_{1k} & \cdots & b_{1n} \\
+      \vdots &        & |[magenta]| \vdots &        & \vdots \\
+      b_{m1} & \cdots & |[magenta]| b_{mk} & \cdots & b_{mn} \\
+    };
+    \node[waku, fit=(A-3-1)(A-3-3)] (row) {};
+    \node[waku, fit=(B-1-3)(B-3-3)] (col) {};
+    \node[magenta, font=\tiny, left=8pt of row] {第$i$行};
+    \node[magenta, font=\tiny, above=4pt of col] {第$k$列};
+  \end{tikzpicture}
+    \caption{行列の積の計算}
+  \label{fig:matrix-product}
+\end{wrapfigure}
+
+積$AB$が定義されるのは，左の行列$A$の列の数と，右の行列$B$の行の数が一致するときに限ることに注意したい．
+そして，$AB$の$(i, k)$成分は，$A$の第$i$行と$B$の第$k$列の成分どうしを順にかけて足し合わせたもの，すなわち
+\[
+  a_{i1}b_{1k} + a_{i2}b_{2k} + \cdots + a_{im}b_{mk}
+\]
+である．
+
+\deref{行列の積}は複雑である．
+しかし，のちに線型写像について考察すると，この定義が自然であることが明らかとなる\footnote{行列の積が写像の合成に対応することについては，\prref{行列の積と写像の合成}で確認する．}．
+ここでは具体例で確認してみよう．
+
+\begin{example}{行列の積}{行列の積}
+  \[
+    A = \begin{pmatrix} 1 & 2 & 0 \\ 3 & 2 & 0 \end{pmatrix}, \quad
+    B = \begin{pmatrix} 1 & 0 \\ 0 & 2 \\ 1 & 1 \end{pmatrix}
+  \]
+  のとき，$A$は$2 \times 3$行列，$B$は$3 \times 2$行列であるため，積$AB$は定義され，
+  \[
+    AB =
+    \begin{pmatrix}
+      1 \cdot 1 + 2 \cdot 0 + 0 \cdot 1 & 1 \cdot 0 + 2 \cdot 2 + 0 \cdot 1 \\
+      3 \cdot 1 + 2 \cdot 0 + 0 \cdot 1 & 3 \cdot 0 + 2 \cdot 2 + 0 \cdot 1
+    \end{pmatrix}
+    =
+    \begin{pmatrix}
+      1 & 4 \\
+      3 & 4
+    \end{pmatrix}
+  \]
+  である．
+\end{example}
+
+一般に，積$AB$が定義されても$BA$が定義されるとは限らない．
+ただし，$A$が$m\times n$行列，$B$が$n\times m$行列であれば，
+$AB$と$BA$はともに定義される．
+とくに，同じ次数の正方行列どうしでは，常に$AB$と$BA$の両方が定義される．
+
+任意の$a, b \in \mathbb{R}$に対して，以下の$2$つの事実が成り立つことは既知であろう：
+\begin{gather*}
+  ab = ba, \\
+  ab = 0 \text{ ならば } a = 0 \text{ または } b = 0.
+\end{gather*}
+つまり，$\mathbb{R}$では積の交換律が成り立ち，$a \ne 0$かつ$b \ne 0$なのに$ab = 0$となるような$a, b$は存在しない．
+では，行列の場合はどうであろうか．
+
+\begin{example}{行列の積の非可換性と零因子}{行列の積の非可換性と零因子}
+  行列$A$，$B$を
+  \[
+    A = \begin{pmatrix} 1 & 0 \\ 1 & 0 \end{pmatrix}, \quad
+    B = \begin{pmatrix} 0 & 0 \\ 0 & 1 \end{pmatrix}
+  \]
+  で定めると，
+  \[
+    AB = \begin{pmatrix} 0 & 0 \\ 0 & 0 \end{pmatrix}, \quad
+    BA = \begin{pmatrix} 0 & 0 \\ 1 & 0 \end{pmatrix}
+  \]
+  となる．
+\end{example}
+
+この例から，行列においては，一般に積の交換律$AB = BA$は成立しないことがわかる．
+さらに，$A \ne O$かつ$B \ne O$であるのに$AB = O$となることも起こりうる\footnote{このように，零行列でないのに，零行列でない行列をかけると積が零行列になるような行列を\textbf{零因子}\index{れいいんし@零因子}という．}．
+このように，行列の積は数の積とは異なる振る舞いをすることがあるので，計算の際には注意が必要である．
+
+一方で，行列の積は数の積と似た性質をもつ場面もある．
+
+\begin{prop}{行列の乗法結合律}{行列の乗法結合律}
+  $A$が$l \times m$行列，$B$が$m \times n$行列，$C$が$n \times p$行列であれば，
+  \[
+    (AB)C = A(BC)
+  \]
+  が成り立つ．
+\end{prop}
+
+\begin{leftbar}
+\begin{proof}
+  $A = (a_{ij})$，$B = (b_{jk})$，$C = (c_{kq})$とかく．
+  $AB$の$(i, k)$成分は
+  \[
+    \sum_{j=1}^{m} a_{ij} b_{jk}
+    \quad (i = 1, 2, \dots, l,~ k = 1, 2, \dots, n)
+  \]
+  であるから，$(AB)C$の$(i, q)$成分は
+  \[
+    \sum_{k=1}^{n} \left( \sum_{j=1}^{m} a_{ij} b_{jk} \right) c_{kq}
+    = \sum_{k=1}^{n} \sum_{j=1}^{m} a_{ij} b_{jk} c_{kq}
+  \]
+  である．同様に，$A(BC)$の$(i, q)$成分は
+  \[
+    \sum_{j=1}^{m} \sum_{k=1}^{n} a_{ij} b_{jk} c_{kq}
+  \]
+  である．この$2$つの式は，$\sum$記号の順序が違うだけで一致している．
+  これが証明すべきことであった．
+\end{proof}
+\end{leftbar}
+
+交換律は成り立たないが結合律は成り立つ，という場面はほかにもある．
+たとえば，写像の合成について，
+\[
+  f \circ g = g \circ f
+\]
+は一般には成り立たないが，
+\[
+  h \circ (g \circ f) = (h \circ g) \circ f
+\]
+はつねに成り立つ．
+
+\begin{example}{合成関数と交換律}{合成関数と交換律}
+  実数全体で定義された関数$f(x) = 1 + x$，$g(x) = x^3$を考える．
+  $f$と$g$，$g$と$f$はいずれも合成可能で，
+  \[
+    (g \circ f)(x) = (1 + x)^3, \quad (f \circ g)(x) = 1 + x^3
+  \]
+  となり，$g \circ f \ne f \circ g$である．
+\end{example}
+
+実は，行列の積と写像の合成のこの類似は偶然ではない．
+このことは，のちに線型写像と行列の関係を調べる際に明らかになる（\prref{行列の積と写像の合成}）．
+
+行列の積について成り立つ計算規則をまとめておこう．
+
+\begin{prop}{行列の積の計算規則}{行列の積の計算規則}
+  $A$，$B$，$C$を行列とし，$E$を単位行列とする．両辺が定義されるかぎり，次が成り立つ：
+  \begin{align*}
+    (AB)C &= A(BC) && \text{（積の結合律）} \\
+    AE &= A, \quad EA = A && \text{（乗法単位元の存在）} \\
+    A(B + C) &= AB + AC, \quad (A + B)C = AC + BC && \text{（分配律）}
+  \end{align*}
+\end{prop}
+
+\begin{leftbar}
+\begin{proof}
+  第$1$式は\prref{行列の乗法結合律}で示した通りである．
+  第$2$式と第$3$式は，\prref{行列の和の計算規則}の証明と同様に，両辺の成分を比較することで確かめられる．
+\end{proof}
+\end{leftbar}
+
+\phantomsection
+\subsection{逆行列}
+
+数$a \ne 0$に対しては，$ax = xa = 1$を満たす数$x = a^{-1}$が存在した．
+この「逆数」にあたる概念を，正方行列に対して考えよう．
+
+\begin{definition}{逆行列}{逆行列}
+  $n$次正方行列$A$と$n$次単位行列$E$に対して，
+  \[
+    AX = XA = E
+  \]
+  となる$n$次正方行列$X$が存在するとき，$A$は\textbf{正則}\index{せいそく@正則}であるという．
+  このような$X$を$A$の\textbf{逆行列}\index{ぎゃくぎょうれつ@逆行列}とよび，$A^{-1}$とかく．
+\end{definition}
+
+\begin{prop}{逆行列の一意性}{逆行列の一意性}
+  正方行列$A$に逆行列が存在するとき，それはただ一つに限る．
+\end{prop}
+
+\begin{leftbar}
+\begin{proof}
+  $X$，$Y$がともに$A$の逆行列であるとする．このとき，
+  \[
+    AY = YA = E
+  \]
+  が成り立つ．このもとで，
+  \[
+    X = XE = X(AY) = (XA)Y = EY = Y
+  \]
+  となるため，逆行列の一意性が示された．
+\end{proof}
+\end{leftbar}
+
+\begin{remark}[定義は最小限にとどめる]
+  逆行列は，定義から一意であることがわかった．
+  ここで，「常に逆行列が一意であるならば，逆行列の定義に一意性を入れたほうが定義の情報量が多くなってよいはず」と考える方もおられるだろう．
+
+  しかし，数学においては「定義は最小限の情報におさえて，その他のことは命題として示す」という慣習がある．
+  定義を最小限にしたほうが，「逆行列が一意であることは，定義から証明できる事実である」ということが明確になるのである．
+\end{remark}
+
+\begin{example}{2次正方行列の逆行列}{2次正方行列の逆行列}
+  $A = \begin{pmatrix} a & b \\ c & d \end{pmatrix}$（成分は$K$の元）に対して，$AX = E$となる行列$X$が存在する条件を求めよう．
+  $X = \begin{pmatrix} x_{11} & x_{12} \\ x_{21} & x_{22} \end{pmatrix}$とすると，
+  \[
+    AX =
+    \begin{pmatrix}
+      ax_{11} + bx_{21} & ax_{12} + bx_{22} \\
+      cx_{11} + dx_{21} & cx_{12} + dx_{22}
+    \end{pmatrix}
+  \]
+  であり，これが$E$と等しくなればよいので，
+  \[
+    \begin{cases}
+      ax_{11} + bx_{21} = 1 \\
+      cx_{11} + dx_{21} = 0
+    \end{cases}, \quad
+    \begin{cases}
+      ax_{12} + bx_{22} = 0 \\
+      cx_{12} + dx_{22} = 1
+    \end{cases}
+  \]
+  を得る．$ad - bc \ne 0$のとき，この$2$組の連立方程式は加減法によりただ一組の解をもち，
+  \[
+    x_{11} = \frac{d}{ad - bc}, \quad
+    x_{12} = -\frac{b}{ad - bc}, \quad
+    x_{21} = -\frac{c}{ad - bc}, \quad
+    x_{22} = \frac{a}{ad - bc}
+  \]
+  となる．この$X$に対して$XA$を計算すると，たしかに$XA = E$となる．
+  よって，$ad - bc \ne 0$のとき$A$は正則であり，その逆行列は
+  \[
+    A^{-1} = \frac{1}{ad - bc} \begin{pmatrix} d & -b \\ -c & a \end{pmatrix}
+  \]
+  である\footnote{逆に$ad - bc = 0$のときは$A$は正則でないが，このことは上の計算（$ad - bc \ne 0$の場合の解の構成）だけからは直ちには従わない．\partref{行列式}で行列式を導入したあとに，一般の$n$次正方行列が正則であるための必要十分条件として証明される．}．
+\end{example}
+
+\phantomsection
+\section{連立一次方程式}
+
+\phantomsection
+\subsection{加減法による解法}
+
+次のような連立一次方程式を考える：
+\begin{equation}
+  \begin{cases}
+    4x + 3y = 8 \\
+    2x + 3y = 4
+  \end{cases} \label{eq:連立一次方程式の例}
+\end{equation}
+
+初等的な解法を確認しておこう．
+第$1$式から第$2$式を辺々引くと$2x = 4$を得るので，$x = 2$である．
+これを第$2$式に代入すると$4 + 3y = 4$，すなわち$3y = 0$となるので，$y = 0$である．
+よって，\eqref{eq:連立一次方程式の例}の解は$x = 2$，$y = 0$である．
+
+この解法は「加減法」としてよく知られているものである．
+本節では，この解法を行列のことばで表現し直すことを考える．
+
+\phantomsection
+\subsection{係数行列と行基本変形}
+
+一般に，$m$個の式と$n$個の未知数からなる連立一次方程式
+\[
+  \begin{cases}
+    a_{11}x_1 + a_{12}x_2 + \cdots + a_{1n}x_n = b_1 \\
+    a_{21}x_1 + a_{22}x_2 + \cdots + a_{2n}x_n = b_2 \\
+    \hspace{2em} \vdots \\
+    a_{m1}x_1 + a_{m2}x_2 + \cdots + a_{mn}x_n = b_m
+  \end{cases}
+\]
+は，行列の積を用いて
+\[
+  A\bm{x} = \bm{b}, \quad
+  A = (a_{ij}), \quad
+  \bm{x} = \begin{pmatrix} x_1 \\ x_2 \\ \vdots \\ x_n \end{pmatrix}, \quad
+  \bm{b} = \begin{pmatrix} b_1 \\ b_2 \\ \vdots \\ b_m \end{pmatrix}
+\]
+とかける．
+
+\begin{definition}{係数行列・拡大係数行列}{係数行列}
+  上の連立一次方程式に対して，係数を並べた$m \times n$行列$A = (a_{ij})$を\textbf{係数行列}\index{けいすうぎょうれつ@係数行列}という．
+  さらに，$A$の右側に$\bm{b}$を付け加えた$m \times (n + 1)$行列
+  \[
+    \begin{pmatrix}
+      a_{11} & a_{12} & \cdots & a_{1n} & b_1 \\
+      a_{21} & a_{22} & \cdots & a_{2n} & b_2 \\
+      \vdots & \vdots & \ddots & \vdots & \vdots \\
+      a_{m1} & a_{m2} & \cdots & a_{mn} & b_m
+    \end{pmatrix}
+  \]
+  を\textbf{拡大係数行列}\index{かくだいけいすうぎょうれつ@拡大係数行列}という．
+\end{definition}
+
+たとえば，\eqref{eq:連立一次方程式の例}は
+\[
+  \begin{pmatrix} 4 & 3 \\ 2 & 3 \end{pmatrix}
+  \begin{pmatrix} x \\ y \end{pmatrix}
+  =
+  \begin{pmatrix} 8 \\ 4 \end{pmatrix}
+\]
+とかけ，係数行列は$\begin{pmatrix} 4 & 3 \\ 2 & 3 \end{pmatrix}$，拡大係数行列は$\begin{pmatrix} 4 & 3 & 8 \\ 2 & 3 & 4 \end{pmatrix}$である．
+
+\begin{definition}{行基本変形}{行基本変形}
+  行列に対する以下の$3$種類の操作を\textbf{行基本変形}\index{ぎょうきほんへんけい@行基本変形}という．
+  \begin{enumerate}[label=(\arabic*),leftmargin=3.2em]
+    \item 第$i$行を$c$倍する（$c \ne 0$）\footnote{$c = 0$倍を許すと，第$i$行の情報が失われてしまい，もとの連立方程式と同値でなくなる．そのため$c \ne 0$という条件を課している．}．
+    \item 第$i$行と第$j$行を入れ替える．
+    \item 第$i$行に第$j$行の定数倍を加える（$i \ne j$）．
+  \end{enumerate}
+\end{definition}
+
+拡大係数行列に行基本変形を施すことは，連立方程式に対して「両辺を定数倍する」「式の順序を入れ替える」「ある式に別の式の定数倍を加える」という操作を行うことに対応する．
+いずれの操作でも連立方程式の解は変わらないので，行基本変形を繰り返して拡大係数行列を簡単な形に変形すれば，解が読み取れる．
+
+たとえば，\eqref{eq:連立一次方程式の例}の拡大係数行列は，以下のように変形できる：
+\begin{align*}
+  \begin{pmatrix}
+    4 & 3 & 8 \\
+    2 & 3 & 4
+  \end{pmatrix}
+  &\xrightarrow{\text{第1行に第2行の$(-1)$倍を加える}}
+  \begin{pmatrix}
+    2 & 0 & 4 \\
+    2 & 3 & 4
+  \end{pmatrix} \\
+  &\xrightarrow{\text{第2行に第1行の$(-1)$倍を加える}}
+  \begin{pmatrix}
+    2 & 0 & 4 \\
+    0 & 3 & 0
+  \end{pmatrix} \\
+  &\xrightarrow{\text{第1行を$1/2$倍，第2行を$1/3$倍する}}
+  \begin{pmatrix}
+    1 & 0 & 2 \\
+    0 & 1 & 0
+  \end{pmatrix}
+\end{align*}
+最後の行列は連立方程式
+\[
+  \begin{cases}
+    x = 2 \\
+    y = 0
+  \end{cases}
+\]
+を表しており，これがそのまま解を与えている．
+この操作は，本質的には加減法による解法と同じである．
+
+\phantomsection
+\subsection{逆行列を用いた解法}
+
+係数行列が正則な場合には，逆行列を用いて解を表すこともできる．
+\eqref{eq:連立一次方程式の例}を
+\begin{equation}
+  A\bm{x} = \bm{b}, \quad
+  A = \begin{pmatrix} 4 & 3 \\ 2 & 3 \end{pmatrix}, \quad
+  \bm{x} = \begin{pmatrix} x \\ y \end{pmatrix}, \quad
+  \bm{b} = \begin{pmatrix} 8 \\ 4 \end{pmatrix} \label{eq:連立一次方程式の行列表示}
+\end{equation}
+とかく．$4 \cdot 3 - 3 \cdot 2 = 6 \ne 0$なので，\exref{2次正方行列の逆行列}より$A$は正則であり，
+\[
+  A^{-1} = \frac{1}{6} \begin{pmatrix} 3 & -3 \\ -2 & 4 \end{pmatrix}
+\]
+である．これを\eqref{eq:連立一次方程式の行列表示}の両辺に左からかけると，
+\begin{gather*}
+  A^{-1}A\bm{x} = A^{-1}\bm{b} \\
+  \therefore~ \bm{x} = A^{-1}\bm{b}
+\end{gather*}
+であり，
+\[
+  A^{-1}\bm{b} = \frac{1}{6}
+  \begin{pmatrix} 3 & -3 \\ -2 & 4 \end{pmatrix}
+  \begin{pmatrix} 8 \\ 4 \end{pmatrix}
+  =
+  \begin{pmatrix} 2 \\ 0 \end{pmatrix}
+\]
+であるから，与えられた連立一次方程式の解は$x = 2$，$y = 0$とわかる．
+これは加減法および行基本変形で得た解と一致している．
+ここまでで，行列の演算と，連立一次方程式の行列による扱いを整理した．
+次章では，行列と密接に関わる概念である線型写像を導入し，行列がなにを表しているのかを見直そう．
