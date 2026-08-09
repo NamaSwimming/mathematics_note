@@ -342,7 +342,17 @@
 %   「第 3 章」のような相互参照が得られる（§ 5.1 を参照）．
 %   同じタイトルの章がふたつあると "multiply defined" 警告が出るので，
 %   その場合は \part[短縮タイトル]{表示タイトル} で短縮側を一意にすること．
-\def\part@autolabel#1{\label{\partrefprefix #1}}
+%   タイトルに数式やマクロを含む章では，直前に \partkey{...} を置いて
+%   ラベル名を明示すること（下記）．
+\global\let\part@key\@empty
+\def\part@autolabel#1{%
+  \ifx\part@key\@empty
+    \label{\partrefprefix #1}%
+  \else
+    \label{\partrefprefix\part@key}%
+    \global\let\part@key\@empty
+  \fi
+}
 
 % オプション引数なし版
 \def\part@noopt#1{%
@@ -404,6 +414,17 @@
 % （\part の自動ラベルもこの接頭辞を用いる）．
 
 \newcommand{\partrefprefix}{part:}
+
+% \partkey{ラベル名}
+%   直後の \part のラベル名を明示的に指定する．
+%   タイトルに数式やマクロが入る章で使う：
+%     \partkey{RnとC}
+%     \part{\texorpdfstring{$\mathbb{R}^n$と$\mathbb{C}$}{Rn と C}}
+%     ...
+%     \partref{RnとC}   % → 第 4 章
+\makeatletter
+\newcommand{\partkey}[1]{\gdef\part@key{#1}}
+\makeatother
 
 \makeatletter
 \DeclareRobustCommand{\partref}{\@ifstar\partref@star\partref@plain}
@@ -1204,8 +1225,39 @@
 \renewcommand{\labelenumi}{(\arabic{enumi})}
 
 % ---- 執筆中マーカー ----
+% \draftpart[補足]  … 章の冒頭（abstract の直後）に置き，
+%                     その章全体がまだ草稿であることを読者に伝える．
+% \draftnote{メモ}  … 本文の途中に置く，個別の「ここは未完」マーカー．
+\colorlet{draftAccent}{magenta!72!black}
+\colorlet{draftBack}  {magenta!5}
+
+\newcommand{\draftpart}[1][]{%
+  \begin{tcolorbox}[
+      enhanced, breakable, sharp corners,
+      colback=draftBack, colframe=draftBack,
+      boxrule=0pt, borderline west={2pt}{0pt}{draftAccent},
+      left=5mm, right=5mm, top=3mm, bottom=3mm,
+      before skip=1.0\baselineskip, after skip=1.2\baselineskip,
+    ]
+    {\sffamily\bfseries\color{draftAccent}執筆中}\par\smallskip
+    {\sffamily\small
+      この章は草稿である．内容・構成・記号は今後変更される可能性がある．%
+      \ifstrempty{#1}{}{\par\smallskip #1}}%
+  \end{tcolorbox}%
+}
+
 \newcommand{\draftnote}[1]{%
-  \begin{center}\textbf{\textcolor{magenta}{執筆中：~#1}}\end{center}}
+  \begin{tcolorbox}[
+      enhanced, breakable, sharp corners,
+      colback=draftBack, colframe=draftBack,
+      boxrule=0pt, borderline west={2pt}{0pt}{draftAccent},
+      left=4mm, right=4mm, top=2mm, bottom=2mm,
+      before skip=0.8\baselineskip, after skip=0.8\baselineskip,
+    ]
+    {\sffamily\bfseries\small\color{draftAccent}執筆中}%
+    \hspace{0.9em}{\sffamily\small #1}%
+  \end{tcolorbox}%
+}
 
 % ---- 数学演算子 ----
 \newcommand{\kaijou}{\ensuremath{\mkern1mu!\mkern1mu}}  % 階乗 !
