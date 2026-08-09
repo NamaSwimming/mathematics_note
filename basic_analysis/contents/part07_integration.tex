@@ -15,20 +15,20 @@
 
 区間$I=[a,b]$で定義された関数$f$が$I$上で連続であるとする．これを論理記号で表すと，
 \[
-   \forall \alpha \in I , ~ \forall \varepsilon >0 , ~ \exists \delta >0,~ \forall x \in I : (\abs{x-\alpha}<\delta \to \abs{f(x)-f(\alpha)}<\varepsilon)
+   \lall{\alpha \in I} \lsep \lall{\varepsilon >0} \lsep \lex{\delta >0} \lsep \lall{x \in I} \lst (\abs{x-\alpha}<\delta \limp \abs{f(x)-f(\alpha)}<\varepsilon)
 \]
 となる．つまり，\emph{$\alpha$の位置が変われば$\delta$も変化する．}ここで，一様連続という概念を導入する．
 
 \begin{definition}{一様連続}{一様連続}
-\begin{align*}
-    & \text{$f$が$I$上で一様連続} \\
-  \iff &  \forall \varepsilon >0 , ~ \exists \delta >0 ,~\forall \alpha \in I ,~ \forall x \in I : (\abs{x-\alpha}<\delta \to \abs{f(x)-f(\alpha)}<\varepsilon).
-\end{align*}
+  関数$f$が$I$上で\emph{一様連続}であるとは，つぎが成り立つことである：
+  \[
+    \lall{\varepsilon >0} \lsep \lex{\delta >0} \lsep \lall{\alpha \in I} \lsep \lall{x \in I} \lst (\abs{x-\alpha}<\delta \limp \abs{f(x)-f(\alpha)}<\varepsilon)
+  \]
 \end{definition}
 
 \begin{remark}[連続と一様連続の違い]
   一様連続の定義では，\emph{$\alpha$の位置にかかわらず$\abs{x-\alpha}<\delta$を満たす$\delta$をとることができる．}
-  ふたつの定義を見比べると，連続では$\forall \alpha$が$\exists \delta$より前にあるのに対し，一様連続では$\exists \delta$が$\forall \alpha$より前に出ている．
+  ふたつの定義を見比べると，連続では$\lall{\alpha}$が$\lex{\delta}$より前にあるのに対し，一様連続では$\lex{\delta}$が$\lall{\alpha}$より前に出ている．
   すなわち，量化子の順序の違いが，「$\delta$が$\alpha$に依存してよいかどうか」という違いを正確に表現しているのである．
 \end{remark}
 
