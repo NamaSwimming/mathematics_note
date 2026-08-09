@@ -145,7 +145,7 @@ $\varepsilon \in \mathbb{R}$ が存在する．
   \[
     \begin{cases}
       \textup{(1)}\ m \in A,\\
-      \textup{(2)}\ \forall x \in A,\ x \leqq m
+      \textup{(2)}\ \lall{x \in A} \lst x \leqq m
     \end{cases}
   \]
   を満たすとき，$m$を$A$の\emph{最大元}といい，
@@ -158,7 +158,7 @@ $\varepsilon \in \mathbb{R}$ が存在する．
   \[
     \begin{cases}
       \textup{(1)}\ m \in A,\\
-      \textup{(2)}\ \forall x \in A,\ m \leqq x
+      \textup{(2)}\ \lall{x \in A} \lst m \leqq x
     \end{cases}
   \]
   を満たすとき，$m$を$A$の\emph{最小元}といい，
@@ -284,19 +284,19 @@ $\varepsilon \in \mathbb{R}$ が存在する．
     最大元の定義より，
     \[
       m = \max A
-      \quad\Longleftrightarrow\quad
+      \quad\lequiv\quad
       \begin{cases}
         \textup{(1)}\ m \in A,\\
-        \textup{(2)}\ \forall x \in A,\ x \leqq m
+        \textup{(2)}\ \lall{x \in A} \lst x \leqq m
       \end{cases}
     \]
     であり，同様に
     \[
       m' = \max A
-      \quad\Longleftrightarrow\quad
+      \quad\lequiv\quad
       \begin{cases}
         \textup{(1)}\ m' \in A,\\
-        \textup{(2)}\ \forall x \in A,\ x \leqq m'
+        \textup{(2)}\ \lall{x \in A} \lst x \leqq m'
       \end{cases}
     \]
     である．
@@ -340,23 +340,23 @@ $\varepsilon \in \mathbb{R}$ が存在する．
 
   $a \in \mathbb{R}$が
   \[
-    \forall x \in A,\ x \leqq a
+    \lall{x \in A} \lst x \leqq a
   \]
   を満たすとき，$a$を$A$の\emph{上界}という．
   また，$A$の上界全体の集合を$U(A)$とかく．すなわち，
   \[
-    U(A) = \{ a \in \mathbb{R} \mid \forall x \in A,\ x \leqq a \}
+    U(A) = \{ a \in \mathbb{R} \mid \lall{x \in A} \lst x \leqq a \}
   \]
   である．
 
   また，$a \in \mathbb{R}$が
   \[
-    \forall x \in A,\ a \leqq x
+    \lall{x \in A} \lst a \leqq x
   \]
   を満たすとき，$a$を$A$の\emph{下界}という．
   また，$A$の下界全体の集合を$L(A)$とかく．すなわち，
   \[
-    L(A) = \{ a \in \mathbb{R} \mid \forall x \in A,\ a \leqq x \}
+    L(A) = \{ a \in \mathbb{R} \mid \lall{x \in A} \lst a \leqq x \}
   \]
   である．
 
@@ -386,18 +386,8 @@ $\varepsilon \in \mathbb{R}$ が存在する．
 \begin{prop}{有界であるための必要十分条件}{boundedness_characterization}
   $A \subset \mathbb{R}$とする．
 
-  \[
-    A\ \text{が上に有界}
-    \quad\Longleftrightarrow\quad
-    U(A) \neq \varnothing
-  \]
-  である．また，
-  \[
-    A\ \text{が下に有界}
-    \quad\Longleftrightarrow\quad
-    L(A) \neq \varnothing
-  \]
-  である．
+  $A$が上に有界であるための必要十分条件は，$U(A) \neq \varnothing$である．
+  また，$A$が下に有界であるための必要十分条件は，$L(A) \neq \varnothing$である．
 \end{prop}
 
 \begin{leftbar}
@@ -412,13 +402,7 @@ $\varepsilon \in \mathbb{R}$ が存在する．
   $U(A)$の定義より，すべての$x \in A$に対して$x \leqq a$である．
   したがって，$a$は$A$の上界であるから，$A$は上に有界である．
 
-  下に有界であることについても，同様に議論を進めると，
-  \[
-    A\ \text{が下に有界}
-    \quad\Longleftrightarrow\quad
-    L(A) \neq \varnothing
-  \]
-  が成り立つ．これが証明すべきことであった．
+  下に有界であることについても同様に議論を進めると，$A$が下に有界であるための必要十分条件が$L(A) \neq \varnothing$であることがわかる．これが証明すべきことであった．
 \end{proof}
 \end{leftbar}
 
@@ -538,10 +522,10 @@ $\varepsilon \in \mathbb{R}$ が存在する．
   $A$が上に有界であるとき，$m \in \mathbb{R}$について
   \[
     m = \sup A
-    \quad\Longleftrightarrow\quad
+    \quad\lequiv\quad
     \begin{cases}
-      \textup{(1)}\ \forall x \in A,\ x \leqq m,\\
-      \textup{(2)}\ \forall a < m,\ \exists x \in A,\ a < x
+      \textup{(1)}\ \lall{x \in A} \lst x \leqq m,\\
+      \textup{(2)}\ \lall{a < m} \lsep \lex{x \in A} \lst a < x
     \end{cases}
   \]
   が成り立つ．
@@ -549,10 +533,10 @@ $\varepsilon \in \mathbb{R}$ が存在する．
   また，$A$が下に有界であるとき，$m \in \mathbb{R}$について
   \[
     m = \inf A
-    \quad\Longleftrightarrow\quad
+    \quad\lequiv\quad
     \begin{cases}
-      \textup{(1)}\ \forall x \in A,\ m \leqq x,\\
-      \textup{(2)}\ \forall a > m,\ \exists x \in A,\ x < a
+      \textup{(1)}\ \lall{x \in A} \lst m \leqq x,\\
+      \textup{(2)}\ \lall{a > m} \lsep \lex{x \in A} \lst x < a
     \end{cases}
   \]
   が成り立つ．
@@ -564,7 +548,7 @@ $\varepsilon \in \mathbb{R}$ が存在する．
   上限の定義より，
   \[
     m = \sup A
-    \quad\Longleftrightarrow\quad
+    \quad\lequiv\quad
     m = \min U(A)
   \]
   である．
@@ -572,25 +556,25 @@ $\varepsilon \in \mathbb{R}$ が存在する．
   さらに，最小元の定義より，
   \[
     m = \min U(A)
-    \quad\Longleftrightarrow\quad
+    \quad\lequiv\quad
     \begin{cases}
       \textup{(1)}\ m \in U(A),\\
-      \textup{(2)}\ \forall a \in U(A),\ m \leqq a
+      \textup{(2)}\ \lall{a \in U(A)} \lst m \leqq a
     \end{cases}
   \]
   である．ここで，(2)の対偶をとると，
   \[
-    \forall a \in U(A),\ m \leqq a
-    \quad\Longleftrightarrow\quad
-    a < m\ \text{ならば}\ a \notin U(A)
+    \lall{a \in U(A)} \lst m \leqq a
+    \quad\lequiv\quad
+    a < m \limp a \notin U(A)
   \]
   である．したがって，
   \[
     m = \sup A
-    \quad\Longleftrightarrow\quad
+    \quad\lequiv\quad
     \begin{cases}
       \textup{(1)}\ m \in U(A),\\
-      \textup{(2)}\ a < m\ \text{ならば}\ a \notin U(A)
+      \textup{(2)}\ a < m \limp a \notin U(A)
     \end{cases}
   \]
   となる．
@@ -598,22 +582,22 @@ $\varepsilon \in \mathbb{R}$ が存在する．
   最後に，上界の定義より，
   \[
     m \in U(A)
-    \quad\Longleftrightarrow\quad
-    \forall x \in A,\ x \leqq m
+    \quad\lequiv\quad
+    \lall{x \in A} \lst x \leqq m
   \]
   であり，また
   \[
     a \notin U(A)
-    \quad\Longleftrightarrow\quad
-    \exists x \in A,\ a < x
+    \quad\lequiv\quad
+    \lex{x \in A} \lst a < x
   \]
   である．ゆえに，
   \[
     m = \sup A
-    \quad\Longleftrightarrow\quad
+    \quad\lequiv\quad
     \begin{cases}
-      \textup{(1)}\ \forall x \in A,\ x \leqq m,\\
-      \textup{(2)}\ a < m\ \text{ならば}\ \exists x \in A,\ a < x
+      \textup{(1)}\ \lall{x \in A} \lst x \leqq m,\\
+      \textup{(2)}\ a < m \limp \lex{x \in A} \lst a < x
     \end{cases}
   \]
   が成り立つ．
@@ -621,45 +605,45 @@ $\varepsilon \in \mathbb{R}$ が存在する．
   下限の場合も同様である．$A$の下界全体の集合を$L(A)$とすると，
   \[
     m = \inf A
-    \quad\Longleftrightarrow\quad
+    \quad\lequiv\quad
     m = \max L(A)
   \]
   である．最大元の定義より，
   \[
     m = \max L(A)
-    \quad\Longleftrightarrow\quad
+    \quad\lequiv\quad
     \begin{cases}
       \textup{(1)}\ m \in L(A),\\
-      \textup{(2)}\ \forall a \in L(A),\ a \leqq m
+      \textup{(2)}\ \lall{a \in L(A)} \lst a \leqq m
     \end{cases}
   \]
   である．(2)の対偶をとると，
   \[
-    \forall a \in L(A),\ a \leqq m
-    \quad\Longleftrightarrow\quad
-    m < a\ \text{ならば}\ a \notin L(A)
+    \lall{a \in L(A)} \lst a \leqq m
+    \quad\lequiv\quad
+    m < a \limp a \notin L(A)
   \]
   である．
 
   ここで，下界の定義より，
   \[
     m \in L(A)
-    \quad\Longleftrightarrow\quad
-    \forall x \in A,\ m \leqq x
+    \quad\lequiv\quad
+    \lall{x \in A} \lst m \leqq x
   \]
   であり，また
   \[
     a \notin L(A)
-    \quad\Longleftrightarrow\quad
-    \exists x \in A,\ x < a
+    \quad\lequiv\quad
+    \lex{x \in A} \lst x < a
   \]
   である．したがって，
   \[
     m = \inf A
-    \quad\Longleftrightarrow\quad
+    \quad\lequiv\quad
     \begin{cases}
-      \textup{(1)}\ \forall x \in A,\ m \leqq x,\\
-      \textup{(2)}\ \forall a > m,\ \exists x \in A,\ x < a
+      \textup{(1)}\ \lall{x \in A} \lst m \leqq x,\\
+      \textup{(2)}\ \lall{a > m} \lsep \lex{x \in A} \lst x < a
     \end{cases}
   \]
   が成り立つ．これが証明すべきことであった．
@@ -672,10 +656,10 @@ $\varepsilon \in \mathbb{R}$ が存在する．
   $A$が上に有界であるとき，$m \in \mathbb{R}$について
   \[
     m = \sup A
-    \quad\Longleftrightarrow\quad
+    \quad\lequiv\quad
     \begin{cases}
-      \textup{(1)}\ \forall x \in A,\ x \leqq m,\\
-      \textup{(2)}\ \forall \varepsilon > 0,\ \exists a \in A,\ m - \varepsilon < a
+      \textup{(1)}\ \lall{x \in A} \lst x \leqq m,\\
+      \textup{(2)}\ \lall{\varepsilon > 0} \lsep \lex{a \in A} \lst m - \varepsilon < a
     \end{cases}
   \]
   が成り立つ．
@@ -683,10 +667,10 @@ $\varepsilon \in \mathbb{R}$ が存在する．
   また，$A$が下に有界であるとき，$m \in \mathbb{R}$について
   \[
     m = \inf A
-    \quad\Longleftrightarrow\quad
+    \quad\lequiv\quad
     \begin{cases}
-      \textup{(1)}\ \forall x \in A,\ m \leqq x,\\
-      \textup{(2)}\ \forall \varepsilon > 0,\ \exists a \in A,\ a < m + \varepsilon
+      \textup{(1)}\ \lall{x \in A} \lst m \leqq x,\\
+      \textup{(2)}\ \lall{\varepsilon > 0} \lsep \lex{a \in A} \lst a < m + \varepsilon
     \end{cases}
   \]
   が成り立つ．
