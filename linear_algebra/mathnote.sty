@@ -1279,6 +1279,44 @@
 \newcommand{\Kmul}{\mathbin{\underset{\opsub{K}}{\ast}}}
 \newcommand{\scalmul}{\mathbin{\underset{\opsub{V}}{\ast}}}
 
+% ======================================================================
+% ---- 論理記号 ----
+% ----------------------------------------------------------------------
+% 【記法の方針】
+%   (1) 散文（地の文・定義文・命題の主張）では論理記号を用いず，日本語で
+%       「かつ」「または」「〜ならば」「任意の〜に対して」「〜が存在して」
+%       と書く．
+%   (2) 論理式として数式に書き下すときは論理記号だけを用い，数式のなかに
+%       日本語を混ぜない（\text{かつ} などを書かない）．
+%   (3) ひとつの記号にひとつの意味だけを担わせる．とくに \to は写像と極限
+%       に予約し，含意には \limp（⇒）を用いる．
+%
+%   矢印を長くしたい（⟹ ⟺ にしたい）場合は，下の \limp と \lequiv の
+%   定義を \Longrightarrow / \Longleftrightarrow に変えるだけでよい．
+% ======================================================================
+
+% -- 結合子 --
+% 論理積 \land，論理和 \lor，否定 \lnot は LaTeX 標準のものを用いる．
+% 論理的同値（「つねに真」というメタ言語の主張）には \equiv を用いる．
+\newcommand{\limp}  {\mathrel{\Rightarrow}}      % 含意「ならば」
+\newcommand{\lequiv}{\mathrel{\Leftrightarrow}}  % 同値
+
+% -- 量化子 --
+% 使い方: \lall{x \in \mathbb{R}} \lst x^2 \geqq 0
+%         \lall{a \in A} \lsep \lexu{b \in B} \lst (a, b) \in G
+\newcommand{\lall}[1]{\forall\, #1}    % 全称量化子
+\newcommand{\lex} [1]{\exists\, #1}    % 存在量化子
+\newcommand{\lexu}[1]{\exists!\, #1}   % 一意存在量化子
+\newcommand{\lst}     {\,:\,}          % 量化子と述語の区切り
+\newcommand{\lsep}    {,\;}            % 量化子を並べるときの区切り
+
+% -- 数式中で日本語の接続詞が必要になったとき --
+% 上の方針 (2) により原則として使わない．図や表など，やむをえず数式に
+% 日本語を入れる場合にだけ用いること．
+\newcommand{\katsu} {\mathrel{\text{かつ}}}
+\newcommand{\matawa}{\mathrel{\text{または}}}
+\newcommand{\naraba}{\mathrel{\text{ならば}}}
+
 % ---- 不等号を二重線に統一 ----
 \renewcommand{\le} {\leqq}
 \renewcommand{\ge} {\geqq}
