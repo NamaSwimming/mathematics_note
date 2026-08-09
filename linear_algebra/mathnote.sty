@@ -1011,6 +1011,45 @@
 \RequirePackage[shortlabels,inline]{enumitem}
 \setlist[description]{font={\bfseries\sffamily}}
 
+% 長さの計算（\widthof でラベル幅を測るために使用）
+\RequirePackage{calc}
+
+% ---- description 環境の整形スタイル ----
+% 従来の `\item[ラベル] \mbox{} \\ 本文` という改行の手動指定を置き換える．
+%
+%   \labelwidthof{見本}
+%     description のラベル書式（\bfseries\sffamily）で組んだときの幅を返す．
+%     labelwidth の指定に用いる．
+%
+%   descalign  ：ラベルを一定幅の欄に左揃えし，本文をその右にぶら下げる．
+%                ラベルが短く，本文も短い場合に適する．
+%                最長ラベルに合わせて labelwidth を必ず descalign の
+%                **後に** 指定すること（既定値 4\zw を上書きするため）：
+%                  \begin{description}[descalign,
+%                      labelwidth=\labelwidthof{最長のラベル}]
+%
+%   descnext   ：ラベルを独立した行に置き，本文を次行から字下げして始める．
+%                ラベルが長い場合や本文が数行にわたる場合に適する．
+%                labelwidth は指定しない（指定すると改行が無効になる）：
+%                  \begin{description}[descnext]
+\newcommand{\labelwidthof}[1]{\widthof{\bfseries\sffamily #1}}
+
+\SetEnumitemKey{descalign}{
+  labelwidth = 4\zw,
+  labelsep   = 1\zw,
+  leftmargin = !,
+  align      = left,
+  itemsep    = 0.5\baselineskip,
+  parsep     = 0pt
+}
+
+\SetEnumitemKey{descnext}{
+  style      = nextline,
+  leftmargin = 2\zw,
+  itemsep    = 0.5\baselineskip,
+  parsep     = 0pt
+}
+
 % 図の回り込み
 \RequirePackage{wrapfig}
 
