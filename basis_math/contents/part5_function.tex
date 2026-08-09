@@ -1,0 +1,455 @@
+\phantomsection
+\part{写像}
+
+\begin{abstract}
+この章では，集合とならんで現代数学の基礎をなす「写像」を導入する．まず写像を「各元にただひとつの元を対応させる規則」として定義し，自動販売機などの身近な例で直感的な理解を深める．次に，像・値域・逆像といった写像に付随する集合を定義する．そのうえで，単射・全射・全単射という写像の重要な性質を，図と具体例をもとに確認しよう．
+\end{abstract}
+
+\phantomsection
+\section{写像の定義と例}
+
+% --- この章の写像図で共通して使う TikZ スタイル ---
+\tikzset{
+  mapfig/.style     ={>=Latex, font=\small, line cap=round, line join=round},
+  mapset/.style     ={draw=black!60, fill=black!4, line width=0.7pt},
+  mapsub/.style     ={draw=black!50, fill=black!14, line width=0.5pt},
+  mapelem/.style    ={circle, fill=black!85, inner sep=1.3pt},
+  maparrow/.style   ={-{Latex[length=1.8mm,width=1.3mm]}, draw=black!70,
+                      line width=0.55pt, shorten <=2.5pt, shorten >=3pt},
+  mapleader/.style  ={draw=black!50, line width=0.4pt},
+  mapsetname/.style ={font=\small, text=black!70},
+  maplabL/.style    ={anchor=east, xshift=-2.5pt},
+  maplabR/.style    ={anchor=west, xshift=2.5pt},
+}
+
+\phantomsection
+\subsection{写像の定義}
+
+いままでの数学の学習の過程で「関数\index{かんすう@関数}」という言葉に出会ったことがある読者もいるかもしれない．
+「関数」と言われると，$y = \sin x$や$y = x^3 + 1$のような「$x$と$y$を結ぶ式」，あるいはそのグラフを思い浮かべる読者が多いであろう．
+しかし，これから見るように，関数の本質は式やグラフそのものではなく，「元にただひとつの元を対応させる規則」である．
+式やグラフは，この規則を表現し，視覚化するための手段にすぎない．
+
+関数の一般的な表現として「写像」がある\footnote{写像の始集合・終集合が$\mathbb{R}$など「数」の集合であるときに「関数」とよぶことが多い．}．厳密な写像の定義はのちに述べるとして，まず簡潔な定義を提示しよう．
+
+\begin{definition}{写像}{写像}
+  集合$A$から集合$B$への\emph{写像}\index{しゃぞう@写像}$f$とは，任意の$a \in A$に対して，$b \in B$をただひとつ対応させる規則のことである．
+
+  このとき，$A$を$f$の\emph{始集合}\index{ししゅうごう@始集合} ，$B$を$f$の\emph{終集合}\index{しゅうしゅうごう@終集合}とよぶ．
+
+  これを次のように表す：
+  \[
+    f \colon A \to B
+  \]
+  この写像$f$によって，$a \in A$が$b \in B$に対応するとき，
+  \[
+    b=f(a)
+  \]
+  または
+  \[
+    f \colon a \mapsto b
+  \]
+  とかく\footnote{これを$ f \colon A \ni a \mapsto b \in B$とかくときもある．}．
+\end{definition}
+
+\begin{wrapfigure}{r}{6.0cm}
+  \centering
+  \begin{tikzpicture}[mapfig]
+    % 集合
+    \draw[mapset] (-1.75,0) ellipse [x radius=0.95, y radius=1.25];
+    \draw[mapset] ( 1.75,0) ellipse [x radius=0.95, y radius=1.25];
+    \node[mapsetname] at (-1.75,1.55) {$A$};
+    \node[mapsetname] at ( 1.75,1.55) {$B$};
+    \node[mapsetname] at (0,1.35) {$f$};
+    % 要素
+    \coordinate (A1) at (-1.75, 0.75);
+    \coordinate (A2) at (-1.75, 0);
+    \coordinate (A3) at (-1.75,-0.75);
+    \coordinate (Ba) at ( 1.75, 0.75);
+    \coordinate (Bb) at ( 1.75, 0);
+    \coordinate (Bc) at ( 1.75,-0.75);
+    \foreach \p in {A1,A2,A3,Ba,Bb,Bc} \node[mapelem] at (\p) {};
+    \node[maplabL] at (A1) {$1$};
+    \node[maplabL] at (A2) {$2$};
+    \node[maplabL] at (A3) {$3$};
+    \node[maplabR] at (Ba) {$a$};
+    \node[maplabR] at (Bb) {$b$};
+    \node[maplabR] at (Bc) {$c$};
+    % 対応
+    \draw[maparrow] (A1) to[bend left=10] (Ba);
+    \draw[maparrow] (A2) -- (Bb);
+    \draw[maparrow] (A3) to[bend left=12] (Ba);
+  \end{tikzpicture}
+  \caption{写像 $f \colon A \to B$}
+\end{wrapfigure}
+
+$A=\{ 1,2 ,3 \}$， $B=\{ a, b,c \}$とする．$f(1) = a$，$f(2) = b$，$f(3) = a$とすると，この写像$f$は右図のように表現できる．
+
+
+この例では，$1$と$3$がともに$a$に対応しているが，上記の写像の定義ではこのような場合があってもよい．
+また，$A$のどの元にも対応しない元$c$の存在も許容される．
+
+学習が進むと，「任意の$ a_1 , a_2 \in A$に対して，$ a_1 \ne a_2$ならば$f(a_1) \ne f(a_2)$である写像」や
+「任意の$ b \in B$に対して，ある$a \in A$が存在して，$b=f(a)$となる写像」を考える場合もあるが，この説明はもう少しあとにしよう．
+
+\phantomsection
+\subsection{写像の例}
+
+ここでは直感的な理解を深めるために，具体例を挙げてみよう．
+
+\begin{example}{自動販売機}{自動販売機}
+  自動販売機のボタンの集合を$A$，提供される飲み物の集合を$B$とする．
+  各ボタン$a \in A$に，そのボタンを押すと出てくる飲み物$f(a) \in B$を対応させる．
+  どのボタンにも飲み物がただひとつ定まるから，$f \colon A \to B$は写像である．
+\end{example}
+
+\begin{example}{写像の例と写像でない例}{写像の例と写像でない例}
+  \begin{itemize}
+    \item $f \colon \mathbb{R} \ni x \mapsto x^2 \in \mathbb{R}$は写像である．
+          各実数$x$に対して，$x^2$がただひとつ定まるからである．
+    \item 各正の実数$x$に「2乗すると$x$になる実数」を対応させる規則は，写像ではない．
+          たとえば$x = 4$には$2$と$-2$の2つが対応し，「ただひとつ対応させる」という条件を満たさないからである．
+  \end{itemize}
+\end{example}
+
+\begin{remark}[「式」と「写像」の違い]
+  「多項式$x^2 + x$は関数である」という言い方をすることがあるが，正確には，式$x^2 + x$それ自体は単なる多項式であって，写像ではない．始集合と終集合を定め，
+  \[
+    f \colon \mathbb{R} \ni x \mapsto x^2 + x \in \mathbb{R}
+  \]
+  のように対応の規則を与えてはじめて写像となる．同じ式を用いても，始集合を$[0, 1]$に変えれば，写像としては別のものである．
+  逆に，\exref{自動販売機}のように，ひとつの式では表されない写像も存在する．すなわち，「写像であること」と「式で表されること」は別のことがらである．
+
+  また，関数をグラフでとらえる見方も有用であるが，グラフ（点$(x, f(x))$全体のなす集合）だけでは終集合の情報は定まらないことに注意したい．
+  同じ式・同じグラフでも，終集合の取り方によって写像の性質は変わりうる（この違いは，\deref{全射}のあとの例で実際に現れる）．
+\end{remark}
+
+
+\subsection{像と値域，逆像}
+
+\begin{definition}{像と値域}{像と値域}
+  写像$f \colon A \to B$において，集合$A$の部分集合$A' \subset A$に対して，
+  \[
+    f(A') = \{ f(a) \mid a \in A' \}
+  \]
+  で定義される集合を，$f$による$A'$の\emph{像}という．
+
+  特に，定義域$A$全体の像
+  \[
+    f(A) = \{ f(a) \mid a \in A \}
+  \]
+  を，写像$f$の\emph{値域}という．
+
+  \index{ぞう@像} \index{ちいき@値域}
+\end{definition}
+
+
+\begin{definition}{逆像}{逆像}
+  写像$f \colon A \to B$と集合$B' \subset B$に対して，$B'$の\emph{逆像}とは，
+  \[
+    f^{-1}(B') = \{ a \in A \mid f(a) \in B' \}
+  \]
+  で定義される集合である．
+
+  \index{ぎゃくぞう@逆像}
+\end{definition}
+
+\begin{remark}[逆像と逆写像]
+  \deref{逆像}で定義した逆像は「写像」ではなく，あくまで「集合」であることに注意したい．
+  逆像と紛らわしい単語に「逆写像」があるが，逆写像は$f$が全単射であるときに定義される写像である．その一方で，逆像は$f$が全単射でなくても定義される．
+\end{remark}
+
+\begin{figure}[ht]
+  \centering
+  \begin{minipage}[t]{0.48\linewidth}
+    \centering
+    \begin{tikzpicture}[mapfig]
+      % 集合
+      \draw[mapset] (-1.75,0) ellipse [x radius=0.95, y radius=1.25];
+      \draw[mapset] ( 1.75,0) ellipse [x radius=0.95, y radius=1.25];
+      \node[mapsetname] at (-1.75,-1.55) {$A$};
+      \node[mapsetname] at ( 1.75,-1.55) {$B$};
+      \node[mapsetname] at (0,1.35) {$f$};
+      % A' = {1, 2} とその像 f(A') = {a, b}
+      \draw[mapsub] (-1.75,0.375) ellipse [x radius=0.55, y radius=0.85];
+      \draw[mapsub] ( 1.75,0.125) ellipse [x radius=0.50, y radius=0.85];
+      \draw[mapleader] (-2.14,0.98) -- (-2.45,1.35)
+        node[anchor=south, font=\small] {$A'$};
+      \draw[mapleader] ( 2.10,0.72) -- ( 2.45,1.35)
+        node[anchor=south, font=\small] {$f(A')$};
+      % 要素
+      \coordinate (A1) at (-1.75, 0.75);
+      \coordinate (A2) at (-1.75, 0);
+      \coordinate (A3) at (-1.75,-0.75);
+      \coordinate (Ba) at ( 1.75, 0.5);
+      \coordinate (Bb) at ( 1.75,-0.25);
+      \foreach \p in {A1,A2,A3,Ba,Bb} \node[mapelem] at (\p) {};
+      \node[maplabL] at (A1) {$1$};
+      \node[maplabL] at (A2) {$2$};
+      \node[maplabL] at (A3) {$3$};
+      \node[maplabR] at (Ba) {$a$};
+      \node[maplabR] at (Bb) {$b$};
+      % 対応
+      \draw[maparrow] (A1) to[bend left=10] (Ba);
+      \draw[maparrow] (A2) -- (Bb);
+      \draw[maparrow] (A3) to[bend left=12] (Ba);
+    \end{tikzpicture}
+    \caption{$A' = \{1, 2\}$ の像 $f(A') = \{a, b\}$}
+  \end{minipage}
+  \hfill
+  \begin{minipage}[t]{0.48\linewidth}
+    \centering
+    \begin{tikzpicture}[mapfig]
+      % 集合
+      \draw[mapset] (-1.75,0) ellipse [x radius=0.95, y radius=1.35];
+      \draw[mapset] ( 1.75,0) ellipse [x radius=0.95, y radius=1.35];
+      \node[mapsetname] at (-1.75,-1.65) {$A$};
+      \node[mapsetname] at ( 1.75,-1.65) {$B$};
+      \node[mapsetname] at (0,1.35) {$f$};
+      % B' = {a} とその逆像 f^{-1}(B') = {1, 2, 3}
+      \draw[mapsub] ( 1.75,0.5) ellipse [x radius=0.45, y radius=0.42];
+      \draw[mapsub] (-1.75,0.30) ellipse [x radius=0.60, y radius=1.00];
+      \draw[mapleader] (-2.17,1.01) -- (-2.45,1.45)
+        node[anchor=south, font=\small] {$f^{-1}(B')$};
+      \draw[mapleader] ( 2.07,0.80) -- ( 2.40,1.45)
+        node[anchor=south, font=\small] {$B'$};
+      % 要素
+      \coordinate (A1) at (-1.75, 0.95);
+      \coordinate (A2) at (-1.75, 0.30);
+      \coordinate (A3) at (-1.75,-0.35);
+      \coordinate (A4) at (-1.75,-1.00);
+      \coordinate (Ba) at ( 1.75, 0.5);
+      \coordinate (Bb) at ( 1.75,-0.5);
+      \foreach \p in {A1,A2,A3,A4,Ba,Bb} \node[mapelem] at (\p) {};
+      \node[maplabL] at (A1) {$1$};
+      \node[maplabL] at (A2) {$2$};
+      \node[maplabL] at (A3) {$3$};
+      \node[maplabL] at (A4) {$4$};
+      \node[maplabR] at (Ba) {$a$};
+      \node[maplabR] at (Bb) {$b$};
+      % 対応
+      \draw[maparrow] (A1) to[bend left=10] (Ba);
+      \draw[maparrow] (A2) -- (Ba);
+      \draw[maparrow] (A3) to[bend right=8] (Ba);
+      \draw[maparrow] (A4) to[bend right=12] (Bb);
+    \end{tikzpicture}
+    \caption{$B' = \{a\}$ の逆像 $f^{-1}(B') = \{1, 2, 3\}$}
+  \end{minipage}
+\end{figure}
+
+
+
+\subsection{単射\index{たんしゃ@単射}}
+
+\begin{definition}{単射}{単射}
+  写像$f$が$A$から$B$への単射であるとは，異なる要素$a_1, a_2 \in A$に対して，$f(a_1) \ne f(a_2)$が成り立つことである\footnote{この定義は，対偶を考えると「$f(a_1) =f(a_2)$ならば$a_1=a_2$が成り立つ」とも言い換えられる．}．
+\end{definition}
+
+\phantomsection
+\begin{example}[
+    sidebyside,
+    lefthand width=7.4cm,
+    righthand width=6.2cm,
+    sidebyside gap=4mm,
+  ]{単射の図解}{単射の図解}
+  集合$A = \{1, 2, 3\}$，$B = \{a, b, c, d\}$と写像
+  \[
+    f(1) = a, \quad f(2) = b, \quad f(3) = c
+  \]
+  を考える．
+  $A$の異なる元は$B$の異なる元にうつるから，$f$は単射である．
+  しかし，この$f$は全射でない．
+
+  \tcblower
+
+  \centering
+  \begin{tikzpicture}[mapfig]
+    % 集合
+    \draw[mapset] (-1.75,0) ellipse [x radius=0.95, y radius=1.35];
+    \draw[mapset] ( 1.75,0) ellipse [x radius=0.95, y radius=1.35];
+    \node[mapsetname] at (-1.75,1.65) {$A$};
+    \node[mapsetname] at ( 1.75,1.65) {$B$};
+    \node[mapsetname] at (0,1.4) {$f$};
+    % 要素
+    \coordinate (A1) at (-1.75, 0.75);
+    \coordinate (A2) at (-1.75, 0);
+    \coordinate (A3) at (-1.75,-0.75);
+    \coordinate (Ba) at ( 1.75, 0.95);
+    \coordinate (Bb) at ( 1.75, 0.32);
+    \coordinate (Bc) at ( 1.75,-0.32);
+    \coordinate (Bd) at ( 1.75,-0.95);
+    \foreach \p in {A1,A2,A3,Ba,Bb,Bc,Bd} \node[mapelem] at (\p) {};
+    \node[maplabL] at (A1) {$1$};
+    \node[maplabL] at (A2) {$2$};
+    \node[maplabL] at (A3) {$3$};
+    \node[maplabR] at (Ba) {$a$};
+    \node[maplabR] at (Bb) {$b$};
+    \node[maplabR] at (Bc) {$c$};
+    \node[maplabR] at (Bd) {$d$};
+    % 対応
+    \draw[maparrow] (A1) to[bend left=8] (Ba);
+    \draw[maparrow] (A2) to[bend left=6] (Bb);
+    \draw[maparrow] (A3) to[bend right=6] (Bc);
+  \end{tikzpicture}
+\end{example}
+
+\begin{example}{単射の例}{単射の例}
+  \[
+    f \colon \mathbb{N} \ni n \mapsto 2n \in \mathbb{N}
+  \]
+  は単射である．実際，$2n_1 = 2n_2$ならば$n_1 = n_2$である．
+\end{example}
+
+\begin{example}{電話番号と電話機}{電話番号と電話機}
+  電話番号の集合を$A$，電話機の集合を$B$とし，各電話番号$a \in A$に対応する電話機$f(a) \in B$を対応させる写像$f \colon A \to B$を考える．
+  異なる電話番号が同じ電話機を指すことはないから，$f$は単射である．
+\end{example}
+
+\subsection{全射\index{ぜんしゃ@全射}}
+
+\begin{definition}{全射}{全射}
+  写像$f$が$A$から$B$への全射であるとは，任意の$b \in B$に対して，ある$a \in A$が存在して，$f(a) = b$が成り立つことである．
+\end{definition}
+
+\phantomsection
+\begin{example}[
+    sidebyside,
+    lefthand width=7.4cm,
+    righthand width=6.2cm,
+    sidebyside gap=4mm,
+  ]{全射の図解}{全射の図解}
+  集合$A = \{1, 2, 3\}$，$B = \{a, b\}$と写像
+  \[
+    f(1) = a, \quad f(2) = a, \quad f(3) = b
+  \]
+  を考える．
+  $B$のどの元も$A$のある元の像になっているから，$f$は全射である．
+  しかし，$f(1) = f(2) = a$であるから，$f$は単射でない．
+
+  \tcblower
+
+  \centering
+  \begin{tikzpicture}[mapfig]
+    % 集合
+    \draw[mapset] (-1.75,0) ellipse [x radius=0.95, y radius=1.25];
+    \draw[mapset] ( 1.75,0) ellipse [x radius=0.95, y radius=1.25];
+    \node[mapsetname] at (-1.75,1.55) {$A$};
+    \node[mapsetname] at ( 1.75,1.55) {$B$};
+    \node[mapsetname] at (0,1.35) {$f$};
+    % 要素
+    \coordinate (A1) at (-1.75, 0.75);
+    \coordinate (A2) at (-1.75, 0);
+    \coordinate (A3) at (-1.75,-0.75);
+    \coordinate (Ba) at ( 1.75, 0.5);
+    \coordinate (Bb) at ( 1.75,-0.5);
+    \foreach \p in {A1,A2,A3,Ba,Bb} \node[mapelem] at (\p) {};
+    \node[maplabL] at (A1) {$1$};
+    \node[maplabL] at (A2) {$2$};
+    \node[maplabL] at (A3) {$3$};
+    \node[maplabR] at (Ba) {$a$};
+    \node[maplabR] at (Bb) {$b$};
+    % 対応
+    \draw[maparrow] (A1) to[bend left=10] (Ba);
+    \draw[maparrow] (A2) -- (Ba);
+    \draw[maparrow] (A3) to[bend right=8] (Bb);
+  \end{tikzpicture}
+\end{example}
+
+\begin{example}{全射の例}{全射の例}
+  \[
+    f \colon \mathbb{R} \ni x \mapsto x^2 \in [0, \infty)
+  \]
+  は全射である．実際，任意の$b \in [0, \infty)$に対して，$x = \sqrt{b}$とおけば$f(x) = b$である．
+  一方，$f(-1) = f(1) = 1$であるから，$f$は単射でない．
+
+  なお，\exref{写像の例と写像でない例}の$x \mapsto x^2$とは式が同じで終集合だけが異なるが，終集合を$\mathbb{R}$とすると全射でなくなる．写像の性質は，式だけでなく始集合・終集合を込めて定まるのである．
+\end{example}
+
+\begin{example}{分類コードと本}{分類コードと本}
+  図書館にある本の集合を$A$，使用されている分類コードの集合を$B$とし，各本$a \in A$にその分類コード$f(a) \in B$を対応させる写像$f \colon A \to B$を考える．
+  $B$は使用されているコード全体であるから，どのコード$b \in B$に対しても，それが割り当てられた本$a \in A$が存在する．よって$f$は全射である．
+  一方，同じ分類コードを持つ本は複数ありうるから，$f$は一般に単射でない．
+\end{example}
+
+
+\subsection{全単射\index{ぜんたんしゃ@全単射}}
+
+\begin{definition}{全単射}{全単射}
+  写像$f$が$A$から$B$への全単射であるとは，$f$が単射かつ全射となることである．
+\end{definition}
+
+\phantomsection
+\begin{example}[
+    sidebyside,
+    lefthand width=7.4cm,
+    righthand width=6.2cm,
+    sidebyside gap=4mm,
+  ]{全単射の図解}{全単射の図解}
+  集合$A = \{1, 2, 3\}$，$B = \{a, b, c\}$と写像
+  \[
+    f(1) = c, \quad f(2) = b, \quad f(3) = a
+  \]
+  を考える．
+  この$f$は単射かつ全射，すなわち全単射である．
+  $A$の元と$B$の元が，$f$によって過不足なく1対1に対応している．
+
+  \tcblower
+
+  \centering
+  \begin{tikzpicture}[mapfig]
+    % 集合
+    \draw[mapset] (-1.75,0) ellipse [x radius=0.95, y radius=1.25];
+    \draw[mapset] ( 1.75,0) ellipse [x radius=0.95, y radius=1.25];
+    \node[mapsetname] at (-1.75,1.55) {$A$};
+    \node[mapsetname] at ( 1.75,1.55) {$B$};
+    \node[mapsetname] at (0,1.35) {$f$};
+    % 要素
+    \coordinate (A1) at (-1.75, 0.75);
+    \coordinate (A2) at (-1.75, 0);
+    \coordinate (A3) at (-1.75,-0.75);
+    \coordinate (Ba) at ( 1.75, 0.75);
+    \coordinate (Bb) at ( 1.75, 0);
+    \coordinate (Bc) at ( 1.75,-0.75);
+    \foreach \p in {A1,A2,A3,Ba,Bb,Bc} \node[mapelem] at (\p) {};
+    \node[maplabL] at (A1) {$1$};
+    \node[maplabL] at (A2) {$2$};
+    \node[maplabL] at (A3) {$3$};
+    \node[maplabR] at (Ba) {$a$};
+    \node[maplabR] at (Bb) {$b$};
+    \node[maplabR] at (Bc) {$c$};
+    % 対応（1→c, 2→b, 3→a）
+    \draw[maparrow] (A1) -- (Bc);
+    \draw[maparrow] (A2) -- (Bb);
+    \draw[maparrow] (A3) -- (Ba);
+  \end{tikzpicture}
+\end{example}
+
+\begin{example}{学籍番号と学生}{学籍番号と学生}
+  あるクラスの学生の集合を$A$，そのクラスで使われている学籍番号の集合を$B$とし，各学生$a \in A$にその学籍番号$f(a) \in B$を対応させる写像$f \colon A \to B$を考える．
+  異なる学生が同じ学籍番号を持つことはないから$f$は単射であり，どの学籍番号もある学生に割り当てられているから$f$は全射である．よって$f$は全単射である．
+\end{example}
+
+\begin{example}{単射・全射・全単射}{単射・全射・全単射}
+  \begin{enumerate}[(A)]
+    \item
+          \[
+            f \colon [0,\infty) \ni x \mapsto x^2  \in \mathbb{R}
+          \]
+          は単射であるが全射でない．
+    \item
+          \[
+            g \colon \mathbb{R} \ni x \mapsto x^3 -3x^2 -9 \in \mathbb{R}
+          \]
+          は全射であるが単射でない．
+    \item
+          \[
+            h  \colon \mathbb{R} \ni x \mapsto  2 \sin x \in  \mathbb{R}
+          \]
+          は全射でも単射でもない．しかし，
+          \[
+            h'  \colon [-\pi/2 , \pi/2 ]  \ni x \mapsto  2 \sin  x  \in [-2,2]
+          \]
+          は全単射である．
+  \end{enumerate}
+  \end{example}
+% NOTE: この部は執筆中（今後，節を追記する可能性あり）
