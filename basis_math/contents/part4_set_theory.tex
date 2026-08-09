@@ -2,7 +2,7 @@
 \part{集合}
 
 \begin{abstract}
-この章では，現代数学の基礎をなす「集合」を導入する．まず集合と元を定義し，集合の相等・部分集合・真部分集合といった基本概念を確認する．次に，$\mathbb{N}$，$\mathbb{Z}$，$\mathbb{Q}$，$\mathbb{R}$，$\mathbb{C}$ などのよく使う集合の記号と，外延的記法・内包的記法という集合の表記法を整理する．最後に，共通部分・和集合・差集合・補集合といった集合の演算を定義し，交換法則や分配律などの基本性質を証明しよう．
+この章では，現代数学の基礎をなす「集合」を導入する．まず集合と元を定義し，集合の相等・部分集合・真部分集合といった基本概念を確認する．次に，$\mathbb{N}$，$\mathbb{Z}$，$\mathbb{Q}$，$\mathbb{R}$，$\mathbb{C}$ などのよく使う集合の記号と，外延的記法・内包的記法という集合の表記法を整理する．最後に，共通部分・和集合・差集合・補集合といった集合の演算を定義し，交換法則・分配律・ド・モルガンの法則などの基本性質を証明しよう．
 \end{abstract}
 
 \phantomsection
@@ -65,6 +65,33 @@
   などと表す．
 \end{definition}
 
+集合の相等は，部分集合の言葉を用いて次のように特徴づけられる．
+
+\phantomsection
+\begin{prop}{相等と相互包含}{相等と相互包含}
+  集合$A$，$B$に対して，
+  \[
+    A = B
+    \iff
+    A \subset B \text{ かつ } B \subset A
+  \]
+  である．また，論理記号を用いれば，
+  \[
+    A = B
+    \iff
+    \forall x \, : \, ( x \in A \leftrightarrow x \in B )
+  \]
+  と表すこともできる．
+\end{prop}
+
+\begin{tleftbar}
+  \begin{proof}
+    \deref{集合の相等}より，$A = B$とは$A$と$B$のすべての要素が一致すること，すなわち「任意の$x$について，$x \in A$と$x \in B$の真偽が一致する」ことである．一方，$A \subset B$は「任意の$x$について，$x \in A$ならば$x \in B$」を，$B \subset A$は「任意の$x$について，$x \in B$ならば$x \in A$」を意味する．同値の等価表現$P \leftrightarrow Q \equiv (P \to Q) \land (Q \to P)$により，両者は一致する．これが証明すべきことであった．
+  \end{proof}
+\end{tleftbar}
+
+この命題は，集合の等式$A = B$を証明するための\textbf{標準的な方法}を与えている．すなわち，$A \subset B$と$B \subset A$の\textbf{両方向の包含}をそれぞれ示せばよい．のちに集合の分配律を証明する際にも，実際にこの方法を用いる．
+
 \phantomsection
 \subsection{集合の表記}
 
@@ -116,27 +143,29 @@
     $\mathbb{R}$\\[0.35\baselineskip]
 
     複素数（complex numbers）&
-    $\mathbb{C} = \{ a + bi \mid a,b \in \mathbb{R},\ i^2 = -1 \}$
+    $\mathbb{C} = \{ a + bi \mid a,b \in \mathbb{R} \}$
   \end{tabular}
   \footnotetext{自然数に$0$を含める流儀もあるが，本書では自然数に$0$を含めないものとする．}
 \end{reviewbox}
 
 $\mathbb{N}$，$\mathbb{R}$，$\mathbb{C}$は，それぞれ natural number，real number，complex number に由来する記号である．
 また，$\mathbb{Z}$はドイツ語の Zahl（数）に，$\mathbb{Q}$は quotient（商）に由来する．
+なお，$\mathbb{C}$の表記に現れる$i$は，$i^2 = -1$を満たす\emph{虚数単位}である．$i$は内包的記法の中で動く変数ではなく，あらかじめ固定された定数であることに注意したい．
 
 
-集合の表記は文脈により省略されることがある．たとえば，以下のような問題があったとする．
+$x$がどの集合の中を動くかは，文脈により省略されることがある．たとえば，以下のような問題があったとする．
 \begin{quotation}
-  2次方程式
+  方程式
   \[
-    x^2 - 3x -4 =0
+    x^2 + 1 = 0
   \]
   を解け．
 \end{quotation}
-$x$が属する全体集合は定められていないが，この場合だと「$x \in \mathbb{C}$」とされることが多い．
-よってこの方程式の解は$x = -1 , 4$とする場合が多い．
-だが，もちろん$ x \in \mathbb{N}$とするなら，$ -1 \notin \mathbb{N}$なので，この場合の解は$ x= 4$のみである．
-ただ，$x$が属する全体集合は，文脈でわかったり明記されていたりする場合が多いので，あまり心配はいらないであろう．
+この問題では，$x$がどの集合の中を動くかが明記されていない．
+もし$x \in \mathbb{R}$の範囲で解を探すなら，任意の実数$x$に対して$x^2 + 1 \geqq 1 > 0$なので，解は存在しない．
+一方，$x \in \mathbb{C}$の範囲で解を探すなら，解は$x = \pm i$である．
+このように，「方程式を解く」という問題の答えは，\textbf{どの集合の中で解を探しているか}によって変わる．
+$x$が動く集合は，文脈から読み取れたり明記されていたりする場合が多いが，答えが変わりうる以上，つねに意識しておきたいことがらである．
 
 数の集合以外にも，特定の集合を表すために固有の記号を用いることがある．
 
@@ -199,7 +228,7 @@ $x$が属する全体集合は定められていないが，この場合だと�
 \end{remark}
 
 \phantomsection
-\begin{example}{}{}
+\begin{example}{所属関係の例}{所属関係の例}
   \[
     x \in \mathbb{Q}
   \]
@@ -207,7 +236,7 @@ $x$が属する全体集合は定められていないが，この場合だと�
 \end{example}
 
 \phantomsection
-\begin{example}{}{}
+\begin{example}{部分集合の例}{部分集合の例}
   \[
     \mathbb{R} \subset \mathbb{C}
   \]
@@ -237,6 +266,19 @@ $x$が属する全体集合は定められていないが，この場合だと�
   次のように考えることもできる．もし$\varnothing \subset A$が成り立たないとすると，「$\varnothing$の要素であって$A$に属さないもの」が少なくともひとつ存在しなければならない．しかし，$\varnothing$はそもそも要素を持たないので，そのような要素は存在しえない．よって$\varnothing \subset A$である．
 \end{remark}
 
+集合を要素とする集合の重要な例として，べき集合がある．
+
+\phantomsection
+\begin{definition}{べき集合}{べき集合}
+  集合$A$に対して，$A$の部分集合全体からなる集合
+  \[
+    \mathcal{P}(A) \coloneqq \{ B \mid B \subset A \}
+  \]
+  を$A$の\emph{べき集合}\index{べきしゅうごう@べき集合}という．
+\end{definition}
+
+\prref{空集合は任意の集合の部分集合}により，つねに$\varnothing \in \mathcal{P}(A)$である．また，$A \subset A$なので$A \in \mathcal{P}(A)$である．
+
 \phantomsection
 \begin{example}{べき集合}{べき集合}
   $A=\{ 1, 2\}$とすると，
@@ -265,9 +307,24 @@ $x$が属する全体集合は定められていないが，この場合だと�
     \item[差集合\index{さしゅうごう@差集合}]\mbox{}\\
           $A$の要素で$B$に属さないもの全体の集合を$A \setminus B$と表す．
     \item[補集合\index{ほしゅうごう@補集合}]\mbox{}\\
-          全体集合$X$に対して，$X \setminus A$は$A$の補集合であり，$A^c$と表す．これを``$A$ complement''と読む．
+          全体集合$X$\footnote{考察の対象すべてを含む集合をあらかじめひとつ固定して考えるとき，その集合を\emph{全体集合}\index{ぜんたいしゅうごう@全体集合}という．}とその部分集合$A \subset X$に対して，$A^c \coloneqq X \setminus A$を$A$の補集合という．これを``$A$ complement''と読む．
   \end{description}
 \end{definition}
+
+\begin{remark}[論理記号による言い換え]
+  集合の演算は，\partref{論理}で学んだ論理記号を用いて次のように言い換えられる：
+  \begin{align*}
+    x \in A \cap B & \iff (x \in A) \land (x \in B), \\
+    x \in A \cup B & \iff (x \in A) \lor (x \in B), \\
+    x \in A \setminus B & \iff (x \in A) \land \lnot (x \in B), \\
+    x \in A^c & \iff \lnot (x \in A) \qquad (x \in X)
+  \end{align*}
+  すなわち，$\cap$は$\land$に，$\cup$は$\lor$に，補集合は$\lnot$に対応している．また，部分集合についても
+  \[
+    A \subset B \iff \forall x \, : \, ( x \in A \to x \in B )
+  \]
+  である．この対応により，命題論理の法則から集合の法則を導くことができる（のちのド・モルガンの法則の証明で実際に用いる）．
+\end{remark}
 
 
 \begin{figure}[ht]
@@ -438,7 +495,7 @@ $x$が属する全体集合は定められていないが，この場合だと�
   \]
   が成り立つ．これは差集合の定義から直ちに確かめられる．
 
-  また，集合$A$，$B$に対して，$A$の要素と$B$の要素の順序対$(a,b)$全体の集合を\emph{直積}$A \times B$という（詳しくは後の章で定義する）．直積についても，
+  また，集合$A$，$B$に対して，$A$の要素と$B$の要素の順序対$(a,b)$全体の集合を\emph{直積}$A \times B$という（詳しくは\partref{写像}で定義する）．直積についても，
   \[
     A \times \varnothing = \varnothing, \quad \varnothing \times A = \varnothing
   \]
@@ -501,5 +558,58 @@ $x$が属する全体集合は定められていないが，この場合だと�
   \end{proof}
 \end{tleftbar}
 
-\draftnote{ここに諸定理を追加予定}
+\subsection{集合のさまざまな法則}
+
+\phantomsection
+\begin{prop}{べき等律・全体集合との演算・補集合の性質}{べき等律・全体集合との演算・補集合の性質}
+  $X$を全体集合，$A \subset X$とするとき，次が成り立つ：
+  \begin{align*}
+    & A \cup A = A, && A \cap A = A, \\
+    & A \cup X = X, && A \cap X = A, \\
+    & A \cup A^c = X, && A \cap A^c = \varnothing, \\
+    & (A^c)^c = A
+  \end{align*}
+\end{prop}
+
+\begin{tleftbar}
+  \begin{proof}
+    いずれも定義から確かめられる．例として$(A^c)^c = A$を示す．$x \in X$に対して，
+    \[
+      x \in (A^c)^c
+      \iff \lnot ( x \in A^c )
+      \iff \lnot \lnot ( x \in A )
+      \iff x \in A
+    \]
+    である（最後の同値は二重否定$\lnot \lnot P \equiv P$による）．よって$(A^c)^c = A$である．残りも同様に示される．
+  \end{proof}
+\end{tleftbar}
+
+\phantomsection
+\begin{prop}{集合のド・モルガンの法則}{集合のド・モルガンの法則}
+  $X$を全体集合，$A, B \subset X$とするとき，
+  \[
+    (A \cup B)^c = A^c \cap B^c,
+    \qquad
+    (A \cap B)^c = A^c \cup B^c
+  \]
+  が成り立つ．
+\end{prop}
+
+\begin{tleftbar}
+  \begin{proof}
+    前半を示す．$x \in X$に対して，
+    \begin{align*}
+      x \in (A \cup B)^c
+      & \iff \lnot ( x \in A \cup B ) \\
+      & \iff \lnot \bigl( (x \in A) \lor (x \in B) \bigr) \\
+      & \iff \lnot (x \in A) \land \lnot (x \in B) \\
+      & \iff x \in A^c \cap B^c
+    \end{align*}
+    である．途中，3つ目の同値で命題論理のド・モルガンの法則$\lnot (P \lor Q) \equiv \lnot P \land \lnot Q$を用いた．\prref{相等と相互包含}の論理式による特徴づけにより，$(A \cup B)^c = A^c \cap B^c$である．後半も同様に示される．これが証明すべきことであった．
+  \end{proof}
+\end{tleftbar}
+
+\begin{remark}[論理の法則と集合の法則]
+  この証明からわかるように，集合のド・モルガンの法則は，命題論理のド・モルガンの法則を$P = (x \in A)$，$Q = (x \in B)$として集合の言葉に翻訳したものにほかならない．同様に，集合の交換法則・結合律・分配律も，命題論理の対応する法則から導くことができる．論理と集合は，このように同じ構造を共有しているのである．
+\end{remark}
 % NOTE: この部は執筆中（今後，節を追記する可能性あり）
