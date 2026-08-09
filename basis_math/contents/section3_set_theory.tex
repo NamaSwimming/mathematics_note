@@ -97,28 +97,43 @@ $\mathbb{N}$，$\mathbb{R}$，$\mathbb{C}$は，それぞれ natural number，re
 数の集合以外にも，特定の集合を表すために固有の記号を用いることがある．
 
 
-\begin{reviewbox}[空集合]
-  \small
-  要素をひとつも持たない集合を\textbf{空集合}\index{くうしゅうごう@空集合}といい，
+\phantomsection
+\begin{definition}{空集合}{空集合}
+  要素をひとつも持たない集合を\emph{空集合}\index{くうしゅうごう@空集合}といい，
   \[
     \varnothing
   \]
-  で表す．たとえば，
+  で表す．
+\end{definition}
+
+空集合は$\emptyset$と表記することもある\footnote{空集合をギリシャ文字の$\phi$で表記するのは誤りである．空集合の記号$\varnothing$はAndré Weilによって導入されたもので，ノルウェー語やデンマーク語などで用いられる文字Øに着想を得ている．}．
+
+\phantomsection
+\begin{example}{空集合の例}{空集合の例}
   \[
     \{\}
     \qquad\text{や}\qquad
     \{x \in \mathbb{R} \mid x^2 = -1\}
   \]
   は，いずれも要素をひとつも持たないため，空集合である．
+\end{example}
 
-  一方，
-  \[
-    \{\varnothing\}
-  \]
-  は空集合$\varnothing$をひとつの要素として持つ集合であり，空集合ではない．
-\end{reviewbox}
-
-空集合は$\emptyset$と表記することもある\footnote{空集合をギリシャ文字の$\phi$で表記するのは誤りである．空集合の記号$\varnothing$はAndré Weilによって導入されたもので，ノルウェー語やデンマーク語などで用いられる文字Øに着想を得ている．}．
+\begin{remark}[空集合に関する注意]
+  空集合について，いくつか注意しておこう．
+  \begin{itemize}
+    \item 空集合は要素をひとつも持たないので，どのような$x$に対しても，$x \in \varnothing$は\textbf{常に偽}である．いいかえれば，任意の$x$に対して$x \notin \varnothing$が成り立つ．
+    \item 集合
+          \[
+            \{\varnothing\}
+          \]
+          は空集合$\varnothing$をひとつの要素として持つ集合であり，空集合ではない．
+    \item 空集合の要素の個数は$0$である．一般に，有限集合$A$の要素の個数を$|A|$や$n(A)$と表すことがあり，この記法を用いれば
+          \[
+            |\varnothing| = 0, \qquad |\{\varnothing\}| = 1
+          \]
+          である．
+  \end{itemize}
+\end{remark}
 
 \phantomsection
 \begin{example}{}{}
@@ -137,13 +152,27 @@ $\mathbb{N}$，$\mathbb{R}$，$\mathbb{C}$は，それぞれ natural number，re
 \end{example}
 
 \phantomsection
-\begin{example}{}{}
-  $A$を集合とするとき，
+\begin{prop}{空集合は任意の集合の部分集合}{空集合は任意の集合の部分集合}
+  $A$を任意の集合とするとき，
   \[
-    \varnothing  \subset A
+    \varnothing \subset A
   \]
   である．つまり，空集合はすべての集合の部分集合である．
-\end{example}
+\end{prop}
+
+\begin{tleftbar}
+  \begin{proof}
+    部分集合の定義（\deref{部分集合}）より，$\varnothing \subset A$を示すには，
+    \begin{quotation}
+      任意の$x$に対して，$x \in \varnothing$ならば$x \in A$である
+    \end{quotation}
+    ことを示せばよい．ところが，空集合は要素をひとつも持たないので，$x \in \varnothing$を満たす$x$は存在しない．すなわち，仮定「$x \in \varnothing$」はどのような$x$に対しても偽である．仮定が偽である命題は結論によらず真であるから\footnote{このように，仮定を満たすものが存在しないために無条件で真となることを，\emph{空虚な真}（vacuous truth）ということがある．}，「$x \in \varnothing$ならば$x \in A$」は任意の$x$に対して真である．よって$\varnothing \subset A$が成り立つ．
+  \end{proof}
+\end{tleftbar}
+
+\begin{remark}[背理法による見方]
+  次のように考えることもできる．もし$\varnothing \subset A$が成り立たないとすると，「$\varnothing$の要素であって$A$に属さないもの」が少なくともひとつ存在しなければならない．しかし，$\varnothing$はそもそも要素を持たないので，そのような要素は存在しえない．よって$\varnothing \subset A$である．
+\end{remark}
 
 \phantomsection
 \begin{example}{べき集合}{べき集合}
@@ -173,9 +202,9 @@ $x$が属する全体集合は定められていないが，この場合だと�
 また，集合はしばしば条件を用いて記述される．
 
 \begin{description}
-  \item[外延的記法\index{がいえんてききほう@外延的記法}（列挙形式）] \mbox{} \\
+  \item[外延的記法\index{がいえんてききほう@外延的記法}（列挙形式）]
         $\{ a, b, c \}$のように要素を列挙して表す．
-  \item[内包的記法\index{ないほうてききほう@内包的記法}（条件形式）] \mbox{} \\
+  \item[内包的記法\index{ないほうてききほう@内包的記法}（条件形式）]
         $\{ x \in \mathbb{N} \mid x \leqq 5 \}$のように条件を用いて表す．
 \end{description}
 
@@ -197,13 +226,13 @@ $x$が属する全体集合は定められていないが，この場合だと�
 \begin{definition}{共通部分・和集合・差集合・補集合}{共通部分・和集合・差集合・補集合}
   $A$と$B$を集合とするとき，以下の定義をする．
   \begin{description}
-    \item[共通部分\index{きょうつうぶぶん@共通部分}] \mbox{}\\
+    \item[共通部分\index{きょうつうぶぶん@共通部分}]\mbox{}\\
           $A$と$B$の両方に属する要素全体の集合を$A \cap B$と表す．これを``$A$ intersection $B$''と読む．
-    \item[和集合\index{わしゅうごう@和集合}] \mbox{} \\
+    \item[和集合\index{わしゅうごう@和集合}]\mbox{}\\
           $A$または$B$のいずれかに属する要素全体の集合を$A \cup B$と表す．これを``$A$ union $B$''と読む．
     \item[差集合\index{さしゅうごう@差集合}]\mbox{}\\
           $A$の要素で$B$に属さないもの全体の集合を$A \setminus B$と表す．
-    \item[補集合\index{ほしゅうごう@補集合}] \mbox{}\\
+    \item[補集合\index{ほしゅうごう@補集合}]\mbox{}\\
           全体集合$X$に対して，$X \setminus A$は$A$の補集合であり，$A^c$と表す．これを``$A$ complement''と読む．
   \end{description}
 \end{definition}
@@ -329,6 +358,37 @@ $x$が属する全体集合は定められていないが，この場合だと�
 \begin{remark}[交換法則を考える意義]
   ここで「なぜ交換法則を考えるのか」という疑問が生じるかもしれない．当たり前に成り立つことだと思える読者もいるかもしれないが，よく考えてみると「実数の減法」や「関数（写像）の合成」，「行列の積」など，
   数学において一般に交換法則が成り立たないものは数多く存在する．集合に対して交換法則を考える意義はそこにあるのである．
+\end{remark}
+
+\phantomsection
+\begin{prop}{空集合との演算}{空集合との演算}
+  $A$を任意の集合とするとき，
+  \[
+    A \cup \varnothing = A, \quad A \cap \varnothing = \varnothing
+  \]
+  である．
+\end{prop}
+
+\begin{tleftbar}
+  \begin{proof}
+    まず$A \cup \varnothing = A$を示す．$x \in A \cup \varnothing$とすると，$x \in A$または$x \in \varnothing$である．$x \in \varnothing$を満たす$x$は存在しないので，$x \in A$でなければならない．よって$A \cup \varnothing \subset A$である．逆に，$x \in A$ならば和集合の定義から$x \in A \cup \varnothing$なので，$A \subset A \cup \varnothing$である．以上より$A \cup \varnothing = A$が成り立つ．
+
+    次に$A \cap \varnothing = \varnothing$を示す．$x \in A \cap \varnothing$とすると，特に$x \in \varnothing$であるが，そのような$x$は存在しない．すなわち$A \cap \varnothing$は要素をひとつも持たないので，$A \cap \varnothing = \varnothing$である．
+  \end{proof}
+\end{tleftbar}
+
+\begin{remark}[空集合と差集合・直積]
+  差集合についても，
+  \[
+    A \setminus \varnothing = A, \quad \varnothing \setminus A = \varnothing
+  \]
+  が成り立つ．これは差集合の定義から直ちに確かめられる．
+
+  また，集合$A$，$B$に対して，$A$の要素と$B$の要素の順序対$(a,b)$全体の集合を\emph{直積}$A \times B$という（詳しくは後の章で定義する）．直積についても，
+  \[
+    A \times \varnothing = \varnothing, \quad \varnothing \times A = \varnothing
+  \]
+  が成り立つ．たとえば$(a, b) \in A \times \varnothing$となる順序対が存在するとすれば，$b \in \varnothing$でなければならないが，そのような$b$は存在しないからである．
 \end{remark}
 
 \subsection{集合の分配律}
