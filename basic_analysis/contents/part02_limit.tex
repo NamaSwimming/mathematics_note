@@ -35,7 +35,33 @@
     \abs*{a_n - a} < \varepsilon
   \]
   が成立する．
+
+  これを論理記号で書けば，つぎのようになる：
+  \[
+    \lall{\varepsilon > 0} \lsep \lex{n_0 \in \mathbb{N}} \lsep \lall{n \in \mathbb{N}} \lst
+    \bigl( n \geqq n_0 \limp \abs*{a_n - a} < \varepsilon \bigr)
+  \]
 \end{definition}
+
+\begin{remark}[日本語の言い回しと論理式の対応]
+  \deref{実数列の収束}のふたつの表現は，つぎのように1対1に対応している．
+  \begin{center}
+    \begin{tabular}{l|l}
+      \hline
+      日本語による表現                                  & 論理記号による表現                              \\
+      \hline
+      任意の$\varepsilon > 0$に対して                   & $\lall{\varepsilon > 0}$                        \\
+      ある$n_0 \in \mathbb{N}$が存在し                  & $\lex{n_0 \in \mathbb{N}}$                      \\
+      すべての$n \in \mathbb{N}$に対して                & $\lall{n \in \mathbb{N}}$                       \\
+      $n \geqq n_0$ならば$\abs{a_n - a} < \varepsilon$  & $n \geqq n_0 \limp \abs{a_n - a} < \varepsilon$ \\
+      \hline
+    \end{tabular}
+  \end{center}
+
+  とくに本質的なのは，$\lall{\varepsilon > 0}$が$\lex{n_0 \in \mathbb{N}}$より\textbf{前}にあることである．
+  この順序は「どんなに小さな$\varepsilon$を指定されても，それに応じて$n_0$を選び直してよい」ことを表しており，$n_0$は$\varepsilon$に依存してよい．
+  順序を入れ替えて$\lex{n_0 \in \mathbb{N}} \lsep \lall{\varepsilon > 0}$としてしまうと，「$\varepsilon$によらないひとつの$n_0$がある」という，まったく別の（そしてはるかに強い）主張になってしまう．
+\end{remark}
 
 この定義は，「いかに小さな誤差 $\varepsilon$ を指定したとしても，ある番号 $n_0$ を境に，それ以降のすべての項 $a_n$ が $a$ の $\varepsilon$ 近傍，すなわち開区間 $(a-\varepsilon, a+\varepsilon)$ に収まってしまう」ことを意味している．
 
@@ -49,7 +75,25 @@
     a_n > M
   \]
   が成立することである\footnote{$-\infty$ への発散の定義については，不等号の向きに注意して各自で考えてみてほしい．}．
+
+  これを論理記号で書けば，つぎのようになる：
+  \[
+    \lall{M \in \mathbb{R}} \lsep \lex{n_0 \in \mathbb{N}} \lsep \lall{n \in \mathbb{N}} \lst
+    \bigl( n \geqq n_0 \limp a_n > M \bigr)
+  \]
 \end{definition}
+
+\begin{remark}[「収束しない」ことの論理式]
+  \deref{実数列の発散}にいう「収束しない」を，論理式の形で書いてみよう．
+  量化子の否定の規則（$\lnot$が量化子を通過するたびに$\forall$と$\exists$が入れ替わる）を外側から順に適用し，最後に含意の否定$\lnot ( P \limp Q ) \equiv P \land \lnot Q$を用いると，「$(a_n)_{n \in \mathbb{N}}$が$a$に収束しない」ことは
+  \[
+    \lex{\varepsilon > 0} \lsep \lall{n_0 \in \mathbb{N}} \lsep \lex{n \in \mathbb{N}} \lst
+    \bigl( n \geqq n_0 \land \abs*{a_n - a} \geqq \varepsilon \bigr)
+  \]
+  と表される．すなわち「ある$\varepsilon$がうまくとれて，どんなに先の番号$n_0$を指定されても，それ以降に$a$から$\varepsilon$以上離れた項が現れる」ということである．
+
+  なお，\deref{実数列の発散}の「発散する」は，これがすべての$a \in \mathbb{R}$について成り立つこと，すなわち上の論理式の先頭にさらに$\lall{a \in \mathbb{R}}$を付けたものにあたる．
+\end{remark}
 
 \phantomsection
 \subsection{実数列と極限の性質}
@@ -72,7 +116,7 @@
   $\varepsilon \coloneqq \frac{\abs*{b-a}}{2}$ とおくと，$a \ne b$ より $\varepsilon > 0$ である．
   収束の定義より，ある $n_0, n_1 \in \mathbb{N}$ が存在して，すべての $n \in \mathbb{N}$ に対して次が成り立つ：
   \[
-    n \geqq n_0 \implies \abs{a_n - a} < \varepsilon, \quad n \geqq n_1 \implies \abs{a_n - b} < \varepsilon
+    n \geqq n_0 \limp \abs{a_n - a} < \varepsilon, \quad n \geqq n_1 \limp \abs{a_n - b} < \varepsilon
   \]
   ここで $n \geqq \max\{n_0, n_1\}$ を満たす $n$ を任意にとると，三角不等式より
   \[
@@ -92,7 +136,7 @@
   このとき，収束の定義より，$1>0$に対して，ある$n_0 \in \mathbb{N}$が存在して，
   \[
     n \geqq n_0
-    \implies
+    \limp
     \abs{a_n-a}<1
   \]
   が成り立つ．したがって，$n \geqq n_0$ならば，
@@ -147,13 +191,13 @@
   $a_n\to a$，$b_n\to b$であるから，ある$n_1,n_2\in\mathbb{N}$が存在して，
   \[
     n\geqq n_1
-    \implies
+    \limp
     \abs{a_n-a}<\frac{\varepsilon}{2}
   \]
   かつ
   \[
     n\geqq n_2
-    \implies
+    \limp
     \abs{b_n-b}<\frac{\varepsilon}{2}
   \]
   が成り立つ．そこで，
@@ -180,13 +224,13 @@
   任意の$\varepsilon>0$をとる．$a_n\to a$，$b_n\to b$であるから，ある$n_1,n_2\in\mathbb{N}$が存在して，
   \[
     n\geqq n_1
-    \implies
+    \limp
     \abs{a_n-a}<\frac{\varepsilon}{2M}
   \]
   かつ
   \[
     n\geqq n_2
-    \implies
+    \limp
     \abs{b_n-b}<\frac{\varepsilon}{2(\abs{a}+1)}
   \]
   が成り立つ．ただし，$\abs{a}+1>0$である．
@@ -213,7 +257,7 @@
   ある$n_1\in\mathbb{N}$が存在して，
   \[
     n\geqq n_1
-    \implies
+    \limp
     \abs{b_n-b}<\frac{\abs{b}}{2}
   \]
   が成り立つ．このとき，$n\geqq n_1$ならば，
@@ -228,13 +272,13 @@
   任意の$\varepsilon>0$をとる．$a_n\to a$，$b_n\to b$であるから，ある$n_2,n_3\in\mathbb{N}$が存在して，
   \[
     n\geqq n_2
-    \implies
+    \limp
     \abs{a_n-a}<\frac{\abs{b}}{2}\cdot \frac{\varepsilon}{2}
   \]
   かつ
   \[
     n\geqq n_3
-    \implies
+    \limp
     \abs{b_n-b}<\frac{\abs{b}^2}{2(\abs{a}+1)}\cdot \frac{\varepsilon}{2}
   \]
   が成り立つ．
@@ -281,7 +325,7 @@ b_n \coloneqq -n+\cos^2 n+\frac{\sin n}{n}
 a_n+b_n
 =\sin^2 n+\cos^2 n+\frac{\sin n}{n}
 =1+\frac{\sin n}{n}
-\longrightarrow1
+\to 1
 \]
 である．
 
@@ -294,7 +338,7 @@ b_n\coloneqq -n+1+\frac1n
 \]
 とすれば，$(a_n)$と$(b_n)$はともに発散するが，
 \[
-a_n+b_n=1+\frac1n\longrightarrow1
+a_n+b_n=1+\frac1n\to 1
 \]
 である．
 
@@ -319,10 +363,10 @@ a_n+b_n=1+\frac1n\longrightarrow1
   背理法を用いる．$a > b$ と仮定し，$\varepsilon \coloneqq \frac{a-b}{2} > 0$ とおく．
   収束の定義より，ある $n_0 \in \mathbb{N}$ が存在して，$n \geqq n_0$ ならば
   \[
-    \abs{a_n - a} < \varepsilon \implies a - \varepsilon < a_n < a + \varepsilon
+    \abs{a_n - a} < \varepsilon \limp a - \varepsilon < a_n < a + \varepsilon
   \]
   \[
-    \abs{b_n - b} < \varepsilon \implies b - \varepsilon < b_n < b + \varepsilon
+    \abs{b_n - b} < \varepsilon \limp b - \varepsilon < b_n < b + \varepsilon
   \]
   がともに成立する．このとき，$b + \varepsilon = b + \frac{a-b}{2} = \frac{a+b}{2}$ および $a - \varepsilon = a - \frac{a-b}{2} = \frac{a+b}{2}$ であるから，
   \[
@@ -354,8 +398,8 @@ a_n+b_n=1+\frac1n\longrightarrow1
   任意の $\varepsilon > 0$ をとる．
   仮定より $\lim_{n \to \infty} a_n = a$ および $\lim_{n \to \infty} b_n = a$ であるから，この $\varepsilon$ に対してある $n_1, n_2 \in \mathbb{N}$ が存在し，次を満たす：
   \begin{align}
-    n \geqq n_1 &\implies a - \varepsilon < a_n < a + \varepsilon \\
-    n \geqq n_2 &\implies a - \varepsilon < b_n < a + \varepsilon
+    n \geqq n_1 &\limp a - \varepsilon < a_n < a + \varepsilon \\
+    n \geqq n_2 &\limp a - \varepsilon < b_n < a + \varepsilon
   \end{align}
   ここで $n_0 \coloneqq \max \{ n_1, n_2 \}$ と定めると，$n \geqq n_0$ においては上の 2 つの不等式が同時に成立する．
   さらに，仮定 $a_n \leqq c_n \leqq b_n$ を合わせると， $n \geqq n_0$ において
@@ -364,7 +408,7 @@ a_n+b_n=1+\frac1n\longrightarrow1
   \]
   が成り立つ．したがって，$n \geqq n_0$ ならば常に
   \[
-    a - \varepsilon < c_n < a + \varepsilon \iff \abs{c_n - a} < \varepsilon
+    a - \varepsilon < c_n < a + \varepsilon \lequiv \abs{c_n - a} < \varepsilon
   \]
   が成立する．これは，数列 $(c_n)_{n \in \mathbb{N}}$ が $a$ に収束することの定義そのものである．これが証明すべきことであった．
 \end{proof}
