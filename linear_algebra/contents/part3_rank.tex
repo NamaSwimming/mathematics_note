@@ -1,0 +1,550 @@
+\phantomsection
+\part{線型独立性と階数}
+
+\begin{abstract}
+  この章では，ベクトルの組の「無駄のなさ」を測る概念を整理する．
+  まず\textbf{線型結合}と線型関係を定義し，線型写像が線型結合を保つことを確かめる．
+  次に，自明な線型関係しかもたない組として\textbf{線型独立}を，そうでない組として\textbf{線型従属}を定義し，
+  それぞれについて扱いやすい言い換えを与える．
+  続いて，以後くり返し用いる「線型独立な組の拡大」と「取替補題」を証明する．
+  最後に，行列の\textbf{階数}を線型独立な列の最大個数として定義し，
+  行階数と列階数が一致すること，および行基本変形によって階数が計算できることを示す．
+\end{abstract}
+
+\phantomsection
+\section{線型結合と線型独立性}
+
+\phantomsection
+\subsection{線型結合と線型関係}
+
+本節では，複数のベクトルからつくられる基本的な演算である\textbf{線型結合}\index{せんけいけつごう@線型結合}を定義する\footnote{ここでは$K^m$のベクトルに対して定義するが，\partref{線型空間}で導入する一般の線型空間の元に対しても，まったく同様に定義される．}．
+
+\begin{definition}{線型結合・線型関係}{線型結合}
+  $n$個のベクトル$\bm{x}_1, \bm{x}_2, \dots, \bm{x}_n \in K^m$を考える．
+  \begin{equation}
+    \lambda_1 \bm{x}_1 + \lambda_2 \bm{x}_2 + \cdots + \lambda_n \bm{x}_n
+    \quad (\lambda_i \in K) \label{eq:線型結合の形}
+  \end{equation}
+  の形のベクトルを，$\bm{x}_1, \bm{x}_2, \dots, \bm{x}_n$の\textbf{線型結合}という．
+
+  また，\eqref{eq:線型結合の形}に関連して，等式
+  \[
+    \lambda_1 \bm{x}_1 + \lambda_2 \bm{x}_2 + \cdots + \lambda_n \bm{x}_n = \bm{0}
+  \]
+  を$\bm{x}_1, \bm{x}_2, \dots, \bm{x}_n$の\textbf{線型関係}\index{せんけいかんけい@線型関係}という．
+\end{definition}
+
+任意のベクトル$\bm{x}_1, \bm{x}_2, \dots, \bm{x}_n$に対して，係数をすべて$0$とした
+\[
+  0\bm{x}_1 + 0\bm{x}_2 + \cdots + 0\bm{x}_n = \bm{0}
+\]
+はつねに成り立つ線型関係である．これを\textbf{自明な線型関係}\index{じめいなせんけいかんけい@自明な線型関係}とよぶ．
+
+\partref{線型写像}で導入した線型写像は，線型結合と相性がよい．
+すなわち，線型写像は線型結合を保つ：
+
+\begin{prop}{線型写像と線型結合}{線型写像と線型結合}
+  $f \colon K^n \to K^m$を線型写像とする．
+  このとき，任意の$\bm{x}_1, \bm{x}_2, \dots, \bm{x}_k \in K^n$と任意の$\lambda_1, \lambda_2, \dots, \lambda_k \in K$に対して，
+  \[
+    f(\lambda_1 \bm{x}_1 + \lambda_2 \bm{x}_2 + \cdots + \lambda_k \bm{x}_k)
+    = \lambda_1 f(\bm{x}_1) + \lambda_2 f(\bm{x}_2) + \cdots + \lambda_k f(\bm{x}_k)
+  \]
+  が成り立つ．
+\end{prop}
+
+\begin{leftbar}
+\begin{proof}
+  $k$に関する帰納法で示す．
+  $k = 1$のときは，$f$の線型性の第$2$の条件そのものである．
+
+  $k - 1$のとき主張が成り立つと仮定する．このとき，
+  \begin{align}
+    f\left(\sum_{i=1}^{k} \lambda_i \bm{x}_i\right)
+    &= f\left(\sum_{i=1}^{k-1} \lambda_i \bm{x}_i + \lambda_k \bm{x}_k\right) \nonumber \\
+    &= f\left(\sum_{i=1}^{k-1} \lambda_i \bm{x}_i\right) + f(\lambda_k \bm{x}_k) \tag{$f$の線型性} \\
+    &= \sum_{i=1}^{k-1} \lambda_i f(\bm{x}_i) + \lambda_k f(\bm{x}_k) \tag{帰納法の仮定と$f$の線型性} \\
+    &= \sum_{i=1}^{k} \lambda_i f(\bm{x}_i) \nonumber
+  \end{align}
+  となり，$k$のときも主張が成り立つ．これが証明すべきことであった．
+\end{proof}
+\end{leftbar}
+
+\begin{remark}[$A\bm{x}$は列ベクトルの線型結合]
+  行列とベクトルの積は，線型結合のことばで見直すことができる．
+  $m \times n$行列$A$の列ベクトルを$\bm{a}_1, \bm{a}_2, \dots, \bm{a}_n \in K^m$とすると，任意の$\bm{x} = \begin{pmatrix} x_1 \\ x_2 \\ \vdots \\ x_n \end{pmatrix} \in K^n$に対して，
+  \[
+    A\bm{x} = x_1 \bm{a}_1 + x_2 \bm{a}_2 + \cdots + x_n \bm{a}_n
+  \]
+  が成り立つ．実際，$\bm{x} = \sum_{j=1}^{n} x_j \bm{e}_j$と\prref{線型写像と線型結合}より，
+  \[
+    A\bm{x} = T_A\left(\sum_{j=1}^{n} x_j \bm{e}_j\right)
+    = \sum_{j=1}^{n} x_j T_A(\bm{e}_j)
+    = \sum_{j=1}^{n} x_j \bm{a}_j
+  \]
+  となる．
+  すなわち，$A\bm{x}$は$A$の列ベクトルの線型結合であり，その係数は$\bm{x}$の成分にほかならない．
+  この見方によれば，連立一次方程式$A\bm{x} = \bm{b}$が解を持つことは，$\bm{b}$が$A$の列ベクトルの線型結合として表せることと同値である．
+  一方，\prref{連立一次方程式と像と核}(ii)より，$A\bm{x} = \bm{b}$が解を持つことは$\bm{b} \in \Im T_A$とも同値であった．
+  あわせると，像$\Im T_A$とは「$A$の列ベクトルの線型結合全体の集合」にほかならないことがわかる．
+\end{remark}
+
+\phantomsection
+\subsection{線型独立と線型従属}
+
+線型関係のうち，自明なものしか存在しないとき，ベクトルの組は\textbf{線型独立}\index{せんけいどくりつ@線型独立}であるという．
+
+\begin{definition}{線型独立}{線型独立}
+  $\bm{x}_1, \bm{x}_2, \dots, \bm{x}_n \in K^m$が\textbf{線型独立}であるとは，
+  \[
+    \lambda_1 \bm{x}_1 + \lambda_2 \bm{x}_2 + \cdots + \lambda_n \bm{x}_n = \bm{0}
+  \]
+  ならば，
+  \[
+    \lambda_1=\lambda_2=\cdots=\lambda_n = 0
+  \]
+  であることである．
+  線型独立は\textbf{一次独立}\index{いちじどくりつ@一次独立}ともいう．
+\end{definition}
+
+\begin{prop}{線型独立の言い換え}{線型独立の言い換え}
+  $\bm{x}_1,\bm{x}_2,\dots,\bm{x}_n\in K^m$が線型独立であることは，
+  少なくとも一つが$0$でない任意の
+  $\lambda_1,\lambda_2,\dots,\lambda_n\in K$に対して，
+  \[
+    \lambda_1\bm{x}_1+\lambda_2\bm{x}_2+\cdots
+    +\lambda_n\bm{x}_n\ne\bm{0}
+  \]
+  となることと同値である．
+\end{prop}
+
+\begin{leftbar}
+\begin{proof}
+  \deref{線型独立}の条件の対偶を取れば明らかである．
+\end{proof}
+\end{leftbar}
+
+線型独立でないベクトルの組は，\textbf{線型従属}\index{せんけいじゅうぞく@線型従属}であるという．
+
+\begin{definition}{線型従属}{線型従属}
+  $\bm{x}_1, \bm{x}_2, \dots, \bm{x}_n \in K^m$が線型独立でないとき，すなわち，少なくとも一つが$0$でない$\lambda_1, \lambda_2, \dots, \lambda_n \in K$が存在して
+  \[
+    \lambda_1 \bm{x}_1 + \lambda_2 \bm{x}_2 + \cdots + \lambda_n \bm{x}_n = \bm{0}
+  \]
+  が成り立つとき，$\bm{x}_1, \bm{x}_2, \dots, \bm{x}_n$は\textbf{線型従属}であるという．
+  線型従属は\textbf{一次従属}\index{いちじじゅうぞく@一次従属}ともいう．
+\end{definition}
+
+\begin{example}{線型独立と線型従属}{線型独立と線型従属}
+  $K^2$のベクトル
+  \[
+    \bm{e}_1 = \begin{pmatrix} 1 \\ 0 \end{pmatrix}, \quad
+    \bm{e}_2 = \begin{pmatrix} 0 \\ 1 \end{pmatrix}
+  \]
+  は線型独立である．実際，
+  \[
+    \lambda_1 \bm{e}_1 + \lambda_2 \bm{e}_2 = \begin{pmatrix} \lambda_1 \\ \lambda_2 \end{pmatrix} = \bm{0}
+  \]
+  ならば$\lambda_1 = \lambda_2 = 0$となるからである．
+
+  一方，$K^2$のベクトル
+  \[
+    \bm{x}_1 = \begin{pmatrix} 1 \\ 2 \end{pmatrix}, \quad
+    \bm{x}_2 = \begin{pmatrix} 2 \\ 4 \end{pmatrix}
+  \]
+  は線型従属である．実際，$(\lambda_1, \lambda_2) = (2, -1) \ne (0, 0)$に対して
+  \[
+    2\bm{x}_1 + (-1)\bm{x}_2 = \bm{0}
+  \]
+  という非自明な線型関係が成り立つからである．
+\end{example}
+
+最後に，線型従属性の重要な言い換えを示そう．
+これは「線型従属なベクトルの組では，どれかひとつのベクトルが残りのベクトルの線型結合として表せる」という主張であり，のちの章でも繰り返し用いられる．
+
+\begin{prop}{線型従属の言い換え}{線型従属の言い換え}
+  $n \ge 2$とする．
+  $\bm{x}_1, \bm{x}_2, \dots, \bm{x}_n \in K^m$が線型従属であることは，ある$i$が存在して，$\bm{x}_i$が残りの$n - 1$個のベクトルの線型結合として表せることと同値である．
+\end{prop}
+
+\begin{leftbar}
+\begin{proof}
+  まず，$\bm{x}_1, \bm{x}_2, \dots, \bm{x}_n$が線型従属であるとする．
+  このとき，少なくとも一つが$0$でないスカラー$\lambda_1, \lambda_2, \dots, \lambda_n \in K$が存在して
+  \[
+    \lambda_1 \bm{x}_1 + \lambda_2 \bm{x}_2 + \cdots + \lambda_n \bm{x}_n = \bm{0}
+  \]
+  が成り立つ．$\lambda_i \ne 0$となる$i$をとると，
+  \[
+    \bm{x}_i = \sum_{\substack{1 \le j \le n \\ j \ne i}} \left(-\frac{\lambda_j}{\lambda_i}\right) \bm{x}_j
+  \]
+  となり，$\bm{x}_i$は残りのベクトルの線型結合として表せる．
+
+  逆に，ある$i$に対して
+  \[
+    \bm{x}_i = \sum_{\substack{1 \le j \le n \\ j \ne i}} \lambda_j \bm{x}_j
+    \quad (\lambda_j \in K)
+  \]
+  と表せるとする．このとき，
+  \[
+    \lambda_1 \bm{x}_1 + \cdots + \lambda_{i-1} \bm{x}_{i-1} + (-1)\bm{x}_i + \lambda_{i+1} \bm{x}_{i+1} + \cdots + \lambda_n \bm{x}_n = \bm{0}
+  \]
+  が成り立つ．$\bm{x}_i$の係数は$-1 \ne 0$であるから，これは非自明な線型関係である．
+  よって$\bm{x}_1, \bm{x}_2, \dots, \bm{x}_n$は線型従属である．
+
+  以上の考察により，命題が示された．
+\end{proof}
+\end{leftbar}
+
+すなわち，線型従属なベクトルの組には，残りのベクトルの線型結合として「すでに表せてしまう」ベクトルが存在するのである．
+
+なお，与えられたベクトルの線型結合として表されるベクトル全体がなす集合は，\partref{線型空間}において\textbf{線型包}として詳しく扱う．
+そこでは，本章で定義した線型結合の概念が，数ベクトルに限らず一般の線型空間においてもそのまま通用することを見る．
+
+\phantomsection
+\subsection{線型独立性に関する基本補題}
+
+線型独立性について，以後くり返し用いる二つの補題を用意しておこう．
+いずれも線型結合と線型独立の定義のみから導かれる．
+
+なお，これらの補題は，\partref{線型空間}において一般の線型空間に対してあらためて定式化され，証明される（\lemref{一般の取替補題}）．
+ここでは，\partref{行列式}までの議論で必要となる数ベクトル空間$K^m$の場合を先に示しておく．
+
+\begin{lemma}{線型独立な組の拡大}{線型独立な組の拡大}
+  $\bm{v}_1, \bm{v}_2, \dots, \bm{v}_k \in K^m$を線型独立とし，$\bm{w} \in K^m$は
+  $\bm{v}_1, \bm{v}_2, \dots, \bm{v}_k$の線型結合として表せないとする．
+  このとき，$\bm{v}_1, \bm{v}_2, \dots, \bm{v}_k, \bm{w}$は線型独立である．
+\end{lemma}
+
+\begin{leftbar}
+\begin{proof}
+  \[
+    \lambda_1 \bm{v}_1 + \cdots + \lambda_k \bm{v}_k + \mu \bm{w} = \bm{0}
+  \]
+  とする．もし$\mu \ne 0$ならば，
+  \[
+    \bm{w} = \sum_{i=1}^{k} \left(-\frac{\lambda_i}{\mu}\right) \bm{v}_i
+  \]
+  となり，$\bm{w}$が線型結合として表せることになって仮定に反する．
+  よって$\mu = 0$であり，このとき$\sum_{i=1}^{k} \lambda_i \bm{v}_i = \bm{0}$となるから，
+  線型独立性より$\lambda_1 = \cdots = \lambda_k = 0$である．
+  これが証明すべきことであった．
+\end{proof}
+\end{leftbar}
+
+次の補題は，「線型独立なベクトルは，それを生成するベクトルの個数を超えて取れない」ことを述べている．
+
+\begin{lemma}{取替補題}{取替補題}
+  $\bm{v}_1, \bm{v}_2, \dots, \bm{v}_n \in K^m$とする．
+  $\bm{w}_1, \bm{w}_2, \dots, \bm{w}_l \in K^m$がいずれも$\bm{v}_1, \bm{v}_2, \dots, \bm{v}_n$の線型結合として表され，
+  かつ線型独立であるならば，
+  \[
+    l \le n
+  \]
+  が成り立つ．
+\end{lemma}
+
+\begin{leftbar}
+\begin{proof}
+  $k = 0, 1, \dots, l$に対して，次の主張$(\ast_k)$を$k$についての帰納法で示す．
+
+  \begin{quote}
+    $(\ast_k)$：$k \le n$であり，かつ$\bm{v}_1, \dots, \bm{v}_n$の番号を適当に付け替えることで，
+    $\bm{v}_1, \dots, \bm{v}_n$の線型結合として表せるベクトルはすべて
+    \[
+      \bm{w}_1, \dots, \bm{w}_k, \bm{v}_{k+1}, \dots, \bm{v}_n
+    \]
+    の線型結合としても表せる，とできる．
+  \end{quote}
+
+  $k = 0$のときは主張の内容が空であり，成り立つ．
+
+  $k < l$として$(\ast_k)$を仮定する．
+  $\bm{w}_{k+1}$は$\bm{v}_1, \dots, \bm{v}_n$の線型結合であるから，帰納法の仮定より
+  \begin{equation}
+    \bm{w}_{k+1}
+    = \sum_{i=1}^{k} a_i \bm{w}_i + \sum_{j=k+1}^{n} b_j \bm{v}_j
+    \label{eq:取替補題の展開}
+  \end{equation}
+  と表せる．
+
+  ここで，$b_{k+1} = \cdots = b_n = 0$であると仮定してみる
+  （$k = n$のときは第$2$の和が空なので，自動的にこの場合にあたる）．
+  このとき\eqref{eq:取替補題の展開}は
+  \[
+    a_1 \bm{w}_1 + \cdots + a_k \bm{w}_k + (-1)\bm{w}_{k+1} = \bm{0}
+  \]
+  と書き直せる．$\bm{w}_{k+1}$の係数は$-1 \ne 0$であるから，これは非自明な線型関係であり，
+  $\bm{w}_1, \dots, \bm{w}_l$の線型独立性に矛盾する．
+
+  よって$k < n$，すなわち$k + 1 \le n$であり，さらに$b_j \ne 0$となる$j$が存在する．
+  残っている$\bm{v}_{k+1}, \dots, \bm{v}_n$の番号を付け替えて$b_{k+1} \ne 0$としてよい．
+  このとき\eqref{eq:取替補題の展開}を$\bm{v}_{k+1}$について解けば，
+  \[
+    \bm{v}_{k+1}
+    = \frac{1}{b_{k+1}}\left( \bm{w}_{k+1} - \sum_{i=1}^{k} a_i \bm{w}_i - \sum_{j=k+2}^{n} b_j \bm{v}_j \right)
+  \]
+  となり，$\bm{v}_{k+1}$は$\bm{w}_1, \dots, \bm{w}_{k+1}, \bm{v}_{k+2}, \dots, \bm{v}_n$の線型結合として表せる．
+  したがって，$\bm{w}_1, \dots, \bm{w}_k, \bm{v}_{k+1}, \dots, \bm{v}_n$の線型結合として表せるベクトルは，
+  すべて$\bm{w}_1, \dots, \bm{w}_{k+1}, \bm{v}_{k+2}, \dots, \bm{v}_n$の線型結合としても表せる．
+  よって$(\ast_{k+1})$が成り立つ．
+
+  以上より$(\ast_l)$が成り立ち，とくに$l \le n$である．
+  これが証明すべきことであった．
+\end{proof}
+\end{leftbar}
+
+\begin{cor}{$K^m$における線型独立なベクトルの個数}{Km における線型独立なベクトルの個数}
+  $K^m$の線型独立なベクトルは，高々$m$個である．
+  すなわち，$m + 1$個以上のベクトルは必ず線型従属である．
+\end{cor}
+
+\begin{leftbar}
+\begin{proof}
+  任意の$\bm{x} = (x_i) \in K^m$は
+  \[
+    \bm{x} = \sum_{i=1}^{m} x_i \bm{e}_i
+  \]
+  と標準基底ベクトルの線型結合で表せる．
+  よって\lemref{取替補題}を$\bm{v}_i = \bm{e}_i$として適用すればよい．
+  これが証明すべきことであった．
+\end{proof}
+\end{leftbar}
+
+\begin{cor}{$K^n$の$n$個の線型独立なベクトル}{Kn の n 個の線型独立なベクトル}
+  $\bm{a}_1, \bm{a}_2, \dots, \bm{a}_n \in K^n$が線型独立ならば，
+  任意の$\bm{b} \in K^n$は$\bm{a}_1, \bm{a}_2, \dots, \bm{a}_n$の線型結合として表せる．
+\end{cor}
+
+\begin{leftbar}
+\begin{proof}
+  ある$\bm{b} \in K^n$が線型結合として表せないと仮定すると，\lemref{線型独立な組の拡大}より
+  $\bm{a}_1, \dots, \bm{a}_n, \bm{b}$は線型独立である．
+  これは$K^n$の$n + 1$個の線型独立なベクトルであり，\coref{Km における線型独立なベクトルの個数}に矛盾する．
+  これが証明すべきことであった．
+\end{proof}
+\end{leftbar}
+
+\phantomsection
+\section{階数}
+
+\phantomsection
+\subsection{階数}
+
+行列に対して，その列ベクトルがどれだけ「独立な情報」をもっているかを表す量を定める．
+
+\begin{definition}{階数}{階数}
+  $A$を$m \times n$行列とし，その列ベクトルを$\bm{a}_1, \bm{a}_2, \dots, \bm{a}_n \in K^m$とする．
+  $\bm{a}_1, \bm{a}_2, \dots, \bm{a}_n$のうちから選んで線型独立となるベクトルの最大個数を，
+  $A$の\textbf{階数}\index{かいすう@階数}\index{rank@$\rank$}といい，$\rank A$と表す．
+
+  ただし，$0$個のベクトルの組は線型独立であると約束する．
+  したがって$A = O$のとき$\rank A = 0$である．
+\end{definition}
+
+\begin{remark}[階数の定義について]
+  「線型独立な列の最大個数」という定義は，一見すると回りくどく感じられるかもしれない．
+  実は，\partref{線型空間}で「次元」を定義したあとであれば，階数は「$A$の列ベクトルの線型結合として表せるベクトル全体（列空間とよばれる）の次元」と言い直すことができる．
+  この列空間は，像$\Im T_A$にほかならない（\prref{線型写像と線型結合}のあとのRemarkを参照）．
+  すなわち階数は，\partref{線型空間}のことばでは「線型写像$T_A$の像の次元」$\dim \Im T_A$である（\coref{階数と像の次元}）．
+  しかし本章の段階では次元がまだ定義されていないため，「次元」という語を使わずに同じ数を取り出す方法として，この定義を採用しているのである．
+\end{remark}
+
+\begin{example}{階数}{階数の例}
+  \[
+    A = \begin{pmatrix} 1 & 2 & 0 \\ 2 & 4 & 0 \end{pmatrix}
+  \]
+  の列ベクトルは
+  \[
+    \bm{a}_1 = \begin{pmatrix} 1 \\ 2 \end{pmatrix}, \quad
+    \bm{a}_2 = \begin{pmatrix} 2 \\ 4 \end{pmatrix}, \quad
+    \bm{a}_3 = \begin{pmatrix} 0 \\ 0 \end{pmatrix}
+  \]
+  である．$\bm{a}_2 = 2\bm{a}_1$，$\bm{a}_3 = \bm{0}$であるから，
+  どの$2$本を選んでも線型従属であり，一方$\bm{a}_1$の$1$本は線型独立である．
+  よって$\rank A = 1$である．
+\end{example}
+
+階数の定義は列ベクトルによるものであったが，実は行ベクトルで定義しても同じ値が得られる．
+
+\begin{theorem}{行階数と列階数の一致}{行階数と列階数の一致}
+  $A$を$m \times n$行列とする．
+  $A$の行ベクトルのうち線型独立なものの最大個数は，$\rank A$に等しい．
+  したがって，
+  \[
+    \rank A^\mathsf{T} = \rank A
+  \]
+  が成り立つ．
+\end{theorem}
+
+\begin{leftbar}
+\begin{proof}
+  $\rank A = r$とし，$A$の行ベクトルのうち線型独立なものの最大個数を$r'$とする．
+
+  まず$r' \le r$を示す．
+  $A$の列ベクトル$\bm{a}_1, \dots, \bm{a}_n$のうち，線型独立な$r$本を選び，
+  それらを$\bm{c}_1, \dots, \bm{c}_r$とする．
+  各$j$について，$\bm{c}_1, \dots, \bm{c}_r, \bm{a}_j$は$r + 1$本であり，$r$の最大性から線型従属である．
+  よって\lemref{線型独立な組の拡大}の対偶より，$\bm{a}_j$は$\bm{c}_1, \dots, \bm{c}_r$の線型結合として表せる：
+  \[
+    \bm{a}_j = \sum_{i=1}^{r} c_{ij} \bm{c}_i \quad (1 \le j \le n).
+  \]
+
+  そこで，$\bm{c}_1, \dots, \bm{c}_r$を列として並べた$m \times r$行列を$C$，
+  $r \times n$行列$(c_{ij})$を$R$とおくと，上の式は$CR$の第$j$列が$\bm{a}_j$であることを意味するので，
+  \[
+    A = CR
+  \]
+  が成り立つ．
+  行列の積の定義（\deref{行列の積}）より，$A$の第$k$行は
+  \[
+    (A \text{の第}k\text{行}) = \sum_{i=1}^{r} (C \text{の}(k,i)\text{成分}) \cdot (R \text{の第}i\text{行})
+  \]
+  とかける．すなわち，$A$の各行は$R$の$r$本の行の線型結合である．
+  したがって，$A$の線型独立な行を$r'$本とれば，\lemref{取替補題}より$r' \le r$である．
+
+  次に$r \le r'$を示す．
+  前半の議論は任意の行列に対して通用する．すなわち，任意の行列$M$に対して
+  \[
+    (M\text{の線型独立な行の最大個数})
+    \le
+    (M\text{の線型独立な列の最大個数})
+  \]
+  が成り立つ．これを$M = A^\mathsf{T}$に適用する．
+  $A^\mathsf{T}$の行は$A$の列であるから，左辺は$A$の線型独立な列の最大個数，すなわち$r$に等しい．
+  また，$A^\mathsf{T}$の列は$A$の行であるから，右辺は$A$の線型独立な行の最大個数，すなわち$r'$に等しい．
+  したがって$r \le r'$である．
+
+  以上より$r = r'$であり，$A$の線型独立な行の最大個数は$\rank A$に等しい．
+  さらに，$A^\mathsf{T}$の列は$A$の行であるから，
+  \[
+    \rank A^\mathsf{T} = r' = r = \rank A
+  \]
+  も成り立つ．
+  これが証明すべきことであった．
+\end{proof}
+\end{leftbar}
+
+\begin{cor}{階数の上限}{階数の上限}
+  $m \times n$行列$A$に対して，
+  \[
+    \rank A \le \min\{m, n\}
+  \]
+  が成り立つ．
+\end{cor}
+
+\begin{leftbar}
+\begin{proof}
+  $A$の列は$n$本しかないので$\rank A \le n$である．
+  また$A$の行は$m$本しかないので，\thref{行階数と列階数の一致}より$\rank A \le m$である．
+  これが証明すべきことであった．
+\end{proof}
+\end{leftbar}
+
+\begin{remark}[行階数と列階数の一致の意味]
+  \thref{行階数と列階数の一致}は，一見すると当たり前ではない主張である．
+  行の本数と列の本数は一般に異なるうえ，行の線型独立性と列の線型独立性は別々の条件だからである．
+  それにもかかわらず両者が一致するという事実は，階数が行列の「かたち」ではなく本質的な情報を捉えていることを示している．
+
+  なお，証明中に現れた分解$A = CR$は，「$m \times n$行列を，階数$r$の情報だけを使って$m \times r$行列と$r \times n$行列の積に分解する」ものであり，
+  それ自体が応用上重要な意味をもつ．
+\end{remark}
+
+\phantomsection
+\subsection{階数の計算}
+
+階数の定義はそのままでは計算に向かない．
+実際には，行基本変形（\deref{行基本変形}）によって階数を求めることができる．
+
+その根拠となるのが，次の観察である．
+
+\begin{prop}{列の線型関係と斉次連立一次方程式}{列の線型関係と斉次連立方程式}
+  $A$を$m \times n$行列とし，その列ベクトルを$\bm{a}_1, \dots, \bm{a}_n$とする．
+  このとき，$\bm{x} = (x_j) \in K^n$に対して次は同値である：
+  \begin{enumerate}[label=(\roman*),leftmargin=3.2em]
+    \item $A\bm{x} = \bm{0}$である．
+    \item $x_1 \bm{a}_1 + x_2 \bm{a}_2 + \cdots + x_n \bm{a}_n = \bm{0}$である．
+  \end{enumerate}
+  すなわち，$A$の列ベクトルの線型関係と，斉次連立一次方程式$A\bm{x} = \bm{0}$の解は同じものである．
+\end{prop}
+
+\begin{leftbar}
+\begin{proof}
+  \prref{線型写像と線型結合}のあとのRemarkで見たとおり，
+  \[
+    A\bm{x} = x_1 \bm{a}_1 + x_2 \bm{a}_2 + \cdots + x_n \bm{a}_n
+  \]
+  が成り立つ．これが証明すべきことであった．
+\end{proof}
+\end{leftbar}
+
+\begin{prop}{行基本変形と解集合}{行基本変形と解集合}
+  $A$に行基本変形を施して得られる行列を$A'$とすると，
+  \[
+    \{\bm{x} \in K^n \mid A\bm{x} = \bm{0}\}
+    = \{\bm{x} \in K^n \mid A'\bm{x} = \bm{0}\}
+  \]
+  が成り立つ．
+\end{prop}
+
+\begin{leftbar}
+\begin{proof}
+  $A\bm{x} = \bm{0}$の第$i$式を$f_i(\bm{x}) = 0$とかく．
+  行基本変形の各操作で得られる新しい式は，いずれも$f_1, \dots, f_m$の線型結合である．
+  よって$A\bm{x} = \bm{0}$を満たす$\bm{x}$は$A'\bm{x} = \bm{0}$も満たす．
+
+  また，\deref{行基本変形}の$3$種類の操作はいずれも逆操作をもつ
+  （第$i$行を$c$倍する操作の逆は$1/c$倍する操作，行の入れ替えの逆はもう一度入れ替える操作，
+  第$i$行に第$j$行の$c$倍を加える操作の逆は$(-c)$倍を加える操作である）．
+  同じ議論を逆操作に適用すれば，逆向きの包含も従う．
+  これが証明すべきことであった．
+\end{proof}
+\end{leftbar}
+
+\begin{theorem}{行基本変形と階数}{行基本変形と階数}
+  行基本変形によって階数は変化しない．
+\end{theorem}
+
+\begin{leftbar}
+\begin{proof}
+  $A$に行基本変形を施して$A'$が得られたとする．
+  列の番号$j_1 < j_2 < \cdots < j_k$を任意にとり，$A$の第$j_1, \dots, j_k$列だけを取り出した行列を$B$，
+  $A'$の同じ列を取り出した行列を$B'$とする．
+  $A$から$A'$への行基本変形は，$B$から$B'$への行基本変形をそのまま引き起こすから，
+  \prref{行基本変形と解集合}より$B\bm{y} = \bm{0}$と$B'\bm{y} = \bm{0}$の解集合は一致する．
+
+  \prref{列の線型関係と斉次連立方程式}より，
+  $A$の第$j_1, \dots, j_k$列が線型独立であることは$B\bm{y} = \bm{0}$が自明な解しかもたないことと同値であり，
+  $A'$についても同様である．
+  よって，どの列の組についても，$A$で線型独立であることと$A'$で線型独立であることは一致する．
+  線型独立な列の最大個数も一致するので，$\rank A = \rank A'$である．
+  これが証明すべきことであった．
+\end{proof}
+\end{leftbar}
+
+\begin{remark}[行基本変形による階数の計算]
+  \thref{行基本変形と階数}により，階数は次のようにして求められる．
+  行基本変形をくり返して$A$をできるだけ簡単な形に変形すると，
+  最終的に，$0$でない各行の先頭の非零成分が右下に向かって階段状に並び，
+  $0$のみからなる行が下側に集まった形にできる（さらに必要なら，各先頭成分を$1$にできる）．
+  この形の行列では，$0$でない行はすべて線型独立であり，残りは$0$のみからなる行であるから，
+  線型独立な行の最大個数は$0$でない行の本数に等しい．
+  \thref{行階数と列階数の一致}より，これがそのまま階数である．
+
+  \exref{階数の例}の行列$A$であれば，第$2$行に第$1$行の$(-2)$倍を加えて
+  \[
+    \begin{pmatrix} 1 & 2 & 0 \\ 2 & 4 & 0 \end{pmatrix}
+    \longrightarrow
+    \begin{pmatrix} 1 & 2 & 0 \\ 0 & 0 & 0 \end{pmatrix}
+  \]
+  となり，$0$でない行は$1$本であるから$\rank A = 1$と読み取れる．
+\end{remark}
+
+\begin{mycolumn}
+  階数は，のちに線型空間の次元を定義したあとで，
+  「$A$の列ベクトルが張る線型部分空間（列空間）の次元」として捉え直される．
+  \deref{階数}の「線型独立な列の最大個数」という定義は，その次元の値をあらかじめ直接に取り出したものにあたる．
+\end{mycolumn}
+
+ここまでの3つの章で，線型代数の基礎となる概念についての議論を終えた．
+次章ではこれらの概念を踏まえて，行列式を定義しよう．
