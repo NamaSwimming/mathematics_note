@@ -124,11 +124,16 @@
 
 \begin{example}{正方行列}{正方行列}
   \[
+    \begin{pmatrix} 4 \end{pmatrix}, \quad
     \begin{pmatrix} 2 & 5 \\ -8 & 7 \end{pmatrix}, \quad
     \begin{pmatrix} -1 & 4 & 0 \\ 2 & 1 & 9 \\ -8 & 5 & 1 \end{pmatrix}
   \]
-  はそれぞれ$2$次，$3$次の正方行列である．
+  はそれぞれ$1$次，$2$次，$3$次の正方行列である．
 \end{example}
+
+正方行列をわざわざ定義したのは，逆行列や行列式など，
+正方行列に対して考える重要な概念があるからである．
+詳しくは，のちの節で確認していこう．
 
 行列全体の集合にも記号を用意しておこう．
 
@@ -198,7 +203,8 @@
   と定義する．すなわち，成分ごとに和をとる．
 \end{definition}
 
-型の異なる行列に対しては，和は定義されない．
+ここで，行列の和は型の等しい行列に対してのみ定義されることに注意したい．
+つまり，行の数または列の数が異なる行列どうしの和は定義されない．
 
 \begin{definition}{行列のスカラー倍}{行列のスカラー倍}
   $\alpha \in K$と$m \times n$行列$A = (a_{ij})$に対して，$A$の\textbf{スカラー倍}\index{ぎょうれつのすからーばい@行列のスカラー倍}$\alpha A$を
@@ -215,19 +221,17 @@
 \end{definition}
 
 \begin{example}{行列のスカラー倍}{行列のスカラー倍}
-  $A = \begin{pmatrix} 2 & 3 \\ 9 & 1 \\ -8 & 3 \end{pmatrix}$に$5$をかけると，
+  $A = \begin{pmatrix} 2 & 3 & 9 \\ 1 & -8 & 3 \end{pmatrix}$に$5$をかけると，
   \[
     5A =
     \begin{pmatrix}
-      5 \cdot 2 & 5 \cdot 3 \\
-      5 \cdot 9 & 5 \cdot 1 \\
-      5 \cdot (-8) & 5 \cdot 3
+      5 \cdot 2 & 5 \cdot 3 & 5 \cdot 9 \\
+      5 \cdot 1 & 5 \cdot (-8) & 5 \cdot 3
     \end{pmatrix}
     =
     \begin{pmatrix}
-      10 & 15 \\
-      45 & 5 \\
-      -40 & 15
+      10 & 15 & 45 \\
+      5 & -40 & 15
     \end{pmatrix}
   \]
   となる．
