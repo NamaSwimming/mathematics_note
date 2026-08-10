@@ -1,0 +1,82 @@
+\documentclass{mathnote_cmyk}
+\usepackage{mathnote_cmyk}
+
+\begin{document}
+
+% タイトルページの呼び出し
+\tituloum{線型代数のノート}{Namachan}{}{}{\today}
+
+%\include{Preambulo/Capa}
+
+\cleardoublepage
+\pagenumbering{arabic}
+\pagecolor{white}
+
+% 目次の表示
+\localtableofcontents
+
+\input{contents/part1_matrix.tex}
+\input{contents/part2_linear_map.tex}
+\input{contents/part3_rank.tex}
+\input{contents/part4_determinant.tex}
+\input{contents/part5_linear_space.tex}
+\newpage
+\phantomsection
+
+\part*{参考文献}
+
+\noindent
+本書は
+\cite{saitomasahiko1966}，
+\cite{arai}，
+\cite{yukiegunron}，
+\cite{fujioka2021}
+を参考にした．
+
+\medskip
+
+\printbibliography[heading=none]
+% 索引
+% 参考文献の次のページ（偶数ページ）から索引を開始する．
+% 通常の \part は右ページ開始だが，索引だけは右ページ送りを無効にする．
+\clearpage
+\thispagestyle{empty}
+\setcounter{section}{6}
+\renewcommand{\indexname}{索引}
+
+\begingroup
+  \makeatletter
+  \def\part@newpage{\clearpage\thispagestyle{empty}}
+  \makeatother
+  \let\section\part
+  \pagestyle{empty}
+  \printindex
+\endgroup
+
+% 索引の次（奇数ページ）を空白ページにする
+\clearpage
+\null
+\thispagestyle{empty}
+\clearpage
+
+% 裏表紙
+
+\pagestyle{empty} % ページ番号を非表示
+% 垂直方向の位置調整
+\vspace*{\fill}
+
+\begin{center}
+	\begin{tikzpicture}[scale=1.5] % scaleで全体を拡大
+		% 背表紙の中央ライン
+		\draw[thick] (-4,0) -- (4,0);
+		% タイトル「線型代数のノート」
+		\node[below, font=\Large] at (0,-0.5) {\textsf{線型代数のノート}};
+		% 年度表記「2026 Edition」
+		\node[below, font=\normalsize] at (0,-1) {\textsf{2026 Edition}};
+	\end{tikzpicture}
+\end{center}
+
+\vspace*{\fill}
+
+
+\end{document}
