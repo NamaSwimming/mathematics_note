@@ -133,10 +133,12 @@
 %   ltjsarticle ではサイズ命令（\normalsize 等）がこれらの長さを
 %   再設定するため，プリアンブルでの \setlength は上書きされうる．
 \AtBeginDocument{%
-  \setlength{\abovedisplayskip}{5pt plus 3pt minus 2pt}%
-  \setlength{\belowdisplayskip}{5pt plus 3pt minus 1pt}% ←ここだけ変更
-  \setlength{\abovedisplayshortskip}{2pt plus 2pt}%
-  \setlength{\belowdisplayshortskip}{2pt plus 2pt minus 1pt}%
+  % 本文（日本語）と別行立て数式の間を少し広げる．
+  % 5pt -> 7pt，short 2pt -> 4pt とし，詰まり感を弱める．
+  \setlength{\abovedisplayskip}{7pt plus 3pt minus 2pt}%
+  \setlength{\belowdisplayskip}{7pt plus 3pt minus 2pt}%
+  \setlength{\abovedisplayshortskip}{4pt plus 2pt minus 1pt}%
+  \setlength{\belowdisplayshortskip}{4pt plus 2pt minus 1pt}%
 }
 
 % 【追加】align / gather 等の複数行ディスプレイ数式の行間でも
