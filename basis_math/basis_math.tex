@@ -5,7 +5,12 @@
 \begin{document}
 
 % タイトルページの呼び出し
-\tituloum{数学のノート}{Namachan}{}{}{\today}
+\tituloum
+  {Foundations of Mathematics}
+  {Namachan}
+  {Mathematics Notes}
+  {An introduction to mathematical language, logic, proofs, sets, and functions}
+  {\today}
 
 %\include{Preambulo/Capa}
 
@@ -48,10 +53,11 @@
   \printindex
 \endgroup
 
-% 裏表紙を空白にする
-\clearpage
-\thispagestyle{empty}
-\null
-\clearpage
+
+% 裏表紙（表紙と同じダーク・モノトーン）
+% 冊子印刷などで裏表紙を偶数ページに揃えたい場合は \MathNoteBackCover* にする
+\MathNoteBackCover{Foundations of Mathematics}{2026 Edition}
+
+
 
 \end{document}
