@@ -3,10 +3,10 @@
 %
 % 使い方（メインの .tex ファイル）:
 %   \documentclass{mathnote}   % 文書構造（余白・フォント等）
-%   \usepackage{mathnote}      % デザイン・マクロ・パッケージ追加
+%   \usepackage{mathnote_two}  % デザイン・マクロ・パッケージ追加
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{mathnote}[2026/06/27 math note style: design, macros, packages]
+\ProvidesPackage{mathnote}[2026/08/11 math note style (dark hero cover): design, macros, packages]
 
 % ==============================================================
 % § 1. 基本パッケージ
@@ -1170,47 +1170,238 @@
 \RequirePackage{makeidx}
 \makeindex
 
-% ==============================================================
-% § 15. タイトルページ
-% ==============================================================
+% ==============================================================================
+% § 15. Title Page — Apple-inspired monochrome design
+%        Variant Two: Dark Hero（ダーク・下寄せ型）
+% ==============================================================================
+%
+% Apple の "Pro" 系製品ページを意識したダーク表紙．
+%   - 黒（appleInk）背景 + 白 / グレイのみのモノトーン
+%   - 上部にはアイブロウ（シリーズ名）だけを置き，
+%     タイトルブロックはページ下部にアンカーする
+%   - 左揃え・階層構造・メタデータの構成は従来デザインを踏襲
+%   - 表紙以降のページは自動的に白背景へ戻る
 
-\RequirePackage{titletoc}   % 目次のスタイル制御
-\RequirePackage{pagecolor}  % 背景色の変更
+\RequirePackage{titletoc}   % TOC styling
+\RequirePackage{pagecolor}  % page background color
 
-% \tituloum{主タイトル}{著者}{シリーズ名}{サブタイトル}{日付/版情報}
-% Apple 風（白地・黒字・中央 66% のヘアライン）のタイトルページを生成する
+% ---- Dark-mode neutrals（表紙専用） ----
+\definecolor{appleDarkLine} {HTML}{48484A}  % 罫線（ダーク背景用）
+\definecolor{appleDarkMuted}{HTML}{98989D}  % 副次テキスト（ダーク背景用）
+\definecolor{appleDarkSub}  {HTML}{D2D2D7}  % サブタイトル用の明るいグレイ
+
+% English date used on the cover.  The definition is local to \tituloum, so
+% Japanese \today can still be used normally in the body of the document.
+\newcommand{\MathNoteEnglishToday}{%
+  \number\year\space
+  \ifcase\month\or
+    January\or February\or March\or April\or May\or June\or
+    July\or August\or September\or October\or November\or December\fi
+  \space\number\day
+}
+
+% Title-page typography.  Keeping these as separate commands makes later
+% tuning easy without touching the layout code.
+\newcommand{\MathNoteCoverLabelFont}{%
+  \sffamily\bfseries\fontsize{9.5pt}{11.5pt}\selectfont
+}
+\newcommand{\MathNoteCoverTitleFont}{%
+  \sffamily\bfseries\fontsize{34pt}{40pt}\selectfont
+}
+\newcommand{\MathNoteCoverSubtitleFont}{%
+  \sffamily\mdseries\fontsize{14pt}{19pt}\selectfont
+}
+\newcommand{\MathNoteCoverMetaLabelFont}{%
+  \sffamily\bfseries\fontsize{7.5pt}{9pt}\selectfont
+}
+\newcommand{\MathNoteCoverMetaFont}{%
+  \sffamily\mdseries\fontsize{10.5pt}{13pt}\selectfont
+}
+
+% \tituloum{main title}{author}{series/category}{subtitle}{date / edition}
+%
+% Design policy:
+%   - all fixed cover text is English;
+%   - monochrome only (near-black background + white + neutral grays);
+%   - left-aligned, bottom-anchored title block, Apple "Pro" hierarchy;
+%   - main title is set in a 0.88\textwidth parbox, so titles of roughly
+%     two or three lines wrap naturally instead of running off the page;
+%   - if #3 is empty, "MATHEMATICS NOTE" is used as the eyebrow label;
+%   - if #5 contains \today, it is rendered in English on the cover.
 \newcommand{\tituloum}[5]{%
   \begin{titlepage}
     \thispagestyle{empty}%
-    \pagecolor{white}%
-    \color{appleInk}%
-    \vspace*{1.8\baselineskip}%
-    \begin{center}
-      % シリーズ名・カテゴリラベル（眉毛）
-      {\small\sffamily\bfseries\color{appleGray} #3\par}
-      \vspace{0.75\baselineskip}
-      % 主タイトル
-      {\fontsize{34pt}{40pt}\selectfont\sffamily\bfseries #1\par}
-      \vspace{0.7\baselineskip}
-      % 中央 66% 幅のヘアライン
-      \begin{tikzpicture}[x=\linewidth, y=1pt]
-        \draw[line cap=round, line width=0.8pt, color=appleLine] (0.17,0) -- (0.83,0);
-      \end{tikzpicture}
-      % サブタイトル
-      \vspace{0.9\baselineskip}
-      {\large\sffamily\itshape\color{appleInkGray} #4\par}
+    \newgeometry{top=30mm,bottom=25mm,left=24mm,right=24mm}%
+    \pagecolor{appleInk}%
+    \color{white}%
+    \begingroup
+      % Make \today English only inside the title page.
+      \let\today\MathNoteEnglishToday
+      \raggedright
+
+      % Eyebrow / series label（上部・ミュートグレイ）
+      {\MathNoteCoverLabelFont\color{appleDarkMuted}%
+        \if\relax\detokenize{#3}\relax
+          MATHEMATICS NOTE%
+        \else
+          \MakeUppercase{#3}%
+        \fi
+        \par
+      }%
+
+      % タイトルブロックをページ下部へ押し下げる
       \vfill
-      \begin{flushright}
-        % 著者
-        {\normalsize\sffamily\bfseries #2\par}
-        \vspace{0.35\baselineskip}
-        % 日付・版情報
-        {\footnotesize\sffamily\color{appleGray} #5\par}
-      \end{flushright}
-    \end{center}
+
+      % Main title.  A fixed-width parbox gives long English titles a clean,
+      % intentional line break while preserving the large display size.
+      \parbox[t]{0.88\textwidth}{%
+        \MathNoteCoverTitleFont\color{white}%
+        \raggedright
+        \hyphenpenalty=10000\exhyphenpenalty=10000%
+        #1\par
+      }%
+
+      % Hairline under the title block
+      \vspace{0.70cm}%
+      {\color{white}\rule{0.19\textwidth}{1.15pt}\par}%
+
+      % Subtitle is optional.  If omitted, no empty gap is left behind.
+      \if\relax\detokenize{#4}\relax
+      \else
+        \vspace{0.70cm}%
+        \parbox[t]{0.76\textwidth}{%
+          \MathNoteCoverSubtitleFont\color{appleDarkSub}%
+          \raggedright #4\par
+        }%
+      \fi
+
+      % タイトルブロックとメタデータの間の固定ギャップ
+      \vspace{1.60cm}%
+
+      % Bottom metadata: quiet, compact, and fully English.
+      \noindent
+      \begin{minipage}[b]{0.48\textwidth}
+        {\MathNoteCoverMetaLabelFont\color{appleDarkMuted}\MakeUppercase{WRITTEN BY}\par}%
+        \vspace{0.18cm}%
+        {\sffamily\bfseries\fontsize{14pt}{17pt}\selectfont\color{white}#2\par}%
+      \end{minipage}%
+      \hfill
+      \begin{minipage}[b]{0.42\textwidth}
+        \raggedleft
+        \if\relax\detokenize{#5}\relax
+        \else
+          {\MathNoteCoverMetaLabelFont\color{appleDarkMuted}\MakeUppercase{UPDATED}\par}%
+          \vspace{0.18cm}%
+          {\MathNoteCoverMetaFont\color{appleDarkSub}#5\par}%
+        \fi
+      \end{minipage}%
+
+      \vspace{0.35cm}%
+      {\color{appleDarkLine}\rule{\textwidth}{0.45pt}\par}%
+      \vspace{0.28cm}%
+      {\sffamily\fontsize{7.5pt}{9pt}\selectfont\color{appleDarkMuted}%
+        NAMACHAN \hfill TYPESET WITH \LaTeX\par}%
+    \endgroup
+    \restoregeometry
   \end{titlepage}%
-  % 本文で applePaper 等の背景色を使う場合はここで切り替える:
-  % \pagecolor{applePaper}
+  % シリーズラベルを保存し，裏表紙側（\MathNoteBackCover）でも再利用する
+  \gdef\MathNoteCoverSeries{%
+    \if\relax\detokenize{#3}\relax
+      MATHEMATICS NOTE%
+    \else
+      \MakeUppercase{#3}%
+    \fi
+  }%
+  % ---- 表紙の裏（verso）----
+  % 背景は白に戻し，シリーズラベルだけを中央下部にごく小さく置く．
+  % 黒い表紙 → 白の静かな導入 → 本文，という流れをつくる．
+  \begingroup
+    \pagecolor{white}%
+    \thispagestyle{empty}%
+    \null
+    \vfill
+    \begin{center}
+      {\MathNoteCoverMetaLabelFont\color{appleGray}%
+        \MathNoteCoverSeries\par
+      }%
+    \end{center}
+    \vspace{2.2cm}%
+    \clearpage
+  \endgroup
+  % 表紙 + 表紙裏を「前付け」として扱い，ページカウンタを 1 に戻す．
+  % これにより直後の \cleardoublepage が余計な白ページを挟まない．
+  \setcounter{page}{1}%
+  % 表紙まわり以降のページを白背景へ戻す（\pagecolor はグローバルに効くため）
+  \pagecolor{white}%
+}
+
+% \MathNoteBackCover{title}{edition}
+%
+% 巻末（本文の後ろ）を組む．出力されるのは次の 3 ページ：
+%   (1) 白の空ページ … 索引などの本文と，巻末ブロックの間の「間（ま）」．
+%   (2) 裏表紙の裏（見返し）… 白背景．上部中央にシリーズラベルのみ．
+%       表紙裏（verso）と上下対称になる．
+%   (3) 裏表紙 … ダーク背景．中央に短い白罫線 → タイトル → EDITION 表記，
+%       最下部に表紙と同じフッター（NAMACHAN / TYPESET WITH LaTeX）．
+%
+% スター付き（\MathNoteBackCover*）にすると，裏表紙が偶数ページに来るよう
+% (1) の前に白の空ページをもう 1 枚挟む（冊子印刷用）．
+%
+% 白の空ページが不要なら \MathNoteBackCoverBlankfalse を宣言すればよい．
+\newif\ifMathNoteBackCoverBlank \MathNoteBackCoverBlanktrue
+
+% シリーズラベルが未定義（\tituloum 未使用）の場合のフォールバック
+\providecommand{\MathNoteCoverSeries}{MATHEMATICS NOTE}
+
+\NewDocumentCommand{\MathNoteBackCover}{s m m}{%
+  \clearpage
+  \pagestyle{empty}%
+  \IfBooleanT{#1}{%
+    % 裏表紙（3 ページ後）が偶数ページに来るようパリティを調整する
+    \ifodd\value{page}\else
+      \thispagestyle{empty}\null\clearpage
+    \fi
+  }%
+  % (1) 本文と巻末ブロックの間に置く白の空ページ
+  \ifMathNoteBackCoverBlank
+    \thispagestyle{empty}\null\clearpage
+  \fi
+  \begingroup
+    % (2) 裏表紙の裏（見返し）．背景は白のまま，シリーズラベルだけを
+    %     上部中央に置く．表紙裏（verso）と上下対称になる．
+    \pagecolor{white}%
+    \thispagestyle{empty}%
+    \null
+    \vspace{2.2cm}%
+    \begin{center}
+      {\MathNoteCoverMetaLabelFont\color{appleGray}%
+        \MathNoteCoverSeries\par
+      }%
+    \end{center}
+    \vfill
+    \clearpage
+    % (3) 裏表紙（ここからダーク背景）
+    \pagecolor{appleInk}%
+    \color{white}%
+    \thispagestyle{empty}%
+    \vspace*{\fill}%
+    \begin{center}
+      {\color{white}\rule{0.14\textwidth}{1.15pt}\par}%
+      \vspace{0.60cm}%
+      {\sffamily\bfseries\fontsize{20pt}{24pt}\selectfont\color{white}#2\par}%
+      \vspace{0.32cm}%
+      {\MathNoteCoverMetaFont\color{appleDarkMuted}\MakeUppercase{#3}\par}%
+    \end{center}
+    \vspace*{\fill}%
+    % Footer: 表紙と同じ構成
+    \noindent
+    {\color{appleDarkLine}\rule{\textwidth}{0.45pt}\par}%
+    \vspace{0.28cm}%
+    {\sffamily\fontsize{7.5pt}{9pt}\selectfont\color{appleDarkMuted}%
+      NAMACHAN \hfill TYPESET WITH \LaTeX\par}%
+    \clearpage
+  \endgroup
+  \pagecolor{white}%
 }
 
 % ==============================================================
