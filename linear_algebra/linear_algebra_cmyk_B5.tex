@@ -4,7 +4,12 @@
 \begin{document}
 
 % タイトルページの呼び出し
-\tituloum{線型代数のノート}{Namachan}{}{}{\today}
+\tituloum
+  {Linear Algebra}
+  {Namachan}
+  {Mathematics Notes}
+  {A concise introduction to matrices, linear maps, determinants, and vector spaces}
+  {\today}
 
 %\include{Preambulo/Capa}
 
@@ -53,30 +58,6 @@
   \printindex
 \endgroup
 
-% 索引の次（奇数ページ）を空白ページにする
-\clearpage
-\null
-\thispagestyle{empty}
-\clearpage
-
-% 裏表紙
-
-\pagestyle{empty} % ページ番号を非表示
-% 垂直方向の位置調整
-\vspace*{\fill}
-
-\begin{center}
-	\begin{tikzpicture}[scale=1.5] % scaleで全体を拡大
-		% 背表紙の中央ライン
-		\draw[thick] (-4,0) -- (4,0);
-		% タイトル「線型代数のノート」
-		\node[below, font=\Large] at (0,-0.5) {\textsf{線型代数のノート}};
-		% 年度表記「2026 Edition」
-		\node[below, font=\normalsize] at (0,-1) {\textsf{2026 Edition}};
-	\end{tikzpicture}
-\end{center}
-
-\vspace*{\fill}
-
+\MathNoteBackCover{Linear Algebra}{2026 Edition}
 
 \end{document}
