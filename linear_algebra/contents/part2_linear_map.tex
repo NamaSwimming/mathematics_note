@@ -395,14 +395,15 @@
 \end{example}
 
 \begin{example}{数列に関する線型でない操作}{数列と線型でない操作}
-  次の$2$つは，数列に対するごく自然な操作であるが，線型写像ではない．
-  \begin{enumerate}[label=(\arabic*),leftmargin=3.2em]
-    \item 各項を$2$乗する写像$\bm{a} \mapsto (a_1^2, a_2^2, \dots, a_n^2)$．
-      $\alpha$倍すると各成分は$\alpha^2$倍になるので，$f(\alpha\bm{a}) = \alpha f(\bm{a})$が成り立たない．
-    \item 隣り合う項の比$\bm{a} \mapsto (a_2/a_1, \dots, a_n/a_{n-1})$．
-      そもそも$a_i = 0$のとき定義されず，$K^n$全体で定義された写像にすらならない．
-  \end{enumerate}
-  等差数列（差が一定）が線型な世界となじみ，等比数列（比が一定）がなじまないのは，このあたりの事情による．
+次の$2$つは，数列に対するごく自然な操作であるが，線型写像ではない．
+\begin{enumerate}[label=(\arabic*),leftmargin=3.2em]
+\item 各項を$2$乗する写像$\bm{a} \mapsto (a_1^2, a_2^2, \dots, a_n^2)$．
+$\alpha$倍すると各成分は$\alpha^2$倍になるので，$f(\alpha\bm{a}) = \alpha f(\bm{a})$が成り立たない．
+\item 隣り合う項の比$\bm{a} \mapsto (a_2/a_1, \dots, a_n/a_{n-1})$．
+そもそも$a_i = 0$のとき定義されず，$K^n$全体で定義された写像にすらならない．
+\end{enumerate}
+線型写像は加法とスカラー倍を保つため，このような乗法や除法を含む操作とは一般に相性がよくない．
+等差数列（差が一定）が線型な世界となじみ，等比数列（比が一定）がなじまないのは，このあたりの事情による．
 \end{example}
 
 \begin{mycolumn}
