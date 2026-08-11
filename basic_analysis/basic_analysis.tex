@@ -4,7 +4,12 @@
 \begin{document}
 
 % タイトルページの呼び出し
-\tituloum{微積分のノート}{Namachan}{}{}{\today}
+\tituloum
+  {Analysis}
+  {Namachan}
+  {Mathematics Notes}
+  {An introduction to limits, differentiation, and integration}
+  {\today}
 
 %\include{Preambulo/Capa}
 
@@ -55,10 +60,12 @@
   \printindex
 \endgroup
 
-% 裏表紙を空白にする
-\clearpage
-\thispagestyle{empty}
-\null
-\clearpage
+
+
+% 裏表紙（表紙と同じダーク・モノトーン）
+% 冊子印刷などで裏表紙を偶数ページに揃えたい場合は \MathNoteBackCover* にする
+\MathNoteBackCover{Analysis}{2026 Edition}
+
+
 
 \end{document}
