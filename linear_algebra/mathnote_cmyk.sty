@@ -1,16 +1,79 @@
-% mathnote.sty
-% LuaLaTeX / LuaHBTeX + mathnote クラス用のスタイルファイル
+% mathnote_cmyk.sty
+% LuaLaTeX / LuaHBTeX + mathnote_cmyk クラス用のスタイルファイル（B5・CMYK 版）
 %
 % 使い方（メインの .tex ファイル）:
-%   \documentclass{mathnote}   % 文書構造（余白・フォント等）
-%   \usepackage{mathnote}      % デザイン・マクロ・パッケージ追加
+%   \documentclass{mathnote_cmyk}   % 文書構造（余白・フォント等）
+%   \usepackage{mathnote_cmyk}      % デザイン・マクロ・パッケージ追加
+%
+% mathnote.sty（A4・11pt 版）との差分は次の 2 点のみ：
+%   (1) 出力カラーモデルを CMYK にする
+%   (2) 絶対長（mm / pt）を「A4 換算単位」\mnmm / \mnpt / \mnvpt で書く
+% 改ページ位置に影響する設定は A4 版と完全に同じにしてある．
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{mathnote_cmyk}[2026/08/10 math note style: CMYK edition]
+\ProvidesPackage{mathnote_cmyk}[2026/08/10 math note style: CMYK / B5 edition]
 
 % CMYK版：xcolor が他パッケージから先に読み込まれる場合にも備えて，
 % パッケージ読込前に出力カラーモデルを CMYK に指定する．
 \PassOptionsToPackage{cmyk}{xcolor}
+
+% ==============================================================
+% § 0. 寸法のスケール単位（A4 版との体裁・改ページ位置合わせ）
+% ==============================================================
+%
+% mathnote.sty（A4・11pt）と同じ体裁・同じ行取りを B5・9pt でも得るため，
+% このファイル中の絶対長は mm / pt を直接書かず，次の「A4 換算単位」で書く．
+%
+%   \mnpt   A4 での 1pt。文字サイズに比例して縮む（A4 比 0.833790）
+%   \mnmm   A4 での 1mm。同上
+%           → 幅・箱の内部余白・飾りの座標・\fontsize に使う
+%   \mnvpt  A4 での 1pt。行送りに比例して縮む
+%           → 見出し前後・数式前後・箱の前後など「行取り」に効く縦アキに使う
+%
+% ltjsarticle は 9pt 指定のときだけ行送り係数 \n@baseline を 16 → 15 に
+% 落とすため，素の状態では文字サイズの比（0.833790）と行送りの比
+% （0.781678）が一致しない．mathnote_cmyk.cls は既定（similar モード）で
+% \n@baseline を 16 に戻すため，通常は \mnvpt = \mnpt となり，縦横とも
+% A4 版の 0.833790 倍の完全な相似形になる（改行・改ページ位置が一致）．
+% \mnvpt の定義（＝\mnpt x \n@baseline/16）は，[nosimilar] オプションで
+% 旧来の行送り比を選んだ場合にも縦アキが行グリッドに追随するよう残してある．
+%
+% A4（11pt）では 3 つとも本来の 1pt / 1mm に一致するので，この sty を
+% そのまま A4 版に使っても mathnote.sty と同じ結果になる．
+%
+% 罫線の太さのうち，ボックスや見出しの「寸法」に算入されるもの
+% （tcolorbox の boxrule / framed の \FrameRule / \titlerule /
+%   見出し・目次 tikz の line width）は版面の消費量に効くため，
+% A4 版との改行・改ページ一致のために \mnpt で縮める．
+% 一方，寸法に算入されない純粋な上書き描画（borderline 系・
+% \columnseprule・overlay 内の罫線）は，印刷で細りすぎないよう
+% 絶対値のままにしてある．
+
+% 保険：jsclasses 系以外で読まれた場合のフォールバック
+\providecommand{\n@baseline}{16}
+\ifdefined\zw\else \newdimen\zw \zw=10.95pt \fi
+
+\newlength{\mnpt}
+\newlength{\mnmm}
+\newlength{\mnvpt}
+% 【修正 2026/08/11】\mnpt の基準を \zw から \jsc@mpt に変更．
+%   ltjsclasses の \zw は和文スケール 0.924715 を含む
+%   （\zw = 0.924715 x 10 x \jsc@magscale pt = 10.1256pt/8.4426pt）ため，
+%   旧定義 \zw*2000/21900 では \mnpt が意図値の 0.924715 倍となり，
+%   ボックス内余白・見出し前後・数式前後の全寸法が約 7.5% 縮んで
+%   A4 版と改行・改ページ位置がずれていた（横：箱内の字詰めが増える，
+%   縦：ページに入る行数が増える）．
+%   \jsc@mpt（= \jsc@magscale pt．11pt→1.095pt，9pt→0.913pt）を
+%   10/10.95 = 200/219 倍すれば，A4 で厳密に 1pt，B5 で 0.913/1.095 pt
+%   （= 0.8337899…pt）となり，文字サイズ比と厳密に一致する．
+\ifdefined\jsc@mpt
+  \setlength{\mnpt}{\dimexpr\jsc@mpt*200/219\relax}
+\else
+  % jsclasses 系以外で読まれた場合：欧文 \normalsize（\f@size pt）から換算
+  \setlength{\mnpt}{\dimexpr\f@size\p@*20/219\relax}
+\fi
+\setlength{\mnmm} {\dimexpr\mnpt*7227/2540\relax}   % 1mm = 7227/2540 pt
+\setlength{\mnvpt}{\dimexpr\mnpt*\n@baseline/16\relax}
 
 % ==============================================================
 % § 1. 基本パッケージ
@@ -135,10 +198,40 @@
 \AtBeginDocument{%
   % 本文（日本語）と別行立て数式の間を少し広げる．
   % 5pt -> 7pt，short 2pt -> 4pt とし，詰まり感を弱める．
-  \setlength{\abovedisplayskip}{7pt plus 3pt minus 2pt}%
-  \setlength{\belowdisplayskip}{7pt plus 3pt minus 2pt}%
-  \setlength{\abovedisplayshortskip}{4pt plus 2pt minus 1pt}%
-  \setlength{\belowdisplayshortskip}{4pt plus 2pt minus 1pt}%
+  \setlength{\abovedisplayskip}{7\mnvpt plus 3\mnvpt minus 2\mnvpt}%
+  \setlength{\belowdisplayskip}{7\mnvpt plus 3\mnvpt minus 2\mnvpt}%
+  \setlength{\abovedisplayshortskip}{4\mnvpt plus 2\mnvpt minus 1\mnvpt}%
+  \setlength{\belowdisplayshortskip}{4\mnvpt plus 2\mnvpt minus 1\mnvpt}%
+  % 【追加 2026/08/11】クラスが再設定しない絶対長も A4 換算単位に揃える．
+  % A4（11pt）ではいずれも既定値そのものになる（挙動不変）．
+  % ・\jot / \multlinegap：amsmath の既定 3pt / 10pt（両クラスとも未調整だった）
+  % ・\smallskip 系：カーネル既定 3/6/12pt（ltjsarticle は再設定しない）
+  % ・\topsep：trivlist 系（center 等）が参照する大域値．
+  %   ltjsarticle はクラス読込時の \@listi 実行で 0.5\baselineskip
+  %   （linespread 適用前 = 0.5 x 16\jsc@mpt = A4 で 8.76pt）を残すので，
+  %   その値を A4 換算で再現する．（list 環境内では \@listi が
+  %   実行時の \baselineskip で再設定するため両版とも自動で相似．）
+  % ※ \fboxsep・\fboxrule・\arraycolsep 等はクラスが \jsc@mpt 比例で
+  %   設定済みなのでここでは触らない．
+  \setlength{\jot}{3\mnvpt}%
+  \setlength{\multlinegap}{10\mnpt}%
+  % ・数式組版のカーネル既定絶対長：
+  %   \scriptspace 0.5pt（添字の後アキ），\nulldelimiterspace 1.2pt
+  %   （分数等の空デリミタ幅），\delimitershortfall 5pt（\left の
+  %   可変括弧サイズ選択のしきい値．未換算だと B5 で A4 より小さい
+  %   サイズの括弧が選ばれ，数式の幅・高さが相似から外れうる）
+  \setlength{\scriptspace}{0.5\mnpt}%
+  \setlength{\nulldelimiterspace}{1.2\mnpt}%
+  \setlength{\delimitershortfall}{5\mnpt}%
+  \setlength{\smallskipamount}{3\mnvpt plus 1\mnvpt minus 1\mnvpt}%
+  \setlength{\medskipamount}{6\mnvpt plus 2\mnvpt minus 2\mnvpt}%
+  \setlength{\bigskipamount}{12\mnvpt plus 4\mnvpt minus 4\mnvpt}%
+  \setlength{\topsep}{8.76\mnpt}%
+  % ・multicol の既定：\multicolsep=12pt±，\premulticols=50pt，
+  %   \postmulticols=20pt（いずれも絶対値のため換算する）
+  \setlength{\multicolsep}{12\mnvpt plus 4\mnvpt minus 3\mnvpt}%
+  \setlength{\premulticols}{50\mnvpt}%
+  \setlength{\postmulticols}{20\mnvpt}%
 }
 
 % 【追加】align / gather 等の複数行ディスプレイ数式の行間でも
@@ -146,24 +239,6 @@
 % 丸ごと次ページへ送られて大きな余白ができるのを防ぐ．
 % 引数は 1（消極的）〜 4（積極的）．気に入らなければ [1] へ．
 \allowdisplaybreaks[2]
-
-% 【追加】ページ下部の大余白対策 (1/2)：ディスプレイ数式「直前」の改ページ許可
-%
-% TeX の既定 \predisplaypenalty=10000 は「導入文の直後・数式の直前」での
-% 改ページを完全に禁止する．このため「導入文＋大きな数式」で始まる段落や
-% tcolorbox が，ページ末尾の残余スペースに（数式まで含めて）収まらない場合，
-% その塊が丸ごと次ページへ送られ，40〜60mm 級の下部余白が生じていた．
-% （breakable ライブラリは \vsplit で分割位置を探すため，合法な分割点が
-%   数式の後ろにしか無いとタイトル＋数式が最小単位になってしまう）
-%
-%   ・本文       ：3000（基本は避けるが，代替が著しく悪ければ数式直前でも改ページ）
-%   ・ボックス内 ：\mathnoteboxpredisplaypenalty（既定 150．§9/§10 で適用）
-%
-% 従来挙動（数式直前の改ページ禁止）に戻すには，プリアンブルで
-%   \predisplaypenalty=10000
-%   \renewcommand{\mathnoteboxpredisplaypenalty}{10000}
-\predisplaypenalty=3000
-\newcommand{\mathnoteboxpredisplaypenalty}{150}
 
 % ==============================================================
 % § 4. 色の定義
@@ -242,14 +317,14 @@
   {%
   \ifcase#1%
   \or I%
-  \or I\hspace{-1.2pt}I%
-  \or I\hspace{-1.2pt}I\hspace{-1.2pt}I%
-  \or I\hspace{-1.2pt}V%
+  \or I\hspace{-1.2\mnpt}I%
+  \or I\hspace{-1.2\mnpt}I\hspace{-1.2\mnpt}I%
+  \or I\hspace{-1.2\mnpt}V%
   \or V%
-  \or V\hspace{-1.2pt}I%
-  \or V\hspace{-1.2pt}I\hspace{-1.2pt}I%
-  \or V\hspace{-1.2pt}I\hspace{-1.2pt}I\hspace{-1.2pt}I%
-  \or I\hspace{-1.2pt}X%
+  \or V\hspace{-1.2\mnpt}I%
+  \or V\hspace{-1.2\mnpt}I\hspace{-1.2\mnpt}I%
+  \or V\hspace{-1.2\mnpt}I\hspace{-1.2\mnpt}I\hspace{-1.2\mnpt}I%
+  \or I\hspace{-1.2\mnpt}X%
   \or X%
   \else\uppercase\expandafter{\romannumeral#1}%
   \fi
@@ -331,9 +406,9 @@
   {}%
   [{%
     \vspace{0.6ex}%
-    {\color{appleLineGray}\titlerule[1.2pt]}%
+    {\color{appleLineGray}\titlerule[1.2\mnpt]}%
     \nobreak\vspace{0.25ex}%
-    {\color{appleLine}\titlerule[0.6pt]}%
+    {\color{appleLine}\titlerule[0.6\mnpt]}%
   }]
 
 \titlespacing*{\part}
@@ -471,10 +546,10 @@
 \colorlet{secbaredge}{appleGray}
 
 \newlength{\secbarx}
-\setlength{\secbarx}{8mm}
+\setlength{\secbarx}{8\mnmm}
 
 \newlength{\sectextx}
-\setlength{\sectextx}{12mm}
+\setlength{\sectextx}{12\mnmm}
 
 % 番号付き section
 \newcommand{\sectionheadrule}[2]{%
@@ -482,39 +557,39 @@
   \noindent
   \begin{tikzpicture}[baseline=(title.base)]
     \path[use as bounding box]
-      (0,-9mm) rectangle (\linewidth,7mm);
+      (0,-9\mnmm) rectangle (\linewidth,7\mnmm);
 
     % 中央の横罫線
-    \draw[secrule,line width=0.4pt]
+    \draw[secrule,line width=0.4\mnpt]
       (0,0) -- (\linewidth,0);
 
     % 横罫線の左端の円
     \fill[secrule]
-      (0,0) circle[radius=1mm];
+      (0,0) circle[radius=1\mnmm];
 
     % 横罫線の右端の円
     \fill[secrule]
-      (\linewidth,0) circle[radius=1mm];
+      (\linewidth,0) circle[radius=1\mnmm];
 
     \fill[secbarfill]
-      (\secbarx,-7.5mm) rectangle ++(1.8mm,13.5mm);
+      (\secbarx,-7.5\mnmm) rectangle ++(1.8\mnmm,13.5\mnmm);
 
-    \draw[secbaredge,line width=0.4pt]
-      (\secbarx,-7.5mm) rectangle ++(1.8mm,13.5mm);
+    \draw[secbaredge,line width=0.4\mnpt]
+      (\secbarx,-7.5\mnmm) rectangle ++(1.8\mnmm,13.5\mnmm);
 
-    \draw[secbaredge,line width=0.4pt]
-      (\secbarx-0.9mm,-7.5mm) -- ++(0,13.5mm);
+    \draw[secbaredge,line width=0.4\mnpt]
+      (\secbarx-0.9\mnmm,-7.5\mnmm) -- ++(0,13.5\mnmm);
 
     \node[
       anchor=south west,
       inner sep=0pt
-    ] at (\sectextx,1.2mm)
+    ] at (\sectextx,1.2\mnmm)
       {\color{SectionTag}\large\bfseries #1};
 
     \node[
       anchor=north west,
       inner sep=0pt
-    ] (title) at (\sectextx,-1.6mm)
+    ] (title) at (\sectextx,-1.6\mnmm)
       {\color{black}\Large\bfseries #2};
   \end{tikzpicture}%
 }
@@ -525,33 +600,33 @@
   \noindent
   \begin{tikzpicture}[baseline=(title.base)]
     \path[use as bounding box]
-      (0,-9mm) rectangle (\linewidth,7mm);
+      (0,-9\mnmm) rectangle (\linewidth,7\mnmm);
 
     % 中央の横罫線
-    \draw[secrule,line width=0.4pt]
+    \draw[secrule,line width=0.4\mnpt]
       (0,0) -- (\linewidth,0);
 
     % 横罫線の左端の円
     \fill[secrule]
-      (0,0) circle[radius=1mm];
+      (0,0) circle[radius=1\mnmm];
 
     % 横罫線の右端の円
     \fill[secrule]
-      (\linewidth,0) circle[radius=1mm];
+      (\linewidth,0) circle[radius=1\mnmm];
 
     \fill[secbarfill]
-      (\secbarx,-7.5mm) rectangle ++(1.8mm,13.5mm);
+      (\secbarx,-7.5\mnmm) rectangle ++(1.8\mnmm,13.5\mnmm);
 
-    \draw[secbaredge,line width=0.4pt]
-      (\secbarx,-7.5mm) rectangle ++(1.8mm,13.5mm);
+    \draw[secbaredge,line width=0.4\mnpt]
+      (\secbarx,-7.5\mnmm) rectangle ++(1.8\mnmm,13.5\mnmm);
 
-    \draw[secbaredge,line width=0.4pt]
-      (\secbarx-0.9mm,-7.5mm) -- ++(0,13.5mm);
+    \draw[secbaredge,line width=0.4\mnpt]
+      (\secbarx-0.9\mnmm,-7.5\mnmm) -- ++(0,13.5\mnmm);
 
     \node[
       anchor=north west,
       inner sep=0pt
-    ] (title) at (\sectextx,-1.6mm)
+    ] (title) at (\sectextx,-1.6\mnmm)
       {\color{black}\Large\bfseries #1};
   \end{tikzpicture}%
 }
@@ -564,11 +639,8 @@
   {}{}{0pt}
   {\sectionheadrulestar}
 
-% 【変更】見出し前後スキップに plus/minus（伸縮量）を追加：
-%   固定長だと \flushbottom がページを下端まで詰められない／
-%   見出しが「あと数 pt」でページ末尾に入らず丸ごと送られる，の両方に効く．
 \titlespacing{\section}
-  {0pt}{18pt plus 6pt minus 4pt}{14pt plus 2pt minus 2pt}
+  {0pt}{18\mnvpt}{14\mnvpt}
 
 \setlength{\parindent}{1\zw}
 
@@ -579,7 +651,7 @@
   {}
 
 % 星なし ＝ 見出し直後の段落を字下げする
-\titlespacing{\subsection}{0pt}{14pt plus 5pt minus 3pt}{6pt plus 1pt minus 1pt}
+\titlespacing{\subsection}{0pt}{14\mnvpt}{6\mnvpt}
 
 
 
@@ -598,25 +670,25 @@
 
   % 目次ブロックの前後に TikZ でヘアラインを引き，中央に「目 次」を配置
 \etocsettocstyle{%
-  \par\vspace{10pt}%
+  \par\vspace{10\mnvpt}%
   \noindent\hspace*{-\leftskip}%
   \begin{tikzpicture}[x=\linewidth, baseline]
     \draw[
       line cap=round,
-      line width=0.8pt,
+      line width=0.8\mnpt,
       color=appleLine
     ] (0,0) -- (1,0);
     \node[
-      inner sep=2.5pt,
+      inner sep=2.5\mnpt,
       outer sep=0pt,
       fill=appleCard
     ] at (0.5,0)
       {\bfseries\Large\textcolor{appleInk}{目\kern0.35em 次}};
   \end{tikzpicture}%
-  \vspace{8pt}%
+  \vspace{8\mnvpt}%
 
   % ここから目次項目を2段組にする
-  \setlength{\columnsep}{24pt}%
+  \setlength{\columnsep}{24\mnpt}%
   \setlength{\columnseprule}{0pt}%
   \begin{multicols}{2}%
   \raggedcolumns
@@ -624,23 +696,23 @@
   % ここで目次項目の2段組を終了
   \end{multicols}%
 
-  \vspace{4pt}%
+  \vspace{4\mnvpt}%
   \noindent\hspace*{-\leftskip}%
   \begin{tikzpicture}[x=\linewidth, baseline]
     \draw[
       line cap=round,
-      line width=0.5pt,
+      line width=0.5\mnpt,
       color=appleLine
     ] (0,0) -- (1,0);
   \end{tikzpicture}%
-  \vspace{12pt}%
+  \vspace{12\mnvpt}%
 }
 
   % ---- Part エントリ（インデント=0，リーダー線あり） ----
   \etocsetstyle{part}
     {}
     {%
-      \par\vskip11pt
+      \par\vskip11\mnvpt
       \parindent=0pt \leftskip=0pt
       \noindent
       \etoclink{%
@@ -649,7 +721,7 @@
         \etocname
       }%
       \nobreak\leaders\hbox to .5em{\hss.\hss}\hfill \etocpage\par
-      \vskip5.5pt
+      \vskip5.5\mnvpt
     }
     {}
     {}
@@ -658,9 +730,9 @@
   \etocsetstyle{section}
     {\noindent}
     {%
-      \vskip2.5pt
+      \vskip2.5\mnvpt
       \parindent=0pt
-      \leftskip=24pt
+      \leftskip=24\mnpt
       \noindent
       \etoclink{%
         \bfseries\normalsize\color{appleInk}%
@@ -668,7 +740,7 @@
         \etocname
       }%
       \nobreak\leaders\hbox to .5em{\hss.\hss}\hfill \etocpage\par
-      \vskip3.5pt
+      \vskip3.5\mnvpt
     }
     {}
     {}
@@ -678,7 +750,7 @@
   {\noindent}
   {%
     \parindent=0pt
-    \leftskip=44pt
+    \leftskip=44\mnpt
     \rightskip=0pt
     \small
     \noindent
@@ -731,34 +803,24 @@
     coltitle=appleInk,
     coltext=appleInk,
     fonttitle=\gtfamily\sffamily\bfseries\upshape,
+    boxsep=1\mnmm,                     % 【追加】既定 1mm（絶対値）を換算
     left*=1\zw,
     right*=1\zw,
-    toptitle=9pt,                   % 【追加】見出し帯の上余白
-    bottomtitle=7pt,                % 【追加】見出し〜仕切り線の間
-    top=9pt,                        % 仕切り線〜本文の間
-    bottom=10pt,
+    toptitle=9\mnpt,                   % 【追加】見出し帯の上余白
+    bottomtitle=7\mnpt,                % 【追加】見出し〜仕切り線の間
+    top=9\mnpt,                        % 仕切り線〜本文の間
+    bottom=10\mnpt,
     % 【変更】{0.8pt}{-2pt} → {0.5pt}{0pt}：
     %   背景に色が付くとカードの下端が見えるようになるため，
     %   2pt 外側に浮いた線は「ズレ」に見える．下端に密着させる．
     borderline south={0.5pt}{0pt}{appleLineGray},
-    before skip=16pt plus 6pt minus 4pt,
-    after skip=18pt plus 6pt minus 4pt,
+    before skip=16\mnvpt plus 6\mnvpt minus 4\mnvpt,
+    after skip=18\mnvpt plus 6\mnvpt minus 4\mnvpt,
     before upper={\setlength{\parindent}{1\zw}},
     before lower={\setlength{\parindent}{1\zw}},
     pad at break=0pt,
-    enlarge top at break by=12pt,
+    enlarge top at break by=12\mnvpt,
     enlarge bottom at break by=0pt,
-    % 【追加】ページ下部の大余白対策 (2/2)
-    % compress page=all：分割量の計算時に，ページ側の縮み代
-    %   （before skip / displayskip 等の minus 成分）まで使い切る．
-    compress page=all,
-    % 「あと 1 行分」で収まるボックスは本文領域を延ばして収める
-    % （\enlargethispage 相当．はみ出しは最大 1 行分・下余白側）．
-    enlargepage flexible=\baselineskip,
-    % ボックス内ではディスプレイ数式の直前でも分割を許可する．
-    % ※ before upper= で書くと既存の \parindent 設定を上書きして
-    %    消してしまうため，必ず追記型の before upper app= を使うこと．
-    before upper app={\predisplaypenalty=\mathnoteboxpredisplaypenalty\relax},
     % 【追加】見出しの下に全幅ヘアライン（Column 環境の区切り線と同族）．
     %   分割時は先頭パートにのみ描画される．
     overlay unbroken and first={
@@ -770,17 +832,6 @@
     theo-base,
     borderline west={2pt}{0pt}{#1}
   },
-  % ---- squeeze: 手動救済オプション ----
-  % 「タイトル＋大きな数式」で始まる箱が残余スペースに収まらず
-  % 丸ごと次ページへ送られるとき（＝分割不能な数式が先頭にある場合），
-  % その箱の開始ページだけ本文領域を下へ延長して押し込む．
-  %   使い方：\begin{example}[squeeze]{タイトル}{ラベル} …
-  %           \begin{example}[squeeze=3\baselineskip]{…}{…} で量の指定も可
-  % 下端が他ページと不揃いになるので，本当に必要な箇所だけで使うこと
-  % （既定で全箱に入れると，救済不要なページの下端まで伸びる副作用がある）．
-  % 末尾の /0pt は「2 ページ目以降は拡張しない」の指定．
-  squeeze/.style={enlargepage={#1/0pt}},
-  squeeze/.default=2\baselineskip,
 }
 
 % ---- 各定理環境（subsection 内で共通カウンタを使用） ----
@@ -812,27 +863,25 @@
 % ---- hosoibox: タイトル付きの細枠 ----
 \newtcolorbox{hosoibox}[1]{%
   colframe=black, colback=white, coltitle=black, colbacktitle=white,
-  boxrule=0.5pt, arc=0mm, enhanced,
-  attach boxed title to top left={xshift=10mm, yshift=-3mm},
-  boxed title style={frame hidden},
+  boxrule=0.5\mnpt, arc=0mm, enhanced,
+  boxsep=1\mnmm, left=4\mnmm, right=4\mnmm, top=2\mnmm, bottom=2\mnmm,
+  beforeafter skip balanced=0.5\baselineskip plus 2\mnvpt,
+  attach boxed title to top left={xshift=10\mnmm, yshift=-3\mnmm},
+  boxed title style={frame hidden, boxsep=1\mnmm},
   title=#1%
 }
 
 % ---- tleftbar: 左縦線付き環境（breakable・インデント対応） ----
 % framed の leftbar 環境は注釈が入れられないため tcolorbox で代替
-\newtcolorbox{tbleftline}{blanker,breakable,left=5mm,borderline west={1.1mm}{0pt}{black},
-  compress page=all,
-  before upper app={\predisplaypenalty=\mathnoteboxpredisplaypenalty\relax}}
+\newtcolorbox{tbleftline}{blanker,breakable,left=5\mnmm,borderline west={1.1mm}{0pt}{black}}
 \newenvironment{tleftbar}%
   {\begin{tbleftline}\setlength{\parindent}{1\zw}}%
   {\end{tbleftline}}
 
 % ---- dotleftbar: 点線の左縦線付き環境 ----
 \newtcolorbox{tbdotleftline}{%
-  blanker, left=5mm, breakable,
-  borderline west={1.1mm}{0pt}{draw=black, dotted},
-  compress page=all,
-  before upper app={\predisplaypenalty=\mathnoteboxpredisplaypenalty\relax}%
+  blanker, left=5\mnmm, breakable,
+  borderline west={1.1mm}{0pt}{draw=black, dotted}%
 }
 \newenvironment{dotleftbar}{%
   \begin{tbdotleftline}\setlength{\parindent}{1\zw}%
@@ -843,12 +892,12 @@
 % ---- simplesquarebox: タイトル付き L 字枠（TikZ で描画） ----
 % 書式: \begin{simplesquarebox}[副題]{主題}[線幅pt][追加オプション]
 \DeclareTColorBox{simplesquarebox}{ o m O{.5} O{} }{%
-  empty, left=2mm, right=2mm, top=-1mm,
+  empty, left=2\mnmm, right=2\mnmm, top=-1\mnmm,
+  bottom=2\mnmm, boxsep=1\mnmm,
+  beforeafter skip balanced=0.5\baselineskip plus 2\mnvpt,
   attach boxed title to top left={xshift=1.2\zw},
-  boxed title style={empty,left=-2mm,right=-2mm},
+  boxed title style={empty,left=-2\mnmm,right=-2\mnmm,boxsep=1\mnmm},
   colframe=black, coltitle=black, coltext=black, breakable,
-  compress page=all,
-  before upper app={\predisplaypenalty=\mathnoteboxpredisplaypenalty\relax},
   underlay unbroken={%
     \draw[black,line width=#3pt]
       (title.east) -- (title.east-|frame.east) -- (frame.south east)
@@ -883,17 +932,17 @@
 
 % ---- 見出し枠の中心を上辺から何mm下げるか（ここ1か所で調整） ----
 \newlength{\columnTitleDrop}
-\setlength{\columnTitleDrop}{6.4mm}
+\setlength{\columnTitleDrop}{6.4\mnmm}
 
 % ---- 罫線ヘルパ ----
 \newcommand{\columnAccentLine}[2]{%
   \draw[columnMagenta, line width=1.2pt, line cap=round]
-    ([xshift=2.8mm, yshift=#1]frame.north west) --
-    ([xshift=2.8mm, yshift=#2]frame.south west);}
+    ([xshift=2.8\mnmm, yshift=#1]frame.north west) --
+    ([xshift=2.8\mnmm, yshift=#2]frame.south west);}
 \newcommand{\columnHeadRule}{%
   \draw[columnRule, line width=0.4pt]
-    ([xshift=7mm+\tcboxedtitlewidth+3.2mm, yshift=-\columnTitleDrop]frame.north west)
-    -- ([xshift=-6mm, yshift=-\columnTitleDrop]frame.north east);}
+    ([xshift=7\mnmm+\tcboxedtitlewidth+3.2\mnmm, yshift=-\columnTitleDrop]frame.north west)
+    -- ([xshift=-6\mnmm, yshift=-\columnTitleDrop]frame.north east);}
 
 \newtcolorbox[
   auto counter,
@@ -904,50 +953,48 @@
   colback=columnBackground,
   colframe=columnFrame,          % ← 追加：外枠の色
   coltext=columnInk,
-  boxrule=0.4pt,                 % ← 追加：ヘアライン
+  boxrule=0.4\mnpt,              % ← 追加：ヘアライン
   arc=0mm,
   outer arc=0mm,
   boxsep=0pt,
-  left=7mm,
-  right=6mm,
-  top=4mm,                      % 見出し帯のぶん 10mm→12mm
-  bottom=6mm,
+  left=7\mnmm,
+  right=6\mnmm,
+  top=4\mnmm,                      % 見出し帯のぶん 10mm→12mm
+  bottom=6\mnmm,
   before=\par\medskip\noindent,
   after=\par\medskip,
   parbox=false,
-  compress page=all,
-  before upper app={\predisplaypenalty=\mathnoteboxpredisplaypenalty\relax},
-  pad at break*=2mm,
-  toprule at break=0.4pt,
-  bottomrule at break=0.4pt,
+  pad at break*=2\mnmm,
+  toprule at break=0.4\mnpt,
+  bottomrule at break=0.4\mnpt,
   title={%
     \sffamily\bfseries
-    \fontsize{10pt}{12pt}\selectfont
+    \fontsize{10\mnpt}{12\mnvpt}\selectfont
     Column\hspace{0.7em}\thetcbcounter
   },
   coltitle=columnMagenta,
   fonttitle=\sffamily\bfseries,
   attach boxed title to top left={
-    xshift=7mm,
+    xshift=7\mnmm,
     yshift*={-\tcboxedtitleheight/2-\columnTitleDrop}
   },
   boxed title style={
     enhanced,
     colframe=columnFrame,
-    boxrule=0.4pt,
+    boxrule=0.4\mnpt,
     colback=columnBackground,
-    arc=1.0mm,
-    outer arc=1.0mm,
+    arc=1.0\mnmm,
+    outer arc=1.0\mnmm,
     boxsep=0pt,
-    left=3mm,                    % ← 左右対称に
-    right=3mm,
-    top=1.4mm,                   % ← 上下にも余白を
-    bottom=1.4mm
+    left=3\mnmm,                    % ← 左右対称に
+    right=3\mnmm,
+    top=1.4\mnmm,                   % ← 上下にも余白を
+    bottom=1.4\mnmm
   },
-  overlay unbroken={\columnAccentLine{-10mm}{5mm}\columnHeadRule},
-  overlay first   ={\columnAccentLine{-10mm}{0mm}\columnHeadRule},
-  overlay middle  ={\columnAccentLine{0mm}{0mm}},
-  overlay last    ={\columnAccentLine{0mm}{5mm}}
+  overlay unbroken={\columnAccentLine{-10\mnmm}{5\mnmm}\columnHeadRule},
+  overlay first   ={\columnAccentLine{-10\mnmm}{0\mnmm}\columnHeadRule},
+  overlay middle  ={\columnAccentLine{0\mnmm}{0\mnmm}},
+  overlay last    ={\columnAccentLine{0\mnmm}{5\mnmm}}
 }
 
 %% ==============================================================
@@ -974,18 +1021,18 @@
 \colorlet{remarkSubtitle}{black!52}
 
 % ---- 見出し帯の寸法（調整はここ1か所で） ----
-\newlength{\remarkPad}        \setlength{\remarkPad}{6mm}      % 左右の内側余白
-\newlength{\remarkDotR}       \setlength{\remarkDotR}{1.1mm}   % ドットの半径
-\newlength{\remarkDotX}       \setlength{\remarkDotX}{7.1mm}   % ドット中心の x（左端が \remarkPad に揃う）
-\newlength{\remarkHeadY}      \setlength{\remarkHeadY}{5.9mm}  % ドット中心の深さ
-\newlength{\remarkTitleX}     \setlength{\remarkTitleX}{10.4mm}% 見出し文字の左端
-\newlength{\remarkTitleBase}  \setlength{\remarkTitleBase}{7.0mm}
-\newlength{\remarkRuleY}      \setlength{\remarkRuleY}{10.2mm}
+\newlength{\remarkPad}        \setlength{\remarkPad}{6\mnmm}      % 左右の内側余白
+\newlength{\remarkDotR}       \setlength{\remarkDotR}{1.1\mnmm}   % ドットの半径
+\newlength{\remarkDotX}       \setlength{\remarkDotX}{7.1\mnmm}   % ドット中心の x（左端が \remarkPad に揃う）
+\newlength{\remarkHeadY}      \setlength{\remarkHeadY}{5.9\mnmm}  % ドット中心の深さ
+\newlength{\remarkTitleX}     \setlength{\remarkTitleX}{10.4\mnmm}% 見出し文字の左端
+\newlength{\remarkTitleBase}  \setlength{\remarkTitleBase}{7.0\mnmm}
+\newlength{\remarkRuleY}      \setlength{\remarkRuleY}{10.2\mnmm}
 
 % ---- 見出しの中身 ----
 \makeatletter
 \newcommand{\remark@head}[1]{%
-  \sffamily\bfseries\fontsize{9.5pt}{11pt}\selectfont
+  \sffamily\bfseries\fontsize{9.5\mnpt}{11\mnvpt}\selectfont
   \color{remarkInk}Remark%
   \ifstrempty{#1}{}{%
     \hspace{0.72em}%
@@ -1006,28 +1053,23 @@
   %
   % ---- 外形 ----
   boxrule=0pt,
-  arc=3mm,
-  outer arc=3mm,
+  arc=3\mnmm,
+  outer arc=3\mnmm,
   boxsep=0pt,
   %
   % ---- 余白（top は見出し帯のぶんを含む） ----
   left=\remarkPad,
   right=\remarkPad,
-  top=13.6mm,
-  bottom=5.5mm,
+  top=13.6\mnmm,
+  bottom=5.5\mnmm,
   %
-  before skip=1.0\baselineskip plus 4pt minus 3pt,
-  after skip=1.0\baselineskip plus 4pt minus 3pt,
-  %
-  % ---- 分割の促進（§9 と同趣旨）----
-  compress page=all,
-  enlargepage flexible=\baselineskip,
+  before skip=1.0\baselineskip,
+  after skip=1.0\baselineskip,
   %
   % ---- 本文 ----
   before upper={%
     \setlength{\parindent}{1\zw}%
   },
-  before upper app={\predisplaypenalty=\mathnoteboxpredisplaypenalty\relax},
   %
   % ---- 見出し帯（1ページ目・分割しない場合のみ） ----
   overlay unbroken and first={%
@@ -1043,7 +1085,7 @@
   },
   %
   % ---- 改ページ時 ----
-  pad at break*=2mm
+  pad at break*=2\mnmm
 }
 \makeatother
 
@@ -1051,13 +1093,10 @@
 \newtcolorbox{reviewbox}[1][]{
   enhanced, breakable,
   colback=white, colframe=appleLine,
-  boxrule=0.35pt, arc=4mm,
-  left=7mm, right=7mm, top=4mm, bottom=4mm,
-  before skip=0.9\baselineskip plus 4pt minus 3pt,
-  after skip =0.9\baselineskip plus 4pt minus 3pt,
-  compress page=all,
-  enlargepage flexible=\baselineskip,
-  before upper app={\predisplaypenalty=\mathnoteboxpredisplaypenalty\relax},
+  boxrule=0.35\mnpt, arc=4\mnmm, boxsep=1\mnmm,
+  left=7\mnmm, right=7\mnmm, top=4\mnmm, bottom=4\mnmm,
+  before skip=0.9\baselineskip,
+  after skip =0.9\baselineskip,
   fonttitle=\bfseries\sffamily,
   coltitle=appleInk,
   title=#1,
@@ -1067,17 +1106,19 @@
 % ---- mondai: 問題・解答の上下分割ボックス ----
 \newcounter{mondaibangou}
 \newtcolorbox{mondai}[1][]{%
-  enhanced, boxrule=1pt,
-  top=2pt, left=44pt, right=4pt, bottom=2pt, arc=0mm,
+  enhanced, boxrule=1\mnpt,
+  boxsep=1\mnmm, middle=2\mnmm,      % 【追加】既定 1mm / 2mm（絶対値）を換算
+  beforeafter skip balanced=0.5\baselineskip plus 2\mnvpt,
+  top=2\mnpt, left=44\mnpt, right=4\mnpt, bottom=2\mnpt, arc=0mm,
   colframe=magenta!30!gray,
   underlay={%
-    \node[inner sep=1pt, magenta!50!black, fill=magenta!10!white]
-      at ([xshift=22pt,yshift=-9pt]interior.north west)
+    \node[inner sep=1\mnpt, magenta!50!black, fill=magenta!10!white]
+      at ([xshift=22\mnpt,yshift=-9\mnpt]interior.north west)
       {\stepcounter{mondaibangou}\bfseries\gtfamily 問題\themondaibangou};},
   segmentation code={%
     \draw[dashed] (segmentation.west) -- (segmentation.east);
-    \node[inner sep=1pt, magenta!50!black, fill=magenta!10!white]
-      at ([xshift=22pt,yshift=-8pt]segmentation.south west)
+    \node[inner sep=1\mnpt, magenta!50!black, fill=magenta!10!white]
+      at ([xshift=22\mnpt,yshift=-8\mnpt]segmentation.south west)
       {\bfseries\gtfamily 解答};},
   before upper={\setlength{\parindent}{1\zw}},
   before lower={\setlength{\parindent}{1\zw}},
@@ -1088,13 +1129,15 @@
 % 書式: \begin{kans}[副題]{主題}[オフセットpt][追加オプション]
 \DeclareTColorBox{kans}{ o m O{3} O{} }{%
   enhanced, colback=white, colframe=white,
-  attach boxed title to top left={xshift=1cm, yshift=-\tcboxedtitleheight/2},
+  attach boxed title to top left={xshift=10\mnmm, yshift=-\tcboxedtitleheight/2},
   fonttitle=\bfseries,
   varwidth boxed title=0.85\linewidth,
   coltitle=black, fonttitle=\gtfamily,
-  enlarge top by=2mm, enlarge bottom by=2mm,
+  enlarge top by=2\mnmm, enlarge bottom by=2\mnmm,
+  boxsep=1\mnmm, left=4\mnmm, right=4\mnmm, top=2\mnmm, bottom=2\mnmm,
+  beforeafter skip balanced=0.5\baselineskip plus 2\mnvpt,
   breakable, sharp corners,
-  boxed title style={colback=white, left=0mm, right=0mm},
+  boxed title style={colback=white, left=0mm, right=0mm, boxsep=1\mnmm},
   borderline={.75pt}{#3pt}{black,dotted},
   IfValueTF={#1}{title=【#2】〈#1〉}{title=【#2】},#4%
 }
@@ -1109,7 +1152,7 @@
 % 書式: \begin{aleftbar}[オフセット幅] ... \end{aleftbar}
 \newenvironment{aleftbar}[1][0.0em]{%
   \par\begingroup
-  \setlength{\FrameRule}{0.4pt}%  縦線の太さ
+  \setlength{\FrameRule}{0.4\mnpt}%  縦線の太さ
   \setlength{\FrameSep}{0.0em}%   縦線と本文の間隔
   \noindent\hspace*{#1}%
   \begin{minipage}{\dimexpr\linewidth-#1\relax}%
@@ -1197,7 +1240,7 @@
 \newcolumntype{L}[1]{>{\raggedright\arraybackslash}m{#1}}
 \newcolumntype{B}[1]{>{\centering\arraybackslash\bfseries}m{#1}}
 
-\setlength{\tabcolsep}{8pt}  % 列間の水平余白
+\setlength{\tabcolsep}{8\mnpt}  % 列間の水平余白
 
 % ==============================================================
 % § 14. ハイパーリンク・参考文献・索引
@@ -1254,11 +1297,11 @@
       {\small\sffamily\bfseries\color{appleGray} #3\par}
       \vspace{0.75\baselineskip}
       % 主タイトル
-      {\fontsize{34pt}{40pt}\selectfont\sffamily\bfseries #1\par}
+      {\fontsize{34\mnpt}{40\mnvpt}\selectfont\sffamily\bfseries #1\par}
       \vspace{0.7\baselineskip}
       % 中央 66% 幅のヘアライン
-      \begin{tikzpicture}[x=\linewidth, y=1pt]
-        \draw[line cap=round, line width=0.8pt, color=appleLine] (0.17,0) -- (0.83,0);
+      \begin{tikzpicture}[x=\linewidth, y=1\mnpt]
+        \draw[line cap=round, line width=0.8\mnpt, color=appleLine] (0.17,0) -- (0.83,0);
       \end{tikzpicture}
       % サブタイトル
       \vspace{0.9\baselineskip}
@@ -1302,7 +1345,8 @@
       enhanced, breakable, sharp corners,
       colback=draftBack, colframe=draftBack,
       boxrule=0pt, borderline west={2pt}{0pt}{draftAccent},
-      left=5mm, right=5mm, top=3mm, bottom=3mm,
+      boxsep=1\mnmm,
+      left=5\mnmm, right=5\mnmm, top=3\mnmm, bottom=3\mnmm,
       before skip=1.0\baselineskip, after skip=1.2\baselineskip,
     ]
     {\sffamily\bfseries\color{draftAccent}執筆中}\par\smallskip
@@ -1317,7 +1361,8 @@
       enhanced, breakable, sharp corners,
       colback=draftBack, colframe=draftBack,
       boxrule=0pt, borderline west={2pt}{0pt}{draftAccent},
-      left=4mm, right=4mm, top=2mm, bottom=2mm,
+      boxsep=1\mnmm,
+      left=4\mnmm, right=4\mnmm, top=2\mnmm, bottom=2\mnmm,
       before skip=0.8\baselineskip, after skip=0.8\baselineskip,
     ]
     {\sffamily\bfseries\small\color{draftAccent}執筆中}%
@@ -1493,7 +1538,7 @@
 \makeatletter
 \renewenvironment{proof}[1][\proofname]{\par
   \pushQED{\qed}%
-  \normalfont \topsep6\p@\@plus6\p@\relax
+  \normalfont \topsep6\mnvpt\@plus6\mnvpt\relax
   \trivlist
   \item[\hskip\labelsep\normalfont#1\@addpunct{.}]%
   \mbox{}\par\nobreak\ignorespaces
@@ -1517,5 +1562,5 @@
   % 【追加】段落間にごく小さな伸び代（自然長は 0pt のまま）．
   % 段落数の多いページで \flushbottom が下端まで詰めやすくなる．
   % 見た目に影響が出ると感じたら削除してよい．
-  \setlength{\parskip}{0pt plus 1pt}%
+  \setlength{\parskip}{0pt plus 1\mnvpt}%
 }
