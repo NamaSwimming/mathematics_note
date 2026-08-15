@@ -199,7 +199,7 @@
   が成り立つ．
 \end{prop}
 
-\begin{leftbar}
+\begin{tleftbar}
 \begin{proof}
   \deref{線型写像}の第$2$の条件で$\alpha = 0$，$\bm{x} = \bm{0}$とすれば，
   \[
@@ -207,7 +207,7 @@
   \]
   が成り立つ．これが証明すべきことであった．
 \end{proof}
-\end{leftbar}
+\end{tleftbar}
 
 \prref{線型写像と零ベクトル}の対偶をとれば，「$f(\bm{0}) \ne \bm{0}$ならば$f$は線型写像でない」となる．
 これは，与えられた写像が線型でないことを示す際の，もっとも手軽な判定法である．
@@ -448,7 +448,7 @@ $\alpha$倍すると各成分は$\alpha^2$倍になるので，$f(\alpha\bm{a}) 
   また，$\alpha \in K$に対して，$\alpha f \colon K^n \to K^m$も線型写像である．
 \end{prop}
 
-\begin{leftbar}
+\begin{tleftbar}
 \begin{proof}
   前半の主張を示す．任意の$\bm{x}, \bm{y} \in K^n$に対して，
   \begin{align}
@@ -468,10 +468,11 @@ $\alpha$倍すると各成分は$\alpha^2$倍になるので，$f(\alpha\bm{a}) 
 
   後半の主張も同様にして証明される．
 \end{proof}
-\end{leftbar}
+\end{tleftbar}
 
-次に，線型写像を合成する操作を考える．このときも，合成写像は線型写像になる．
-様々な操作でここまで線型性が保たれることを不思議に感じるかもしれない．
+次に，線型写像を合成する操作を考える．結論からいえば，このときの合成写像も線型写像になる．
+これまでに見た和やスカラー倍に加えて，合成についても線型性が保たれるとなると
+「なぜこれほど多くの操作によって写像の線型性が保たれるのか」と不思議に感じるかもしれない．
 しかし，線型写像と行列との対応を念頭に置けば，
 これは行列どうしの積に対応する自然な性質であるといえる．
 
@@ -480,7 +481,7 @@ $\alpha$倍すると各成分は$\alpha^2$倍になるので，$f(\alpha\bm{a}) 
   このとき，合成写像$g \circ f \colon K^n \to K^l$も線型写像である．
 \end{prop}
 
-\begin{leftbar}
+\begin{tleftbar}
 \begin{proof}
   任意の$\bm{x}, \bm{y} \in K^n$に対して，
   \begin{align}
@@ -498,7 +499,7 @@ $\alpha$倍すると各成分は$\alpha^2$倍になるので，$f(\alpha\bm{a}) 
   \end{align}
   が成り立つ．これが証明すべきことであった．
 \end{proof}
-\end{leftbar}
+\end{tleftbar}
 
 \phantomsection
 \section{線型写像と行列}
@@ -510,6 +511,8 @@ $\alpha$倍すると各成分は$\alpha^2$倍になるので，$f(\alpha\bm{a}) 
 これまでにも，行列と写像にはいくつかの類似性があることを示唆してきた．ここでは，両者の関係をより詳しく調べていこう．
 結論からいえば，$K^n$から$K^m$への線型写像は$m \times n$行列とちょうど一対一に対応する．
 
+この対応を具体的に記述するためには，$K^n$の各成分を一つずつ取り出して考えると都合がよい．
+そのための基本的な役割を果たすのが，次に定める標準基底ベクトルである．
 以下では，第$j$成分が$1$で他の成分がすべて$0$であるベクトル
 \[
   \bm{e}_j =
@@ -519,7 +522,10 @@ $\alpha$倍すると各成分は$\alpha^2$倍になるので，$f(\alpha\bm{a}) 
   \in K^n
   \quad (j = 1, 2, \dots, n)
 \]
-を\textbf{標準基底ベクトル}\index{ひょうじゅんきていべくとる@標準基底ベクトル}とよぶ\footnote{「基底」という概念そのものは，\partref{線型空間}で正式に定義される（\deref{基底}）．そこで見るように，$(\bm{e}_1, \bm{e}_2, \dots, \bm{e}_n)$は$K^n$の基底のもっとも代表的な例であり，「標準基底ベクトル」という名称もそれに由来する．現段階では，「第$j$成分だけが$1$で他の成分がすべて$0$のベクトル」を表す名前だと思っておけばよい．}．
+を\textbf{標準基底ベクトル}\index{ひょうじゅんきていべくとる@標準基底ベクトル}とよぶ
+\footnote{「基底」という概念そのものは，\partref{線型空間}で正式に定義される（\deref{基底}）．
+そこで見るように，$(\bm{e}_1, \bm{e}_2, \dots, \bm{e}_n)$は$K^n$の基底のもっとも代表的な例であり，
+「標準基底ベクトル」という名称もそれに由来する．現段階では，「第$j$成分だけが$1$で他の成分がすべて$0$のベクトル」を表す名前だと思っておけばよい．}．
 
 \begin{prop}{行列の定める線型写像}{行列の定める線型写像}
   $A$を$m \times n$行列とする．
@@ -527,7 +533,7 @@ $\alpha$倍すると各成分は$\alpha^2$倍になるので，$f(\alpha\bm{a}) 
   このとき，$T_A$は$K^n$から$K^m$への線型写像である．
 \end{prop}
 
-\begin{leftbar}
+\begin{tleftbar}
 \begin{proof}
   任意の$\bm{x}, \bm{y} \in K^n$と$\alpha \in K$に対して，
   \begin{align}
@@ -544,7 +550,7 @@ $\alpha$倍すると各成分は$\alpha^2$倍になるので，$f(\alpha\bm{a}) 
   が成り立つ．
   よって$T_A$は線型写像である．
 \end{proof}
-\end{leftbar}
+\end{tleftbar}
 
 \prref{行列の定める線型写像}は「行列が与えられれば線型写像が定まる」ことを主張している．
 実は，この逆も成り立つ．すなわち，任意の線型写像はある行列から定まる線型写像として表され，しかもそのような行列はただひとつしか存在しない．
@@ -558,7 +564,7 @@ $\alpha$倍すると各成分は$\alpha^2$倍になるので，$f(\alpha\bm{a}) 
   が成り立つ．さらに，このような$A$はただひとつしか存在しない．
 \end{theorem}
 
-\begin{leftbar}
+\begin{tleftbar}
 \begin{proof}
   まず，存在を示す．
   \[
@@ -601,7 +607,7 @@ $\alpha$倍すると各成分は$\alpha^2$倍になるので，$f(\alpha\bm{a}) 
   が成り立つ．すべての列が一致するので$A = B$であり，一意性が示された．
   これが証明すべきことであった．
 \end{proof}
-\end{leftbar}
+\end{tleftbar}
 
 まとめると，行列$A$の定める写像$T_A$は線型写像であり，逆に，$K^n$から$K^m$への線型写像は，ただひとつの行列によって表される．
 この意味で，「$K^n$から$K^m$への線型写像」と「$m \times n$行列」は同一視できる．
@@ -622,7 +628,7 @@ $\alpha$倍すると各成分は$\alpha^2$倍になるので，$f(\alpha\bm{a}) 
   が成り立つ．
 \end{prop}
 
-\begin{leftbar}
+\begin{tleftbar}
 \begin{proof}
   任意の$\bm{x} \in K^n$に対して，
   \begin{align}
@@ -634,7 +640,7 @@ $\alpha$倍すると各成分は$\alpha^2$倍になるので，$f(\alpha\bm{a}) 
   が成り立つ\footnote{$\bm{x} \in K^n$を$n \times 1$行列とみなせば，$A(B\bm{x}) = (AB)\bm{x}$は行列の乗法結合律そのものである．}．
   これが証明すべきことであった．
 \end{proof}
-\end{leftbar}
+\end{tleftbar}
 
 \prref{行列の積と写像の合成}によって，一見複雑に見えた行列の積の定義（\deref{行列の積}）が，「写像の合成に対応するように定められたもの」として自然に理解できる．
 行列の積が交換律を満たさないのは，写像の合成が交換律を満たさないことの反映なのである．
@@ -748,6 +754,8 @@ $\alpha$倍すると各成分は$\alpha^2$倍になるので，$f(\alpha\bm{a}) 
 \subsection{数列と線型変換}
 
 数列に関する例も，行列の言葉で見直してみよう．
+\enlargethispage{2mm}
+
 
 \begin{example}{階差行列と部分和行列}{階差行列と部分和行列}
   \exref{部分和をとる写像}の$\Sigma \colon K^n \to K^n$を表す行列を求めよう．
@@ -919,14 +927,14 @@ $\alpha$倍すると各成分は$\alpha^2$倍になるので，$f(\alpha\bm{a}) 
   \end{enumerate}
 \end{prop}
 
-\begin{leftbar}
+\begin{tleftbar}
 \begin{proof}
   (i)について，$\bm{x} \in \Ker T_A$であることは，$T_A$の定義より$A\bm{x} = \bm{0}$と同値であり，これは$\bm{x}$が$A\bm{x} = \bm{0}$の解であることにほかならない．
 
   (ii)について，$\bm{b} \in \Im T_A$であることは，ある$\bm{x} \in K^n$が存在して$A\bm{x} = \bm{b}$となること，すなわち$A\bm{x} = \bm{b}$が解をもつことと同値である．
   いずれも定義の言い換えである．これが証明すべきことであった．
 \end{proof}
-\end{leftbar}
+\end{tleftbar}
 
 このように，核は「斉次連立一次方程式の解全体」を，像は「右辺として実現可能なベクトル全体」を，写像のことばで言い直したものである．
 
@@ -940,7 +948,7 @@ $\alpha$倍すると各成分は$\alpha^2$倍になるので，$f(\alpha\bm{a}) 
   \end{enumerate}
 \end{prop}
 
-\begin{leftbar}
+\begin{tleftbar}
 \begin{proof}
   (i)$\limp$(ii)：$\bm{0} \in \Ker f$はつねに成り立つので，逆の包含を示せばよい．
   $\bm{x} \in \Ker f$とすると，\prref{線型写像と零ベクトル}より
@@ -957,7 +965,7 @@ $\alpha$倍すると各成分は$\alpha^2$倍になるので，$f(\alpha\bm{a}) 
   よって$\bm{x} - \bm{y} = \bm{0}$，すなわち$\bm{x} = \bm{y}$となり，$f$は単射である．
   これが証明すべきことであった．
 \end{proof}
-\end{leftbar}
+\end{tleftbar}
 
 一般の写像の単射性を確かめるには，すべての値の組$f(\bm{x})$，$f(\bm{y})$を比較しなければならない．
 これに対して線型写像では，\prref{単射性と核}により「$\bm{0}$にうつるベクトルが$\bm{0}$だけかどうか」を調べれば十分である．
