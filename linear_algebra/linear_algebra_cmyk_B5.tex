@@ -40,14 +40,25 @@
 
 \medskip
 
+
+
 \printbibliography[heading=none]
 % 索引
 % 参考文献の次のページ（偶数ページ）から索引を開始する．
 % 通常の \part は右ページ開始だが，索引だけは右ページ送りを無効にする．
+
+\clearpage
+
+\thispagestyle{empty}
+
+\null
+
 \clearpage
 \thispagestyle{empty}
 \setcounter{section}{6}
 \renewcommand{\indexname}{索引}
+
+
 
 \begingroup
   \makeatletter
@@ -58,7 +69,10 @@
   \printindex
 \endgroup
 
-% 裏表紙の直前に白紙を1ページ挿入
+% 裏表紙の直前に白紙を2ページ挿入
+\clearpage
+\thispagestyle{empty}
+\null
 \clearpage
 \thispagestyle{empty}
 \null
