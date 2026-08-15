@@ -238,6 +238,26 @@
   \setlength{\postmulticols}{20\mnvpt}%
 }
 
+% 【追加 2026/08/15】\vdots・\ddots を A4 換算単位で組み直す．
+%   カーネル（fontmath.ltx）の定義はドット間隔・上部カーンが絶対 pt
+%     \vdots: \vbox{\baselineskip4\p@ \lineskiplimit\z@ \kern6\p@ ...}
+%     \ddots: \raise7\p@ / \kern7\p@ / \raise4\p@ / \raise\p@
+%   であり，文字サイズ比 0.833790 では縮まない（縮むのはドット字形のみ）．
+%   このため \vdots を含む pmatrix / cases の行は，A4 換算で 1 行あたり
+%   約 +2.8pt 高くなり，\vdots を多用するページ（連立方程式・拡大係数
+%   行列の頁など）では A4 版より先にページが埋まって改ページ位置が
+%   1 行分ずれていた（実測：\vdots 入りディスプレイ数式 1 つにつき
+%   約 2.8〜5.6pt の超過が累積し，第 1.2.2 節では計 1 行送りが発生）．
+%   定義本体はカーネルと同一で，\p@ を \mnpt に置き換えただけである．
+%   A4（\mnpt = 1pt）ではカーネル定義と完全に同じ組版になる．
+\makeatletter
+\DeclareRobustCommand\vdots{\vbox{\baselineskip4\mnpt \lineskiplimit\z@
+    \kern6\mnpt\hbox{.}\hbox{.}\hbox{.}}}
+\DeclareRobustCommand\ddots{\mathinner{\mkern1mu\raise7\mnpt
+    \vbox{\kern7\mnpt\hbox{.}}\mkern2mu
+    \raise4\mnpt\hbox{.}\mkern2mu\raise\mnpt\hbox{.}\mkern1mu}}
+\makeatother
+
 % 【追加】align / gather 等の複数行ディスプレイ数式の行間でも
 % 改ページを許可する（amsmath）．長い証明の数式ブロックが
 % 丸ごと次ページへ送られて大きな余白ができるのを防ぐ．
@@ -559,6 +579,7 @@
 \newcommand{\sectionheadrule}[2]{%
   \gdef\CurrentSectionTitle{\thesection\quad #2}%
   \noindent
+  \begingroup\mnnoscale% 座標は \mnmm 換算済みのため自動スケールを除外
   \begin{tikzpicture}[baseline=(title.base)]
     \path[use as bounding box]
       (0,-9\mnmm) rectangle (\linewidth,7\mnmm);
@@ -596,12 +617,14 @@
     ] (title) at (\sectextx,-1.6\mnmm)
       {\color{black}\Large\bfseries #2};
   \end{tikzpicture}%
+  \endgroup
 }
 
 % 番号なし section
 \newcommand{\sectionheadrulestar}[1]{%
   \gdef\CurrentSectionTitle{#1}%
   \noindent
+  \begingroup\mnnoscale% 座標は \mnmm 換算済みのため自動スケールを除外
   \begin{tikzpicture}[baseline=(title.base)]
     \path[use as bounding box]
       (0,-9\mnmm) rectangle (\linewidth,7\mnmm);
@@ -633,6 +656,7 @@
     ] (title) at (\sectextx,-1.6\mnmm)
       {\color{black}\Large\bfseries #1};
   \end{tikzpicture}%
+  \endgroup
 }
 
 \titleformat{\section}[block]
@@ -676,6 +700,7 @@
 \etocsettocstyle{%
   \par\vspace{10\mnvpt}%
   \noindent\hspace*{-\leftskip}%
+  \begingroup\mnnoscale% x=\linewidth のためスケール除外
   \begin{tikzpicture}[x=\linewidth, baseline]
     \draw[
       line cap=round,
@@ -689,6 +714,7 @@
     ] at (0.5,0)
       {\bfseries\Large\textcolor{appleInk}{目\kern0.35em 次}};
   \end{tikzpicture}%
+  \endgroup
   \vspace{8\mnvpt}%
 
   % ここから目次項目を2段組にする
@@ -702,6 +728,7 @@
 
   \vspace{4\mnvpt}%
   \noindent\hspace*{-\leftskip}%
+  \begingroup\mnnoscale% x=\linewidth のためスケール除外
   \begin{tikzpicture}[x=\linewidth, baseline]
     \draw[
       line cap=round,
@@ -709,6 +736,7 @@
       color=appleLine
     ] (0,0) -- (1,0);
   \end{tikzpicture}%
+  \endgroup
   \vspace{12\mnvpt}%
 }
 
@@ -1204,6 +1232,83 @@
 \usepgfplotslibrary{fillbetween}
 \pgfplotsset{compat=1.17}
 
+% --------------------------------------------------------------
+% § 12.1 本文 tikzpicture の自動スケール（A4 版との改ページ位置合わせ）
+% --------------------------------------------------------------
+%
+% 本文ソース（contents/*.tex）の tikzpicture は，A4 版の実寸
+% （x=13mm，(0,1.6) ＝ 1.6cm など）で座標が書かれている．これらは
+% \mnmm / \mnsc の換算を通らないため，そのままでは B5 でも A4 と同じ
+% 物理サイズで描かれ，版面に対して相対的に大きくなる（実測：サラスの
+% 方法の図で約 14pt ＝ ほぼ 1 行分の超過）．ページが埋まっている箇所で
+% は，この超過が A4 版より 1 行早い改ページを引き起こす．
+%
+% そこで every picture フックで全 tikzpicture に scale=\mnpt/1pt
+% （= 文字サイズ比 0.833790）を自動適用し，図全体を A4 版の相似形に
+% 縮める．scale はユーザー指定の x= / y= 単位にも合成される
+% （x=13mm → 実効 13mm×0.83379）．ノード内のテキストは scale の影響を
+% 受けず，文書のフォントサイズ（既に A4 比 0.83379）で組まれるため，
+% 結果として図は文字も含めて A4 版の厳密な相似形になる．
+% A4 版でこの sty を使った場合は \mnpt = 1pt なので scale=1（無効果）．
+%
+% ただし次の tikzpicture は版面実寸（\linewidth 等）で座標を取るため
+% スケールしてはならない．これらでは \mn@scalepic を偽にして除外する：
+%   (1) tcolorbox が枠・仕切り線を描く内部 picture
+%       （overlay / underlay / borderline / boxed title を含む）
+%   (2) この sty 自身が組む見出し・目次の picture（§7・§8．
+%       座標は既に \mnmm / \mnpt で換算済み）
+%
+% 本文中で例外的に「実寸のまま」描きたい図がある場合は，
+%   {\mnnoscale \begin{tikzpicture}...\end{tikzpicture}}
+% とグループ内で \mnnoscale を前置すればよい．
+
+\RequirePackage{etoolbox}
+
+\newif\ifmn@scalepic
+\mn@scalepictrue
+
+% 図に適用する倍率（= \mnpt の pt 値）．A4 では 1.0
+\newcommand*{\mn@picscale}{\strip@pt\mnpt}
+
+% every picture から呼ばれる条件付きスケール
+\tikzset{
+  mn auto scale/.code={%
+    \ifmn@scalepic
+      \pgfkeysalso{scale=\mn@picscale}%
+    \fi
+  },
+}
+% 他パッケージの every picture 設定より後に確実に追加する
+\AtBeginDocument{%
+  \tikzset{every picture/.append style={mn auto scale}}%
+}
+
+% 直後の tikzpicture のスケールを抑止（グループ内で使用）
+\newcommand*{\mnnoscale}{\mn@scalepicfalse}
+
+% ---- 除外 (1)：tcolorbox の内部描画 ----
+% tcolorbox が枠・overlay・borderline・boxed title 等を描く内部 picture は
+% 実寸座標（frame ノード等）で描くため，スケールしてはならない．
+% 内部 picture の起動方法は tcolorbox のバージョンで異なるため，
+% 既知の全機構に対して除外フックを張る（存在しない環境への
+% \AddToHook は無害なので，複数バージョンを同時にカバーできる）：
+%   ・〜v6.2  ：環境 tikzpicture@tcb@hooked の中から \tikzpicture を
+%               コマンド形式で起動（tcbskins.code.tex）
+%   ・v6.3〜 ：環境 tcb@drawing の中から \begin{tikzpicture} を起動
+%               （tcolorbox.sty．v6.10 現在も同名）
+% いずれも描画用環境のグループ内でフラグを折れば，内側の picture の
+% every picture 処理時にスケールが抑止される．
+% ※ 将来 tcolorbox が描画環境名を変更した場合は，ここに
+%   \AddToHook{env/<新環境名>/begin}{\mn@scalepicfalse} を追加すること．
+%   症状：枠内の文字が本文より小さくなる／枠線がずれる．
+\AddToHook{env/tikzpicture@tcb@hooked/begin}{\mn@scalepicfalse}
+\AddToHook{env/tcb@drawing/begin}{\mn@scalepicfalse}
+% 上下分割線を描く picture（\tcb@draw@pseudo@segmentation．v6.2〜v6.10 で
+% 同一実装）も除外する．
+\patchcmd{\tcb@draw@pseudo@segmentation}
+  {\begingroup}{\begingroup\mn@scalepicfalse}
+  {}{\PackageWarning{mathnote_cmyk}{Failed to patch tcb pseudo segmentation}}
+
 % ==============================================================
 % § 13. 表・リスト・回り込み
 % ==============================================================
@@ -1273,6 +1378,38 @@
 %   ※ \linewidth・\textwidth に比例する長さは，版面幅自体が既に換算済み
 %     なので \mnsc に渡してはならない（二重に縮む）．
 \newcommand*{\mnsc}[1]{\dimexpr(#1)*\number\dimexpr\mnpt\relax/65536\relax}
+
+% ---- \enlargethispage の自動換算 ----
+% 本文ソースには \enlargethispage{7mm} のような「A4 実寸」の指定が
+% 複数ある．そのままでは B5 でも 7mm 広がってしまい，版面比で A4 より
+% 大きく広がるため，A4 版と改ページ位置が揃わなくなる（広げた先に
+% 次の行が入りうる）．引数を \mnsc で換算し，A4 版と同じ「行数換算」で
+% 広がるようにする（A4 では \mnsc は恒等変換なので挙動不変）．
+% \enlargethispage*（詰め込み許可付き）も同様に扱う．
+%
+% 【重要】tcolorbox（breakable）は，pad at break* 使用時などに
+% 「現在の版面から実寸で計算した」量で \enlargethispage* を内部的に
+% 呼ぶ（tcbbreakable.code.tex の \tcb@check@for@final@box と
+% \tcb@enlbreak@next@final の 2 箇所）．これらの量は既に B5 実寸なので
+% 換算してはならない（換算すると量が不足し，A4 では収まる箱が
+% 次ページへ送られてしまう）．この 2 箇所は無換算の
+% \mn@orig@enlargethispage を使うようパッチして除外する．
+\AtBeginDocument{%
+  \let\mn@orig@enlargethispage\enlargethispage
+  \DeclareRobustCommand{\enlargethispage}{%
+    \@ifstar{\mn@enlargethispage@star}{\mn@enlargethispage@plain}}%
+}
+\newcommand*{\mn@enlargethispage@star}[1]{%
+  \mn@orig@enlargethispage*{\dimexpr\mnsc{#1}\relax}}
+\newcommand*{\mn@enlargethispage@plain}[1]{%
+  \mn@orig@enlargethispage{\dimexpr\mnsc{#1}\relax}}
+% tcolorbox 内部の 2 呼び出しを無換算版に差し替え
+\patchcmd{\tcb@check@for@final@box}
+  {\enlargethispage*}{\mn@orig@enlargethispage*}
+  {}{\PackageWarning{mathnote_cmyk}{Failed to patch tcb final box enlarge}}
+\patchcmd{\tcb@enlbreak@next@final}
+  {\enlargethispage}{\mn@orig@enlargethispage}
+  {}{\PackageWarning{mathnote_cmyk}{Failed to patch tcb enlbreak}}
 
 % 幅指定付きの列型
 %   L{幅}: 左揃え・高さ自動
@@ -1418,7 +1555,15 @@
 
       % Main title. A fixed-width parbox lets long English titles wrap
       % cleanly while preserving the large display size.
-      \parbox[t]{0.88\textwidth}{%
+      % 【変更 2026/08/15】行長を「B5 表紙の \textwidth 比」でなく
+      % 「A4 表紙の版面幅 162mm（= 210 − 24x2）の A4 換算」で与える．
+      % B5 の紙は A4 の相似形ではない（幅比 182/210 = 0.867 ≠ 文字比
+      % 0.834）ため，\textwidth 比のままでは行長が文字サイズに対して
+      % 約 4% 広くなり，タイトル・サブタイトルの改行位置が A4 版と
+      % 変わってしまう（実測：サブタイトルの折り返し位置が相違）．
+      % 罫線や下部メタデータは「紙面いっぱい」に引く意匠なので
+      % \textwidth 比のまま（改行位置には影響しない）．
+      \parbox[t]{0.88\mnsc{162mm}}{%
         \MathNoteCoverTitleFont\color{white}%
         \raggedright
         \hyphenpenalty=10000\exhyphenpenalty=10000%
@@ -1433,7 +1578,8 @@
       \if\relax\detokenize{#4}\relax
       \else
         \vspace{7\mnmm}%
-        \parbox[t]{0.76\textwidth}{%
+        % 【変更 2026/08/15】タイトルと同じ理由で A4 換算の行長にする．
+        \parbox[t]{0.76\mnsc{162mm}}{%
           \MathNoteCoverSubtitleFont\color{appleDarkSub}%
           \raggedright #4\par
         }%
