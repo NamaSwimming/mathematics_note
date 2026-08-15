@@ -771,8 +771,28 @@
 }
 
 % ---- tleftbar: 左縦線付き環境（breakable・インデント対応） ----
-% framed の leftbar 環境は注釈が入れられないため tcolorbox で代替
-\newtcolorbox{tbleftline}{blanker,breakable,left=5mm,borderline west={1.1mm}{0pt}{black}}
+% framed の leftbar 環境は注釈（\footnote）が入れられないため tcolorbox で代替．
+% \footnote は箱の下端（縦線の範囲内）に脚注罫線付きで出力される．
+%
+% 【変更】寸法・前後の空きを framed.sty の leftbar と同一に揃えた：
+%   ・縦線 3pt ＋ 線と本文の間隔 10pt（本文幅 = \linewidth - 13pt，右端は版面右端）
+%   ・箱の内側に上下の余白なし（縦線の高さ = 本文ブロックの高さ）
+%   ・前後の空き：framed は
+%       前: \addvspace{\topsep} の後，箱の上端を「高さ \FrameHeightAdjust の行」
+%           として基線合わせする → 直前基線から箱上端まで
+%           \topsep + \baselineskip - \FrameHeightAdjust
+%       後: \null + \vskip\topsep → 箱下端から次の基線まで \topsep + \baselineskip
+%     tcolorbox の before/after skip balanced（prevdepth を 0.3\baselineskip に
+%     正規化して \addvspace する）に換算すると下式になり，行深さによらず一致する．
+%     \topsep・\baselineskip は環境使用時の値を参照するので文字サイズにも追従する．
+\providecommand\FrameHeightAdjust{6pt}% framed 未読込でも動くように（framed の既定と同値）
+\newtcolorbox{tbleftline}{%
+  blanker, breakable,
+  left=13pt,                          % = 3pt(線) + 10pt(線と本文の間隔)
+  borderline west={3pt}{0pt}{black},
+  before skip balanced=\glueexpr\topsep+0.7\baselineskip-\FrameHeightAdjust\relax,
+  after skip balanced=\glueexpr\topsep+0.3\baselineskip\relax,
+}
 \newenvironment{tleftbar}%
   {\begin{tbleftline}\setlength{\parindent}{1\zw}}%
   {\end{tbleftline}}
