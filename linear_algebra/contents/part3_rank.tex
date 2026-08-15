@@ -50,7 +50,7 @@
   が成り立つ．
 \end{prop}
 
-\begin{leftbar}
+\begin{tleftbar}
 \begin{proof}
   $k$に関する帰納法で示す．
   $k = 1$のときは，$f$の線型性の第$2$の条件そのものである．
@@ -65,9 +65,9 @@
   \end{align}
   となり，$k$のときも主張が成り立つ．これが証明すべきことであった．
 \end{proof}
-\end{leftbar}
+\end{tleftbar}
 
-\enlargethispage{4.5mm}
+\enlargethispage{2mm}
 
 \begin{remark}[$A\bm{x}$は列ベクトルの線型結合]
   行列とベクトルの積は，線型結合のことばで見直すことができる．
@@ -88,13 +88,13 @@
   あわせると，像$\Im T_A$とは「$A$の列ベクトルの線型結合全体の集合」にほかならないことがわかる．
 \end{remark}
 
-
 \phantomsection
 \subsection{線型独立と線型従属}
 
 線型結合の定義をもとに，ベクトルの組の「無駄のなさ」を測る概念として\textbf{線型独立性}を定義する．
-線型関係のうち，自明なものしか存在しないとき，ベクトルの組は\textbf{線型独立}\index{せんけいどくりつ@線型独立}であるという．\
+線型関係のうち，自明なものしか存在しないとき，ベクトルの組は\textbf{線型独立}\index{せんけいどくりつ@線型独立}であるという．
 \newpage 
+
 
 \begin{definition}{線型独立}{線型独立}
   $\bm{x}_1, \bm{x}_2, \dots, \bm{x}_n \in K^m$が\textbf{線型独立}であるとは，
@@ -120,11 +120,11 @@
   となることと同値である．
 \end{prop}
 
-\begin{leftbar}
+\begin{tleftbar}
 \begin{proof}
   \deref{線型独立}の条件の対偶を取れば明らかである．
 \end{proof}
-\end{leftbar}
+\end{tleftbar}
 
 線型独立でないベクトルの組は，\textbf{線型従属}\index{せんけいじゅうぞく@線型従属}であるという．
 
@@ -169,7 +169,7 @@
   $\bm{x}_1, \bm{x}_2, \dots, \bm{x}_n \in K^m$が線型従属であることは，ある$i$が存在して，$\bm{x}_i$が残りの$n - 1$個のベクトルの線型結合として表せることと同値である．
 \end{prop}
 
-\begin{leftbar}
+\begin{tleftbar}
 \begin{proof}
   まず，$\bm{x}_1, \bm{x}_2, \dots, \bm{x}_n$が線型従属であるとする．
   このとき，少なくとも一つが$0$でないスカラー$\lambda_1, \lambda_2, \dots, \lambda_n \in K$が存在して
@@ -196,7 +196,7 @@
 
   以上の考察により，命題が示された．
 \end{proof}
-\end{leftbar}
+\end{tleftbar}
 
 すなわち，線型従属なベクトルの組には，残りのベクトルの線型結合として「すでに表せてしまう」ベクトルが存在するのである．
 
@@ -210,7 +210,7 @@
 いずれも線型結合と線型独立の定義のみから導かれる．
 
 なお，これらの補題は，\partref{線型空間}において一般の線型空間に対してあらためて定式化され，証明される（\lemref{一般の取替補題}）．
-ここでは，\partref{行列式}までの議論で必要となる数ベクトル空間$K^m$の場合を先に示しておく．
+ここでは，\partref{行列式}までの議論で必要となる数ベクトル空間$K^m$の場合を先に示す．
 
 \begin{lemma}{線型独立な組の拡大}{線型独立な組の拡大}
   $\bm{v}_1, \bm{v}_2, \dots, \bm{v}_k \in K^m$を線型独立とし，$\bm{w} \in K^m$は
@@ -218,7 +218,7 @@
   このとき，$\bm{v}_1, \bm{v}_2, \dots, \bm{v}_k, \bm{w}$は線型独立である．
 \end{lemma}
 
-\begin{leftbar}
+\begin{tleftbar}
 \begin{proof}
   \[
     \lambda_1 \bm{v}_1 + \cdots + \lambda_k \bm{v}_k + \mu \bm{w} = \bm{0}
@@ -232,7 +232,7 @@
   線型独立性より$\lambda_1 = \cdots = \lambda_k = 0$である．
   これが証明すべきことであった．
 \end{proof}
-\end{leftbar}
+\end{tleftbar}
 
 次の補題は，「線型独立なベクトルは，それを生成するベクトルの個数を超えて取れない」ことを述べている．
 
@@ -246,7 +246,7 @@
   が成り立つ．
 \end{lemma}
 
-\begin{leftbar}
+\begin{tleftbar}
 \begin{proof}
   $k = 0, 1, \dots, l$に対して，次の主張$(\ast_k)$を$k$についての帰納法で示す．
 
@@ -294,14 +294,14 @@
   以上より$(\ast_l)$が成り立ち，とくに$l \le n$である．
   これが証明すべきことであった．
 \end{proof}
-\end{leftbar}
+\end{tleftbar}
 
 \begin{cor}{$K^m$における線型独立なベクトルの個数}{Km における線型独立なベクトルの個数}
   $K^m$の線型独立なベクトルは，高々$m$個である．
   すなわち，$m + 1$個以上のベクトルは必ず線型従属である．
 \end{cor}
 
-\begin{leftbar}
+\begin{tleftbar}
 \begin{proof}
   任意の$\bm{x} = (x_i) \in K^m$は
   \[
@@ -311,21 +311,21 @@
   よって\lemref{取替補題}を$\bm{v}_i = \bm{e}_i$として適用すればよい．
   これが証明すべきことであった．
 \end{proof}
-\end{leftbar}
+\end{tleftbar}
 
 \begin{cor}{$K^n$の$n$個の線型独立なベクトル}{Kn の n 個の線型独立なベクトル}
   $\bm{a}_1, \bm{a}_2, \dots, \bm{a}_n \in K^n$が線型独立ならば，
   任意の$\bm{b} \in K^n$は$\bm{a}_1, \bm{a}_2, \dots, \bm{a}_n$の線型結合として表せる．
 \end{cor}
 
-\begin{leftbar}
+\begin{tleftbar}
 \begin{proof}
   ある$\bm{b} \in K^n$が線型結合として表せないと仮定すると，\lemref{線型独立な組の拡大}より
   $\bm{a}_1, \dots, \bm{a}_n, \bm{b}$は線型独立である．
   これは$K^n$の$n + 1$個の線型独立なベクトルであり，\coref{Km における線型独立なベクトルの個数}に矛盾する．
   これが証明すべきことであった．
 \end{proof}
-\end{leftbar}
+\end{tleftbar}
 
 \phantomsection
 \section{階数}
@@ -370,6 +370,7 @@
 \end{example}
 
 階数の定義は列ベクトルによるものであったが，実は行ベクトルで定義しても同じ値が得られる．
+\enlargethispage{2mm}
 
 \begin{theorem}{行階数と列階数の一致}{行階数と列階数の一致}
   $A$を$m \times n$行列とする．
@@ -381,7 +382,7 @@
   が成り立つ．
 \end{theorem}
 
-\begin{leftbar}
+\begin{tleftbar}
 \begin{proof}
   $\rank A = r$とし，$A$の行ベクトルのうち線型独立なものの最大個数を$r'$とする．
 
@@ -402,7 +403,7 @@
   が成り立つ．
   行列の積の定義（\deref{行列の積}）より，$A$の第$k$行は
   \[
-    (A \text{の第}k\text{行}) = \sum_{i=1}^{r} (C \text{の}(k,i)\text{成分}) \cdot (R \text{の第}i\text{行})
+    (\text{$A$の第$k$行}) = \sum_{i=1}^{r} (\text{$C$の$(k,i)$成分}) \cdot (\text{$R$の第$i$行})
   \]
   とかける．すなわち，$A$の各行は$R$の$r$本の行の線型結合である．
   したがって，$A$の線型独立な行を$r'$本とれば，\lemref{取替補題}より$r' \le r$である．
@@ -410,9 +411,9 @@
   次に$r \le r'$を示す．
   前半の議論は任意の行列に対して通用する．すなわち，任意の行列$M$に対して
   \[
-    (M\text{の線型独立な行の最大個数})
+    (\text{$M$の線型独立な行の最大個数})
     \le
-    (M\text{の線型独立な列の最大個数})
+    (\text{$M$の線型独立な列の最大個数})
   \]
   が成り立つ．これを$M = A^\mathsf{T}$に適用する．
   $A^\mathsf{T}$の行は$A$の列であるから，左辺は$A$の線型独立な列の最大個数，すなわち$r$に等しい．
@@ -427,7 +428,7 @@
   も成り立つ．
   これが証明すべきことであった．
 \end{proof}
-\end{leftbar}
+\end{tleftbar}
 
 \begin{cor}{階数の上限}{階数の上限}
   $m \times n$行列$A$に対して，
@@ -437,13 +438,13 @@
   が成り立つ．
 \end{cor}
 
-\begin{leftbar}
+\begin{tleftbar}
 \begin{proof}
   $A$の列は$n$本しかないので$\rank A \le n$である．
   また$A$の行は$m$本しかないので，\thref{行階数と列階数の一致}より$\rank A \le m$である．
   これが証明すべきことであった．
 \end{proof}
-\end{leftbar}
+\end{tleftbar}
 
 \begin{remark}[行階数と列階数の一致の意味]
   \thref{行階数と列階数の一致}は，一見すると当たり前ではない主張である．
@@ -472,7 +473,7 @@
   すなわち，$A$の列ベクトルの線型関係と，斉次連立一次方程式$A\bm{x} = \bm{0}$の解は同じものである．
 \end{prop}
 
-\begin{leftbar}
+\begin{tleftbar}
 \begin{proof}
   \prref{線型写像と線型結合}のあとのRemarkで見たとおり，
   \[
@@ -480,7 +481,7 @@
   \]
   が成り立つ．これが証明すべきことであった．
 \end{proof}
-\end{leftbar}
+\end{tleftbar}
 
 \begin{prop}{行基本変形と解集合}{行基本変形と解集合}
   $A$に行基本変形を施して得られる行列を$A'$とすると，
@@ -491,7 +492,7 @@
   が成り立つ．
 \end{prop}
 
-\begin{leftbar}
+\begin{tleftbar}
 \begin{proof}
 $A\bm{x} = \bm{0}$の第$i$式を$f_i(\bm{x}) = 0$とかく．
 行基本変形で得られる各式は$f_1, \dots, f_m$の線型結合であるから，
@@ -502,13 +503,13 @@ $A\bm{x} = \bm{0}$を満たす$\bm{x}$は$A’\bm{x} = \bm{0}$も満たす．
 同じ議論を逆操作に適用すれば逆向きの包含も従う．
 これが証明すべきことであった．
 \end{proof}
-\end{leftbar}
+\end{tleftbar}
 
 \begin{theorem}{行基本変形と階数}{行基本変形と階数}
   行基本変形によって階数は変化しない．
 \end{theorem}
 
-\begin{leftbar}
+\begin{tleftbar}
 \begin{proof}
 $A$に行基本変形を施して$A’$が得られたとする．
 $j_1 < \cdots < j_k$を任意にとり，$A$の第$j_1, \dots, j_k$列からなる行列を$B$，
@@ -522,7 +523,7 @@ $B\bm{y} = \bm{0}$（$A’$については$B’\bm{y} = \bm{0}$）が自明な�
 したがって線型独立な列の最大個数も一致し，$\rank A = \rank A’$である．
 これが証明すべきことであった．
 \end{proof}
-\end{leftbar}
+\end{tleftbar}
 
 \begin{remark}[行基本変形による階数の計算]
   \thref{行基本変形と階数}により，階数は次のようにして求められる．
