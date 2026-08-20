@@ -227,7 +227,7 @@
   \[
     \bm{w} = \sum_{i=1}^{k} \left(-\frac{\lambda_i}{\mu}\right) \bm{v}_i
   \]
-  となり，$\bm{w}$が線型結合として表せることになって仮定に反する．
+  となり，$\bm{w}$が$\bm{v}_1, \bm{v}_2, \dots, \bm{v}_k$の線型結合として表せることになって仮定に反する．
   よって$\mu = 0$であり，このとき$\sum_{i=1}^{k} \lambda_i \bm{v}_i = \bm{0}$となるから，
   線型独立性より$\lambda_1 = \cdots = \lambda_k = 0$である．
   これが証明すべきことであった．
@@ -286,7 +286,9 @@
     \bm{v}_{k+1}
     = \frac{1}{b_{k+1}}\left( \bm{w}_{k+1} - \sum_{i=1}^{k} a_i \bm{w}_i - \sum_{j=k+2}^{n} b_j \bm{v}_j \right)
   \]
-  となり，$\bm{v}_{k+1}$は$\bm{w}_1, \dots, \bm{w}_{k+1}, \bm{v}_{k+2}, \dots, \bm{v}_n$の線型結合として表せる．
+  となり，この式より$\bm{v}_{k+1}$は
+  $\bm{w}_1, \dots, \bm{w}_{k+1}, \bm{v}_{k+2}, \dots, \bm{v}_n$
+  の線型結合として表すことができる．
   したがって，$\bm{w}_1, \dots, \bm{w}_k, \bm{v}_{k+1}, \dots, \bm{v}_n$の線型結合として表せるベクトルは，
   すべて$\bm{w}_1, \dots, \bm{w}_{k+1}, \bm{v}_{k+2}, \dots, \bm{v}_n$の線型結合としても表せる．
   よって$(\ast_{k+1})$が成り立つ．
