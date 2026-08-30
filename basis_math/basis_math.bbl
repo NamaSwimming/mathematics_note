@@ -97,6 +97,32 @@
       \field{title}{基幹講座　数学　集合・論理と位相}
       \field{year}{2016}
     \endentry
+    \entry{saito}{book}{}{}
+      \name{author}{1}{}{%
+        {{hash=53e1a7dadd0fe6962768fe2b966511f1}{%
+           family={斎藤},
+           familyi={斎\bibinitperiod},
+           given={毅},
+           giveni={毅\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {東京大学出版会}%
+      }
+      \strng{namehash}{53e1a7dadd0fe6962768fe2b966511f1}
+      \strng{fullhash}{53e1a7dadd0fe6962768fe2b966511f1}
+      \strng{fullhashraw}{53e1a7dadd0fe6962768fe2b966511f1}
+      \strng{bibnamehash}{53e1a7dadd0fe6962768fe2b966511f1}
+      \strng{authorbibnamehash}{53e1a7dadd0fe6962768fe2b966511f1}
+      \strng{authornamehash}{53e1a7dadd0fe6962768fe2b966511f1}
+      \strng{authorfullhash}{53e1a7dadd0fe6962768fe2b966511f1}
+      \strng{authorfullhashraw}{53e1a7dadd0fe6962768fe2b966511f1}
+      \field{sortinit}{4}
+      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{集合と位相}
+      \field{year}{2009}
+    \endentry
   \enddatalist
 \endrefsection
 \endinput
