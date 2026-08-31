@@ -1063,6 +1063,8 @@
 
 \RequirePackage{tikz}
 \usetikzlibrary{intersections,calc,arrows.meta,calendar,shadows.blur,matrix,fit,positioning}
+% フローチャート用（diamond 等の図形ノード）
+\usetikzlibrary{shapes.geometric}
 \RequirePackage{tikz-3dplot}  % 3D 座標系の描画
 
 \RequirePackage{pgfplots}
@@ -1134,6 +1136,45 @@
 \newcolumntype{B}[1]{>{\centering\arraybackslash\bfseries}m{#1}}
 
 \setlength{\tabcolsep}{8pt}  % 列間の水平余白
+
+% 表の罫線（\toprule / \midrule / \bottomrule）
+\RequirePackage{booktabs}
+
+% ---- 図・表のキャプションと相互参照 ----
+% キャプションのラベル（「図 1.2」「表 1.1」）を太字サンセリフに．
+% caption は hyperref より前に読み込むこと（§14 より前に置く理由）．
+\RequirePackage[labelfont={bf,sf},labelsep=quad,font=small]{caption}
+
+% 図・表の番号を「章番号.通し番号」にし，章ごとにリセットする
+\makeatletter
+\renewcommand{\thefigure}{\thepart.\arabic{figure}}
+\renewcommand{\thetable}{\thepart.\arabic{table}}
+\@addtoreset{figure}{part}
+\@addtoreset{table}{part}
+\makeatother
+
+% \figref{ラベル} → 「図 1.2」（リンク付き．\label{fig:ラベル} が必要）
+% \tabref{ラベル} → 「表 1.1」（リンク付き．\label{tab:ラベル} が必要）
+\newcommand{\figref}[1]{\hyperref[fig:#1]{図\ref*{fig:#1}}}
+\newcommand{\tabref}[1]{\hyperref[tab:#1]{表\ref*{tab:#1}}}
+
+% ---- フローチャート用の TikZ スタイル（本文の figure で使用） ----
+%   flowbox  … 処理・状態を表す角丸の箱
+%   flowbox* … 強調したい箱（薄灰の塗り＋太字）は flowbox,flowhl と併用
+%   flowq    … 判断（ひし形）
+%   flowlab  … 定理・補題などのラベル片
+%   flowarr  … 矢印
+\tikzset{
+  flowbox/.style={draw=appleGrayDark, rounded corners=3pt, minimum height=1.6em,
+                  inner sep=5pt, align=center, font=\small, text=appleInk},
+  flowhl/.style ={fill=appleGrayLight, font=\small\bfseries},
+  flowq/.style  ={draw=appleGrayDark, diamond, aspect=2.6, inner sep=1.5pt,
+                  align=center, font=\small, text=appleInk},
+  flowlab/.style={draw=appleGrayDark, rounded corners=2pt, fill=appleGrayLight,
+                  inner sep=4pt, font=\small, text=appleInk},
+  flowarr/.style={-{Stealth[length=2mm]}, thick, draw=appleGrayDark},
+  flowtxt/.style={font=\scriptsize, text=appleGray},
+}
 
 % ==============================================================
 % § 14. ハイパーリンク・参考文献・索引
