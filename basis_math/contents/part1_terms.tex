@@ -245,6 +245,47 @@ well-definedについては，\ref{subsec:写像の合成とwell-defined}項で�
 狭い意味での命題については，次項で「定理」とあわせて確認することにし，本項では広い意味での命題について解説する．
 なお，本書では，どちらの意味であるかが文脈から明らかな場合には，単に「命題」とかくことにする．
 
+\begin{figure}[h]
+  \centering
+\begin{tikzpicture}[
+  scale=0.875,
+  transform shape,
+  node distance=6mm and 10mm
+]
+    \node[flowbox] (sent) {文（主張）};
+    \node[flowq, below=of sent] (q1) {真偽が定まるか？};
+    \node[flowbox, right=14mm of q1] (notprop)
+      {命題ではない\\ \scriptsize（「$1+1$」「この部屋は暑い」など）};
+    \node[flowbox, flowhl, below=of q1] (broad) {命題（広い意味）};
+    \node[flowq, below=of broad] (q2) {真か偽か？};
+    \node[flowbox, left=10mm of q2, yshift=-14mm] (false)
+      {偽の命題\\ \scriptsize（「$1+1=46$」など）};
+    \node[flowbox, right=10mm of q2, yshift=-14mm] (true)
+      {真の命題\\ \scriptsize（「$1+1=2$」など）};
+    \node[flowq, below=of true] (q3) {証明を与え，\\見出しをつけるか？};
+    \node[flowbox, flowhl, below=9mm of q3, xshift=-14mm] (narrow) {命題（狭い意味）};
+    \node[flowlab, right=3mm of narrow] (thm) {定理};
+    \node[flowlab, right=3mm of thm]    (lem) {補題};
+    \node[flowlab, right=3mm of lem]    (cor) {系};
+    \node[draw=appleGray, dashed, rounded corners=3pt, inner sep=5pt,
+          fit=(narrow)(thm)(lem)(cor),
+          label={[flowtxt]below:正しいと分かっている主張につける見出し（ラベル）}]
+      (labels) {};
+
+    \draw[flowarr] (sent) -- (q1);
+    \draw[flowarr] (q1) -- node[flowtxt, above] {いいえ} (notprop);
+    \draw[flowarr] (q1) -- node[flowtxt, right] {はい} (broad);
+    \draw[flowarr] (broad) -- (q2);
+    \draw[flowarr] (q2) -| node[flowtxt, pos=0.25, above] {偽} (false);
+    \draw[flowarr] (q2) -| node[flowtxt, pos=0.25, above] {真} (true);
+    \draw[flowarr] (true) -- (q3);
+    \draw[flowarr] (q3) -- node[flowtxt, right] {はい} (labels.north -| q3);
+  \end{tikzpicture}
+  \caption{「命題」のふたつの意味}
+  \label{fig:命題のふたつの意味}
+\end{figure}
+
+
 さて，広い意味での命題，すなわち真偽が定まっている文についてみていこう．
 命題は「真の命題」と「偽の命題」のいずれかであり，このようにふたつの値を用いる論理体系を\emph{二値論理}\index{にちろんり@二値論理}とよぶ．
 以下では，命題が真であることを$\mathrm{T}$，偽であることを$\mathrm{F}$と表す．
@@ -315,6 +356,24 @@ well-definedについては，\ref{subsec:写像の合成とwell-defined}項で�
 数学では，証明によって正しいことが確かめられた主張に「命題」「定理」「補題」「系」といった見出し（ラベル）をつけて述べる．
 「狭い意味での命題」とは，このラベルとしての「命題」のことであり，\textbf{Prop}と略記される．
 前項でみた「真偽が定まる文」という広い意味と異なり，こちらは「証明された（あるいは証明すべき）正しい数学の主張」を指す言葉である\footnote{したがって，狭い意味での命題は，広い意味では「真の命題」である．偽である主張に「命題」というラベルがつけられることはない．}．
+両者の違いを\tabref{命題の比較}に整理した．
+
+\begin{table}[htbp]
+  \centering
+  \begin{tabular}{>{\centering\arraybackslash}m{2.2cm} L{4.9cm} L{4.9cm}}
+    \toprule
+      & \textbf{広い意味} & \textbf{狭い意味} \\
+    \midrule
+    なにを指すか & 真偽が定まっている文 & 証明された数学の主張につけるラベル \\
+    真偽 & 真の場合も偽の場合もある & つねに真 \\
+    対になる語 & 「命題でない文」 & 定理・補題・系 \\
+    主な登場場面 & 論理（真理値表など） & 教科書の見出し \\
+    例 & 「$1+1=2$」（真），「$1+1=46$」（偽） & \prref{逆行列の一意性} \\
+    \bottomrule
+  \end{tabular}
+  \caption{広い意味・狭い意味の命題の比較}
+  \label{tab:命題の比較}
+\end{table}
 
 そのうえで，\emph{定理}\index{ていり@定理}（\emph{theorem}）とは，正しいと分かっている数学の主張（狭い意味での命題）の中でもとりわけ重要なものを指す．\textbf{Thm}と略記される．
 
