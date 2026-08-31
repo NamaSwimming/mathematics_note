@@ -243,52 +243,72 @@ well-definedについては，\ref{subsec:写像の合成とwell-defined}項で�
 \emph{広い意味}では，真であるか偽であるかが定まる文を命題という\footnote{たとえば，「$1+1=2$」は真の命題であり，「$1+1=3$」は偽の命題である．真であっても偽であっても，真偽が定まってさえいれば命題とよぶことに注意しよう．}．
 一方，\emph{狭い意味}では，「定理」「補題」「系」などと同じように，正しい数学の主張につけるラベルのひとつとして「命題」という語を用いる\footnote{前項の\prref{絶対値のふたつの定義の同値性}や\prref{逆行列の一意性}に「命題」という見出しをつけたのは，この用法である．}．
 
-本項では「広い意味での命題」について解説する．そして，本書ではどちらの意味であるかが明らかな場合は，単に「命題」とかくと約束する．
-
-
 \begin{figure}[h]
   \centering
-\begin{tikzpicture}[
-  scale=0.95,
-  transform shape,
-  node distance=6mm and 10mm
-]
-    \node[flowbox] (sent) {文（主張）};
-    \node[flowq, below=of sent] (q1) {真偽が定まるか？};
-    \node[flowbox, right=14mm of q1] (notprop)
-      {命題ではない\\ \scriptsize（「$1+1$」「この部屋は暑い」など）};
+  \begin{tikzpicture}[
+    scale=0.90,
+    transform shape,
+    node distance=5mm and 10mm
+  ]
+    \node[flowbox] (sent) {言葉・式};
+    \node[flowq, below=of sent] (q0) {主張を表しているか？};
+    \node[flowbox, right=12mm of q0] (nosent)
+      {命題ではない\\ \scriptsize（「$1+1$」「りんご」など）};
+
+    \node[flowq, below=of q0] (q1) {真偽が定まるか？};
+    \node[flowbox, right=12mm of q1] (notprop)
+      {命題ではない\\ \scriptsize（「この部屋は暑い」など）};
+
     \node[flowbox, flowhl, below=of q1] (broad) {命題（広い意味）};
     \node[flowq, below=of broad] (q2) {真か偽か？};
-    \node[flowbox, left=10mm of q2, yshift=-14mm] (false)
+
+    \node[flowbox, left=10mm of q2, yshift=-13mm] (false)
       {偽の命題\\ \scriptsize（「$1+1=46$」など）};
-    \node[flowbox, right=10mm of q2, yshift=-14mm] (true)
+    \node[flowbox, right=10mm of q2, yshift=-13mm] (true)
       {真の命題\\ \scriptsize（「$1+1=2$」など）};
+
     \node[flowq, below=of true] (q3) {証明を与え，\\見出しをつけるか？};
-    \node[flowbox, flowhl, below=9mm of q3, xshift=-14mm] (narrow) {命題（狭い意味）};
+
+    \node[flowbox, flowhl, below=8mm of q3, xshift=-14mm] (narrow)
+      {命題（狭い意味）};
     \node[flowlab, right=3mm of narrow] (thm) {定理};
     \node[flowlab, right=3mm of thm]    (lem) {補題};
     \node[flowlab, right=3mm of lem]    (cor) {系};
-    \node[draw=appleGray, dashed, rounded corners=3pt, inner sep=5pt,
-          fit=(narrow)(thm)(lem)(cor),
-          label={[flowtxt]below:正しいと分かっている主張につける見出し（ラベル）}]
-      (labels) {};
 
-    \draw[flowarr] (sent) -- (q1);
+    \node[
+      draw=appleGray,
+      dashed,
+      rounded corners=3pt,
+      inner sep=5pt,
+      fit=(narrow)(thm)(lem)(cor),
+      label={[flowtxt]below:
+        正しいと分かっている主張につける見出し（ラベル）}
+    ] (labels) {};
+
+    \draw[flowarr] (sent) -- (q0);
+    \draw[flowarr] (q0) -- node[flowtxt, above] {いいえ} (nosent);
+    \draw[flowarr] (q0) -- node[flowtxt, right] {はい} (q1);
+
     \draw[flowarr] (q1) -- node[flowtxt, above] {いいえ} (notprop);
     \draw[flowarr] (q1) -- node[flowtxt, right] {はい} (broad);
+
     \draw[flowarr] (broad) -- (q2);
-    \draw[flowarr] (q2) -| node[flowtxt, pos=0.25, above] {偽} (false);
-    \draw[flowarr] (q2) -| node[flowtxt, pos=0.25, above] {真} (true);
+    \draw[flowarr] (q2) -|
+      node[flowtxt, pos=0.25, above] {偽} (false);
+    \draw[flowarr] (q2) -|
+      node[flowtxt, pos=0.25, above] {真} (true);
+
     \draw[flowarr] (true) -- (q3);
-    \draw[flowarr] (q3) -- node[flowtxt, right] {はい} (labels.north -| q3);
+    \draw[flowarr] (q3) --
+      node[flowtxt, right] {はい} (labels.north -| q3);
   \end{tikzpicture}
   \caption{「命題」のふたつの意味}
   \label{fig:命題のふたつの意味}
 \end{figure}
 
+本項では「広い意味での命題」について解説する．そして，本書ではどちらの意味であるかが明らかな場合は，単に「命題」とかくと約束する．
 
-さて，広い意味での命題，すなわち真偽が定まっている文についてみていこう．
-命題は「真の命題」と「偽の命題」のいずれかであり，このようにふたつの値を用いる論理体系を\emph{二値論理}\index{にちろんり@二値論理}とよぶ．
+「広い意味での命題」は「真の命題」と「偽の命題」のいずれかであり，このようにふたつの値を用いる論理体系を\emph{二値論理}\index{にちろんり@二値論理}とよぶ．
 以下では，命題が真であることを$\mathrm{T}$，偽であることを$\mathrm{F}$と表す．
 
 命題の定義にあてはまらないとされる主張には
