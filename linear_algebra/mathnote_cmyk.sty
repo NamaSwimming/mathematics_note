@@ -391,7 +391,11 @@
 
 % 現在の Part・Section タイトルを保持するグローバル変数
 \newcommand{\CurrentPartTitle}{}
-\newcommand{\CurrentSectionTitle}{}
+% Section タイトルはマークで受け渡す（\gdef だと，節見出しを読み込んだ
+% 時点で書き換わり，見出しが次ページへ送られた場合に前のページの柱まで
+% 新しい節になってしまう）．柱にはそのページ末尾時点の節を出す．
+\NewMarkClass{mnsection}
+\newcommand{\CurrentSectionTitle}{\LastMark{mnsection}}
 
 % ページスタイルの適用
 \pagestyle{fancy}
@@ -575,7 +579,7 @@
 
 % 番号付き section
 \newcommand{\sectionheadrule}[2]{%
-  \gdef\CurrentSectionTitle{\thesection\quad #2}%
+  \InsertMark{mnsection}{\thesection\quad #2}%
   \noindent
   \begingroup\mnnoscale% 座標は \mnmm 換算済みのため自動スケールを除外
   \begin{tikzpicture}[baseline=(title.base)]
@@ -620,7 +624,7 @@
 
 % 番号なし section
 \newcommand{\sectionheadrulestar}[1]{%
-  \gdef\CurrentSectionTitle{#1}%
+  \InsertMark{mnsection}{#1}%
   \noindent
   \begingroup\mnnoscale% 座標は \mnmm 換算済みのため自動スケールを除外
   \begin{tikzpicture}[baseline=(title.base)]
@@ -670,8 +674,11 @@
 
 \setlength{\parindent}{1\zw}
 
+% \color は垂直モードで whatsit を置き，その直後の \parskip が改ページ
+% 可能点になる（節見出しの直後でも項見出しとの間で改ページされ，節見出し
+% だけがページ下端に取り残される）．\nobreak でこの改ページを禁止する．
 \titleformat{\subsection}[block]
-  {\normalfont\color{black}\large\bfseries}
+  {\normalfont\color{black}\nobreak\large\bfseries}
   {\thesubsection}
   {0.7em}
   {}
