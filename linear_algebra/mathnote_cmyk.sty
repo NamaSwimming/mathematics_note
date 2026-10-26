@@ -384,12 +384,10 @@
 % 奇数ページ右: Section タイトル + ページ番号
 \RequirePackage{fancyhdr}
 % \titleformat / \titlespacing（\section・\subsection の見出し整形で使用）
-% 【変更】nobottomtitles* を追加：ページ下部の残り高さが
-% \bottomtitlespace 未満なら，見出しを次ページ先頭へ送る．
-% （見出しだけがページ最下部に孤立するのを防ぐ）
-\RequirePackage[nobottomtitles*]{titlesec}
-% 見出し＋本文数行が入らない場合に送る閾値（好みで調整．大きいほど早めに送る）
-\renewcommand{\bottomtitlespace}{.15\textheight}
+% 【変更】nobottomtitles* を外した：見出しを次ページへ送ったページが
+% \raggedbottom 扱いになり，下に最大 \bottomtitlespace 分の余白が残るため．
+% 見出し直後での改ページは titlesec 標準の \nobreak で防がれる．
+\RequirePackage{titlesec}
 
 % 現在の Part・Section タイトルを保持するグローバル変数
 \newcommand{\CurrentPartTitle}{}
@@ -668,7 +666,7 @@
   {\sectionheadrulestar}
 
 \titlespacing{\section}
-  {0pt}{18\mnvpt}{14\mnvpt}
+  {0pt}{18\mnvpt plus 6\mnvpt minus 2\mnvpt}{14\mnvpt plus 3\mnvpt minus 2\mnvpt}
 
 \setlength{\parindent}{1\zw}
 
@@ -679,7 +677,7 @@
   {}
 
 % 星なし ＝ 見出し直後の段落を字下げする
-\titlespacing{\subsection}{0pt}{14\mnvpt}{6\mnvpt}
+\titlespacing{\subsection}{0pt}{14\mnvpt plus 6\mnvpt minus 2\mnvpt}{6\mnvpt plus 2\mnvpt}
 
 
 
@@ -846,8 +844,8 @@
     %   背景に色が付くとカードの下端が見えるようになるため，
     %   2pt 外側に浮いた線は「ズレ」に見える．下端に密着させる．
     borderline south={0.5pt}{0pt}{appleLineGray},
-    before skip=16\mnvpt plus 6\mnvpt minus 4\mnvpt,
-    after skip=18\mnvpt plus 6\mnvpt minus 4\mnvpt,
+    before skip=16\mnvpt plus 10\mnvpt minus 4\mnvpt,
+    after skip=18\mnvpt plus 10\mnvpt minus 4\mnvpt,
     before upper={\setlength{\parindent}{1\zw}},
     before lower={\setlength{\parindent}{1\zw}},
     pad at break=0pt,
@@ -1119,8 +1117,8 @@
   top=13.6\mnmm,
   bottom=5.5\mnmm,
   %
-  before skip=1.0\baselineskip,
-  after skip=1.0\baselineskip,
+  before skip=1.0\baselineskip plus 8\mnvpt minus 2\mnvpt,
+  after skip=1.0\baselineskip plus 8\mnvpt minus 2\mnvpt,
   %
   % ---- 本文 ----
   before upper={%
@@ -1151,8 +1149,8 @@
   colback=white, colframe=appleLine,
   boxrule=0.35\mnpt, arc=4\mnmm, boxsep=1\mnmm,
   left=7\mnmm, right=7\mnmm, top=4\mnmm, bottom=4\mnmm,
-  before skip=0.9\baselineskip,
-  after skip =0.9\baselineskip,
+  before skip=0.9\baselineskip plus 6\mnvpt minus 2\mnvpt,
+  after skip =0.9\baselineskip plus 6\mnvpt minus 2\mnvpt,
   fonttitle=\bfseries\sffamily,
   coltitle=appleInk,
   title=#1,
@@ -1362,6 +1360,22 @@
 
 % 図の回り込み
 \RequirePackage{wrapfig}
+
+% ---- 図・表のキャプション ----
+% キャプションのラベル（「図 1.2」「表 1.1」）を太字サンセリフに．
+% caption は hyperref より前に読み込むこと．
+\RequirePackage[labelfont={bf,sf},labelsep=quad,font=small]{caption}
+
+% 図・表の番号を「章番号.通し番号」にし，章ごとにリセットする
+\renewcommand{\thefigure}{\thepart.\arabic{figure}}
+\renewcommand{\thetable}{\thepart.\arabic{table}}
+\@addtoreset{figure}{part}
+\@addtoreset{table}{part}
+
+% \figref{ラベル} → 「図 1.2」（リンク付き．\label{fig:ラベル} が必要）
+% \tabref{ラベル} → 「表 1.1」（リンク付き．\label{tab:ラベル} が必要）
+\newcommand{\figref}[1]{\hyperref[fig:#1]{図\ref*{fig:#1}}}
+\newcommand{\tabref}[1]{\hyperref[tab:#1]{表\ref*{tab:#1}}}
 
 % 表組みの拡張
 \RequirePackage{array}
@@ -1957,3 +1971,9 @@
   % 見た目に影響が出ると感じたら削除してよい．
   \setlength{\parskip}{0pt plus 1\mnvpt}%
 }
+
+% 【追加】ページ下端をそろえる（\flushbottom）．
+%   ltjsarticle は一段組のとき \raggedbottom を指定するため，
+%   定理ボックスや見出しが次ページへ送られると下に大きな余白が残っていた．
+%   上の各種スキップに伸び代を持たせ，ページ内の空きを均等に配分する．
+\flushbottom
