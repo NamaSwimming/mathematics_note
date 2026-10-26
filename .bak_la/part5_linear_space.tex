@@ -1,0 +1,1826 @@
+\phantomsection
+\part{線型空間}
+
+\begin{abstract}
+  この章では\textbf{線型空間}を導入し，ベクトルを抽象的な立場から捉え直す．
+  「ベクトルとは何か」ではなく「ベクトルに対して何ができるか」に着目することで，数ベクトルだけでなく，行列や多項式，関数，数列なども同じ枠組みで扱えるようになる．
+  さらに，線型部分空間，基底，次元といった基本概念を導入し，線型空間の構造を調べる．
+  最後に，基底を取り替えたときに座標がどのように変わるかを見る．
+\end{abstract}
+
+\phantomsection
+\section{線型空間}
+
+\phantomsection
+\subsection{線型空間の定義}
+
+これまで本書で「ベクトル」といえば，$K^n$の元，すなわち数を縦に並べたもの（数ベクトル）のことであった．
+しかし\partref{線型写像}では，多項式を係数の並びとみなしたり（\exref{多項式の微分と定積分}），数列を項の並びとみなしたりすることで，多項式や数列にも線型写像の考え方を持ち込んだ．
+そこで行ったのは，いわば「数ベクトルへの翻訳」である．
+
+ここで少し立ち止まって考えてみよう．
+線型写像の議論で実際に使ったのは，ベクトルどうしを足せること，ベクトルをスカラー倍できること，そしてそれらがいつもの計算規則を満たすこと，の三点だけであった．
+それならば，翻訳などせずとも，「足し算とスカラー倍ができて，いつもの計算規則が成り立つ」ものはすべてベクトルとして扱ってしまえばよいのではないか．
+この発想を定式化したものが，本章の主役である\textbf{線型空間}\index{せんけいくうかん@線型空間}である．
+
+\partref{行列と連立一次方程式}から\partref{行列式}までは$K=\mathbb{R}$または$K=\mathbb{C}$としていたが，
+本章では$K$を任意の\textbf{体}\index{たい@体}（field）とする%
+\footnote{体とは，大まかにいえば，加法・減法・乗法，および$0$でない元による除法が自由に行える代数系である．
+$\mathbb{R}$や$\mathbb{C}$はその代表例であり，有理数全体$\mathbb{Q}$も体である．}．
+もっとも，本章の議論で体について用いるのは四則演算ができることだけなので，体という言葉に馴染みのない読者は，これまでどおり$K=\mathbb{R}$または$\mathbb{C}$と思って読み進めてもらって構わない．
+
+次の定義では，体$K$の加法・乗法と，
+$V$の加法・スカラー倍を区別するため，それぞれ異なる記号を用いる．
+
+\begin{definition}{線型空間}{線型空間}
+  $K$を体とし，その加法と乗法をそれぞれ
+  \[
+    \Kadd\colon K\times K\to K,
+    \qquad
+    \Kmul\colon K\times K\to K
+  \]
+  とする．また，加法の零元を$0_K$，乗法の単位元を$1_K$とする．
+
+  集合$V$に，加法とスカラー倍
+  \[
+    \Vadd\colon V\times V\to V,
+    \qquad
+    \scalmul\colon K\times V\to V
+  \]
+  が定められているとする．
+  このとき，次の条件を満たす$V$を体$K$上の\textbf{線型空間}という．
+
+  \begin{enumerate}[label=(\roman*),leftmargin=3.2em]
+    \item \textbf{加法に関して可換群}
+
+    $V$は，加法$\Vadd$に関して可換群をなす．
+
+    \item \textbf{スカラー倍に関する性質}
+
+    任意の$\bm{v},\bm{w}\in V$および$\alpha,\beta\in K$に対して，
+    \[
+      1_K\scalmul\bm{v}=\bm{v},
+      \qquad
+      (\alpha\Kadd\beta)\scalmul\bm{v}
+      =
+      (\alpha\scalmul\bm{v})\Vadd(\beta\scalmul\bm{v}),
+    \]
+    \[
+      \alpha\scalmul(\bm{v}\Vadd\bm{w})
+      =
+      (\alpha\scalmul\bm{v})\Vadd(\alpha\scalmul\bm{w}),
+      \qquad
+      (\alpha\Kmul\beta)\scalmul\bm{v}
+      =
+      \alpha\scalmul(\beta\scalmul\bm{v})
+    \]
+    が成り立つ．
+  \end{enumerate}
+
+  $V$の元を\textbf{ベクトル}という．
+  線型空間は\textbf{ベクトル空間}ともよばれる．
+\end{definition}
+
+仰々しい記号が並んだが，やっていることは単純である．
+集合$V$に「足し算」と「スカラー倍」という$2$つの演算が与えられていて，それらが数ベクトルのときと同じ計算規則を満たしていればよい，というだけのことである．
+ここで，$V$の元が「矢印」である必要も，「数の並び」である必要もないことに注意してほしい．
+ベクトルであるかどうかは，その元の\textbf{正体}ではなく，元のあいだにどのような\textbf{演算}が定められているかによって決まるのである．
+
+この定義では，$4$つの演算を区別するために，
+一時的に$\Kadd$，$\Kmul$，$\Vadd$，$\scalmul$という記号を用いた．
+しかし，どの演算であるかは文脈から判断できるため，以下では
+$\alpha\Kadd\beta$，$\bm{v}\Vadd\bm{w}$，$\alpha\Kmul\beta$，$\alpha\scalmul\bm{v}$
+を，それぞれ
+$\alpha+\beta$，$\bm{v}+\bm{w}$，$\alpha\beta$，$\alpha\bm{v}$
+と表す．
+たとえば
+\[
+  (\alpha+\beta)\bm{v}
+  =
+  \alpha\bm{v}+\beta\bm{v}
+\]
+では，左辺の$+$は$K$の加法，右辺の$+$は$V$の加法である．
+同じ記号$+$が$2$通りの意味で使われているわけだが，慣れればかえって見通しがよい．
+
+\begin{remark}[加法に関する可換群の条件]
+線型空間の公理のうち，
+「加法に関して可換群である」という条件には，
+結合法則，交換法則，零ベクトルの存在，加法逆元の存在の$4$つが含まれている．
+具体的には，ある特別な元$\bm{0}_V\in V$（これを\textbf{零ベクトル}\index{れいべくとる@零ベクトル}という）が存在して，任意の$\bm{u},\bm{v},\bm{w}\in V$に対して
+\[
+  (\bm{v}+\bm{w})+\bm{u}
+  =
+  \bm{v}+(\bm{w}+\bm{u}),
+  \qquad
+  \bm{v}+\bm{w}
+  =
+  \bm{w}+\bm{v},
+  \qquad
+  \bm{v}+\bm{0}_V
+  =
+  \bm{v}
+\]
+が成り立ち，さらに各$\bm{v}\in V$に対して
+\[
+  \bm{v}+(-\bm{v})
+  =
+  \bm{0}_V
+\]
+を満たす元$-\bm{v}\in V$（\textbf{加法逆元}）が存在する，ということである．
+\partref{行列と連立一次方程式}の\prref{行列の和の計算規則}で行列について確かめた$4$つの規則と，まったく同じ形をしていることに気づくであろう．
+\end{remark}
+
+定義だけでは掴みどころがないので，例を見よう．
+
+\begin{example}{線型空間の例}{線型空間の例}
+次の集合はいずれも，通常の加法とスカラー倍に関して線型空間となる．
+\begin{enumerate}[label=(\arabic*),leftmargin=3.2em]
+\item $K$上の線型空間$K^n$（数ベクトル空間）．$\mathbb{R}^n$や$\mathbb{C}^n$がその例である．
+\item $K$上の線型空間$M_{m,n}(K)$（$K$の元を成分とする$m\times n$行列全体，\deref{行列全体の集合}）．
+\item $\mathbb{R}$上の線型空間$\mathbb{R}[x]$（実数係数多項式全体）．
+\item $\mathbb{R}$上の線型空間$\mathcal{F}(\mathbb{R})$（$\mathbb{R}$から$\mathbb{R}$への関数全体）．
+  ここで，関数$f$，$g$の和と，$f$の$\alpha$倍は
+  \[
+    (f+g)(x)=f(x)+g(x),
+    \qquad
+    (\alpha f)(x)=\alpha f(x)
+  \]
+  で定める．零ベクトルは恒等的に$0$をとる関数である．
+\item $\mathbb{R}$上の線型空間$\mathcal{S}$（実数列$(a_n)_{n\ge1}$全体）．
+  和とスカラー倍は項ごとに$(a_n)+(b_n)=(a_n+b_n)$，$\alpha(a_n)=(\alpha a_n)$で定める．
+\end{enumerate}
+(1)，(2)は\partref{行列と連立一次方程式}で確かめた計算規則そのものである．
+(3)〜(5)についても，公理の各式は「各係数ごと」「各点$x$ごと」「各項ごと」に見れば実数の計算規則に帰着されるので，すぐに確かめられる\footnote{同じ集合でも，どの体の上の線型空間とみるかによって構造は異なる．たとえば$\mathbb{C}^n$は，スカラーを実数に制限すれば$\mathbb{R}$上の線型空間ともみなせる．線型空間を考えるときに係数体を明示するのはこのためである．}．
+\end{example}
+
+関数や数列が「ベクトル」だといわれると，戸惑う方もいるかもしれない．
+しかし，高校で学んだ「$2$つの関数を足す」「関数を定数倍する」という操作は，まさしく\deref{線型空間}の加法とスカラー倍である．
+関数のグラフを矢印とみなす必要はなく，足し算とスカラー倍が自然に定まっていることが重要なのである．
+
+逆に，集合と演算の組がいつでも線型空間になるわけではない．
+公理が$1$つでも破れれば，それは線型空間ではない．
+
+\begin{example}{線型空間にならない例}{線型空間にならない例}
+  $V=\mathbb{R}^2$とし，加法は通常どおりとするが，スカラー倍を
+  \[
+    \alpha\ast\begin{pmatrix} x \\ y \end{pmatrix}
+    =
+    \begin{pmatrix} \alpha x \\ y \end{pmatrix}
+  \]
+  （第$1$成分だけを$\alpha$倍する）と定めてみる．
+  このとき$1\ast\bm{v}=\bm{v}$や$\alpha\ast(\bm{v}+\bm{w})=\alpha\ast\bm{v}+\alpha\ast\bm{w}$は成り立つが，
+  \[
+    (1+1)\ast\begin{pmatrix} 0 \\ 1 \end{pmatrix}
+    =\begin{pmatrix} 0 \\ 1 \end{pmatrix},
+    \qquad
+    1\ast\begin{pmatrix} 0 \\ 1 \end{pmatrix}
+    +1\ast\begin{pmatrix} 0 \\ 1 \end{pmatrix}
+    =\begin{pmatrix} 0 \\ 2 \end{pmatrix}
+  \]
+  となり，$(\alpha+\beta)\ast\bm{v}=\alpha\ast\bm{v}+\beta\ast\bm{v}$が成り立たない．
+  よって，この演算に関して$\mathbb{R}^2$は線型空間ではない．
+  これは，\partref{行列と連立一次方程式}で行列のスカラー倍の定義の設計について述べたRemark（\deref{行列のスカラー倍}のあと）と同じ現象である．
+\end{example}
+
+このように，線型空間であるかどうかは集合だけでは決まらず，演算まで込めて初めて意味をもつ．
+
+さて，公理として要請したのは上の$8$つの式だけである．
+「$0$倍すれば零ベクトルになる」のような，数ベクトルでは当たり前だった性質も，一般の線型空間では公理から証明しなければならない．
+ここで手を抜くと，あとの議論のどこかで「数ベクトルなら成り立つが，一般には保証されていないこと」を使ってしまいかねないからである．
+
+\begin{prop}{線型空間の基本性質}{線型空間の基本性質}
+  $V$を体$K$上の線型空間とする．
+  任意の$\bm{v} \in V$および任意の$\alpha \in K$に対して，次が成り立つ：
+  \begin{enumerate}[label=(\roman*),leftmargin=3.2em]
+    \item $0_K \bm{v} = \bm{0}_V$
+    \item $\alpha \bm{0}_V = \bm{0}_V$
+    \item $(-1_K)\bm{v} = -\bm{v}$
+  \end{enumerate}
+\end{prop}
+
+\begin{tleftbar}
+\begin{proof}
+  (i)について，スカラー倍に関する分配律より，
+  \[
+    0_K \bm{v} = (0_K + 0_K)\bm{v} = 0_K \bm{v} + 0_K \bm{v}
+  \]
+  である．両辺に$0_K \bm{v}$の加法逆元$-(0_K \bm{v})$を加え，結合法則を用いると，
+  $\bm{0}_V = 0_K \bm{v}$
+  を得る．
+
+  (ii)について，同様に，
+  \[
+    \alpha \bm{0}_V = \alpha(\bm{0}_V + \bm{0}_V) = \alpha \bm{0}_V + \alpha \bm{0}_V
+  \]
+  であるから，両辺に$-(\alpha \bm{0}_V)$を加えて$\bm{0}_V = \alpha \bm{0}_V$を得る．
+
+  (iii)について，(i)より，
+  \[
+    \bm{v} + (-1_K)\bm{v} = 1_K \bm{v} + (-1_K)\bm{v} = \bigl(1_K + (-1_K)\bigr)\bm{v} = 0_K \bm{v} = \bm{0}_V
+  \]
+  である．加法逆元の一意性\footnote{$\bm{v}+\bm{w}=\bm{0}_V$かつ$\bm{v}+\bm{w}'=\bm{0}_V$ならば，$\bm{w}=\bm{w}+(\bm{v}+\bm{w}')=(\bm{w}+\bm{v})+\bm{w}'=\bm{0}_V+\bm{w}'=\bm{w}'$である．同様にして，零ベクトルもただひとつであることがわかる．}より，$(-1_K)\bm{v} = -\bm{v}$である．
+  これが証明すべきことであった．
+\end{proof}
+\end{tleftbar}
+
+以下，$\bm{v}+(-\bm{w})$を$\bm{v}-\bm{w}$とかく．
+また，零ベクトル$\bm{0}_V$は，$V$が文脈から明らかなときは単に$\bm{0}$とかくことにする．
+
+\phantomsection
+\subsection{線型部分空間}
+
+ある集合が線型空間であることを確かめるには，本来は$8$つの公理をすべてチェックしなければならない．
+これはなかなか骨の折れる作業である．
+しかし，調べたい集合$W$が，すでに線型空間であるとわかっている$V$の部分集合であれば，話はずっと簡単になる．
+結合法則や分配法則などの「等式で書かれた公理」は，$V$で成り立っている以上，$W$の元についても自動的に成り立つからである．
+残る問題は，$W$の中で足し算やスカラー倍をしたときに，結果が$W$の外に飛び出してしまわないかどうか，だけである．
+この「飛び出さない」という性質を，「加法やスカラー倍について\textbf{閉じている}」という．
+高校数学でも，「整数どうしの和や積はまた整数である（整数全体は加法と乗法について閉じている）」といった言い回しに出会ったことがあるだろう．
+線型部分空間とは，加法とスカラー倍について閉じた部分集合のことである．
+
+\begin{definition}{線型部分空間}{線型部分空間}
+  体$K$上の線型空間$V$の部分集合$W$が，
+  次の条件を満たすとき，
+  $W$を$V$の\textbf{線型部分空間}\index{せんけいぶぶんくうかん@線型部分空間}という．
+  \begin{enumerate}[label=(\roman*),leftmargin=3.2em]
+    \item \textbf{空でない}：$W\neq\varnothing$である．
+    \item \textbf{加法について閉じている}：任意の$\bm{v},\bm{w}\in W$に対して，$\bm{v}+\bm{w}\in W$である．
+    \item \textbf{スカラー倍について閉じている}：任意の$\bm{v}\in W$，任意の$\alpha\in K$に対して，$\alpha \bm{v}\in W$である．
+  \end{enumerate}
+\end{definition}
+
+この$3$条件のもとで，$W$は$V$の加法とスカラー倍をそのまま用いて，それ自身が線型空間になる．
+実際，$W$の元$\bm{w}$をひとつとれば，(iii)と\prref{線型空間の基本性質}より
+\[
+  \bm{0}_V = 0_K\bm{w}\in W,
+  \qquad
+  -\bm{w}=(-1_K)\bm{w}\in W
+\]
+となるので，零ベクトルと加法逆元も$W$の中に確保される．
+等式で書かれた残りの公理は，先に述べたように$V$から受け継がれる．
+
+\begin{remark}[空でないことと零ベクトル]
+上の議論からわかるように，定義の最初の条件は
+$\bm{0}_V\in W$
+に置き換えてもよい．
+実用上は，「まず$\bm{0}_V\in W$を確かめる」のが手早い．
+零ベクトルを含まない集合は，その時点で線型部分空間ではないと判定できるからである．
+\end{remark}
+
+具体例で感覚をつかもう．
+とくに，線型部分空間に\textbf{ならない}例のほうが，定義の意味をよく教えてくれる．
+
+\begin{example}{線型部分空間の例}{線型部分空間の例}
+  \begin{enumerate}[label=(\arabic*),leftmargin=3.2em]
+    \item 任意の線型空間$V$に対して，$\{\bm{0}_V\}$と$V$自身は，いずれも$V$の線型部分空間である．
+    \item $K = \mathbb{R}$とする．原点を通る直線
+      \[
+        W = \left\{ \begin{pmatrix} x \\ y \end{pmatrix} \in \mathbb{R}^2 ~\middle|~ 2x - y = 0 \right\}
+      \]
+      は$\mathbb{R}^2$の線型部分空間である（\figref{subspace-or-not}(a)）．
+      実際，$\bm{0} \in W$であり，$2x_1 - y_1 = 0$かつ$2x_2 - y_2 = 0$ならば$2(x_1 + x_2) - (y_1 + y_2) = 0$，また任意の$\alpha \in \mathbb{R}$に対して$2(\alpha x_1) - \alpha y_1 = \alpha(2x_1 - y_1) = 0$となるからである．
+    \item 次数が$n$以下の実数係数多項式全体（零多項式を含む）を$\mathbb{R}[x]_{\le n}$とかく．
+      次数$n$以下の多項式どうしの和や，そのスカラー倍の次数が$n$を超えることはないから，$\mathbb{R}[x]_{\le n}$は$\mathbb{R}[x]$の線型部分空間である．
+  \end{enumerate}
+\end{example}
+
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}[
+      scale=0.6,
+      ax/.style={-{Stealth[length=1.4mm]}},
+      sub/.style={magenta, very thick},
+      vec/.style={-{Stealth[length=1.8mm]}, thick},
+      lab/.style={font=\scriptsize}]
+    % (a)
+    \begin{scope}
+      \draw[ax] (-1.7,0) -- (1.7,0); \draw[ax] (0,-1.7) -- (0,1.7);
+      \draw[sub] (-0.8,-1.6) -- (0.8,1.6);
+      \fill (0,0) circle (2.5pt);
+      \node[lab, align=center] at (0,-2.4) {(a) $2x-y=0$\\ 部分空間};
+    \end{scope}
+    % (b)
+    \begin{scope}[xshift=4.6cm]
+      \draw[ax] (-1.7,0) -- (1.7,0); \draw[ax] (0,-1.7) -- (0,1.7);
+      \draw[sub] (-0.3,-1.6) -- (1.3,1.6);
+      \draw[fill=white] (0,0) circle (2.5pt);
+      \node[lab, align=center] at (0,-2.4) {(b) $2x-y=1$\\ $\bm{0}$を含まない};
+    \end{scope}
+    % (c)
+    \begin{scope}[xshift=9.2cm]
+      \fill[magenta!15] (0,0) rectangle (1.6,1.6);
+      \draw[ax] (-1.7,0) -- (1.7,0); \draw[ax] (0,-1.7) -- (0,1.7);
+      \draw[vec, magenta] (0,0) -- (1.0,0.6) node[lab, above right, inner sep=1pt] {$\bm{v}$};
+      \draw[vec, dashed] (0,0) -- (-1.0,-0.6) node[lab, below left, inner sep=1pt] {$-\bm{v}$};
+      \node[lab, align=center] at (0,-2.4) {(c) 第$1$象限\\ $(-1)$倍で飛び出す};
+    \end{scope}
+    % (d)
+    \begin{scope}[xshift=13.8cm]
+      \draw[ax] (-1.7,0) -- (1.7,0); \draw[ax] (0,-1.7) -- (0,1.7);
+      \draw[sub] (-1.6,0) -- (1.6,0); \draw[sub] (0,-1.6) -- (0,1.6);
+      \draw[vec] (0,0) -- (1,0); \draw[vec] (0,0) -- (0,1);
+      \draw[densely dotted] (1,0) -- (1,1) -- (0,1);
+      \draw[vec, dashed] (0,0) -- (1,1) node[lab, above right, inner sep=1pt] {$\bm{e}_1+\bm{e}_2$};
+      \node[lab, align=center] at (0,-2.4) {(d) $x$軸$\cup$$y$軸\\ 和で飛び出す};
+    \end{scope}
+  \end{tikzpicture}
+  \caption{$\mathbb{R}^2$の部分集合が線型部分空間かどうか（(a)のみが線型部分空間）}
+  \label{fig:subspace-or-not}
+\end{figure}
+
+\figref{subspace-or-not}の(b)〜(d)は，いずれも線型部分空間でない例である．
+(b)の原点を通らない直線は，そもそも$\bm{0}$を含まない．
+(c)の第$1$象限$\{(x,y)^\mathsf{T} \mid x\ge0,~y\ge0\}$は$\bm{0}$を含み，加法についても閉じているが，$(-1)$倍すると外に出てしまう．
+(d)の$x$軸と$y$軸の合併は，スカラー倍については閉じているが，$\bm{e}_1+\bm{e}_2$が外に出てしまう．
+$3$つの条件はどれも省略できないのである．
+平面$\mathbb{R}^2$の線型部分空間は，じつは$\{\bm{0}\}$，原点を通る直線，$\mathbb{R}^2$全体の$3$種類しかない（このことは次元を導入すると簡単に示せる）．
+
+さらに，\partref{線型写像}で導入した線型写像の像と核（\deref{像と核}）は，線型部分空間の重要な例を与える\footnote{\partref{線型写像}では$K$を$\mathbb{R}$または$\mathbb{C}$としていたが，線型写像とその像・核の定義（\deref{線型写像}，\deref{像と核}），および\prref{線型写像と零ベクトル}や\prref{線型写像と線型結合}などの基本性質は，一般の体$K$に対してもそのまま通用する．\partref{線型独立性と階数}の\prref{線型従属の言い換え}なども同様である．}．
+\partref{線型写像}では，これらを単なる「部分集合」として定義したのであった．
+
+\begin{prop}{像と核の線型部分空間性}{像と核の線型部分空間性}
+  $f \colon K^n \to K^m$を線型写像とする．このとき，次が成り立つ．
+  \begin{enumerate}[label=(\roman*),leftmargin=3.2em]
+    \item $\Ker f$は$K^n$の線型部分空間である．
+    \item $\Im f$は$K^m$の線型部分空間である．
+  \end{enumerate}
+\end{prop}
+
+\begin{tleftbar}
+\begin{proof}
+  (i)について示す．
+  \prref{線型写像と零ベクトル}より$f(\bm{0}) = \bm{0}$であるから，$\bm{0} \in \Ker f$である．
+  $\bm{x}, \bm{y} \in \Ker f$，$\alpha \in K$とすると，$f$の線型性より
+  \[
+    f(\bm{x} + \bm{y}) = f(\bm{x}) + f(\bm{y}) = \bm{0} + \bm{0} = \bm{0},
+    \qquad
+    f(\alpha\bm{x}) = \alpha f(\bm{x}) = \alpha\bm{0} = \bm{0}
+  \]
+  であるから，$\bm{x} + \bm{y} \in \Ker f$，$\alpha\bm{x} \in \Ker f$である．
+  よって$\Ker f$は$K^n$の線型部分空間である．
+
+  (ii)について示す．
+  $\bm{0} = f(\bm{0}) \in \Im f$である．
+  $\bm{v}, \bm{w} \in \Im f$とすると，$\bm{v} = f(\bm{x})$，$\bm{w} = f(\bm{y})$となる$\bm{x}, \bm{y} \in K^n$がとれる．$f$の線型性より，任意の$\alpha\in K$に対して
+  \[
+    \bm{v} + \bm{w} = f(\bm{x}) + f(\bm{y}) = f(\bm{x} + \bm{y}) \in \Im f,
+    \qquad
+    \alpha\bm{v} = \alpha f(\bm{x}) = f(\alpha\bm{x}) \in \Im f
+  \]
+  である．よって$\Im f$は$K^m$の線型部分空間である．
+  これが証明すべきことであった．
+\end{proof}
+\end{tleftbar}
+
+とくに，斉次連立一次方程式$A\bm{x} = \bm{0}$の解全体は$\Ker T_A$であったから（\prref{連立一次方程式と像と核}），$K^n$の線型部分空間である．
+これを$A\bm{x} = \bm{0}$の\textbf{解空間}\index{かいくうかん@解空間}という．
+「$2$つの解の和はふたたび解であり，解のスカラー倍もまた解である」という重ね合わせの性質こそが，部分空間性の意味するところである．
+
+一方，$\bm{b}\ne\bm{0}$のとき，連立一次方程式$A\bm{x}=\bm{b}$の解全体は線型部分空間ではない．
+$\bm{x}=\bm{0}$が解にならないからである．
+\figref{subspace-or-not}の(a)と(b)は，それぞれ$2x-y=0$と$2x-y=1$の解全体であり，ちょうどこの対比になっている．
+
+線型部分空間がいくつか与えられたとき，そこから新たな線型部分空間を作ることができる．
+基本となるのは，共通部分と和である．
+
+\begin{definition}{共通部分・和}{共通部分・和}
+  $V$を線型空間，
+  $W_1,W_2$を$V$の線型部分空間とする．
+  このとき，集合としての共通部分
+  $W_1\cap W_2$
+  を$W_1$と$W_2$の\textbf{共通部分}という．
+  また，
+  \[
+  W_1+W_2
+  =
+  \{
+  \bm{w}_1+\bm{w}_2
+  \mid
+  \bm{w}_1\in W_1,\
+  \bm{w}_2\in W_2
+  \}
+  \]
+  を$W_1$と$W_2$の\textbf{和}\index{わ@和（部分空間の）}という．
+\end{definition}
+
+たとえば$\mathbb{R}^3$において，$W_1$を$xy$平面，$W_2$を$yz$平面とすれば，$W_1\cap W_2$は$y$軸であり，$W_1+W_2$は$\mathbb{R}^3$全体である．
+実際，任意の$(x,y,z)^\mathsf{T}$は$(x,y,0)^\mathsf{T}+(0,0,z)^\mathsf{T}$と，$W_1$の元と$W_2$の元の和に分けられる．
+
+\begin{prop}{共通部分と和の線型部分空間性}{共通部分と和の線型部分空間性}
+  \deref{共通部分・和}で定義した，
+  線型部分空間の共通部分および和は，
+  ともに線型部分空間である．
+\end{prop}
+
+\begin{tleftbar}
+\begin{proof}
+  まず，共通部分$W_1\cap W_2$について示す．
+  $W_1,W_2$はいずれも線型部分空間であるから$\bm{0}_V\in W_1$かつ$\bm{0}_V\in W_2$であり，
+  $\bm{0}_V\in W_1\cap W_2$である．
+  次に，$\bm{x},\bm{y}\in W_1\cap W_2$，$\alpha\in K$とする．
+  $\bm{x},\bm{y}$は$W_1$にも$W_2$にも属し，$W_1,W_2$はいずれも加法とスカラー倍について閉じているから，
+  $\bm{x}+\bm{y}$と$\alpha\bm{x}$は$W_1$にも$W_2$にも属する．
+  すなわち$\bm{x}+\bm{y}\in W_1\cap W_2$，$\alpha\bm{x}\in W_1\cap W_2$である．
+
+  続いて，和$W_1+W_2$について示す．
+  $\bm{0}_V=\bm{0}_V+\bm{0}_V$であり，$\bm{0}_V\in W_1$かつ$\bm{0}_V\in W_2$であるから，
+  $\bm{0}_V\in W_1+W_2$である．
+  $\bm{x},\bm{y}\in W_1+W_2$，$\alpha\in K$とすると，ある$\bm{x}_1,\bm{y}_1\in W_1$および
+  $\bm{x}_2,\bm{y}_2\in W_2$が存在して，
+  $\bm{x}=\bm{x}_1+\bm{x}_2$，$\bm{y}=\bm{y}_1+\bm{y}_2$
+  と表せる．したがって，
+  \[
+    \bm{x}+\bm{y}
+    =(\bm{x}_1+\bm{y}_1)+(\bm{x}_2+\bm{y}_2),
+    \qquad
+    \alpha\bm{x}
+    =\alpha\bm{x}_1+\alpha\bm{x}_2
+  \]
+  であり，$\bm{x}_1+\bm{y}_1,~\alpha\bm{x}_1\in W_1$，$\bm{x}_2+\bm{y}_2,~\alpha\bm{x}_2\in W_2$であるから，
+  $\bm{x}+\bm{y}\in W_1+W_2$，$\alpha\bm{x}\in W_1+W_2$となる．
+  これが証明すべきことであった．
+\end{proof}
+\end{tleftbar}
+
+\phantomsection
+\subsection{線型結合と線型包}
+
+\partref{線型独立性と階数}では，数ベクトルに対して線型結合を定義した（\deref{線型結合}）．
+その定義は，足し算とスカラー倍しか使っていないので，一般の線型空間の元に対しても，まったく同様に通用する．
+
+\begin{definition}{線型結合（一般の線型空間）}{一般の線型結合}
+  $V$を体$K$上の線型空間とする．
+  $n$個のベクトル$\bm{v}_1, \bm{v}_2, \dots, \bm{v}_n \in V$に対して，
+  \[
+    \lambda_1 \bm{v}_1 + \lambda_2 \bm{v}_2 + \cdots + \lambda_n \bm{v}_n
+    \quad (\lambda_i \in K)
+  \]
+  の形のベクトルを，$\bm{v}_1, \bm{v}_2, \dots, \bm{v}_n$の\textbf{線型結合}という．
+  線型関係，線型独立，線型従属についても，\partref{線型独立性と階数}と同じ式によって定義される．
+\end{definition}
+
+たとえば$\mathbb{R}[x]$において，$1+x$，$1-x$，$x^2$の線型結合として$3+x+2x^2=2(1+x)+(1-x)+2x^2$が得られる．
+また，$1$，$x$，$x^2$は線型独立である．
+$a+bx+cx^2$が零多項式になるのは$a=b=c=0$のときに限るからである．
+
+ベクトルの集合$S$が与えられたとき，その元の線型結合として表されるベクトルをすべて集めた集合を考えよう．
+$S$の元を「材料」として，足し算とスカラー倍だけで作れるものの全体である．
+
+\begin{definition}{線型包}{線型包}
+  $V$を体$K$上の線型空間とし，$S$を$V$の部分集合とする．
+
+  $S \neq \varnothing$のとき，$S$の有限個の元の線型結合全体の集合
+  \[
+    \Span(S)
+    = \{ \lambda_1 \bm{v}_1 + \cdots + \lambda_n \bm{v}_n \mid n \ge 1,\ \bm{v}_1, \dots, \bm{v}_n \in S,\ \lambda_1, \dots, \lambda_n \in K \}
+  \]
+  を$S$の\textbf{線型包}\index{せんけいほう@線型包}\index{Span@$\Span$}（\textbf{張る空間}\index{はるくうかん@張る空間}，生成される部分空間）という．
+  また，$\Span(\varnothing) = \{\bm{0}_V\}$と定める．
+
+  有限個のベクトル$\bm{v}_1, \bm{v}_2, \dots, \bm{v}_n \in V$に対しては，
+  $\Span(\bm{v}_1, \dots, \bm{v}_n) = \Span(\{\bm{v}_1, \dots, \bm{v}_n\})$
+  ともかく．
+\end{definition}
+
+$S$が無限集合の場合でも，一度に使う材料は有限個に限っている点に注意してほしい．
+無限個の和は，そもそも線型空間の演算だけでは意味をもたないからである．
+
+\noindent
+\begin{minipage}[c]{0.55\linewidth}
+  \setlength{\parindent}{1\zw}
+  \hspace{1\zw}幾何的には，$\mathbb{R}^3$の$1$本のベクトル$\bm{v}\ne\bm{0}$が張る空間$\Span(\bm{v})=\{\lambda\bm{v}\mid\lambda\in\mathbb{R}\}$は，原点を通り$\bm{v}$の方向に伸びる直線である．
+  また，同じ直線上にない$2$本のベクトル$\bm{u}$，$\bm{v}$が張る空間は，原点を通り$\bm{u}$と$\bm{v}$を含む平面になる（\figref{span-plane}）．
+  $\lambda$，$\mu$を動かすと，$\lambda\bm{u}+\mu\bm{v}$はこの平面上をくまなく動くのである．
+\end{minipage}%
+\hfill
+\begin{minipage}[c]{0.42\linewidth}
+  \centering
+  \begin{tikzpicture}[
+      scale=0.85,
+      x={(-0.5cm,-0.42cm)}, y={(1cm,0cm)}, z={(0cm,1cm)},
+      vec/.style={-{Stealth[length=2mm]}, thick},
+      lab/.style={font=\scriptsize, inner sep=1pt}]
+    \fill[magenta!12] (-1.2,-1.0,-0.5) -- (2.2,-1.0,0.35) -- (2.2,2.6,1.25) -- (-1.2,2.6,0.4) -- cycle;
+    \draw[-{Stealth[length=1.4mm]}] (0,0,0) -- (2.8,0,0) node[lab, below left] {$x$};
+    \draw[-{Stealth[length=1.4mm]}] (0,0,0) -- (0,3.0,0) node[lab, right] {$y$};
+    \draw[-{Stealth[length=1.4mm]}] (0,0,0) -- (0,0,2.0) node[lab, above] {$z$};
+    \draw[vec, magenta] (0,0,0) -- (1.5,0,0.375) node[lab, below] {$\bm{u}$};
+    \draw[vec, magenta] (0,0,0) -- (0,1.5,0.375) node[lab, below right] {$\bm{v}$};
+    \draw[densely dotted] (1.5,0,0.375) -- (1.5,1.5,0.75) -- (0,1.5,0.375);
+    \draw[vec] (0,0,0) -- (1.5,1.5,0.75) node[lab, below right] {$\lambda\bm{u}+\mu\bm{v}$};
+    \node[lab, magenta] at (-0.9,2.3,0.45) {$\Span(\bm{u},\bm{v})$};
+  \end{tikzpicture}
+  \captionof{figure}{$2$本のベクトルが張る平面}
+  \label{fig:span-plane}
+\end{minipage}
+\par\medskip
+
+数ベクトル以外の例も見ておこう．
+
+\begin{example}{線型包の例}{線型包の例}
+  $K^3$の標準基底ベクトル$\bm{e}_1$，$\bm{e}_2$に対して，
+  \[
+    \Span(\bm{e}_1, \bm{e}_2)
+    = \left\{ \lambda_1 \begin{pmatrix} 1 \\ 0 \\ 0 \end{pmatrix} + \lambda_2 \begin{pmatrix} 0 \\ 1 \\ 0 \end{pmatrix} ~\middle|~ \lambda_1, \lambda_2 \in K \right\}
+    = \left\{ \begin{pmatrix} \lambda_1 \\ \lambda_2 \\ 0 \end{pmatrix} ~\middle|~ \lambda_1, \lambda_2 \in K \right\}
+  \]
+  である．$K = \mathbb{R}$のとき，これは$xyz$空間における$xy$平面にほかならない．
+
+  また，実数係数多項式全体のなす線型空間$\mathbb{R}[x]$において，
+  \[
+    \Span(1, x, x^2)
+    = \{ a + bx + cx^2 \mid a, b, c \in \mathbb{R} \}
+    = \mathbb{R}[x]_{\le 2}
+  \]
+  である．
+  一方，$\Span(1+x,\,1-x)$も$\mathbb{R}[x]_{\le 1}$に一致する．
+  実際，$a+bx=\frac{a+b}{2}(1+x)+\frac{a-b}{2}(1-x)$と表せるからである．
+  このように，同じ線型部分空間が異なるベクトルの組によって張られることもある．
+\end{example}
+
+線型包という名前から想像されるとおり，線型包はつねに線型部分空間となる．
+
+\begin{prop}{線型包の線型部分空間性}{線型包の線型部分空間性}
+  $V$を体$K$上の線型空間，$S$を$V$の部分集合とする．
+  このとき，$\Span(S)$は$V$の線型部分空間である．
+\end{prop}
+
+\begin{tleftbar}
+\begin{proof}
+  $S = \varnothing$のときは，$\Span(\varnothing) = \{\bm{0}_V\}$であり，
+  $\bm{0}_V + \bm{0}_V = \bm{0}_V$
+  および，任意の$\alpha \in K$に対して$\alpha \bm{0}_V = \bm{0}_V$（\prref{線型空間の基本性質}）
+  が成り立つから，$V$の線型部分空間である．
+
+  次に，$S \neq \varnothing$とする．
+  $\bm{v} \in S$をとると$\bm{v} = 1_K \bm{v} \in \Span(S)$であるから，$\Span(S)$は空でない．
+  $\bm{x}, \bm{y} \in \Span(S)$とすると，ある$\bm{v}_1, \dots, \bm{v}_m \in S$，$\bm{w}_1, \dots, \bm{w}_l \in S$および$\lambda_i, \mu_j \in K$を用いて
+  \[
+    \bm{x} = \sum_{i=1}^{m} \lambda_i \bm{v}_i, \quad
+    \bm{y} = \sum_{j=1}^{l} \mu_j \bm{w}_j
+  \]
+  と表せる．このとき，
+  \[
+    \bm{x} + \bm{y}
+    = \lambda_1 \bm{v}_1 + \cdots + \lambda_m \bm{v}_m + \mu_1 \bm{w}_1 + \cdots + \mu_l \bm{w}_l
+  \]
+  も$S$の有限個の元の線型結合であるから，$\bm{x} + \bm{y} \in \Span(S)$である．
+  さらに，任意の$\alpha \in K$に対して，スカラー倍に関する分配律より
+  $\alpha\bm{x} = \sum_{i=1}^{m} (\alpha\lambda_i) \bm{v}_i$
+  も$S$の有限個の元の線型結合であるから，$\alpha\bm{x} \in \Span(S)$である．
+  これが証明すべきことであった．
+\end{proof}
+\end{tleftbar}
+
+線型部分空間$W$が$S$の元をすべて含んでいれば，$W$は足し算とスカラー倍について閉じているので，$S$の元の線型結合もすべて含んでいなければならない．
+つまり，$S$を含む線型部分空間は，必ず$\Span(S)$を丸ごと含む．
+この観察を命題の形にまとめておこう．
+線型包は「$S$を含む最小の線型部分空間」として特徴づけられるのである．
+
+\begin{prop}{線型包の最小性}{線型包の最小性}
+  $V$を体$K$上の線型空間，$S$を$V$の部分集合とする．このとき，次が成り立つ：
+  \begin{enumerate}[label=(\roman*),leftmargin=3.2em]
+    \item $S \subset \Span(S)$である．
+    \item $W$が$S \subset W$を満たす$V$の線型部分空間ならば，$\Span(S) \subset W$である．
+  \end{enumerate}
+  すなわち，$\Span(S)$は，$S$を含む最小の線型部分空間である．
+\end{prop}
+
+\begin{tleftbar}
+\begin{proof}
+  (i)について，任意の$\bm{v} \in S$は
+  $\bm{v} = 1_K \bm{v}$
+  と表せるから，$\bm{v} \in \Span(S)$である．
+
+  (ii)について，$S = \varnothing$のときは，任意の線型部分空間$W$は零ベクトルを含む（\deref{線型部分空間}のあとの議論を参照）から，
+  $\Span(\varnothing) = \{\bm{0}_V\} \subset W$
+  である．
+  次に，$S \neq \varnothing$とし，$\Span(S)$の任意の元
+  \[
+    \bm{x} = \lambda_1 \bm{v}_1 + \lambda_2 \bm{v}_2 + \cdots + \lambda_n \bm{v}_n
+    \quad (\bm{v}_i \in S,\ \lambda_i \in K)
+  \]
+  をとる．$S \subset W$より$\bm{v}_i \in W$であり，$W$はスカラー倍について閉じているから，
+  $\lambda_i \bm{v}_i \in W$~$(1 \le i \le n)$
+  である．さらに，$W$は加法について閉じているから，これらの和である$\bm{x}$も$W$に属する．
+  よって$\Span(S) \subset W$である．
+  これが証明すべきことであった．
+\end{proof}
+\end{tleftbar}
+
+\prref{線型包の最小性}は，以後「ある線型包が別の線型部分空間に含まれる」ことを示す場面で繰り返し用いられる．
+$\Span(S)\subset W$を示したければ，$\Span(S)$の元を一般的にとる必要はなく，$S$の元が$W$に属することだけを確かめればよいのである．
+
+\begin{remark}[線型包と共通部分]
+\prref{線型包の最小性}より，$\Span(S)$は「$S$を含む線型部分空間すべての共通部分」とも一致する．
+実際，\prref{線型包の線型部分空間性}と\prref{線型包の最小性}(i)より，$\Span(S)$自身が「$S$を含む線型部分空間」のひとつであるから，共通部分は$\Span(S)$に含まれる．
+逆に，\prref{線型包の最小性}(ii)より，$\Span(S)$は$S$を含むどの線型部分空間にも含まれるから，共通部分にも含まれる．
+なお，\prref{共通部分と和の線型部分空間性}では$2$つの線型部分空間の共通部分を扱ったが，同様の議論により，任意個の線型部分空間の共通部分も線型部分空間となる．
+\end{remark}
+
+$2$つの線型部分空間の和$W_1+W_2$も，線型包のことばで捉え直すことができる．
+
+\begin{prop}{和と線型包}{和と線型包}
+  $V$を線型空間，$W_1, W_2$を$V$の線型部分空間とする．このとき，次の等式が成り立つ：
+  \[
+    W_1 + W_2 = \Span(W_1 \cup W_2)
+  \]
+\end{prop}
+
+\begin{tleftbar}
+\begin{proof}
+  まず，$W_1 + W_2 \subset \Span(W_1 \cup W_2)$を示す．
+  任意の$\bm{w}_1 \in W_1$，$\bm{w}_2 \in W_2$に対して，
+  $\bm{w}_1 + \bm{w}_2 = 1_K \bm{w}_1 + 1_K \bm{w}_2$
+  は$W_1 \cup W_2$の元の線型結合であるから，$\bm{w}_1 + \bm{w}_2 \in \Span(W_1 \cup W_2)$である．
+
+  逆に，$\Span(W_1 \cup W_2) \subset W_1 + W_2$を示す．
+  \prref{共通部分と和の線型部分空間性}より$W_1 + W_2$は$V$の線型部分空間であり，
+  \[
+    \bm{w}_1 = \bm{w}_1 + \bm{0}_V \in W_1 + W_2,
+    \quad
+    \bm{w}_2 = \bm{0}_V + \bm{w}_2 \in W_1 + W_2
+  \]
+  より$W_1 \cup W_2 \subset W_1 + W_2$である．
+  よって，\prref{線型包の最小性}より$\Span(W_1 \cup W_2) \subset W_1 + W_2$である．
+  これが証明すべきことであった．
+\end{proof}
+\end{tleftbar}
+
+\begin{remark}[合併は線型部分空間とは限らない]
+一般に，線型部分空間どうしの合併$W_1 \cup W_2$は線型部分空間になるとは限らない．
+\figref{subspace-or-not}(d)で見たように，$\mathbb{R}^2$において$x$軸と$y$軸はいずれも線型部分空間であるが，
+$\bm{e}_1 + \bm{e}_2$
+は$x$軸にも$y$軸にも属さないので，合併は加法について閉じていない．
+\prref{和と線型包}は，合併そのものではなく，和$W_1 + W_2$こそが「$W_1$と$W_2$の両方を含む最小の線型部分空間」であることを示している．
+集合の世界での「合併」の役割を，線型空間の世界では「和」が担うのである．
+\end{remark}
+
+\phantomsection
+\subsection{直和}
+
+本項では「直和」とよばれる$2$つの構成を扱う．
+ひとつは，$2$つの線型空間を並べて大きな線型空間を作る\textbf{外部直和}であり，
+もうひとつは，$1$つの線型空間を$2$つの線型部分空間に「分解」する\textbf{内部直和}である．
+まずは前者から定義しよう．
+
+\begin{definition}{直和（外部直和）}{直和}
+  $V,W$を体$K$上の線型空間とする．
+  直積集合
+  $V\times W
+  =
+  \{
+  (\bm{v},\bm{w})
+  \mid
+  \bm{v}\in V,\
+  \bm{w}\in W
+  \}$
+  を考え，
+  加法およびスカラー倍を
+  \[
+  (\bm{v}_1,\bm{w}_1)+(\bm{v}_2,\bm{w}_2)
+  =
+  (\bm{v}_1+\bm{v}_2,\bm{w}_1+\bm{w}_2),
+  \qquad
+  \alpha(\bm{v},\bm{w})
+  =
+  (\alpha \bm{v},\alpha \bm{w})
+  \]
+  によって定める．
+  このとき，線型空間の各公理を成分ごとに確認することにより，
+  $V\times W$はこれらの演算に関して体$K$上の線型空間となる．
+  これを
+  $V$と$W$の\textbf{直和}\index{ちょくわ@直和}（\textbf{外部直和}\index{がいぶちょくわ@外部直和}）といい，
+  $V\oplus W$
+  と表す．
+\end{definition}
+
+要するに，$V$の元と$W$の元をペアにして，演算は成分ごとに独立に行う，ということである．
+零ベクトルは$(\bm{0}_V,\bm{0}_W)$である．
+たとえば$\mathbb{R}\oplus\mathbb{R}$の元は実数のペア$(x,y)$であり，演算も成分ごとであるから，これは$\mathbb{R}^2$そのものと考えてよい．
+同様に，$K^m\oplus K^n$は，$K^m$の元と$K^n$の元を縦に積み重ねることで$K^{m+n}$と同一視できる．
+
+外部直和が「外から持ってきた$2$つの空間を並べる」ものであったのに対し，次の内部直和は，与えられた$1$つの線型空間$V$の\textbf{内部}で，$2$つの線型部分空間が$V$を過不足なく分担している状況を表す概念である．
+
+\begin{definition}{内部直和}{内部直和}
+  $W_1, W_2$を体$K$上の線型空間$V$の線型部分空間とする．
+  \[
+    V = W_1 + W_2,
+    \qquad
+    W_1 \cap W_2 = \{\bm{0}_V\}
+  \]
+  がともに成り立つとき（和$W_1 + W_2$については\deref{共通部分・和}を参照），$V$は$W_1$と$W_2$の\textbf{内部直和}\index{ないぶちょくわ@内部直和}であるといい，
+  $V = W_1 \oplus W_2$
+  と表す．
+\end{definition}
+
+第$1$の条件$V=W_1+W_2$は「$W_1$と$W_2$で$V$全体をまかなえる」こと，すなわち「不足がない」ことを表す．
+第$2$の条件$W_1\cap W_2=\{\bm{0}_V\}$は「$W_1$と$W_2$に重なりがない」こと，すなわち「過剰がない」ことを表す．
+この$2$つの条件の違いを，具体例で確かめておこう．
+
+\begin{example}{内部直和}{内部直和の例}
+  \noindent
+  \begin{minipage}[c]{0.56\linewidth}
+    \setlength{\parindent}{1\zw}
+    \hspace{1\zw}$K=\mathbb{R}$，$V=\mathbb{R}^2$とし，$W_1$を$x$軸，$W_2$を直線$y=x$とする．
+    任意の$\bm{v}=(a,b)^\mathsf{T}$は
+    \[
+      \begin{pmatrix} a \\ b \end{pmatrix}
+      =
+      \begin{pmatrix} a-b \\ 0 \end{pmatrix}
+      +
+      \begin{pmatrix} b \\ b \end{pmatrix}
+    \]
+    と，$W_1$の元と$W_2$の元の和に分けられる（\figref{direct-sum}）．
+    また，$W_1\cap W_2=\{\bm{0}\}$は明らかである．
+    よって$\mathbb{R}^2=W_1\oplus W_2$である．
+    $2$本の直線は直交している必要はない．
+  \end{minipage}%
+  \hfill
+  \begin{minipage}[c]{0.40\linewidth}
+    \centering
+    \begin{tikzpicture}[
+        scale=0.8,
+        vec/.style={-{Stealth[length=2mm]}, thick},
+        lab/.style={font=\scriptsize, inner sep=1pt}]
+      \draw[magenta, thick] (-0.8,0) -- (3.6,0) node[lab, right] {$W_1$};
+      \draw[magenta, thick] (-0.6,-0.6) -- (2.8,2.8) node[lab, above right] {$W_2$};
+      \fill (0,0) circle (1.2pt) node[lab, below left] {$O$};
+      \draw[densely dotted] (1,0) -- (3,2) -- (2,2);
+      \draw[vec] (0,0) -- (3,2) node[lab, right] {$\bm{v}$};
+      \draw[vec, magenta] (0,0) -- (1,0) node[lab, below] {$\bm{w}_1$};
+      \draw[vec, magenta] (0,0) -- (2,2) node[lab, above left] {$\bm{w}_2$};
+    \end{tikzpicture}
+    \captionof{figure}{内部直和による分解}
+    \label{fig:direct-sum}
+  \end{minipage}
+  \par\medskip
+
+  一方，$V=\mathbb{R}^3$で$W_1$を$xy$平面，$W_2$を$yz$平面とすると，$V=W_1+W_2$ではあるが，$W_1\cap W_2$は$y$軸であり$\{\bm{0}\}$ではない．
+  このとき，たとえば
+  \[
+    \begin{pmatrix} 1 \\ 1 \\ 1 \end{pmatrix}
+    =\begin{pmatrix} 1 \\ 1 \\ 0 \end{pmatrix}+\begin{pmatrix} 0 \\ 0 \\ 1 \end{pmatrix}
+    =\begin{pmatrix} 1 \\ 0 \\ 0 \end{pmatrix}+\begin{pmatrix} 0 \\ 1 \\ 1 \end{pmatrix}
+  \]
+  のように，$W_1$の元と$W_2$の元の和としての表し方が一通りに定まらない．
+  重なり（$y$軸）の分だけ，どちらに振り分けるかの自由が生じてしまうのである．
+\end{example}
+
+\exref{内部直和の例}の後半で見たように，重なりがあると分解が一意でなくなる．
+逆に，重なりがなければ分解は一意になる．
+内部直和は，この「ベクトルの分解の一意性」によって特徴づけられる．
+
+\begin{prop}{内部直和と分解の一意性}{内部直和と分解の一意性}
+  $W_1, W_2$を線型空間$V$の線型部分空間とする．このとき，次の$2$つは同値である：
+  \begin{enumerate}[label=(\roman*),leftmargin=3.2em]
+    \item $V = W_1 \oplus W_2$（内部直和）である．
+    \item 任意の$\bm{v} \in V$は，
+    $\bm{v} = \bm{w}_1 + \bm{w}_2$~$(\bm{w}_1 \in W_1,~ \bm{w}_2 \in W_2)$
+    の形にただ一通りに表される．
+  \end{enumerate}
+\end{prop}
+
+\begin{tleftbar}
+\begin{proof}
+  まず，(i)を仮定して(ii)を示す．
+  $V = W_1 + W_2$であるから，任意の$\bm{v} \in V$は$\bm{v} = \bm{w}_1 + \bm{w}_2$（$\bm{w}_1 \in W_1$，$\bm{w}_2 \in W_2$）の形に表せる．
+  いま，
+  \[
+    \bm{v} = \bm{w}_1 + \bm{w}_2 = \bm{w}'_1 + \bm{w}'_2
+    \quad (\bm{w}_i, \bm{w}'_i \in W_i)
+  \]
+  と$2$通りに表せたとすると，移項して
+  $\bm{w}_1 - \bm{w}'_1 = \bm{w}'_2 - \bm{w}_2$
+  を得る．左辺は$W_1$に，右辺は$W_2$に属するから，両辺が表すベクトルは$W_1 \cap W_2 = \{\bm{0}_V\}$に属する．
+  よって$\bm{w}_1 = \bm{w}'_1$かつ$\bm{w}_2 = \bm{w}'_2$であり，表し方はただ一通りである．
+
+  逆に，(ii)を仮定して(i)を示す．
+  任意の$\bm{v} \in V$が$\bm{w}_1 + \bm{w}_2$の形に表せることから，$V = W_1 + W_2$である．
+  次に，$\bm{v} \in W_1 \cap W_2$をとると，
+  $\bm{v} = \bm{v} + \bm{0}_V = \bm{0}_V + \bm{v}$
+  は，いずれも「$W_1$の元と$W_2$の元の和」としての$\bm{v}$の表示である．
+  表し方の一意性より$\bm{v} = \bm{0}_V$となるから，$W_1 \cap W_2 = \{\bm{0}_V\}$である．
+  これが証明すべきことであった．
+\end{proof}
+\end{tleftbar}
+
+\begin{remark}[内部直和と外部直和の同一視]
+  外部直和と内部直和は異なる構成であるが，同じ記号$\oplus$で表される．
+  これは，$V = W_1 \oplus W_2$（内部直和）のとき，外部直和$W_1 \oplus W_2$の元$(\bm{w}_1, \bm{w}_2)$に$\bm{w}_1 + \bm{w}_2 \in V$を対応させる写像が全単射となり（全射性は$V = W_1 + W_2$から，単射性は\prref{内部直和と分解の一意性}の分解の一意性から従う），さらに和とスカラー倍も保たれるため，両者を自然に同一視できるからである．
+  外部直和の元を「ペア」として，内部直和の元を「和」として見ているだけで，中身は同じだと思ってよい．
+\end{remark}
+
+\phantomsection
+\section{基底と次元}
+
+\phantomsection
+\subsection{基底}
+
+平面上の点を$(x,y)$という$2$つの数で表せるのは，座標軸と目盛りを決めているからである．
+一般の線型空間でも，同じように「ベクトルを数の組で表す」ための仕組みを作りたい．
+その役割を果たすのが本項で導入する\textbf{基底}である．
+
+前節で，ベクトルの集合$S$から生成される線型部分空間$\Span(S)$を導入した．
+一方，\partref{線型独立性と階数}では，ベクトルの組に「無駄がない」ことを表す概念として線型独立を導入した（\deref{線型独立}）．
+この$2$つを組み合わせよう．
+すなわち，「$V$全体を生成し，かつ無駄がない」ベクトルの組を考えるのである．
+
+\begin{definition}{基底}{基底}
+  $V$を体$K$上の線型空間とする．
+  $V$のベクトルの組$\mathcal{B} = (\bm{v}_1, \bm{v}_2, \dots, \bm{v}_n)$が次の$2$つの条件を満たすとき，
+  $\mathcal{B}$を$V$の\textbf{基底}\index{きてい@基底}という．
+  \begin{enumerate}[label=(\roman*),leftmargin=3.2em]
+    \item \textbf{線型独立性}：$\bm{v}_1, \bm{v}_2, \dots, \bm{v}_n$は線型独立である．
+    \item \textbf{生成性}：$\Span(\bm{v}_1, \bm{v}_2, \dots, \bm{v}_n) = V$である．
+  \end{enumerate}
+  また，$V = \{\bm{0}_V\}$のときは，空の組$(\ )$を$V$の基底と定める．
+\end{definition}
+
+生成性は「材料が足りている」こと，線型独立性は「余計な材料がない」ことを表している．
+材料が足りなければ$V$のすべてのベクトルを作れないし，余計な材料があれば同じベクトルを何通りにも作れてしまう．
+基底とは，その両者のちょうど境目にある「過不足のない材料の組」なのである．
+
+\begin{remark}[基底を「組」として定義する理由]
+  基底を「集合」ではなく「組」（順序のついた有限列）として定義していることに注意してほしい．
+  順序を込めて考えるのは，のちに定義する座標（\deref{座標ベクトル}）が「第何成分か」を指定して初めて意味をもつからである．
+  文献によっては基底を集合として定義し，座標を考えるときにあらためて順序を固定する流儀もある．
+
+  また，$V = \{\bm{0}_V\}$に対して空の組を基底と定めたのは，$\Span(\varnothing) = \{\bm{0}_V\}$という約束（\deref{線型包}）と整合させるためである．
+  「$\bm{0}_V$のみからなる組」を基底とすることはできない．
+  実際，$1_K \bm{0}_V = \bm{0}_V$は非自明な線型関係であり，$(\bm{0}_V)$は線型従属だからである．
+\end{remark}
+
+\begin{example}{基底の例}{基底の例}
+  \begin{enumerate}[label=(\arabic*),leftmargin=3.2em]
+    \item $K^n$において，標準基底ベクトルの組$(\bm{e}_1, \bm{e}_2, \dots, \bm{e}_n)$は基底である．
+    実際，$\sum_i x_i\bm{e}_i=(x_1,\dots,x_n)^\mathsf{T}$であるから，これが$\bm{0}$になるのは$x_1=\cdots=x_n=0$のときに限り，また任意のベクトルがこの形に表せる．
+    これを$K^n$の\textbf{標準基底}\index{ひょうじゅんきてい@標準基底}という．
+
+    \item $K=\mathbb{R}$とする．$\mathbb{R}^2$において，
+    $\bm{v}_1 = (1,1)^\mathsf{T}$，$\bm{v}_2 = (1,-1)^\mathsf{T}$
+    の組も基底である．
+    実際，$\lambda_1\bm{v}_1+\lambda_2\bm{v}_2=(\lambda_1+\lambda_2,\,\lambda_1-\lambda_2)^\mathsf{T}=(a,b)^\mathsf{T}$を解くと$\lambda_1=\frac{a+b}{2}$，$\lambda_2=\frac{a-b}{2}$とただ一組に定まるので，生成性と線型独立性がともに成り立つ\footnote{$a=b=0$とすれば$\lambda_1=\lambda_2=0$となり，線型独立性がわかる．}．
+    このように，基底の取り方は一通りではない．
+
+    \item $M_{m,n}(K)$において，$(i,j)$成分のみが$1$で他が$0$である行列$E_{ij}$の組（$mn$個）は基底である\footnote{この$E_{ij}$は\textbf{行列単位}とよばれる．単位行列$E_n$（\deref{零行列と単位行列}）と記号が似ているが別物である．なお，正方行列（$m = n$）の場合には$E_n = E_{11} + E_{22} + \cdots + E_{nn}$という関係がある．}．
+    実際，任意の行列は$A=(a_{ij})=\sum_{i,j}a_{ij}E_{ij}$とただ一通りに表せる．
+
+    \item $\mathbb{R}[x]_{\le n}$において，$(1, x, x^2, \dots, x^n)$は基底である．
+  \end{enumerate}
+\end{example}
+
+\exref{基底の例}(2)は，$\mathbb{R}^2$の基底として，直交していない（ここでは偶然直交しているが，一般には斜めでもよい）$2$本のベクトルを選んでもよいことを示している．
+あとで見るように，基底を選ぶことは「座標軸と目盛りを選ぶ」ことにあたり，その選び方には大きな自由があるのである．
+
+ところで，基底は有限個のベクトルからなる組として定義した．
+そこで，有限個のベクトルで生成できる線型空間に名前をつけておこう．
+
+\begin{definition}{有限生成}{有限生成}
+  線型空間$V$に対して，有限個のベクトル$\bm{v}_1, \bm{v}_2, \dots, \bm{v}_n \in V$が存在して
+  $V = \Span(\bm{v}_1, \bm{v}_2, \dots, \bm{v}_n)$
+  となるとき，$V$は\textbf{有限生成}\index{ゆうげんせいせい@有限生成}であるという．
+\end{definition}
+
+\begin{mycolumn}
+  有限生成でない線型空間も存在する．
+  たとえば，実数係数多項式全体のなす線型空間$\mathbb{R}[x]$は有限生成ではない．
+  実際，有限個の多項式$f_1, \dots, f_n$に対して，十分大きい整数$d$をとれば，$f_1, \dots, f_n$はいずれも次数$d$以下の多項式である．次数$d$以下の多項式の線型結合はふたたび次数$d$以下の多項式であるから，たとえば$x^{d+1}$は$f_1, \dots, f_n$の線型結合として表せない．
+  関数全体$\mathcal{F}(\mathbb{R})$や数列全体$\mathcal{S}$も，$\mathbb{R}[x]$を（線型部分空間として）含むような巨大な空間であり，有限生成ではない．
+
+  このような空間にも「基底」を考えることはできるが，そこでは無限個のベクトルからなる集合を扱う必要があり，線型独立性も「その有限部分集合がつねに線型独立である」と定義し直さなければならない．
+  さらに，一般の線型空間に基底が存在することの証明には選択公理（ツォルンの補題）が必要となる．
+
+  本書では，無限次元の線型空間を本格的に扱うことはせず，有限生成性（のちの言葉でいえば有限次元性）を仮定する命題では，その都度これを明記する．
+  また，本書で単に「基底」というときは，つねに\deref{基底}の意味での，有限個のベクトルからなる順序付きの組を指すものとする．
+\end{mycolumn}
+
+さて，基底のもっとも重要な性質は，「表し方がただ一通りに定まる」ことである．
+先に述べた「過不足のなさ」を，そのまま定理の形にしたものといえる．
+
+\begin{theorem}{基底による表示の一意性}{基底による表示の一意性}
+  $V$を体$K$上の線型空間とし，$\bm{v}_1, \bm{v}_2, \dots, \bm{v}_n \in V$とする．
+  このとき，$(\bm{v}_1, \bm{v}_2, \dots, \bm{v}_n)$が$V$の基底であるための必要十分条件は，
+  任意の$\bm{v} \in V$が
+  \[
+    \bm{v} = x_1 \bm{v}_1 + x_2 \bm{v}_2 + \cdots + x_n \bm{v}_n
+    \quad (x_i \in K)
+  \]
+  の形にただ一通りに表されることである．
+\end{theorem}
+
+\begin{tleftbar}
+\begin{proof}
+  まず，$(\bm{v}_1, \dots, \bm{v}_n)$が基底であるとする．
+  生成性より，任意の$\bm{v} \in V$は上の形に表せる．
+  いま，
+  $\bm{v} = \sum_{i=1}^{n} x_i \bm{v}_i = \sum_{i=1}^{n} y_i \bm{v}_i$
+  と$2$通りに表せたとすると，辺々引いて
+  \[
+    \sum_{i=1}^{n} (x_i - y_i) \bm{v}_i = \bm{0}_V
+  \]
+  を得る．線型独立性より$x_i - y_i = 0$，すなわち$x_i = y_i$である．
+  よって表し方は一通りである．
+
+  逆に，任意の$\bm{v} \in V$がただ一通りに表されるとする．
+  表せること自体から$V = \Span(\bm{v}_1, \dots, \bm{v}_n)$であり，生成性が成り立つ．
+  また，
+  $\sum_{i=1}^{n} \lambda_i \bm{v}_i = \bm{0}_V$
+  とすると，$\bm{0}_V$の表し方としては$\lambda_1 = \cdots = \lambda_n = 0$とするものがすでにある．
+  一意性より$\lambda_i = 0$であり，線型独立性が成り立つ．
+  これが証明すべきことであった．
+\end{proof}
+\end{tleftbar}
+
+\thref{基底による表示の一意性}により，基底を一つ固定すると，$V$のベクトルに$n$個の数の組が一意に対応する．
+これが「座標」である．
+平面の点$(x,y)$が「$x$軸方向に$x$目盛り，$y$軸方向に$y$目盛り進んだ点」を表していたのと同じく，
+$x_1\bm{v}_1+\cdots+x_n\bm{v}_n$の係数$x_1,\dots,x_n$は，「$\bm{v}_1$方向に$x_1$目盛り，…，$\bm{v}_n$方向に$x_n$目盛り進む」ことを表している．
+基底のベクトルが座標軸の向きと目盛りの幅を，係数が目盛りの数を与えているのである．
+
+\begin{definition}{座標ベクトル}{座標ベクトル}
+  $\mathcal{B} = (\bm{v}_1, \bm{v}_2, \dots, \bm{v}_n)$を線型空間$V$の基底とする．
+  $\bm{v} \in V$に対して，\thref{基底による表示の一意性}により一意に定まる$x_1, x_2, \dots, x_n \in K$を用いて
+  \[
+    [\bm{v}]_{\mathcal{B}}
+    = \begin{pmatrix} x_1 \\ x_2 \\ \vdots \\ x_n \end{pmatrix} \in K^n
+  \]
+  と定め，これを基底$\mathcal{B}$に関する$\bm{v}$の\textbf{座標ベクトル}\index{ざひょうべくとる@座標ベクトル}という．
+\end{definition}
+
+\begin{example}{多項式の座標ベクトル}{多項式の座標ベクトル}
+  $V=\mathbb{R}[x]_{\le 2}$とし，$p(x)=1+2x+3x^2$を考える．
+  基底$\mathcal{B}=(1,x,x^2)$に関する座標ベクトルは，係数をそのまま並べた
+  $[p]_{\mathcal{B}}=(1,2,3)^\mathsf{T}$
+  である．
+  一方，$\mathcal{B}'=(1,\,x-1,\,(x-1)^2)$も$V$の基底であり\footnote{$x-1=t$とおけば$\mathcal{B}'$は$(1,t,t^2)$となるから，$\mathcal{B}$が基底であることから従う．}，
+  \[
+    1+2x+3x^2 = 6+8(x-1)+3(x-1)^2
+  \]
+  と展開できるから，$[p]_{\mathcal{B}'}=(6,8,3)^\mathsf{T}$である．
+  同じ多項式$p$でも，基底が変われば座標ベクトルは変わる．
+  なお，この$6$，$8$，$3$は，それぞれ$p(1)$，$p'(1)$，$p''(1)/2$に等しい（$x=1$のまわりのテイラー展開）．
+\end{example}
+
+座標ベクトルをとる対応は，足し算とスカラー倍をきちんと保つ．
+
+\begin{prop}{座標ベクトルの性質}{座標ベクトルの性質}
+  $\mathcal{B}$を線型空間$V$の基底とする．
+  このとき，写像
+  $V \to K^n$，$\bm{v} \mapsto [\bm{v}]_{\mathcal{B}}$
+  は全単射であり，任意の$\bm{v}, \bm{w} \in V$および任意の$\alpha \in K$に対して
+  \[
+    [\bm{v} + \bm{w}]_{\mathcal{B}} = [\bm{v}]_{\mathcal{B}} + [\bm{w}]_{\mathcal{B}},
+    \quad
+    [\alpha \bm{v}]_{\mathcal{B}} = \alpha [\bm{v}]_{\mathcal{B}}
+  \]
+  が成り立つ．
+\end{prop}
+
+\begin{tleftbar}
+\begin{proof}
+  $\mathcal{B} = (\bm{v}_1, \dots, \bm{v}_n)$とする．
+  任意の$(x_i)\in K^n$に対して$\bm{v}=\sum_i x_i\bm{v}_i$とおけば$[\bm{v}]_{\mathcal{B}}=(x_i)$であるから全射であり，
+  $[\bm{v}]_{\mathcal{B}}=[\bm{w}]_{\mathcal{B}}$ならば$\bm{v}$と$\bm{w}$は同じ線型結合で表されるので$\bm{v}=\bm{w}$となり，単射である．
+
+  $[\bm{v}]_{\mathcal{B}} = (x_i)$，$[\bm{w}]_{\mathcal{B}} = (y_i)$とすると，
+  \[
+    \bm{v} + \bm{w}
+    = \sum_{i=1}^{n} x_i \bm{v}_i + \sum_{i=1}^{n} y_i \bm{v}_i
+    = \sum_{i=1}^{n} (x_i + y_i) \bm{v}_i
+  \]
+  であり，表示の一意性より$[\bm{v} + \bm{w}]_{\mathcal{B}} = (x_i + y_i)$である．
+  スカラー倍についても同様である．
+  これが証明すべきことであった．
+\end{proof}
+\end{tleftbar}
+
+\begin{remark}[基底による$K^n$との同一視]
+  \prref{座標ベクトルの性質}は，「基底を一つ選べば，抽象的な線型空間$V$は数ベクトル空間$K^n$と同じものとみなせる」ことを述べている．
+  たとえば，$\mathbb{R}[x]_{\le 2}$は，基底$(1, x, x^2)$を選ぶことで$\mathbb{R}^3$と同一視され，
+  \[
+    a + bx + cx^2 \longleftrightarrow \begin{pmatrix} a \\ b \\ c \end{pmatrix}
+  \]
+  という対応のもとで，多項式の計算が数ベクトルの計算に翻訳される．
+  \partref{線型写像}の\exref{多項式の微分と定積分}で行った「同一視」の正体は，まさにこれであった．
+
+  ただし，この同一視は基底の選び方に依存する．
+  \exref{多項式の座標ベクトル}で見たように，基底を変えれば同じベクトルに対応する数ベクトルも変わってしまう．
+  「どの基底を選んでも変わらない性質」と「基底に依存する表示」を区別することが，以下の議論の主題である．
+\end{remark}
+
+\phantomsection
+\subsection{次元}
+
+「平面は$2$次元，空間は$3$次元」という言い方は，日常的にもよく耳にする．
+これを線型空間に対して正確に定義したい．
+自然な発想は「基底に含まれるベクトルの個数を次元とよぶ」というものであろう．
+しかし，基底の取り方は一通りではなかった．
+ある基底では$2$個，別の基底では$3$個，ということが起こってしまっては，次元を定義することはできない．
+そこで本項ではまず，「基底に含まれるベクトルの個数は基底の取り方によらない」ことを示す．
+
+\partref{線型独立性と階数}では，数ベクトル空間$K^m$に限って「線型独立な組の拡大」と「取替補題」を示した（\lemref{線型独立な組の拡大}，\lemref{取替補題}）．
+本項では，同じ議論が一般の線型空間においてもそのまま通用することを確認する．
+証明の骨格は同じであるが，数ベクトルの成分には一切触れず，線型包のことばだけで議論が組み立てられることを味わってほしい．
+
+まず，準備として次の補題を用意する．
+「線型独立な組に，その組では作れないベクトルを付け加えても，線型独立なままである」という主張である．
+
+\begin{lemma}{線型独立な組の拡大}{一般の線型独立な組の拡大}
+  $\bm{v}_1, \bm{v}_2, \dots, \bm{v}_k$を線型空間$V$の線型独立なベクトルとし，
+  $\bm{w} \notin \Span(\bm{v}_1, \bm{v}_2, \dots, \bm{v}_k)$
+  とする．このとき，$\bm{v}_1, \bm{v}_2, \dots, \bm{v}_k, \bm{w}$は線型独立である．
+\end{lemma}
+
+\begin{tleftbar}
+\begin{proof}
+  $\lambda_1 \bm{v}_1 + \cdots + \lambda_k \bm{v}_k + \mu \bm{w} = \bm{0}_V$
+  とする．もし$\mu \ne 0$ならば，
+  \[
+    \bm{w} = \sum_{i=1}^{k} \left(-\frac{\lambda_i}{\mu}\right) \bm{v}_i
+    \in \Span(\bm{v}_1, \dots, \bm{v}_k)
+  \]
+  となり仮定に反する．よって$\mu = 0$である．
+  このとき$\sum_{i=1}^{k} \lambda_i \bm{v}_i = \bm{0}_V$となるので，$\bm{v}_1, \dots, \bm{v}_k$の線型独立性より$\lambda_1 = \cdots = \lambda_k = 0$である．
+  これが証明すべきことであった．
+\end{proof}
+\end{tleftbar}
+
+次が，次元の概念を支える中心的な補題である．
+$n$本のベクトルで張られる空間の中には，$n$本を超える線型独立なベクトルを取ることはできない．
+証明では，$\bm{v}_j$を$1$本ずつ$\bm{w}_i$に「取り替えて」いっても，張る空間が変わらないことを示す．
+これが「取替補題」という名前の由来である．
+
+\begin{lemma}{取替補題}{一般の取替補題}
+  $V$を線型空間とし，$\bm{v}_1, \bm{v}_2, \dots, \bm{v}_n \in V$とする．
+  $\bm{w}_1, \bm{w}_2, \dots, \bm{w}_m \in \Span(\bm{v}_1, \bm{v}_2, \dots, \bm{v}_n)$が線型独立ならば，
+  $m \le n$
+  が成り立つ．
+\end{lemma}
+
+\begin{tleftbar}
+\begin{proof}
+  $W = \Span(\bm{v}_1, \dots, \bm{v}_n)$とおく．
+  $k = 0, 1, \dots, m$に対して，次の主張$(\ast_k)$を$k$についての帰納法で示す．
+
+  \begin{quote}
+    $(\ast_k)$：$k \le n$であり，かつ$\bm{v}_1, \dots, \bm{v}_n$の番号を適当に付け替えることで
+    $W = \Span(\bm{w}_1, \dots, \bm{w}_k, \bm{v}_{k+1}, \dots, \bm{v}_n)$
+    とできる．
+  \end{quote}
+
+  $k = 0$のときは$W$の定義そのものであり，成り立つ．
+
+  $k < m$として$(\ast_k)$を仮定する．
+  $\bm{w}_{k+1} \in W$であるから，帰納法の仮定より
+  \begin{equation}
+    \bm{w}_{k+1}
+    = \sum_{i=1}^{k} a_i \bm{w}_i + \sum_{j=k+1}^{n} b_j \bm{v}_j
+    \label{eq:一般の取替補題の展開}
+  \end{equation}
+  と表せる．
+
+  ここで，$b_{k+1} = \cdots = b_n = 0$と仮定してみる（$k = n$のときは第$2$の和が空なので自動的にこの場合である）．
+  このとき\eqref{eq:一般の取替補題の展開}は
+  \[
+    a_1 \bm{w}_1 + \cdots + a_k \bm{w}_k + (-1)\bm{w}_{k+1} = \bm{0}_V
+  \]
+  と書き直せる．$\bm{w}_{k+1}$の係数は$-1 \ne 0$であるから，これは$\bm{w}_1, \dots, \bm{w}_{k+1}$の非自明な線型関係であり，線型独立性に矛盾する．
+
+  よって$k < n$，すなわち$k + 1 \le n$であり，さらに$b_j \ne 0$となる$j$が存在する．
+  残っている$\bm{v}_{k+1}, \dots, \bm{v}_n$の番号を付け替えて$b_{k+1} \ne 0$としてよい．
+  このとき\eqref{eq:一般の取替補題の展開}を$\bm{v}_{k+1}$について解くと，
+  \[
+    \bm{v}_{k+1}
+    = \frac{1}{b_{k+1}}\left( \bm{w}_{k+1} - \sum_{i=1}^{k} a_i \bm{w}_i - \sum_{j=k+2}^{n} b_j \bm{v}_j \right)
+  \]
+  となるので，
+  $\bm{v}_{k+1} \in \Span(\bm{w}_1, \dots, \bm{w}_{k+1}, \bm{v}_{k+2}, \dots, \bm{v}_n)$
+  である．
+  したがって，右辺の線型包は$\bm{w}_1, \dots, \bm{w}_k, \bm{v}_{k+1}, \dots, \bm{v}_n$をすべて含む線型部分空間であり，\prref{線型包の最小性}より
+  \[
+    W = \Span(\bm{w}_1, \dots, \bm{w}_k, \bm{v}_{k+1}, \dots, \bm{v}_n)
+    \subset \Span(\bm{w}_1, \dots, \bm{w}_{k+1}, \bm{v}_{k+2}, \dots, \bm{v}_n)
+  \]
+  を得る．逆の包含は，右辺の各ベクトルが$W$に属することと\prref{線型包の最小性}から従うので，$(\ast_{k+1})$が成り立つ．
+
+  以上より$(\ast_m)$が成り立ち，とくに$m \le n$である．
+  これが証明すべきことであった．
+\end{proof}
+\end{tleftbar}
+
+取替補題さえ手に入れば，基底の個数の一意性はすぐに従う．
+
+\begin{theorem}{基底の個数の一意性}{基底の個数の一意性}
+  $V$を線型空間とし，$(\bm{v}_1, \dots, \bm{v}_n)$と$(\bm{w}_1, \dots, \bm{w}_m)$がともに$V$の基底であるとする．
+  このとき，$m = n$である．
+\end{theorem}
+
+\begin{tleftbar}
+\begin{proof}
+  $(\bm{v}_1, \dots, \bm{v}_n)$の生成性より$\bm{w}_1, \dots, \bm{w}_m \in \Span(\bm{v}_1, \dots, \bm{v}_n)$であり，$\bm{w}_1, \dots, \bm{w}_m$は線型独立であるから，\lemref{一般の取替補題}より$m \le n$である．
+  $(\bm{v}_1, \dots, \bm{v}_n)$と$(\bm{w}_1, \dots, \bm{w}_m)$の役割を入れ替えて同じ議論を行えば$n \le m$を得る．
+  よって$m = n$である．
+  これが証明すべきことであった．
+\end{proof}
+\end{tleftbar}
+
+こうして，次の定義が意味をもつ．
+
+\begin{definition}{次元}{次元}
+  線型空間$V$が基底$(\bm{v}_1, \bm{v}_2, \dots, \bm{v}_n)$をもつとき，
+  $n$を$V$の\textbf{次元}\index{じげん@次元}といい，
+  $\dim_K V = n$
+  と表す．体$K$が文脈から明らかなときは，単に$\dim V$とかく．
+  とくに，$\dim \{\bm{0}_V\} = 0$である．
+\end{definition}
+
+\begin{remark}[「次元」が意味をもつために]
+  「次元が$n$である」という主張は，
+  基底が存在すること（存在性）と，
+  その個数が基底の取り方によらないこと（一意性）
+  の$2$つがそろって初めて意味をもつ．
+  \thref{基底の個数の一意性}は後者を保証するものであり，前者は，有限生成な線型空間については次項の\thref{基底の存在}が保証する（一般の線型空間の場合については，\deref{有限生成}のあとのコラムで触れた）．
+  定義の順序としては，まず基底を定め，つぎにその個数が基底の取り方によらないことを示し，そのうえで次元を定義する，という流れになっている．次元を先に定義することはできない点に注意してほしい．
+\end{remark}
+
+次元に関連して，用語を一つ補っておく．
+
+\begin{definition}{有限次元と無限次元}{有限次元と無限次元}
+  有限個のベクトルからなる基底をもつ線型空間を\textbf{有限次元}\index{ゆうげんじげん@有限次元}線型空間という．
+  有限次元でない線型空間を\textbf{無限次元}\index{むげんじげん@無限次元}線型空間という．
+\end{definition}
+
+のちの\thref{基底の存在}で示すように，有限生成な線型空間はつねに（有限個のベクトルからなる）基底をもつ．
+逆に，有限個のベクトルからなる基底をもつ線型空間は，明らかに有限生成である．
+したがって「有限生成」と「有限次元」は同じクラスの線型空間を指す言葉である．
+有限次元の線型空間$V$については$\dim V$が$0$以上の整数として定まり，無限次元の場合は$\dim V=\infty$とかくこともある．
+それでは，これまでに登場した線型空間の次元を求めてみよう．
+
+\begin{example}{次元の例}{次元の例}
+  \exref{基底の例}より，
+  \[
+    \dim_K K^n = n,
+    \quad
+    \dim_K M_{m,n}(K) = mn,
+    \quad
+    \dim_{\mathbb{R}} \mathbb{R}[x]_{\le n} = n + 1
+  \]
+  である．$\mathbb{R}[x]_{\le n}$の次元が$n$ではなく$n+1$であることに注意してほしい．定数項の分だけ$1$つ多いのである．
+
+  また，$\mathbb{C}$は$\mathbb{C}$上の線型空間としては$\dim_{\mathbb{C}} \mathbb{C} = 1$であるが，$\mathbb{R}$上の線型空間とみなすと$(1, i)$が基底となり$\dim_{\mathbb{R}} \mathbb{C} = 2$である．
+  複素数平面が「平面」であるのは，$\mathbb{R}$上の線型空間として$2$次元だからである．
+  このように，次元はどの体上の線型空間とみるかに依存する．
+\end{example}
+
+\phantomsection
+\subsection{基底の存在と延長}
+
+次元を定義したものの，そもそも基底が存在しなければ話は始まらない．
+本項では，有限生成な線型空間には必ず基底が存在することを示す．
+方針は$2$通りある．
+生成する組から「余計なもの」を取り除いていく方法（\thref{基底の存在}）と，
+線型独立な組に「足りないもの」を付け加えていく方法（\thref{基底の延長}）である．
+
+\begin{theorem}{基底の存在}{基底の存在}
+  $V$を有限生成な線型空間とすると，$V$は基底をもつ．
+  より詳しく，$V = \Span(\bm{v}_1, \dots, \bm{v}_n)$ならば，$\bm{v}_1, \dots, \bm{v}_n$のうちの適当な部分の組が$V$の基底となる．
+\end{theorem}
+
+\begin{tleftbar}
+\begin{proof}
+  $\bm{v}_1, \dots, \bm{v}_n$が線型独立ならば，これがそのまま基底である．
+
+  線型独立でないとすると，\prref{線型従属の言い換え}（その証明は一般の線型空間でもそのまま通用する）より，ある$i$について$\bm{v}_i$は残りのベクトルの線型結合として表せる\footnote{$n=1$のときは，$\bm{v}_1$が線型従属であることから$\bm{v}_1=\bm{0}_V$であり，$\bm{v}_1$を除いても線型包は$\{\bm{0}_V\}=\Span(\varnothing)$のまま変わらない．}．
+  このとき，
+  \[
+    \Span(\bm{v}_1, \dots, \bm{v}_n)
+    = \Span(\bm{v}_1, \dots, \widehat{\bm{v}_i}, \dots, \bm{v}_n)
+  \]
+  が成り立つ（$\widehat{\phantom{x}}$はその項を除くことを表す）．
+  実際，右辺は左辺に含まれ，逆に$\bm{v}_i$が右辺に属するので，\prref{線型包の最小性}より左辺は右辺に含まれる．
+
+  この操作でベクトルの個数は$1$減るので，有限回で線型独立な組に到達する．
+  すべてのベクトルが除かれた場合は$V = \Span(\varnothing) = \{\bm{0}_V\}$であり，空の組が基底である．
+  これが証明すべきことであった．
+\end{proof}
+\end{tleftbar}
+
+たとえば$\mathbb{R}^2=\Span(\bm{e}_1,\bm{e}_2,\bm{e}_1+\bm{e}_2)$であるが，$\bm{e}_1+\bm{e}_2$は残りの$2$本の線型結合であるから，これを取り除いて基底$(\bm{e}_1,\bm{e}_2)$を得る．
+取り除くベクトルの選び方は一通りとは限らず，$\bm{e}_2$を取り除いて基底$(\bm{e}_1,\bm{e}_1+\bm{e}_2)$を得ることもできる．
+
+次は逆向きの方法である．
+こちらは「手元にある線型独立なベクトルを含むような基底がとれる」という，より強い主張になっている．
+
+\begin{theorem}{基底の延長}{基底の延長}
+  $V$を有限生成な線型空間とし，$\bm{w}_1, \bm{w}_2, \dots, \bm{w}_k \in V$を線型独立なベクトルとする．
+  このとき，適当な$\bm{u}_1, \dots, \bm{u}_l \in V$を付け加えて
+  $(\bm{w}_1, \dots, \bm{w}_k, \bm{u}_1, \dots, \bm{u}_l)$
+  を$V$の基底とすることができる．
+\end{theorem}
+
+\begin{tleftbar}
+\begin{proof}
+  $V = \Span(\bm{v}_1, \dots, \bm{v}_n)$とする．
+  組$(\bm{w}_1, \dots, \bm{w}_k)$から出発し，$\bm{v}_1, \bm{v}_2, \dots, \bm{v}_n$を順に見ていき，
+  「その時点までにできている組の線型包に属さないもの」だけを組に付け加える，という操作を行う．
+  \lemref{一般の線型独立な組の拡大}より，付け加えるたびに組は線型独立なままである．
+  最終的に得られる組を
+  $(\bm{w}_1, \dots, \bm{w}_k, \bm{u}_1, \dots, \bm{u}_l)$
+  とおく．
+
+  構成法より，各$\bm{v}_j$はこの組の線型包に属する（付け加えられた場合は自明であり，付け加えられなかった場合はその時点の線型包に属していたからである）．
+  よって\prref{線型包の最小性}より
+  \[
+    V = \Span(\bm{v}_1, \dots, \bm{v}_n)
+    \subset \Span(\bm{w}_1, \dots, \bm{w}_k, \bm{u}_1, \dots, \bm{u}_l)
+    \subset V
+  \]
+  となり，生成性が成り立つ．線型独立性はすでに示したので，この組は$V$の基底である．
+  これが証明すべきことであった．
+\end{proof}
+\end{tleftbar}
+
+たとえば$\mathbb{R}^3$の線型独立なベクトル$\bm{w}_1=(1,1,0)^\mathsf{T}$から出発し，標準基底$\bm{e}_1,\bm{e}_2,\bm{e}_3$を順に見ていくと，
+$\bm{e}_1\notin\Span(\bm{w}_1)$なので付け加え，
+$\bm{e}_2=\bm{w}_1-\bm{e}_1\in\Span(\bm{w}_1,\bm{e}_1)$なので付け加えず，
+$\bm{e}_3\notin\Span(\bm{w}_1,\bm{e}_1)$なので付け加える．
+こうして基底$(\bm{w}_1,\bm{e}_1,\bm{e}_3)$が得られる．
+
+$2$つの定理から，「個数がちょうど次元に等しい組」については，基底であるかどうかの判定が大幅に楽になる．
+
+\begin{cor}{次元による基底の判定}{次元による基底の判定}
+  $\dim V = n$とし，$\bm{v}_1, \bm{v}_2, \dots, \bm{v}_n \in V$とする（個数が$n$であることに注意）．
+  このとき，次の$3$つは同値である．
+  \begin{enumerate}[label=(\roman*),leftmargin=3.2em]
+    \item $\bm{v}_1, \dots, \bm{v}_n$は線型独立である．
+    \item $\Span(\bm{v}_1, \dots, \bm{v}_n) = V$である．
+    \item $(\bm{v}_1, \dots, \bm{v}_n)$は$V$の基底である．
+  \end{enumerate}
+\end{cor}
+
+\begin{tleftbar}
+\begin{proof}
+  (iii)から(i)，(ii)が従うのは基底の定義そのものである．
+  なお，$V$は$n$個のベクトルからなる基底をもつので有限生成である．
+
+  (i)$\limp$(iii)：\thref{基底の延長}より，この組はベクトルを付け加えて基底にできる．
+  しかし\thref{基底の個数の一意性}より基底の個数は$n$でなければならないから，付け加えるベクトルは$0$個である．
+
+  (ii)$\limp$(iii)：\thref{基底の存在}より，この組から適当な部分を取り出して基底にできる．
+  同様に，基底の個数は$n$であるから，取り除くベクトルは$0$個である．
+  これが証明すべきことであった．
+\end{proof}
+\end{tleftbar}
+
+\begin{remark}[次元による基底の判定の注意]
+  \coref{次元による基底の判定}は実用上たいへん便利である．
+  たとえば$\mathbb{R}^3$のベクトルが$3$個与えられたとき，基底であることを確かめるには線型独立性だけを調べればよく，生成性を別に確認する必要はない．
+  ただし，これは「個数が次元と一致している」場合に限られる．
+  個数が$n$と異なる組については，線型独立性と生成性は独立な条件であり，一方から他方は従わない．
+\end{remark}
+
+この判定法の威力を，\partref{線型写像}のコラムで予告した三項間漸化式の例で味わってみよう．
+
+\begin{example}{漸化式の解空間}{漸化式の解空間}
+  $p,q\in\mathbb{R}$を定数とし，三項間漸化式
+  \[
+    a_{n+2}=p\,a_{n+1}+q\,a_n \quad (n\ge1)
+  \]
+  を満たす実数列全体を$\mathcal{S}_{p,q}$とする．
+  $2$つの解の項ごとの和やスカラー倍もまた解であるから，$\mathcal{S}_{p,q}$は数列全体$\mathcal{S}$の線型部分空間である．
+
+  初項と第$2$項が$(1,0)$である解を$\bm{s}$，$(0,1)$である解を$\bm{t}$とする．
+  漸化式により第$3$項以降は順に決まるので，これらはただひとつずつ存在する．
+  任意の解$\bm{a}=(a_n)$に対して，$a_1\bm{s}+a_2\bm{t}$も解であり，初項と第$2$項が$\bm{a}$と一致するから，すべての項が一致して$\bm{a}=a_1\bm{s}+a_2\bm{t}$となる．
+  また，$\lambda\bm{s}+\mu\bm{t}=\bm{0}$ならば，初項と第$2$項を比べて$\lambda=\mu=0$である．
+  よって$(\bm{s},\bm{t})$は基底であり，$\dim\mathcal{S}_{p,q}=2$である．
+
+  さて，特性方程式$x^2=px+q$が相異なる実数解$\alpha$，$\beta$をもつとする．
+  このとき，数列$(\alpha^{n-1})$，$(\beta^{n-1})$はいずれも$\mathcal{S}_{p,q}$に属する（$\alpha^{n+1}=p\alpha^n+q\alpha^{n-1}$が成り立つ）．
+  これらの初項と第$2$項は$(1,\alpha)$，$(1,\beta)$であり，$\alpha\ne\beta$より線型独立である．
+  したがって，次元が$2$であることと\coref{次元による基底の判定}より，これらは$\mathcal{S}_{p,q}$の基底となり，任意の解は
+  \[
+    a_n=c_1\alpha^{n-1}+c_2\beta^{n-1} \quad (c_1,c_2\in\mathbb{R})
+  \]
+  の形にただ一通りに表される．
+  高校で「一般項はこの形になる」と学んだ事実は，「$2$次元の空間に線型独立な解を$2$つ見つければ，それで全部である」という主張だったのである．
+\end{example}
+
+部分空間の次元についても，直観どおりの結果が成り立つ．
+「部分は全体より大きくなれない」ということである．
+
+\begin{prop}{部分空間の次元}{部分空間の次元}
+  $V$を有限生成な線型空間とし，$W$を$V$の線型部分空間とする．
+  このとき$W$も有限生成であり，
+  $\dim W \le \dim V$
+  が成り立つ．さらに，$\dim W = \dim V$であることと$W = V$であることは同値である．
+\end{prop}
+
+\begin{tleftbar}
+\begin{proof}
+  \thref{基底の存在}より$V$は基底をもつので，$\dim V = n$とする．
+  $V$は$n$個のベクトルで張られるから，\lemref{一般の取替補題}より，$W$の線型独立な組に含まれるベクトルの個数は高々$n$である．
+  空の組も線型独立とみなすと，$W$の線型独立な組の長さは$0, 1, \dots, n$のいずれかであるから，その最大値$r$が存在する．
+  そこで，長さが最大である$W$の線型独立な組を$(\bm{w}_1, \dots, \bm{w}_r)$とする（$W = \{\bm{0}_V\}$のときは$r = 0$であり，空の組をとることになる）．
+
+  もし$\Span(\bm{w}_1, \dots, \bm{w}_r) \ne W$ならば，$\bm{w} \in W$であって$\bm{w} \notin \Span(\bm{w}_1, \dots, \bm{w}_r)$となるものがとれる．
+  \lemref{一般の線型独立な組の拡大}より$\bm{w}_1, \dots, \bm{w}_r, \bm{w}$は線型独立となり，$r$の最大性に矛盾する．
+  よって$(\bm{w}_1, \dots, \bm{w}_r)$は$W$の基底であり，$W$は有限生成で$\dim W = r \le n$である．
+
+  最後の主張について，$W = V$ならば$\dim W = \dim V$は明らかである．
+  逆に$\dim W = n$とすると，$W$の基底は$V$の$n$個の線型独立なベクトルであるから，\coref{次元による基底の判定}より$V$の基底でもある．
+  よって
+  $V = \Span(\bm{w}_1, \dots, \bm{w}_n) \subset W \subset V$
+  となり，$W = V$である．
+  これが証明すべきことであった．
+\end{proof}
+\end{tleftbar}
+
+\prref{部分空間の次元}を使えば，\figref{subspace-or-not}のあとで予告した「$\mathbb{R}^2$の線型部分空間は$3$種類しかない」ことがわかる．
+$W$を$\mathbb{R}^2$の線型部分空間とすると$\dim W\in\{0,1,2\}$であり，
+$\dim W=0$なら$W=\{\bm{0}\}$，
+$\dim W=1$なら$W=\Span(\bm{w})$（$\bm{w}\ne\bm{0}$）は原点を通る直線，
+$\dim W=2$なら$W=\mathbb{R}^2$である．
+同様に，$\mathbb{R}^3$の線型部分空間は，$\{\bm{0}\}$，原点を通る直線，原点を通る平面，$\mathbb{R}^3$全体の$4$種類である．
+
+次に，$2$つの線型部分空間$W_1$，$W_2$について，和と共通部分の次元の関係を調べよう．
+たとえば$\mathbb{R}^3$の$2$つの異なる平面（いずれも原点を通る）を考えると，その和は$\mathbb{R}^3$全体（$3$次元）であり，共通部分は直線（$1$次元）である．
+このとき$3+1=2+2$が成り立っている．
+これは偶然ではない．
+
+\begin{theorem}{次元公式}{次元公式}
+  $V$を有限生成な線型空間とし，$W_1, W_2$を$V$の線型部分空間とする．
+  このとき，
+  \[
+    \dim(W_1 + W_2) + \dim(W_1 \cap W_2) = \dim W_1 + \dim W_2
+  \]
+  が成り立つ．
+\end{theorem}
+
+\begin{tleftbar}
+\begin{proof}
+  \prref{共通部分と和の線型部分空間性}と\prref{部分空間の次元}より，$W_1 \cap W_2$，$W_1$，$W_2$，$W_1+W_2$はいずれも有限生成であり，次元が定まる．
+  $\dim(W_1 \cap W_2) = r$とし，$W_1 \cap W_2$の基底を$(\bm{u}_1, \dots, \bm{u}_r)$とする．
+  これは$W_1$でも$W_2$でも線型独立であるから，\thref{基底の延長}を$W_1$，$W_2$それぞれに適用して
+  \[
+    \begin{aligned}
+      &\text{$W_1$の基底} \qquad
+      &&(\bm{u}_1, \dots, \bm{u}_r, \bm{x}_1, \dots, \bm{x}_s),\\
+      &\text{$W_2$の基底}
+      &&(\bm{u}_1, \dots, \bm{u}_r, \bm{y}_1, \dots, \bm{y}_t)
+    \end{aligned}
+  \]
+  がとれる．すなわち$\dim W_1 = r + s$，$\dim W_2 = r + t$である．
+  ここで，
+  \[
+    (\bm{u}_1, \dots, \bm{u}_r, \bm{x}_1, \dots, \bm{x}_s, \bm{y}_1, \dots, \bm{y}_t)
+  \]
+  が$W_1 + W_2$の基底であることを示す．
+
+  生成性について，まず，上の組の各ベクトルは$W_1$または$W_2$に属するから$W_1 + W_2$に属し，$W_1 + W_2$は線型部分空間であるから，\prref{線型包の最小性}より上の組の線型包は$W_1 + W_2$に含まれる．
+  逆に，$W_1$も$W_2$も上の組の線型包に含まれるから，\prref{和と線型包}の$W_1 + W_2 = \Span(W_1 \cup W_2)$と\prref{線型包の最小性}より，$W_1 + W_2$は上の組の線型包に含まれる．
+  したがって，上の組の線型包は$W_1 + W_2$に等しい．
+
+  線型独立性について，
+  \begin{equation}
+    \sum_{i=1}^{r} a_i \bm{u}_i + \sum_{j=1}^{s} b_j \bm{x}_j + \sum_{k=1}^{t} c_k \bm{y}_k = \bm{0}_V
+    \label{eq:次元公式の線型関係}
+  \end{equation}
+  とする．このとき
+  \[
+    \bm{z} := \sum_{k=1}^{t} c_k \bm{y}_k
+    = -\left( \sum_{i=1}^{r} a_i \bm{u}_i + \sum_{j=1}^{s} b_j \bm{x}_j \right)
+  \]
+  とおくと，左辺の表示より$\bm{z} \in W_2$，右辺の表示より$\bm{z} \in W_1$であるから，$\bm{z} \in W_1 \cap W_2$である．
+  よって
+  $\bm{z} = \sum_{i=1}^{r} d_i \bm{u}_i$
+  と表せるので，
+  \[
+    \sum_{i=1}^{r} d_i \bm{u}_i - \sum_{k=1}^{t} c_k \bm{y}_k = \bm{0}_V
+  \]
+  となる．$(\bm{u}_1, \dots, \bm{u}_r, \bm{y}_1, \dots, \bm{y}_t)$は$W_2$の基底であるから線型独立であり，とくに$c_1 = \cdots = c_t = 0$である．
+  これを\eqref{eq:次元公式の線型関係}に代入すると
+  \[
+    \sum_{i=1}^{r} a_i \bm{u}_i + \sum_{j=1}^{s} b_j \bm{x}_j = \bm{0}_V
+  \]
+  となり，$W_1$の基底の線型独立性より$a_i = 0$，$b_j = 0$である．
+
+  以上より$\dim(W_1 + W_2) = r + s + t$であり，
+  $(r + s + t) + r = (r + s) + (r + t)$
+  から主張が従う．
+  これが証明すべきことであった．
+\end{proof}
+\end{tleftbar}
+
+\begin{remark}[次元公式の読み方]
+  次元公式は，有限集合の元の個数についての公式
+  \[
+    |A \cup B| + |A \cap B| = |A| + |B|
+  \]
+  と同じ形をしている．
+  ただし，線型空間では合併$W_1 \cup W_2$ではなく和$W_1 + W_2$を考える点が異なる（\prref{和と線型包}のあとのRemarkを参照）．
+
+  とくに$W_1 \cap W_2 = \{\bm{0}_V\}$のときは
+  $\dim(W_1 + W_2) = \dim W_1 + \dim W_2$
+  となる．この場合，和$W_1 + W_2$は（それ自身を一つの線型空間とみて）$W_1$と$W_2$の内部直和$W_1 \oplus W_2$である（\deref{内部直和}）．
+  すなわち上の等式は，「内部直和の次元は各成分の次元の和である」と読むことができる．
+  \exref{内部直和の例}の前半でいえば$2=1+1$であり，後半では重なり（$y$軸）の分だけ$\dim W_1+\dim W_2=4$が$\dim\mathbb{R}^3=3$を上回っている．
+\end{remark}
+
+本項の締めくくりとして，もう一つの次元公式を証明しよう．
+\partref{線型写像}で，線型写像$f \colon K^n \to K^m$に対して像$\Im f$と核$\Ker f$を定義した（\deref{像と核}）．
+本章では，これらがそれぞれ$K^m$，$K^n$の線型部分空間であることを確かめた（\prref{像と核の線型部分空間性}）ので，その次元を考えることができる．
+\partref{線型写像}のコラムで予告した公式を，いよいよ証明する．
+
+\begin{theorem}{線型写像の次元公式}{線型写像の次元公式}
+  $f \colon K^n \to K^m$を線型写像とする．このとき，
+  \[
+    \dim \Ker f + \dim \Im f = n
+  \]
+  が成り立つ．
+\end{theorem}
+
+\begin{tleftbar}
+\begin{proof}
+  $K^n$は有限生成であり（標準基底，\exref{基底の例}），$\Ker f$はその線型部分空間であるから，\prref{部分空間の次元}より$\Ker f$も有限生成である．
+  $\dim \Ker f = k$とおき，$\Ker f$の基底を$(\bm{u}_1, \dots, \bm{u}_k)$とする（$k = 0$のときは空の組をとる）．
+  \thref{基底の延長}より，これを延長して$K^n$の基底
+  $(\bm{u}_1, \dots, \bm{u}_k, \bm{w}_1, \dots, \bm{w}_l)$
+  がとれる．$\dim K^n = n$（\exref{次元の例}）であるから，\thref{基底の個数の一意性}より$k + l = n$である．
+  ここで，$(f(\bm{w}_1), \dots, f(\bm{w}_l))$が$\Im f$の基底であることを示す．
+
+  生成性について，任意の$\bm{v} \in \Im f$は，ある$\bm{x} \in K^n$を用いて$\bm{v} = f(\bm{x})$と表せる．
+  $\bm{x}$を上の$K^n$の基底で
+  $\bm{x} = \sum_{i=1}^{k} a_i \bm{u}_i + \sum_{j=1}^{l} b_j \bm{w}_j$
+  と表すと，\prref{線型写像と線型結合}と$f(\bm{u}_i) = \bm{0}$（$\bm{u}_i \in \Ker f$）より，
+  \[
+    \bm{v} = f(\bm{x})
+    = \sum_{i=1}^{k} a_i f(\bm{u}_i) + \sum_{j=1}^{l} b_j f(\bm{w}_j)
+    = \sum_{j=1}^{l} b_j f(\bm{w}_j)
+  \]
+  となる．よって$\Im f = \Span\bigl(f(\bm{w}_1), \dots, f(\bm{w}_l)\bigr)$である．
+
+  線型独立性について，
+  $\sum_{j=1}^{l} c_j f(\bm{w}_j) = \bm{0}$
+  とする．\prref{線型写像と線型結合}より$f\left(\sum_{j=1}^{l} c_j \bm{w}_j\right) = \bm{0}$，すなわち
+  $\sum_{j=1}^{l} c_j \bm{w}_j \in \Ker f$
+  である．$(\bm{u}_1, \dots, \bm{u}_k)$は$\Ker f$の基底であるから，
+  $\sum_{j=1}^{l} c_j \bm{w}_j = \sum_{i=1}^{k} d_i \bm{u}_i$
+  と表せる．移項すると
+  \[
+    \sum_{i=1}^{k} d_i \bm{u}_i - \sum_{j=1}^{l} c_j \bm{w}_j = \bm{0}
+  \]
+  となり，$(\bm{u}_1, \dots, \bm{u}_k, \bm{w}_1, \dots, \bm{w}_l)$の線型独立性より，とくに$c_1 = \cdots = c_l = 0$である．
+
+  以上より$(f(\bm{w}_1), \dots, f(\bm{w}_l))$は$\Im f$の基底であり，$\dim \Im f = l$である．
+  したがって，
+  $\dim \Ker f + \dim \Im f = k + l = n$
+  が成り立つ．これが証明すべきことであった．
+\end{proof}
+\end{tleftbar}
+
+証明の要点は，定義域$K^n$の基底を「核の基底」と「それ以外」に分けると，前者はすべて$\bm{0}$につぶれ，後者の行き先がちょうど像の基底になる，という点にある．
+\partref{線型独立性と階数}で「線型独立な列の最大個数」として導入した階数（\deref{階数}）も，この公式を通じて「像の次元」として捉え直される．
+
+\begin{cor}{階数と像・核の次元}{階数と像の次元}
+  $A$を$m \times n$行列とし，$T_A \colon K^n \to K^m$を$A$の定める線型写像とする．このとき，
+  \[
+    \dim \Im T_A = \rank A,
+    \qquad
+    \dim \Ker T_A = n - \rank A
+  \]
+  が成り立つ．
+\end{cor}
+
+\begin{tleftbar}
+\begin{proof}
+  $A$の列ベクトルを$\bm{a}_1, \dots, \bm{a}_n \in K^m$とする．
+  任意の$\bm{x} \in K^n$に対して，$\bm{x} = \sum_{j=1}^{n} x_j \bm{e}_j$，$A\bm{e}_j = \bm{a}_j$と\prref{線型写像と線型結合}より
+  $A\bm{x} = \sum_{j=1}^{n} x_j \bm{a}_j$
+  であるから，$\Im T_A = \Span(\bm{a}_1, \dots, \bm{a}_n)$である．
+
+  $r = \rank A$とおく．
+  階数の定義（\deref{階数}）より，$\bm{a}_1, \dots, \bm{a}_n$のうちから線型独立な$r$本$\bm{a}_{j_1}, \dots, \bm{a}_{j_r}$が選べる．
+  任意の列$\bm{a}_j$に対して，$\bm{a}_j$が$\bm{a}_{j_1}, \dots, \bm{a}_{j_r}$のいずれかであれば明らかに
+  $\bm{a}_j \in \Span(\bm{a}_{j_1}, \dots, \bm{a}_{j_r})$
+  である．そうでなければ，$r + 1$本の組$\bm{a}_{j_1}, \dots, \bm{a}_{j_r}, \bm{a}_j$は$r$の最大性より線型従属であるから，\lemref{一般の線型独立な組の拡大}の対偶より，やはり$\bm{a}_j \in \Span(\bm{a}_{j_1}, \dots, \bm{a}_{j_r})$である．
+  よって\prref{線型包の最小性}より
+  \[
+    \Im T_A = \Span(\bm{a}_1, \dots, \bm{a}_n)
+    \subset \Span(\bm{a}_{j_1}, \dots, \bm{a}_{j_r})
+    \subset \Im T_A
+  \]
+  となり，$\Im T_A = \Span(\bm{a}_{j_1}, \dots, \bm{a}_{j_r})$である．
+  $(\bm{a}_{j_1}, \dots, \bm{a}_{j_r})$は線型独立かつ$\Im T_A$を生成するから，$\Im T_A$の基底であり，$\dim \Im T_A = r = \rank A$である．
+
+  後半の等式は，\thref{線型写像の次元公式}より
+  $\dim \Ker T_A = n - \dim \Im T_A = n - \rank A$
+  として従う．これが証明すべきことであった．
+\end{proof}
+\end{tleftbar}
+
+\begin{remark}[次元公式の解釈と解の自由度]
+  \thref{線型写像の次元公式}は，定義域のもつ$n$次元分の情報が，「核としてつぶれる分」と「像として生き残る分」とに過不足なく分かれることを述べている．
+  \exref{像と核の例}の正射影$f_3$でいえば，$\dim \Ker f_3 = 1$（$y$軸方向がつぶれる）と$\dim \Im f_3 = 1$（$x$軸が残る）の和が，定義域$\mathbb{R}^2$の次元$2$に一致している．
+  同じく\exref{像と核の例}の多項式の微分$D\colon\mathbb{R}^3\to\mathbb{R}^2$では，$\dim\Ker D=1$（定数がつぶれる）と$\dim\Im D=2$の和が$3$になっている．
+  文献によっては，\thref{次元公式}ではなくこちらを指して「次元公式」あるいは「次元定理」とよぶことも多い．
+
+  また，\coref{階数と像の次元}の$\dim \Ker T_A = n - \rank A$は，連立一次方程式の解の様子を定量的に述べている．
+  斉次連立一次方程式$A\bm{x} = \bm{0}$の解空間は$\Ker T_A$であり（\prref{連立一次方程式と像と核}），その次元$n - \rank A$は，解を表すのに必要なパラメータの個数（解の自由度）にあたる．
+  とくに$\rank A = n$のときは$\Ker T_A = \{\bm{0}\}$となり，\prref{単射性と核}より$T_A$は単射，すなわち$A\bm{x} = \bm{0}$は自明な解$\bm{x} = \bm{0}$しかもたない．
+
+  なお，一般の線型空間のあいだの線型写像（\deref{線型写像}と同じ$2$条件で定義される）を考えれば，有限次元の線型空間$V$から線型空間$W$への線型写像$f$に対しても，まったく同じ証明によって
+  $\dim \Ker f + \dim \Im f = \dim V$
+  が成り立つ．
+\end{remark}
+
+ここで本節の流れを振り返っておこう．
+まず，「生成性」と「線型独立性」を兼ね備えた組として基底を定義し，基底による表示が一意であることから座標ベクトルを導入した．
+次に，取替補題によって基底に含まれるベクトルの個数が基底の取り方によらないことを示し，その個数として次元を定義した．
+さらに，有限生成な線型空間には基底が存在し，線型独立な組はいつでも基底に延長できることを見た．
+これらの道具を組み合わせることで，$2$つの次元公式が得られたのであった．
+残された問題は，基底を取り替えたときに座標ベクトルがどう変わるか，である．
+次節でこれを調べよう．
+
+\phantomsection
+\section{基底の取替え}
+
+ベクトルそのものは，どの基底を選ぶかとは無関係に定まっている．
+一方，その座標ベクトルは，基底の選び方に応じて変化する「表示」である（\exref{多項式の座標ベクトル}，\prref{座標ベクトルの性質}のあとのRemarkを参照）．
+地図にたとえるなら，土地そのものは変わらないのに，縮尺や方位の取り方によって地図上の座標が変わるようなものである．
+本節では，この「対象」と「表示」の区別を踏まえ，基底を取り替えたときに座標ベクトルがどのような規則で変換されるかを調べる．
+
+\phantomsection
+\subsection{基底の行列表記}
+
+基底を取り替える操作を見通しよく扱うために，記法を一つ用意する．
+ベクトルを横に並べた組を，あたかも「行列」のように扱うのである．
+
+\begin{definition}{ベクトルの組と行列の積}{ベクトルの組と行列の積}
+  $V$を体$K$上の線型空間とし，$\bm{v}_1, \bm{v}_2, \dots, \bm{v}_n \in V$とする．
+  $n \times m$行列$P = (p_{ij})$に対して，
+  \[
+    (\bm{v}_1, \bm{v}_2, \dots, \bm{v}_n) P
+    :=
+    \left( \sum_{i=1}^{n} p_{i1} \bm{v}_i,~ \sum_{i=1}^{n} p_{i2} \bm{v}_i,~ \dots,~ \sum_{i=1}^{n} p_{im} \bm{v}_i \right)
+  \]
+  と定める．すなわち，右辺の第$j$成分は$P$の第$j$列を係数とする$\bm{v}_1, \dots, \bm{v}_n$の線型結合である．
+  とくに$m=1$のとき，すなわち$\bm{x} = (x_i) \in K^n$に対しては，$1$個のベクトルからなる組をそのベクトル自身と同一視して
+  \[
+    (\bm{v}_1, \bm{v}_2, \dots, \bm{v}_n) \bm{x}
+    = \sum_{i=1}^{n} x_i \bm{v}_i \in V
+  \]
+  とかく．
+\end{definition}
+
+たとえば$V=\mathbb{R}[x]$で
+\[
+  (1,\,x,\,x^2)\begin{pmatrix} 1 & -1 \\ 0 & 1 \\ 2 & 0 \end{pmatrix}
+  =\bigl(1\cdot1+0\cdot x+2\cdot x^2,~ (-1)\cdot1+1\cdot x+0\cdot x^2\bigr)
+  =(1+2x^2,~ -1+x)
+\]
+である．行列の積と同じく，「行と列をかけて足す」要領で計算すればよい．
+
+\begin{remark}[形式的な行列記法について]
+  これは，ベクトルを成分とする「$1 \times n$行列」と通常の行列との積を，形式的に行列の積の定義（\deref{行列の積}）と同じ規則で定めたものである．
+  $V$が一般の線型空間の場合にはベクトルどうしの積は定義されないので，あくまで記法の約束として理解してほしい．
+  この記法のもとで，基底$\mathcal{B} = (\bm{v}_1, \dots, \bm{v}_n)$と座標ベクトルの関係は
+  $\bm{v} = \mathcal{B} \, [\bm{v}]_{\mathcal{B}}$
+  と簡潔にかける．
+\end{remark}
+
+この記法が便利なのは，行列の積と同じように結合律が成り立つからである．
+
+\begin{prop}{ベクトルの組と行列の積の結合律}{ベクトルの組と行列の積の結合律}
+  $\bm{v}_1, \dots, \bm{v}_n \in V$とし，$P$を$n \times m$行列，$Q$を$m \times l$行列とする．
+  $\mathcal{V} = (\bm{v}_1, \dots, \bm{v}_n)$とかくと，
+  $(\mathcal{V} P) Q = \mathcal{V} (PQ)$
+  が成り立つ．
+  とくに$l=1$として，任意の$\bm{x}\in K^m$に対して$(\mathcal{V}P)\bm{x}=\mathcal{V}(P\bm{x})$である．
+\end{prop}
+
+\begin{tleftbar}
+\begin{proof}
+  $P = (p_{ij})$，$Q = (q_{jk})$とし，$\mathcal{V}P$の第$j$成分を$\bm{w}_j = \sum_{i=1}^{n} p_{ij} \bm{v}_i$とおく．
+  このとき，$(\mathcal{V}P)Q$の第$k$成分は
+  \[
+    \sum_{j=1}^{m} q_{jk} \bm{w}_j
+    = \sum_{j=1}^{m} q_{jk} \left( \sum_{i=1}^{n} p_{ij} \bm{v}_i \right)
+    = \sum_{i=1}^{n} \left( \sum_{j=1}^{m} p_{ij} q_{jk} \right) \bm{v}_i
+  \]
+  である．最後の括弧の中は$PQ$の$(i,k)$成分にほかならないから，これは$\mathcal{V}(PQ)$の第$k$成分に等しい．
+  これが証明すべきことであった．
+\end{proof}
+\end{tleftbar}
+
+\phantomsection
+\subsection{基底の取替行列}
+
+それでは，$2$つの基底のあいだの関係を行列で表そう．
+新しい基底の各ベクトルも$V$のベクトルであるから，古い基底の線型結合としてただ一通りに表される．
+その係数を並べたものが，次に定義する取替行列である．
+
+\begin{definition}{基底の取替行列}{取替行列}
+  $\mathcal{B} = (\bm{v}_1, \dots, \bm{v}_n)$，$\mathcal{B}' = (\bm{v}'_1, \dots, \bm{v}'_n)$をともに線型空間$V$の基底とする．
+  各$\bm{v}'_j$を$\mathcal{B}$で表したときの係数を$p_{ij}$とする．すなわち，
+  \[
+    \bm{v}'_j = \sum_{i=1}^{n} p_{ij} \bm{v}_i \quad (1 \le j \le n)
+  \]
+  とし，$P = (p_{ij})$とおく．
+  このとき，
+  $\mathcal{B}' = \mathcal{B} P$
+  が成り立つ．この$P$を，$\mathcal{B}$から$\mathcal{B}'$への\textbf{基底の取替行列}\index{きていのとりかええぎょうれつ@基底の取替行列}という．
+\end{definition}
+
+\begin{remark}[取替行列の列の意味]
+  取替行列$P$の第$j$列は，新しい基底ベクトル$\bm{v}'_j$の，古い基底$\mathcal{B}$に関する座標ベクトルである：
+  \[
+    P = \bigl( [\bm{v}'_1]_{\mathcal{B}},~ [\bm{v}'_2]_{\mathcal{B}},~ \dots,~ [\bm{v}'_n]_{\mathcal{B}} \bigr)
+  \]
+  「新しい基底を，古い基底で表したものを\textbf{列}に並べる」と覚えるとよい．
+  添字の付き方が$\bm{v}'_j = \sum_i p_{ij} \bm{v}_i$と，和をとるのが第$1$添字である点に注意してほしい．
+  これは$\mathcal{B}' = \mathcal{B}P$という表記が成り立つように定めた結果である．
+\end{remark}
+
+たとえば\exref{多項式の座標ベクトル}の$\mathcal{B}=(1,x,x^2)$と$\mathcal{B}'=(1,\,x-1,\,(x-1)^2)$では，
+$1=1$，$x-1=-1+x$，$(x-1)^2=1-2x+x^2$であるから，
+\[
+  P=\begin{pmatrix} 1 & -1 & 1 \\ 0 & 1 & -2 \\ 0 & 0 & 1 \end{pmatrix}
+\]
+である．各列が，新しい基底ベクトルの係数になっていることを確かめてほしい．
+
+取替行列は，基底から基底への「翻訳」であるから，逆向きの翻訳も可能なはずである．
+実際，取替行列はつねに正則である．
+
+\begin{prop}{取替行列の正則性}{取替行列の正則性}
+  $\mathcal{B}$から$\mathcal{B}'$への取替行列を$P$とする．
+  このとき$P$は正則であり，$\mathcal{B}'$から$\mathcal{B}$への取替行列は$P^{-1}$である．
+\end{prop}
+
+\begin{tleftbar}
+\begin{proof}
+  $\mathcal{B}'$から$\mathcal{B}$への取替行列を$Q$とすると，
+  \[
+    \mathcal{B} = \mathcal{B}' Q = (\mathcal{B}P)Q = \mathcal{B}(PQ)
+  \]
+  である（最後の等号は\prref{ベクトルの組と行列の積の結合律}による）．
+  一方，明らかに$\mathcal{B} = \mathcal{B}E_n$である．
+  両辺の第$j$成分を比べると，$\bm{v}_j$が$PQ$の第$j$列を係数とする線型結合と，$E_n$の第$j$列を係数とする線型結合の$2$通りに表されている．
+  $\mathcal{B}$は基底であるから表示は一意であり（\thref{基底による表示の一意性}），$PQ$と$E_n$の第$j$列は一致する．
+  これがすべての$j$について成り立つので，
+  $PQ = E_n$
+  を得る．$\mathcal{B}$と$\mathcal{B}'$の役割を入れ替えれば$QP = E_n$も同様に従う．
+  よって$P$は正則で$Q = P^{-1}$である．
+  これが証明すべきことであった．
+\end{proof}
+\end{tleftbar}
+
+\phantomsection
+\subsection{座標の変換}
+
+いよいよ本節の主題である．
+基底を取り替えると，同じベクトルの座標ベクトルはどう変わるだろうか．
+
+\begin{theorem}{座標の変換公式}{座標の変換公式}
+  $\mathcal{B}$，$\mathcal{B}'$を線型空間$V$の基底とし，$P$を$\mathcal{B}$から$\mathcal{B}'$への取替行列とする．
+  このとき，任意の$\bm{v} \in V$に対して
+  \[
+    [\bm{v}]_{\mathcal{B}} = P \, [\bm{v}]_{\mathcal{B}'},
+    \quad \text{すなわち} \quad
+    [\bm{v}]_{\mathcal{B}'} = P^{-1} [\bm{v}]_{\mathcal{B}}
+  \]
+  が成り立つ．
+\end{theorem}
+
+\begin{tleftbar}
+\begin{proof}
+  $\bm{x} = [\bm{v}]_{\mathcal{B}}$，$\bm{x}' = [\bm{v}]_{\mathcal{B}'}$とおく．
+  座標ベクトルの定義より
+  $\bm{v} = \mathcal{B}\bm{x} = \mathcal{B}'\bm{x}'$
+  である．ここで$\mathcal{B}' = \mathcal{B}P$であるから，\prref{ベクトルの組と行列の積の結合律}より
+  $\mathcal{B}'\bm{x}' = (\mathcal{B}P)\bm{x}' = \mathcal{B}(P\bm{x}')$
+  となる．よって
+  $\mathcal{B}\bm{x} = \mathcal{B}(P\bm{x}')$
+  であり，$\mathcal{B}$による表示の一意性（\thref{基底による表示の一意性}）から$\bm{x} = P\bm{x}'$を得る．
+  \prref{取替行列の正則性}より$P$は正則であるから，$\bm{x}' = P^{-1}\bm{x}$である．
+  これが証明すべきことであった．
+\end{proof}
+\end{tleftbar}
+
+多項式の例で確かめてみよう．
+上で求めた$P$と，\exref{多項式の座標ベクトル}の$[p]_{\mathcal{B}'}=(6,8,3)^\mathsf{T}$に対して
+\[
+  P\,[p]_{\mathcal{B}'}
+  =\begin{pmatrix} 1 & -1 & 1 \\ 0 & 1 & -2 \\ 0 & 0 & 1 \end{pmatrix}
+  \begin{pmatrix} 6 \\ 8 \\ 3 \end{pmatrix}
+  =\begin{pmatrix} 1 \\ 2 \\ 3 \end{pmatrix}
+  =[p]_{\mathcal{B}}
+\]
+となり，たしかに\thref{座標の変換公式}が成り立っている．
+
+ここで，変換の向きに注意してほしい．
+基底については「古い基底に$P$をかけると新しい基底」であったが，座標については「\textbf{新しい}座標に$P$をかけると\textbf{古い}座標」になっている．
+向きが逆になるのである．
+
+\begin{remark}[基底と座標の変換の向き]
+  基底と座標の変換を並べて書くと
+  \[
+    \text{基底：} \quad \mathcal{B}' = \mathcal{B}P,
+    \qquad
+    \text{座標：} \quad [\bm{v}]_{\mathcal{B}'} = P^{-1} [\bm{v}]_{\mathcal{B}}
+  \]
+  となる．
+  基底は$P$によって新しいものに移るのに対し，座標は$P^{-1}$によって移るのである．
+  この点は混乱しやすいので，もっとも簡単な場合で確かめておこう．
+
+  $\mathbb{R}^1=\mathbb{R}$において$\bm{v}_1 = 1$を基底とし，$\bm{v}'_1 = 2$を新しい基底とする．
+  このとき$\bm{v}'_1 = 2\bm{v}_1$であるから$P = (2)$である．
+  ベクトル$\bm{v} = 6$の座標は，$\mathcal{B}$では$6$，$\mathcal{B}'$では$3$である．
+  基底ベクトルを$2$倍に「伸ばす」と，同じベクトルを測る目盛りの数は$1/2$倍に「縮む」わけである．
+  ものさしの目盛りを細かくすれば読み取る数値は大きくなり，粗くすれば小さくなる，という日常の感覚と同じである．
+
+  このように，基底の変換と座標の変換とに互いに逆の行列（$P$と$P^{-1}$）が現れることを指して，座標は基底の変換に対して\textbf{反変的}\index{はんぺんてき@反変的}に変換する，と表現することがある．
+\end{remark}
+
+最後に，平面のベクトルで，座標の変換を図とともに確かめておこう．
+
+\begin{example}{座標の変換}{座標の変換}
+  \noindent
+  \begin{minipage}[c]{0.55\linewidth}
+    \setlength{\parindent}{1\zw}
+    \hspace{1\zw}$V = \mathbb{R}^2$とし，$\mathcal{B} = (\bm{e}_1, \bm{e}_2)$を標準基底，
+    \[
+      \mathcal{B}' = (\bm{v}'_1, \bm{v}'_2), \quad
+      \bm{v}'_1 = \begin{pmatrix} 1 \\ 1 \end{pmatrix}, \quad
+      \bm{v}'_2 = \begin{pmatrix} 1 \\ -1 \end{pmatrix}
+    \]
+    とする（\exref{基底の例}(2)）．
+    $\bm{v}'_1 = \bm{e}_1 + \bm{e}_2$，$\bm{v}'_2 = \bm{e}_1 - \bm{e}_2$であるから，$\mathcal{B}$から$\mathcal{B}'$への取替行列は
+    \[
+      P = \begin{pmatrix} 1 & 1 \\ 1 & -1 \end{pmatrix}
+    \]
+    である．\exref{2次正方行列の逆行列}より$P$は正則で，
+    \[
+      P^{-1} = \frac{1}{2}\begin{pmatrix} 1 & 1 \\ 1 & -1 \end{pmatrix}
+    \]
+    である．
+  \end{minipage}%
+  \hfill
+  \begin{minipage}[c]{0.42\linewidth}
+    \centering
+    \begin{tikzpicture}[
+        scale=0.5,
+        vec/.style={-{Stealth[length=2mm]}, thick},
+        lab/.style={font=\scriptsize, inner sep=1pt}]
+      \begin{scope}
+        \clip (-1.2,-3.2) rectangle (6.4,4.2);
+        \foreach \a in {-4,...,6} {
+          \draw[black!25] ({\a-8},{\a+8}) -- ({\a+8},{\a-8});
+          \draw[black!25] ({\a-8},{-\a-8}) -- ({\a+8},{8-\a});
+        }
+      \end{scope}
+      \draw[-{Stealth[length=1.4mm]}] (-1.2,0) -- (6.4,0) node[lab, right] {$x$};
+      \draw[-{Stealth[length=1.4mm]}] (0,-3.2) -- (0,4.2) node[lab, above] {$y$};
+      \fill (0,0) circle (2pt) node[lab, left=2pt] {$O$};
+      \draw[densely dotted, thick] (3,3) -- (5,1);
+      \draw[vec, magenta] (0,0) -- (1,1) node[lab, above left] {$\bm{v}'_1$};
+      \draw[vec, magenta] (0,0) -- (1,-1) node[lab, below left] {$\bm{v}'_2$};
+      \draw[vec, magenta!60!black, dashed] (0,0) -- (3,3) node[lab, above] {$3\bm{v}'_1$};
+      \draw[vec] (0,0) -- (5,1) node[lab, right] {$\bm{v}$};
+    \end{tikzpicture}
+    \captionof{figure}{基底$\mathcal{B}'$の目盛りで測る}
+    \label{fig:oblique-coordinates}
+  \end{minipage}
+  \par\medskip
+
+  いま，$\bm{v} = (5,1)^\mathsf{T}$を考える．
+  $\mathcal{B}$は標準基底であるから$[\bm{v}]_{\mathcal{B}} = (5,1)^\mathsf{T}$であり，
+  \[
+    [\bm{v}]_{\mathcal{B}'}
+    = P^{-1}\begin{pmatrix} 5 \\ 1 \end{pmatrix}
+    = \frac{1}{2}\begin{pmatrix} 6 \\ 4 \end{pmatrix}
+    = \begin{pmatrix} 3 \\ 2 \end{pmatrix}
+  \]
+  となる．実際，
+  $3\bm{v}'_1 + 2\bm{v}'_2 = (5,1)^\mathsf{T}$
+  であり，確かに成り立っている．
+  \figref{oblique-coordinates}の斜めの格子は，基底$\mathcal{B}'$が定める「目盛り」である．
+  同じ点$\bm{v}$が，標準基底の格子では$(5,1)$，斜めの格子では$(3,2)$と読めるのである．
+\end{example}
+
+\begin{remark}[標準基底の場合と行列式による判定]
+  $V = K^n$で$\mathcal{B}$が標準基底の場合，取替行列$P$は「新しい基底ベクトルを列として並べた行列」そのものである．
+  この場合，$\bm{v} = P[\bm{v}]_{\mathcal{B}'}$という関係は，\partref{線型独立性と階数}で見た「$A\bm{x}$は$A$の列ベクトルの線型結合であり，その係数は$\bm{x}$の成分である」という事実にほかならない．
+
+  また，$K = \mathbb{R}$または$\mathbb{C}$とすれば，\partref{行列式}の結果が使える．
+  \coref{次元による基底の判定}と\prref{行列式と階数}を合わせると，
+  $K^n$の$n$個のベクトル$\bm{v}'_1, \dots, \bm{v}'_n$が基底をなすことは，それらを列に並べた行列$P$について$\det P \ne 0$が成り立つことと同値である．
+  基底かどうかの判定が，行列式の計算に帰着されるのである．
+  \exref{座標の変換}でいえば，$\det P=-2\ne0$であることから，$\mathcal{B}'$が基底であることが直ちにわかる．
+\end{remark}
+
+本章では，線型空間という枠組みのもとで，部分空間・基底・次元・座標といった概念を整備した．
+数ベクトルで培った直観の多くは，そのまま一般の線型空間へと持ち込める．
+一方で，基底を選んで初めて「数の組」が現れること，そしてその表示は基底の選び方に依存することも見た．
+「対象そのもの」と「その表示」を区別するこの視点は，線型代数をさらに学び進めるうえで欠かせないものである．
