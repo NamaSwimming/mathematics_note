@@ -38,3 +38,21 @@ linear_algebra/linear_algebra_cmyk_B5.pdf
 linear_algebra/linear_algebra_cmyk_B5.pdf
 linear_algebra/mathnote_three.sty
 linear_algebra/mathnote_one.sty
+
+# LaTeX intermediate files (linear_algebra)
+linear_algebra/*.aux
+linear_algebra/*.log
+linear_algebra/*.toc
+linear_algebra/*.bbl
+linear_algebra/*.bbl-SAVE-ERROR
+linear_algebra/*.bcf
+linear_algebra/*.blg
+linear_algebra/*.idx
+linear_algebra/*.ilg
+linear_algebra/*.ind
+linear_algebra/*.run.xml
+linear_algebra/*.out
+linear_algebra/*.fls
+linear_algebra/*.fdb_latexmk
+linear_algebra/*.synctex.gz
+linear_algebra/*.synctex(busy)
