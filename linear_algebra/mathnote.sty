@@ -262,12 +262,10 @@
 % 奇数ページ右: Section タイトル + ページ番号
 \RequirePackage{fancyhdr}
 % \titleformat / \titlespacing（\section・\subsection の見出し整形で使用）
-% 【変更】nobottomtitles* を追加：ページ下部の残り高さが
-% \bottomtitlespace 未満なら，見出しを次ページ先頭へ送る．
-% （見出しだけがページ最下部に孤立するのを防ぐ）
-\RequirePackage[nobottomtitles*]{titlesec}
-% 見出し＋本文数行が入らない場合に送る閾値（好みで調整．大きいほど早めに送る）
-\renewcommand{\bottomtitlespace}{.15\textheight}
+% 【変更】nobottomtitles* を外した：見出しを次ページへ送ったページが
+% \raggedbottom 扱いになり，下に最大 \bottomtitlespace 分の余白が残るため．
+% 見出し直後での改ページは titlesec 標準の \nobreak で防がれる．
+\RequirePackage{titlesec}
 
 % 現在の Part・Section タイトルを保持するグローバル変数
 \newcommand{\CurrentPartTitle}{}
@@ -542,7 +540,7 @@
   {\sectionheadrulestar}
 
 \titlespacing{\section}
-  {0pt}{18pt}{14pt}
+  {0pt}{18pt plus 6pt minus 2pt}{14pt plus 3pt minus 2pt}
 
 \setlength{\parindent}{1\zw}
 
@@ -553,7 +551,7 @@
   {}
 
 % 星なし ＝ 見出し直後の段落を字下げする
-\titlespacing{\subsection}{0pt}{14pt}{6pt}
+\titlespacing{\subsection}{0pt}{14pt plus 6pt minus 2pt}{6pt plus 2pt}
 
 
 
@@ -715,8 +713,8 @@
     %   背景に色が付くとカードの下端が見えるようになるため，
     %   2pt 外側に浮いた線は「ズレ」に見える．下端に密着させる．
     borderline south={0.5pt}{0pt}{appleLineGray},
-    before skip=16pt plus 6pt minus 4pt,
-    after skip=18pt plus 6pt minus 4pt,
+    before skip=16pt plus 10pt minus 4pt,
+    after skip=18pt plus 10pt minus 4pt,
     before upper={\setlength{\parindent}{1\zw}},
     before lower={\setlength{\parindent}{1\zw}},
     pad at break=0pt,
@@ -960,8 +958,8 @@
   top=13.6mm,
   bottom=5.5mm,
   %
-  before skip=1.0\baselineskip,
-  after skip=1.0\baselineskip,
+  before skip=1.0\baselineskip plus 8pt minus 2pt,
+  after skip=1.0\baselineskip plus 8pt minus 2pt,
   %
   % ---- 本文 ----
   before upper={%
@@ -992,8 +990,8 @@
   colback=white, colframe=appleLine,
   boxrule=0.35pt, arc=4mm,
   left=7mm, right=7mm, top=4mm, bottom=4mm,
-  before skip=0.9\baselineskip,
-  after skip =0.9\baselineskip,
+  before skip=0.9\baselineskip plus 6pt minus 2pt,
+  after skip =0.9\baselineskip plus 6pt minus 2pt,
   fonttitle=\bfseries\sffamily,
   coltitle=appleInk,
   title=#1,
@@ -1687,3 +1685,9 @@
   % 見た目に影響が出ると感じたら削除してよい．
   \setlength{\parskip}{0pt plus 1pt}%
 }
+
+% 【追加】ページ下端をそろえる（\flushbottom）．
+%   ltjsarticle は一段組のとき \raggedbottom を指定するため，
+%   定理ボックスや見出しが次ページへ送られると下に大きな余白が残っていた．
+%   上の各種スキップに伸び代を持たせ，ページ内の空きを均等に配分する．
+\flushbottom
