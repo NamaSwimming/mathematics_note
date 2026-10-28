@@ -1,6 +1,11 @@
 \documentclass{mathnote_cmyk}
 \usepackage{mathnote_cmyk}
 
+% 製本用：表紙の裏・裏表紙の裏は完全な白紙にする
+\MathNoteVersoLabelfalse
+% 製本用：総ページ数（表紙・裏表紙を含む）．4 の倍数にしておく
+\newcommand{\BookTotalPages}{166}
+
 \begin{document}
 
 % タイトルページの呼び出し
@@ -48,12 +53,6 @@
 % 通常の \part は右ページ開始だが，索引だけは右ページ送りを無効にする．
 
 \clearpage
-
-\thispagestyle{empty}
-
-\null
-
-\clearpage
 \thispagestyle{empty}
 \setcounter{section}{6}
 \renewcommand{\indexname}{索引}
@@ -69,14 +68,22 @@
   \printindex
 \endgroup
 
-% 裏表紙の直前に白紙を2ページ挿入
+% 裏表紙が \BookTotalPages ページ目（偶数ページ）に来るよう白紙を補充する．
+% 末尾 2 ページ＝裏表紙の裏（白紙）＋裏表紙．
+% \ReadonlyShipoutCounter は表紙を含めた出力済みの物理ページ数．
 \clearpage
-\thispagestyle{empty}
-\null
-\clearpage
-\thispagestyle{empty}
-\null
-\clearpage
+\pagestyle{empty}
+\makeatletter
+\@tempcnta=\numexpr\BookTotalPages-2-\ReadonlyShipoutCounter\relax
+\ifnum\@tempcnta<0
+  \PackageWarningNoLine{製本}{本文が \BookTotalPages\space ページを超えています}
+\fi
+\loop\ifnum\@tempcnta>0
+  \thispagestyle{empty}\null\clearpage
+  \advance\@tempcnta\m@ne
+\repeat
+\makeatother
+\MathNoteBackCoverBlankfalse
 
 \MathNoteBackCover{Linear Algebra}{2026 Edition}
 
