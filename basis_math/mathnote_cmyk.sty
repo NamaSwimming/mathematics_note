@@ -1,0 +1,2059 @@
+% mathnote_cmyk.sty
+% LuaLaTeX / LuaHBTeX + mathnote_cmyk クラス用のスタイルファイル（B5・CMYK 版）
+%
+% 使い方（メインの .tex ファイル）:
+%   \documentclass{mathnote_cmyk}   % 文書構造（余白・フォント等）
+%   \usepackage{mathnote_cmyk}      % デザイン・マクロ・パッケージ追加
+%
+% mathnote.sty（A4・11pt 版）との差分は次の 2 点のみ：
+%   (1) 出力カラーモデルを CMYK にする
+%   (2) 絶対長（mm / pt）を「A4 換算単位」\mnmm / \mnpt / \mnvpt で書く
+% 改ページ位置に影響する設定は A4 版と完全に同じにしてある．
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{mathnote_cmyk}[2026/08/11 math note style: CMYK / B5 edition (dark cover)]
+
+% CMYK版：xcolor が他パッケージから先に読み込まれる場合にも備えて，
+% パッケージ読込前に出力カラーモデルを CMYK に指定する．
+\PassOptionsToPackage{cmyk}{xcolor}
+
+% ==============================================================
+% § 0. 寸法のスケール単位（A4 版との体裁・改ページ位置合わせ）
+% ==============================================================
+%
+% mathnote.sty（A4・11pt）と同じ体裁・同じ行取りを B5・9pt でも得るため，
+% このファイル中の絶対長は mm / pt を直接書かず，次の「A4 換算単位」で書く．
+%
+%   \mnpt   A4 での 1pt。文字サイズに比例して縮む（A4 比 0.833790）
+%   \mnmm   A4 での 1mm。同上
+%           → 幅・箱の内部余白・飾りの座標・\fontsize に使う
+%   \mnvpt  A4 での 1pt。行送りに比例して縮む
+%           → 見出し前後・数式前後・箱の前後など「行取り」に効く縦アキに使う
+%
+% ltjsarticle は 9pt 指定のときだけ行送り係数 \n@baseline を 16 → 15 に
+% 落とすため，素の状態では文字サイズの比（0.833790）と行送りの比
+% （0.781678）が一致しない．mathnote_cmyk.cls は既定（similar モード）で
+% \n@baseline を 16 に戻すため，通常は \mnvpt = \mnpt となり，縦横とも
+% A4 版の 0.833790 倍の完全な相似形になる（改行・改ページ位置が一致）．
+% \mnvpt の定義（＝\mnpt x \n@baseline/16）は，[nosimilar] オプションで
+% 旧来の行送り比を選んだ場合にも縦アキが行グリッドに追随するよう残してある．
+%
+% A4（11pt）では 3 つとも本来の 1pt / 1mm に一致するので，この sty を
+% そのまま A4 版に使っても mathnote.sty と同じ結果になる．
+%
+% 罫線の太さのうち，ボックスや見出しの「寸法」に算入されるもの
+% （tcolorbox の boxrule / framed の \FrameRule / \titlerule /
+%   見出し・目次 tikz の line width）は版面の消費量に効くため，
+% A4 版との改行・改ページ一致のために \mnpt で縮める．
+% 一方，寸法に算入されない純粋な上書き描画（borderline 系・
+% \columnseprule・overlay 内の罫線）は，印刷で細りすぎないよう
+% 絶対値のままにしてある．
+
+% 保険：jsclasses 系以外で読まれた場合のフォールバック
+\providecommand{\n@baseline}{16}
+\ifdefined\zw\else \newdimen\zw \zw=10.95pt \fi
+
+\newlength{\mnpt}
+\newlength{\mnmm}
+\newlength{\mnvpt}
+% 【修正 2026/08/11】\mnpt の基準を \zw から \jsc@mpt に変更．
+%   ltjsclasses の \zw は和文スケール 0.924715 を含む
+%   （\zw = 0.924715 x 10 x \jsc@magscale pt = 10.1256pt/8.4426pt）ため，
+%   旧定義 \zw*2000/21900 では \mnpt が意図値の 0.924715 倍となり，
+%   ボックス内余白・見出し前後・数式前後の全寸法が約 7.5% 縮んで
+%   A4 版と改行・改ページ位置がずれていた（横：箱内の字詰めが増える，
+%   縦：ページに入る行数が増える）．
+%   \jsc@mpt（= \jsc@magscale pt．11pt→1.095pt，9pt→0.913pt）を
+%   10/10.95 = 200/219 倍すれば，A4 で厳密に 1pt，B5 で 0.913/1.095 pt
+%   （= 0.8337899…pt）となり，文字サイズ比と厳密に一致する．
+\ifdefined\jsc@mpt
+  \setlength{\mnpt}{\dimexpr\jsc@mpt*200/219\relax}
+\else
+  % jsclasses 系以外で読まれた場合：欧文 \normalsize（\f@size pt）から換算
+  \setlength{\mnpt}{\dimexpr\f@size\p@*20/219\relax}
+\fi
+\setlength{\mnmm} {\dimexpr\mnpt*7227/2540\relax}   % 1mm = 7227/2540 pt
+\setlength{\mnvpt}{\dimexpr\mnpt*\n@baseline/16\relax}
+
+% ==============================================================
+% § 1. 基本パッケージ
+% ==============================================================
+
+% luatexja / luatexja-fontspec / geometry はクラスファイルで読み込み済み
+% .aux ファイル読み込み時のフック機構
+\RequirePackage{auxhook}
+% 画像の取り込み
+\RequirePackage{graphicx}
+% 画像・ボックスのサイズ調整
+\RequirePackage{adjustbox}
+% 複数行の comment 環境（\begin{comment}...\end{comment}）
+\RequirePackage{comment}
+% 単位表記（\SI{3}{\meter} 等）
+\RequirePackage{siunitx}
+% 化学式・反応式
+\RequirePackage[version=4]{mhchem}  % \ce{H2O} 等
+\RequirePackage{chemfig}             % 構造式の描画
+\RequirePackage{chemformula}         % \ch{} コマンド
+
+% ==============================================================
+% § 2. 数学パッケージ
+% ==============================================================
+
+\RequirePackage{amsmath}    % align, gather, cases 等の数式環境
+\RequirePackage{amsfonts}   % \mathbb, \mathfrak 等
+\RequirePackage{amssymb}    % 各種数学記号
+\RequirePackage{amsthm}     % proof 環境のベース（§17 でカスタマイズ）
+\RequirePackage{bm}         % \bm{v} でベクトルの太字斜体
+\RequirePackage{mathtools}  % amsmath の拡張（\coloneqq 等）
+\RequirePackage{nccmath}    % \medmath, \mfrac 等の補助コマンド
+\RequirePackage{empheq}     % 数式ブロック全体を囲む枠
+\RequirePackage{oubraces}   % \overbrace / \underbrace の拡張
+\RequirePackage{ifthen}     % 条件分岐（\adunderbrace 内で使用）
+% \itembox, \screen 等の日本語向け枠環境
+\RequirePackage{ascmac}
+
+% ---- 絶対値・ノルムの自動サイズ調整デリミタ ----
+% スター付き（\abs*{x}）で \left\right の自動サイズ調整
+\DeclarePairedDelimiter{\abs} {\lvert}{\rvert}
+\DeclarePairedDelimiter{\norm}{\lVert}{\rVert}
+
+% ---- 分数のカスタマイズ ----
+% \frac を displaystyle 優先の \bunsuu で上書きする
+%   \bunsuu{分子}{分母}  ：常に \dfrac（displaystyle）ベース
+%   \bunsuu*{分子}{分母} ：\mathchoice で数式スタイルに自動追従
+%   \normalfrac{分子}{分母}：元の \frac を明示的に使いたい場合
+\makeatletter
+
+\let\oldfrac\frac
+
+\DeclareRobustCommand{\bunsuu}{\@ifstar{\bunsuu@}{\@@bunsuu}}
+
+% 通常版（常に \dfrac ベース）：分子・分母を微調整してバランスを改善
+\def\@@bunsuu#1#2{%
+  \dfrac{%
+    \lower.16ex\hbox{$\m@th\displaystyle\mkern1mu#1\mkern1mu$}%
+  }{%
+    \lower-.036ex\hbox{$\m@th\displaystyle\mkern1mu#2\mkern1mu$}%
+  }%
+}
+
+% textstyle 用（インライン数式内での分数）
+\def\tbunsuu#1#2{%
+  \tfrac{%
+    \mkern1mu#1\mkern1mu
+  }{%
+    \lower-.05ex\hbox{$\m@th\scriptstyle\mkern1mu#2\mkern1mu$}%
+  }%
+}
+
+% スター版：\mathchoice で display / text / script / scriptscript に自動追従
+\def\bunsuu@#1#2{%
+  \mathchoice
+    {\@@bunsuu{#1}{#2}}%
+    {\tbunsuu{#1}{#2}}%
+    {\oldfrac{\mkern1mu#1\mkern1mu}{\mkern1mu#2\mkern1mu}}%
+    {\oldfrac{\mkern1mu#1\mkern1mu}{\mkern1mu#2\mkern1mu}}%
+}
+
+\renewcommand{\frac}[2]{\bunsuu{#1}{#2}}
+% 元の \frac を明示的に使う場合
+\newcommand{\normalfrac}[2]{\oldfrac{#1}{#2}}
+
+\makeatother
+
+% ---- \sum・\prod を 0.97 倍に縮小 ----
+% 本文サイズに対して記号が大きく見えすぎるのを補正する
+\makeatletter
+
+\let\orgsum\sum
+\let\orgprod\prod
+
+\DeclareRobustCommand{\sum}{%
+  \mathop{\mathchoice
+    {\vcenter{\hbox{\scalebox{0.97}{$\displaystyle\orgsum$}}}}%
+    {\vcenter{\hbox{\scalebox{0.97}{$\textstyle\orgsum$}}}}%
+    {\vcenter{\hbox{\scalebox{0.97}{$\scriptstyle\orgsum$}}}}%
+    {\vcenter{\hbox{\scalebox{0.97}{$\scriptscriptstyle\orgsum$}}}}%
+  }\limits%
+}
+
+\DeclareRobustCommand{\prod}{%
+  \mathop{\mathchoice
+    {\vcenter{\hbox{\scalebox{0.97}{$\displaystyle\orgprod$}}}}%
+    {\vcenter{\hbox{\scalebox{0.97}{$\textstyle\orgprod$}}}}%
+    {\vcenter{\hbox{\scalebox{0.97}{$\scriptstyle\orgprod$}}}}%
+    {\vcenter{\hbox{\scalebox{0.97}{$\scriptscriptstyle\orgprod$}}}}%
+  }\limits%
+}
+
+\makeatother
+
+% ---- 数式周りの縦スペースを微調整 ----
+% 【変更】(1) plus/minus（伸縮量）を追加：
+%   固定長だと \flushbottom がページを下端まで詰められず，
+%   ボックス移動時の下部余白がそのまま残ってしまうため．
+% 【変更】(2) \AtBeginDocument で設定：
+%   ltjsarticle ではサイズ命令（\normalsize 等）がこれらの長さを
+%   再設定するため，プリアンブルでの \setlength は上書きされうる．
+\AtBeginDocument{%
+  % 本文（日本語）と別行立て数式の間を少し広げる．
+  % 5pt -> 7pt，short 2pt -> 4pt とし，詰まり感を弱める．
+  \setlength{\abovedisplayskip}{7\mnvpt plus 3\mnvpt minus 2\mnvpt}%
+  \setlength{\belowdisplayskip}{7\mnvpt plus 3\mnvpt minus 2\mnvpt}%
+  \setlength{\abovedisplayshortskip}{4\mnvpt plus 2\mnvpt minus 1\mnvpt}%
+  \setlength{\belowdisplayshortskip}{4\mnvpt plus 2\mnvpt minus 1\mnvpt}%
+  % 【追加 2026/08/11】クラスが再設定しない絶対長も A4 換算単位に揃える．
+  % A4（11pt）ではいずれも既定値そのものになる（挙動不変）．
+  % ・\jot / \multlinegap：amsmath の既定 3pt / 10pt（両クラスとも未調整だった）
+  % ・\smallskip 系：カーネル既定 3/6/12pt（ltjsarticle は再設定しない）
+  % ・\topsep：trivlist 系（center 等）が参照する大域値．
+  %   ltjsarticle はクラス読込時の \@listi 実行で 0.5\baselineskip
+  %   （linespread 適用前 = 0.5 x 16\jsc@mpt = A4 で 8.76pt）を残すので，
+  %   その値を A4 換算で再現する．（list 環境内では \@listi が
+  %   実行時の \baselineskip で再設定するため両版とも自動で相似．）
+  % ※ \fboxsep・\fboxrule・\arraycolsep 等はクラスが \jsc@mpt 比例で
+  %   設定済みなのでここでは触らない．
+  \setlength{\jot}{3\mnvpt}%
+  \setlength{\multlinegap}{10\mnpt}%
+  % ・数式組版のカーネル既定絶対長：
+  %   \scriptspace 0.5pt（添字の後アキ），\nulldelimiterspace 1.2pt
+  %   （分数等の空デリミタ幅），\delimitershortfall 5pt（\left の
+  %   可変括弧サイズ選択のしきい値．未換算だと B5 で A4 より小さい
+  %   サイズの括弧が選ばれ，数式の幅・高さが相似から外れうる）
+  \setlength{\scriptspace}{0.5\mnpt}%
+  \setlength{\nulldelimiterspace}{1.2\mnpt}%
+  \setlength{\delimitershortfall}{5\mnpt}%
+  \setlength{\smallskipamount}{3\mnvpt plus 1\mnvpt minus 1\mnvpt}%
+  \setlength{\medskipamount}{6\mnvpt plus 2\mnvpt minus 2\mnvpt}%
+  \setlength{\bigskipamount}{12\mnvpt plus 4\mnvpt minus 4\mnvpt}%
+  \setlength{\topsep}{8.76\mnpt}%
+  % ・multicol の既定：\multicolsep=12pt±，\premulticols=50pt，
+  %   \postmulticols=20pt（いずれも絶対値のため換算する）
+  \setlength{\multicolsep}{12\mnvpt plus 4\mnvpt minus 3\mnvpt}%
+  % ・表の罫線幅 0.4pt・二重罫線の間隔 2pt（array/kernel の既定絶対値）．
+  %   罫線幅は \hline を含む表の総幅・行の高さに算入されるため換算する．
+  \setlength{\arrayrulewidth}{0.4\mnpt}%
+  \setlength{\doublerulesep}{2\mnpt}%
+  \setlength{\premulticols}{50\mnvpt}%
+  \setlength{\postmulticols}{20\mnvpt}%
+}
+
+% 【追加 2026/08/15】\vdots・\ddots を A4 換算単位で組み直す．
+%   カーネル（fontmath.ltx）の定義はドット間隔・上部カーンが絶対 pt
+%     \vdots: \vbox{\baselineskip4\p@ \lineskiplimit\z@ \kern6\p@ ...}
+%     \ddots: \raise7\p@ / \kern7\p@ / \raise4\p@ / \raise\p@
+%   であり，文字サイズ比 0.833790 では縮まない（縮むのはドット字形のみ）．
+%   このため \vdots を含む pmatrix / cases の行は，A4 換算で 1 行あたり
+%   約 +2.8pt 高くなり，\vdots を多用するページ（連立方程式・拡大係数
+%   行列の頁など）では A4 版より先にページが埋まって改ページ位置が
+%   1 行分ずれていた（実測：\vdots 入りディスプレイ数式 1 つにつき
+%   約 2.8〜5.6pt の超過が累積し，第 1.2.2 節では計 1 行送りが発生）．
+%   定義本体はカーネルと同一で，\p@ を \mnpt に置き換えただけである．
+%   A4（\mnpt = 1pt）ではカーネル定義と完全に同じ組版になる．
+\makeatletter
+\DeclareRobustCommand\vdots{\vbox{\baselineskip4\mnpt \lineskiplimit\z@
+    \kern6\mnpt\hbox{.}\hbox{.}\hbox{.}}}
+\DeclareRobustCommand\ddots{\mathinner{\mkern1mu\raise7\mnpt
+    \vbox{\kern7\mnpt\hbox{.}}\mkern2mu
+    \raise4\mnpt\hbox{.}\mkern2mu\raise\mnpt\hbox{.}\mkern1mu}}
+\makeatother
+
+% 【追加】align / gather 等の複数行ディスプレイ数式の行間でも
+% 改ページを許可する（amsmath）．長い証明の数式ブロックが
+% 丸ごと次ページへ送られて大きな余白ができるのを防ぐ．
+% 引数は 1（消極的）〜 4（積極的）．気に入らなければ [1] へ．
+\allowdisplaybreaks[2]
+
+% ==============================================================
+% § 4. 色の定義
+% ==============================================================
+
+\RequirePackage{xcolor}
+\selectcolormodel{cmyk}
+
+% ---- レガシー色（旧来コードとの互換用） ----
+\definecolor{myblue}     {HTML}{3300CC}
+\definecolor{myred}      {HTML}{CC33CC}
+\definecolor{mypink}     {HTML}{FF66FF}
+\definecolor{mygreen}    {HTML}{005500}
+\definecolor{mynamecolor}{HTML}{5507FF}
+\definecolor{myemailcolor}{HTML}{FF4F02}
+\definecolor{darkbrown}  {HTML}{880000}
+\definecolor{dred}       {HTML}{DD0000}
+\definecolor{dgreen}     {HTML}{005500}
+\definecolor{dblue}      {HTML}{000088}
+\definecolor{mypurple}   {HTML}{ba55d3}
+\definecolor{burgundy}   {rgb}{0.5, 0.0, 0.13}
+\definecolor{charcoal}   {rgb}{0.21, 0.27, 0.31}
+\colorlet{lightmypurple}{mypurple!20!white}
+
+% ---- Apple デザインガイドライン準拠の基本色（Neutrals） ----
+\definecolor{applePaper}    {HTML}{F5F5F7}  % ペーパー/セクション背景
+\definecolor{appleCard}     {HTML}{FFFFFF}  % 白カード
+\definecolor{appleInk}      {HTML}{1D1D1F}  % 本文インク（ほぼ黒）
+\definecolor{appleInkGray}  {HTML}{37373A}  % Ink 寄りのダークグレイ
+\definecolor{appleLine}     {HTML}{D2D2D7}  % 区切り線
+\definecolor{appleGrayLight}{HTML}{E5E5EA}  % 薄い灰（背景の差別化）
+\definecolor{appleGray}     {HTML}{8E8E93}  % 中間灰（注釈・副次情報）
+\definecolor{appleGrayDark} {HTML}{3A3A3C}  % 濃い灰（強めのUI線）
+\definecolor{appleBlack}    {HTML}{1D1D1F}  % 黒系のエイリアス
+
+% ---- Apple アクセント色（Blue / Indigo / Purple / Magenta 系） ----
+\definecolor{appleBlue600}   {HTML}{0071E3}  % ボタン系ブルー
+\definecolor{appleBlue500}   {HTML}{0A84FF}  % iOS System Blue
+\definecolor{appleBlue300}   {HTML}{64D2FF}  % 薄いブルー（ハイライト等）
+\definecolor{appleIndigo}    {HTML}{5E5CE6}  % iOS System Indigo
+\definecolor{applePurple}    {HTML}{BF5AF2}  % iOS System Purple
+\definecolor{applePurpleDark}{HTML}{8E43E7}  % 濃い紫（強調用）
+\definecolor{appleMagenta}   {HTML}{D6006D}  % 赤紫（強調・リンク代替）
+\definecolor{applePink}      {HTML}{FF2D55}  % ピンク寄り赤紫
+\definecolor{appleOrange}    {HTML}{C76A00}  % Dark Amber（白地でも視認性◎）
+\definecolor{appleRed}       {HTML}{C92A2A}  % Dark Red（白地でも視認性◎）
+
+% ---- 既存色名 → Apple調へのエイリアス（TikZコード互換） ----
+\colorlet{Ink}        {appleInk}       % 既存 'Ink' を本文インクに
+\colorlet{darkgray2}  {appleGrayLight} % 既存 'darkgray2' を薄い灰に
+\colorlet{appleBlue}  {appleBlue600}   % 後方互換のため残す
+\colorlet{appleLineDark}{appleGrayDark}% 濃い線の統一エイリアス
+
+% ---- 補助色 ----
+\definecolor{appleTitleGray}{RGB}{86, 86, 91}
+\definecolor{appleLineGray} {RGB}{134,134,139}
+
+% ---- グラフ塗りつぶし用（上側・下側の面積） ----
+\definecolor{CupertinoBlue}  {HTML}{D6006D}   % Magenta（旧 System Blue）
+\definecolor{CupertinoIndigo}{HTML}{8E8E93}   % Gray（旧 System Indigo）
+\colorlet{upperfill}{CupertinoBlue!28}
+\colorlet{lowerfill}{CupertinoIndigo!28}
+
+% ---- 見出しタグの色（§7 の \TitleSquareToText で使用） ----
+\colorlet{SectionTag}      {appleGrayDark}  % \section の左角タグ色
+\colorlet{SubsectionTag}   {appleGray}      % \subsection の左角タグ色
+\colorlet{SubsubsectionTag}{appleInkGray}   % 予備
+
+% ==============================================================
+% § 5. Part 番号のローマ数字（文字詰め版）
+% ==============================================================
+
+% \tightromanpart{n}: 文字間を詰めた視覚的に均整のとれるローマ数字を出力
+% グループ化は etoc が目次書き込み時に分断するのを防ぐため
+\newcommand{\tightromanpart}[1]{%
+  {%
+  \ifcase#1%
+  \or I%
+  \or I\hspace{-1.2\mnpt}I%
+  \or I\hspace{-1.2\mnpt}I\hspace{-1.2\mnpt}I%
+  \or I\hspace{-1.2\mnpt}V%
+  \or V%
+  \or V\hspace{-1.2\mnpt}I%
+  \or V\hspace{-1.2\mnpt}I\hspace{-1.2\mnpt}I%
+  \or V\hspace{-1.2\mnpt}I\hspace{-1.2\mnpt}I\hspace{-1.2\mnpt}I%
+  \or I\hspace{-1.2\mnpt}X%
+  \or X%
+  \else\uppercase\expandafter{\romannumeral#1}%
+  \fi
+  }%
+}
+
+% \tightpartnumber: 現在の part カウンタを \tightromanpart で出力
+% .toc への書き込み時にも番号がずれないよう \DeclareRobustCommand で定義
+%\DeclareRobustCommand{\tightpartnumber}{\tightromanpart{\value{part}}}
+% \thepart の表示形式を詰めローマ数字に変更
+\renewcommand{\thepart}{\tightromanpart{\value{part}}}
+
+\DeclareRobustCommand{\tightpartnumber}{\tightromanpart{\value{part}}}
+
+\renewcommand{\thepart}{\arabic{part}}
+\renewcommand{\thesection}{\thepart.\arabic{section}}
+\renewcommand{\thesubsection}{\thesection.\arabic{subsection}}
+
+\makeatletter
+\@addtoreset{section}{part}
+\makeatother
+
+% ==============================================================
+% § 6. ページレイアウト（余白・ヘッダー・フッター・脚注）
+% ==============================================================
+
+% geometry / bxpapersize はクラスファイルで設定済み
+% 図を絶対位置に配置する（textpos パッケージ）
+\RequirePackage[absolute,overlay]{textpos}
+
+% ---- 柱（ヘッダー）のフォーマット ----
+% 偶数ページ左: ページ番号 + Part タイトル
+% 奇数ページ右: Section タイトル + ページ番号
+\RequirePackage{fancyhdr}
+% \titleformat / \titlespacing（\section・\subsection の見出し整形で使用）
+% 【変更】nobottomtitles* を外した：見出しを次ページへ送ったページが
+% \raggedbottom 扱いになり，下に最大 \bottomtitlespace 分の余白が残るため．
+% 見出し直後での改ページは titlesec 標準の \nobreak で防がれる．
+\RequirePackage{titlesec}
+
+% 現在の Part・Section タイトルを保持するグローバル変数
+\newcommand{\CurrentPartTitle}{}
+% Section タイトルはマークで受け渡す（\gdef だと，節見出しを読み込んだ
+% 時点で書き換わり，見出しが次ページへ送られた場合に前のページの柱まで
+% 新しい節になってしまう）．柱にはそのページ末尾時点の節を出す．
+\NewMarkClass{mnsection}
+\newcommand{\CurrentSectionTitle}{\LastMark{mnsection}}
+
+% ページスタイルの適用
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}  % ヘッダー下の罫線を消す
+
+% 偶数ページ左柱：「p.〈番号〉　第〈n〉章　〈タイトル〉」
+\fancyhead[LE]{%
+  \footnotesize\strut
+  p.\,\thepage\hspace{1.2\zw}\CurrentPartTitle
+}
+% 奇数ページ右柱：「〈節番号〉　〈タイトル〉 | p.〈番号〉」
+\fancyhead[RO]{%
+  \footnotesize\strut
+  \CurrentSectionTitle\hspace{1\zw}|\hspace{1\zw}p.\,\thepage
+}
+
+% ---- 脚注のカスタマイズ ----
+% 番号形式を「†1」「†2」... に変更
+\renewcommand\thefootnote  {{\dag}\arabic{footnote}}
+% ボックス（tcolorbox＝minipage 扱い）内の脚注は各ボックスで 1 から
+% 振り直される（LaTeX の既定挙動）．本文の †1 と紛れないよう，
+% 記号を「‡1」「‡2」... に変えて区別する．
+\renewcommand{\thempfootnote}{{\ddag}\arabic{mpfootnote}}
+% 脚注が改ページをまたぐのを極力避ける
+\interfootnotelinepenalty=10000
+
+
+% ---- Part：中央揃え + 二重グレー罫線 ----
+\titleformat{\part}[display]
+  {\normalfont\LARGE\bfseries\centering\color{appleInk}}
+  {\large\color{appleGray}第\thepart 章}
+  {-0.65ex}
+  {}%
+  [{%
+    \vspace{0.6ex}%
+    {\color{appleLineGray}\titlerule[1.2\mnpt]}%
+    \nobreak\vspace{0.25ex}%
+    {\color{appleLine}\titlerule[0.6\mnpt]}%
+  }]
+
+\titlespacing*{\part}
+  {0pt}
+  {-1.45\baselineskip}
+  {1.4\baselineskip}
+
+% \part / \section を拡張してタイトルを \gdef で更新する
+% titlesec の \titleformat{\part}／\titlespacing*{\part} が \part 自体を
+% 再定義するため，このラップは必ずそれらの後ろに置く
+% （先に置くと titlesec の再定義で上書きされ，ここでの拡張が失われる）
+\makeatletter
+
+% --- \part の拡張 ---
+\let\origpart\part
+\renewcommand{\part}{%
+  \@ifstar{\part@star}{\@ifnextchar[{\part@opt}{\part@noopt}}%
+}
+
+% \part は新しいページ（twoside では右ページ）から開始する
+% ページ境界を明確にしないと \thispagestyle{empty} が
+% 意図したページに適用されない（自然な改ページ位置に依存してしまう）ため
+\def\part@newpage{%
+  \pltx@cleartorightpage
+  \thispagestyle{empty}%  % part ページは柱を出さない
+}
+
+% \part@autolabel{タイトル}
+%   \part{タイトル} の直後に \label{part:タイトル} を自動的に張る．
+%   これにより，本文中で \partref{タイトル} と書くだけで
+%   「第 3 章」のような相互参照が得られる（§ 5.1 を参照）．
+%   同じタイトルの章がふたつあると "multiply defined" 警告が出るので，
+%   その場合は \part[短縮タイトル]{表示タイトル} で短縮側を一意にすること．
+%   タイトルに数式やマクロを含む章では，直前に \partkey{...} を置いて
+%   ラベル名を明示すること（下記）．
+\global\let\part@key\@empty
+\def\part@autolabel#1{%
+  \ifx\part@key\@empty
+    \label{\partrefprefix #1}%
+  \else
+    \label{\partrefprefix\part@key}%
+    \global\let\part@key\@empty
+  \fi
+}
+
+% オプション引数なし版
+\def\part@noopt#1{%
+  \part@newpage
+  % .toc 書き込み時に \numberline を強制付与（etoc との互換性のため）
+  \let\saved@addcontentsline\addcontentsline
+  \def\addcontentsline##1##2##3{%
+    \saved@addcontentsline{##1}{##2}{\protect\numberline{\thepart}#1}%
+    \let\addcontentsline\saved@addcontentsline
+  }%
+  \origpart{#1}%
+  \let\addcontentsline\saved@addcontentsline
+  \part@autolabel{#1}%
+  \gdef\CurrentPartTitle{第\thepart 章\quad #1}%
+}
+
+% オプション引数あり版 [短縮タイトル]{表示タイトル}
+\def\part@opt[#1]#2{%
+  \part@newpage
+  \let\saved@addcontentsline\addcontentsline
+  \def\addcontentsline##1##2##3{%
+    \saved@addcontentsline{##1}{##2}{\protect\numberline{\thepart}#1}%
+    \let\addcontentsline\saved@addcontentsline
+  }%
+  \origpart[#1]{#2}%
+  \let\addcontentsline\saved@addcontentsline
+  \part@autolabel{#1}%
+  \gdef\CurrentPartTitle{第\thepart 章\quad #1}%
+}
+
+% スター版（番号なし）
+\def\part@star#1{%
+  \part@newpage
+  \origpart*{#1}%
+  \gdef\CurrentPartTitle{#1}%
+}
+
+\makeatother
+
+% ==============================================================
+% § 5.1 章・節の相互参照（\partref / \secref）
+% ==============================================================
+%
+% 本書では \part を「第 n 章」として組んでいる（§ 7 の \titleformat）．
+% 章番号を本文に直接書くと，章を追加・分割・入れ替えたときに
+% すべて手で直すことになるため，ラベルによる参照を用意する．
+%
+%   \part{線型空間}          % ← \label{part:線型空間} が自動で張られる
+%   ...
+%   \partref{線型空間}       % → 「第 5 章」（リンク付き）
+%   \partref*{線型空間}      % → 「第 5 章「線型空間」」
+%
+% 節を参照したい場合は，\section の直後に自分で \label を張る：
+%   \section{行列の積}\label{sec:行列の積}
+%   \secref{行列の積}        % → 「第 1.3 節」
+%   \subsecref{ラベル}       % → 「第 1.3.2 項」（\label{subsec:...} が必要）
+%
+% ラベルの接頭辞を変えたい場合は \renewcommand{\partrefprefix}{...} とする
+% （\part の自動ラベルもこの接頭辞を用いる）．
+
+\newcommand{\partrefprefix}{part:}
+
+% \partkey{ラベル名}
+%   直後の \part のラベル名を明示的に指定する．
+%   タイトルに数式やマクロが入る章で使う：
+%     \partkey{RnとC}
+%     \part{\texorpdfstring{$\mathbb{R}^n$と$\mathbb{C}$}{Rn と C}}
+%     ...
+%     \partref{RnとC}   % → 第 4 章
+\makeatletter
+\newcommand{\partkey}[1]{\gdef\part@key{#1}}
+\makeatother
+
+\makeatletter
+\DeclareRobustCommand{\partref}{\@ifstar\partref@star\partref@plain}
+% 「第 n 章」全体をひとつのリンクにする（\ref* は番号のみを返す）
+\newcommand{\partref@plain}[1]{%
+  \hyperref[\partrefprefix #1]{第\ref*{\partrefprefix #1}章}%
+}
+\newcommand{\partref@star}[1]{%
+  \hyperref[\partrefprefix #1]{第\ref*{\partrefprefix #1}章「\nameref*{\partrefprefix #1}」}%
+}
+\makeatother
+
+\newcommand{\secref}   [1]{\hyperref[sec:#1]{第\ref*{sec:#1}節}}
+\newcommand{\subsecref}[1]{\hyperref[subsec:#1]{第\ref*{subsec:#1}項}}
+
+% rule/caps color and bar fill/outline
+\colorlet{secrule}{appleLineGray}
+\colorlet{secbarfill}{appleGrayLight}
+\colorlet{secbaredge}{appleGray}
+
+\newlength{\secbarx}
+\setlength{\secbarx}{8\mnmm}
+
+\newlength{\sectextx}
+\setlength{\sectextx}{12\mnmm}
+
+% 番号付き section
+\newcommand{\sectionheadrule}[2]{%
+  \InsertMark{mnsection}{\thesection\quad #2}%
+  \noindent
+  \begingroup\mnnoscale% 座標は \mnmm 換算済みのため自動スケールを除外
+  \begin{tikzpicture}[baseline=(title.base)]
+    \path[use as bounding box]
+      (0,-9\mnmm) rectangle (\linewidth,7\mnmm);
+
+    % 中央の横罫線
+    \draw[secrule,line width=0.4\mnpt]
+      (0,0) -- (\linewidth,0);
+
+    % 横罫線の左端の円
+    \fill[secrule]
+      (0,0) circle[radius=1\mnmm];
+
+    % 横罫線の右端の円
+    \fill[secrule]
+      (\linewidth,0) circle[radius=1\mnmm];
+
+    \fill[secbarfill]
+      (\secbarx,-7.5\mnmm) rectangle ++(1.8\mnmm,13.5\mnmm);
+
+    \draw[secbaredge,line width=0.4\mnpt]
+      (\secbarx,-7.5\mnmm) rectangle ++(1.8\mnmm,13.5\mnmm);
+
+    \draw[secbaredge,line width=0.4\mnpt]
+      (\secbarx-0.9\mnmm,-7.5\mnmm) -- ++(0,13.5\mnmm);
+
+    \node[
+      anchor=south west,
+      inner sep=0pt
+    ] at (\sectextx,1.2\mnmm)
+      {\color{SectionTag}\large\bfseries #1};
+
+    \node[
+      anchor=north west,
+      inner sep=0pt
+    ] (title) at (\sectextx,-1.6\mnmm)
+      {\color{black}\Large\bfseries #2};
+  \end{tikzpicture}%
+  \endgroup
+}
+
+% 番号なし section
+\newcommand{\sectionheadrulestar}[1]{%
+  \InsertMark{mnsection}{#1}%
+  \noindent
+  \begingroup\mnnoscale% 座標は \mnmm 換算済みのため自動スケールを除外
+  \begin{tikzpicture}[baseline=(title.base)]
+    \path[use as bounding box]
+      (0,-9\mnmm) rectangle (\linewidth,7\mnmm);
+
+    % 中央の横罫線
+    \draw[secrule,line width=0.4\mnpt]
+      (0,0) -- (\linewidth,0);
+
+    % 横罫線の左端の円
+    \fill[secrule]
+      (0,0) circle[radius=1\mnmm];
+
+    % 横罫線の右端の円
+    \fill[secrule]
+      (\linewidth,0) circle[radius=1\mnmm];
+
+    \fill[secbarfill]
+      (\secbarx,-7.5\mnmm) rectangle ++(1.8\mnmm,13.5\mnmm);
+
+    \draw[secbaredge,line width=0.4\mnpt]
+      (\secbarx,-7.5\mnmm) rectangle ++(1.8\mnmm,13.5\mnmm);
+
+    \draw[secbaredge,line width=0.4\mnpt]
+      (\secbarx-0.9\mnmm,-7.5\mnmm) -- ++(0,13.5\mnmm);
+
+    \node[
+      anchor=north west,
+      inner sep=0pt
+    ] (title) at (\sectextx,-1.6\mnmm)
+      {\color{black}\Large\bfseries #1};
+  \end{tikzpicture}%
+  \endgroup
+}
+
+\titleformat{\section}[block]
+  {}{}{0pt}
+  {\sectionheadrule{第\thesection 節}}
+
+\titleformat{name=\section,numberless}[block]
+  {}{}{0pt}
+  {\sectionheadrulestar}
+
+\titlespacing{\section}
+  {0pt}{18\mnvpt plus 6\mnvpt minus 2\mnvpt}{14\mnvpt plus 3\mnvpt minus 2\mnvpt}
+
+\setlength{\parindent}{1\zw}
+
+% \color は垂直モードで whatsit を置き，その直後の \parskip が改ページ
+% 可能点になる（節見出しの直後でも項見出しとの間で改ページされ，節見出し
+% だけがページ下端に取り残される）．\nobreak でこの改ページを禁止する．
+\titleformat{\subsection}[block]
+  {\normalfont\color{black}\nobreak\large\bfseries}
+  {\thesubsection}
+  {0.7em}
+  {}
+
+% 星なし ＝ 見出し直後の段落を字下げする
+\titlespacing{\subsection}{0pt}{14\mnvpt plus 6\mnvpt minus 2\mnvpt}{6\mnvpt plus 2\mnvpt}
+
+
+
+
+% ==============================================================
+% § 8. 目次（etoc — Apple 風デザイン）
+% ==============================================================
+
+\RequirePackage{etoc}
+
+\makeatletter
+\AtBeginDocument{%
+
+  % 目次に表示する深さ（subsection まで）
+  \etocsetnexttocdepth{subsection}
+
+  % 目次ブロックの前後に TikZ でヘアラインを引き，中央に「目 次」を配置
+\etocsettocstyle{%
+  \par\vspace{10\mnvpt}%
+  \noindent\hspace*{-\leftskip}%
+  \begingroup\mnnoscale% x=\linewidth のためスケール除外
+  \begin{tikzpicture}[x=\linewidth, baseline]
+    \draw[
+      line cap=round,
+      line width=0.8\mnpt,
+      color=appleLine
+    ] (0,0) -- (1,0);
+    \node[
+      inner sep=2.5\mnpt,
+      outer sep=0pt,
+      fill=appleCard
+    ] at (0.5,0)
+      {\bfseries\Large\textcolor{appleInk}{目\kern0.35em 次}};
+  \end{tikzpicture}%
+  \endgroup
+  \vspace{8\mnvpt}%
+
+  % ここから目次項目を2段組にする
+  \setlength{\columnsep}{24\mnpt}%
+  \setlength{\columnseprule}{0pt}%
+  \begin{multicols}{2}%
+  \raggedcolumns
+}{%
+  % ここで目次項目の2段組を終了
+  \end{multicols}%
+
+  \vspace{4\mnvpt}%
+  \noindent\hspace*{-\leftskip}%
+  \begingroup\mnnoscale% x=\linewidth のためスケール除外
+  \begin{tikzpicture}[x=\linewidth, baseline]
+    \draw[
+      line cap=round,
+      line width=0.5\mnpt,
+      color=appleLine
+    ] (0,0) -- (1,0);
+  \end{tikzpicture}%
+  \endgroup
+  \vspace{12\mnvpt}%
+}
+
+  % ---- Part エントリ（インデント=0，リーダー線あり） ----
+  \etocsetstyle{part}
+    {}
+    {%
+      \par\vskip11\mnvpt
+      \parindent=0pt \leftskip=0pt
+      \noindent
+      \etoclink{%
+        \bfseries\large\color{appleInk}%
+        \makebox[1.5em][l]{\etocnumber}%
+        \etocname
+      }%
+      \nobreak\leaders\hbox to .5em{\hss.\hss}\hfill \etocpage\par
+      \vskip5.5\mnvpt
+    }
+    {}
+    {}
+
+  % ---- Section エントリ（インデント 30pt，リーダー線あり） ----
+  \etocsetstyle{section}
+    {\noindent}
+    {%
+      \vskip2.5\mnvpt
+      \parindent=0pt
+      \leftskip=24\mnpt
+      \noindent
+      \etoclink{%
+        \bfseries\normalsize\color{appleInk}%
+        \makebox[2.5em][l]{\etocnumber}%
+        \etocname
+      }%
+      \nobreak\leaders\hbox to .5em{\hss.\hss}\hfill \etocpage\par
+      \vskip3.5\mnvpt
+    }
+    {}
+    {}
+
+  % ---- Subsection エントリ（インデント 56pt，ページ番号はカッコ付き） ----
+  \etocsetstyle{subsection}
+  {\noindent}
+  {%
+    \parindent=0pt
+    \leftskip=44\mnpt
+    \rightskip=0pt
+    \small
+    \noindent
+    \etoclink{%
+      \makebox[3.4em][l]{\etocnumber}%
+      \etocname
+      \hspace{0.35em}%
+      {(p.\etocpage)}%
+    }%
+    \par
+  }
+  {}
+  {}
+
+}%
+\makeatother
+
+% ==============================================================
+% § 9. tcolorbox — 定理環境
+% ==============================================================
+
+\RequirePackage[many]{tcolorbox}
+\tcbuselibrary{breakable,skins,theorems,xparse,hooks}
+% ==============================================================
+% § 9. 定理環境（Apple風・モノトーン）
+% ==============================================================
+
+% ---- 各環境のアクセント色（モノトーン） ----
+\colorlet{acc@th}{appleInkGray}     % Theorem：濃い灰
+\colorlet{acc@pr}{appleGrayDark}    % Proposition：やや濃い灰
+\colorlet{acc@co}{appleGray}        % Corollary：中間灰
+\colorlet{acc@ax}{appleInk}         % Axiom：ほぼ黒
+\colorlet{acc@de}{appleGrayDark}    % Definition：濃い灰
+\colorlet{acc@le}{appleGray}        % Lemma：中間灰
+\colorlet{acc@ex}{appleGrayLight}   % Example：薄い灰
+\colorlet{acc@qu}{appleLineGray}    % Question：淡い灰（白は使わない）
+
+% ---- 追加：カードの薄い背景（Column 環境と同じ黒1%） ----
+\colorlet{appleCardTint}{white}
+
+% ---- 共通ベーススタイル ----
+% 薄灰カード + 見出し下ヘアライン + 下端ヘアライン + 左に 2pt バー
+\tcbset{
+  theo-base/.style={
+    enhanced, breakable, sharp corners,
+    boxrule=0pt, no shadow,
+    colback=appleCardTint,          % 【変更】白 → 薄灰カード
+    colframe=appleCardTint,
+    colbacktitle=appleCardTint,
+    coltitle=appleInk,
+    coltext=appleInk,
+    fonttitle=\gtfamily\sffamily\bfseries\upshape,
+    boxsep=1\mnmm,                     % 【追加】既定 1mm（絶対値）を換算
+    left*=1\zw,
+    right*=1\zw,
+    toptitle=9\mnpt,                   % 【追加】見出し帯の上余白
+    bottomtitle=7\mnpt,                % 【追加】見出し〜仕切り線の間
+    top=9\mnpt,                        % 仕切り線〜本文の間
+    bottom=10\mnpt,
+    % 【変更】{0.8pt}{-2pt} → {0.5pt}{0pt}：
+    %   背景に色が付くとカードの下端が見えるようになるため，
+    %   2pt 外側に浮いた線は「ズレ」に見える．下端に密着させる．
+    borderline south={0.5pt}{0pt}{appleLineGray},
+    before skip=16\mnvpt plus 10\mnvpt minus 4\mnvpt,
+    after skip=18\mnvpt plus 10\mnvpt minus 4\mnvpt,
+    before upper={\setlength{\parindent}{1\zw}},
+    before lower={\setlength{\parindent}{1\zw}},
+    pad at break=0pt,
+    enlarge top at break by=12\mnvpt,
+    enlarge bottom at break by=0pt,
+    % 【追加】見出しの下に全幅ヘアライン（Column 環境の区切り線と同族）．
+    %   分割時は先頭パートにのみ描画される．
+    overlay unbroken and first={
+      \draw[appleLine, line width=0.4pt]
+        (title.south west) -- (title.south east);
+    },
+  },
+  mytheo/.style n args={1}{
+    theo-base,
+    borderline west={2pt}{0pt}{#1}
+  },
+}
+
+% ---- 各定理環境（subsection 内で共通カウンタを使用） ----
+\newtcbtheorem[number within=subsection]{theorem}   {Theorem}    {mytheo={acc@th}}{th}
+\newtcbtheorem[use counter from=theorem]{prop}      {Proposition}{mytheo={acc@pr}}{pr}
+\newtcbtheorem[use counter from=theorem]{cor}       {Corollary}  {mytheo={acc@co}}{co}
+\newtcbtheorem[use counter from=theorem]{axiom}     {Axiom}      {mytheo={acc@ax}}{ax}
+\newtcbtheorem[use counter from=theorem]{definition}{Definition} {mytheo={acc@de}}{de}
+\newtcbtheorem[use counter from=theorem]{lemma}     {Lemma}      {mytheo={acc@le}}{le}
+\newtcbtheorem[use counter from=theorem]{example}   {Example}    {mytheo={acc@ex}}{ex}
+\newtcbtheorem[use counter from=theorem]{question}  {Question}   {mytheo={acc@qu}}{qu}
+
+% ---- 参照コマンド（\thref{ラベル} → 太字サンセリフの "Theorem 1.2"） ----
+\newcommand{\thref} [1]{\textsf{\bfseries Theorem~\ref{th:#1}}}
+\newcommand{\prref} [1]{\textsf{\bfseries Proposition~\ref{pr:#1}}}
+\newcommand{\coref} [1]{\textsf{\bfseries Corollary~\ref{co:#1}}}
+\newcommand{\axref} [1]{\textsf{\bfseries Axiom~\ref{ax:#1}}}
+\newcommand{\deref} [1]{\textsf{\bfseries Definition~\ref{de:#1}}}
+\newcommand{\lemref}[1]{\textsf{\bfseries Lemma~\ref{le:#1}}}
+\newcommand{\exref} [1]{\textsf{\bfseries Example~\ref{ex:#1}}}
+\newcommand{\quref} [1]{\textsf{\bfseries Question~\ref{qu:#1}}}
+% 後方互換：旧来コードで \leqqref を使っていた場合
+\providecommand{\leqqref}[1]{\lemref{#1}}
+
+% ==============================================================
+% § 10. tcolorbox — その他の枠環境
+% ==============================================================
+
+% ---- hosoibox: タイトル付きの細枠 ----
+\newtcolorbox{hosoibox}[1]{%
+  colframe=black, colback=white, coltitle=black, colbacktitle=white,
+  boxrule=0.5\mnpt, arc=0mm, enhanced,
+  boxsep=1\mnmm, left=4\mnmm, right=4\mnmm, top=2\mnmm, bottom=2\mnmm,
+  beforeafter skip balanced=0.5\baselineskip plus 2\mnvpt,
+  attach boxed title to top left={xshift=10\mnmm, yshift=-3\mnmm},
+  boxed title style={frame hidden, boxsep=1\mnmm},
+  title=#1%
+}
+
+% ---- tleftbar: 左縦線付き環境（breakable・インデント対応） ----
+% framed の leftbar 環境は注釈（\footnote）が入れられないため tcolorbox で代替．
+% \footnote は箱の下端（縦線の範囲内）に脚注罫線付きで出力される．
+%
+% 【変更】寸法・前後の空きを framed.sty の leftbar（A4 版基準）と同一に揃えた：
+%   ・字下げ 13pt = 縦線 3pt ＋ 線と本文の間隔 10pt（本文幅 = \linewidth - 13pt）．
+%     版面を消費する横寸法なので \mnpt で縮める（A4 では厳密に 13pt）．
+%     縦線自体は borderline（上書き描画）なので §0 の方針どおり絶対値 3pt のまま．
+%   ・箱の内側に上下の余白なし（縦線の高さ = 本文ブロックの高さ）
+%   ・前後の空き：framed の leftbar は
+%       前: \addvspace{\topsep} の後，箱の上端を「高さ \FrameHeightAdjust（既定
+%           6pt）の行」として基線合わせする → 直前基線から箱上端まで
+%           \topsep + \baselineskip - 6pt
+%       後: \null + \vskip\topsep → 箱下端から次の基線まで \topsep + \baselineskip
+%     tcolorbox の before/after skip balanced（prevdepth を 0.3\baselineskip に
+%     正規化して \addvspace する）に換算すると下式になり，行深さによらず一致する．
+%     \topsep・\baselineskip は環境使用時の値（クラス側でスケール済み）を参照．
+%     定数 6pt は行取りに効く縦アキなので 6\mnvpt で縮める（A4 では 6pt）．
+%     ※ \FrameHeightAdjust 自体は framed ベースの aleftbar にも波及するため
+%       書き換えず，式に定数として直接書き込む．
+\newtcolorbox{tbleftline}{%
+  blanker, breakable,
+  left=13\mnpt,                       % = 3pt(線) + 10pt(線と本文の間隔) の A4 換算
+  borderline west={3pt}{0pt}{black},
+  before skip balanced=\glueexpr\topsep+0.7\baselineskip-6\mnvpt\relax,
+  after skip balanced=\glueexpr\topsep+0.3\baselineskip\relax,
+}
+\newenvironment{tleftbar}%
+  {\begin{tbleftline}\setlength{\parindent}{1\zw}}%
+  {\end{tbleftline}}
+
+% ---- dotleftbar: 点線の左縦線付き環境 ----
+\newtcolorbox{tbdotleftline}{%
+  blanker, left=5\mnmm, breakable,
+  borderline west={1.1mm}{0pt}{draw=black, dotted}%
+}
+\newenvironment{dotleftbar}{%
+  \begin{tbdotleftline}\setlength{\parindent}{1\zw}%
+}{%
+  \end{tbdotleftline}%
+}
+
+% ---- simplesquarebox: タイトル付き L 字枠（TikZ で描画） ----
+% 書式: \begin{simplesquarebox}[副題]{主題}[線幅pt][追加オプション]
+\DeclareTColorBox{simplesquarebox}{ o m O{.5} O{} }{%
+  empty, left=2\mnmm, right=2\mnmm, top=-1\mnmm,
+  bottom=2\mnmm, boxsep=1\mnmm,
+  beforeafter skip balanced=0.5\baselineskip plus 2\mnvpt,
+  attach boxed title to top left={xshift=1.2\zw},
+  boxed title style={empty,left=-2\mnmm,right=-2\mnmm,boxsep=1\mnmm},
+  colframe=black, coltitle=black, coltext=black, breakable,
+  underlay unbroken={%
+    \draw[black,line width=#3pt]
+      (title.east) -- (title.east-|frame.east) -- (frame.south east)
+      -- (frame.south west) -- (title.west-|frame.west) -- (title.west);},
+  underlay first={%
+    \draw[black,line width=#3pt]
+      (title.east) -- (title.east-|frame.east) -- (frame.south east);
+    \draw[black,line width=#3pt]
+      (frame.south west) -- (title.west-|frame.west) -- (title.west);},
+  underlay middle={%
+    \draw[black,line width=#3pt] (frame.north east) -- (frame.south east);
+    \draw[black,line width=#3pt] (frame.south west) -- (frame.north west);},
+  underlay last={%
+    \draw[black,line width=#3pt]
+      (frame.north east) -- (frame.south east)
+      -- (frame.south west) -- (frame.north west);},
+  fonttitle=\gtfamily,
+  IfValueTF={#1}{title=【#2】〈#1〉}{title=【#2】},#4%
+}
+
+% ==============================================================
+% mycolumn：Apple風コラム環境
+% 使用色：白・黒・マゼンタのみ
+% ==============================================================
+
+% ---- 色設定 ----
+\colorlet{columnMagenta}{magenta!72!black}
+\colorlet{columnInk}{black!88}
+\colorlet{columnBackground}{black!2.5}  % コラム背景（白地に近い薄灰）
+\colorlet{columnFrame}{black!45}   % 外枠・見出し枠のヘアライン（濃いめ）
+\colorlet{columnRule}{black!22}    % 見出し右の区切り線
+
+% ---- 見出し枠の中心を上辺から何mm下げるか（ここ1か所で調整） ----
+\newlength{\columnTitleDrop}
+\setlength{\columnTitleDrop}{6.4\mnmm}
+
+% ---- 罫線ヘルパ ----
+\newcommand{\columnAccentLine}[2]{%
+  \draw[columnMagenta, line width=1.2pt, line cap=round]
+    ([xshift=2.8\mnmm, yshift=#1]frame.north west) --
+    ([xshift=2.8\mnmm, yshift=#2]frame.south west);}
+\newcommand{\columnHeadRule}{%
+  \draw[columnRule, line width=0.4pt]
+    ([xshift=7\mnmm+\tcboxedtitlewidth+3.2\mnmm, yshift=-\columnTitleDrop]frame.north west)
+    -- ([xshift=-6\mnmm, yshift=-\columnTitleDrop]frame.north east);}
+
+\newtcolorbox[
+  auto counter,
+  number format=\Roman
+]{mycolumn}{
+  enhanced,
+  breakable,
+  colback=columnBackground,
+  colframe=columnFrame,          % ← 追加：外枠の色
+  coltext=columnInk,
+  boxrule=0.4\mnpt,              % ← 追加：ヘアライン
+  arc=0mm,
+  outer arc=0mm,
+  boxsep=0pt,
+  left=7\mnmm,
+  right=6\mnmm,
+  top=4\mnmm,                      % 見出し帯のぶん 10mm→12mm
+  bottom=6\mnmm,
+  before=\par\medskip\noindent,
+  after=\par\medskip,
+  parbox=false,
+  pad at break*=2\mnmm,
+  toprule at break=0.4\mnpt,
+  bottomrule at break=0.4\mnpt,
+  title={%
+    \sffamily\bfseries
+    \fontsize{10\mnpt}{12\mnvpt}\selectfont
+    Column\hspace{0.7em}\thetcbcounter
+  },
+  coltitle=columnMagenta,
+  fonttitle=\sffamily\bfseries,
+  attach boxed title to top left={
+    xshift=7\mnmm,
+    yshift*={-\tcboxedtitleheight/2-\columnTitleDrop}
+  },
+  boxed title style={
+    enhanced,
+    colframe=columnFrame,
+    boxrule=0.4\mnpt,
+    colback=columnBackground,
+    arc=1.0\mnmm,
+    outer arc=1.0\mnmm,
+    boxsep=0pt,
+    left=3\mnmm,                    % ← 左右対称に
+    right=3\mnmm,
+    top=1.4\mnmm,                   % ← 上下にも余白を
+    bottom=1.4\mnmm
+  },
+  overlay unbroken={\columnAccentLine{-10\mnmm}{5\mnmm}\columnHeadRule},
+  overlay first   ={\columnAccentLine{-10\mnmm}{0\mnmm}\columnHeadRule},
+  overlay middle  ={\columnAccentLine{0\mnmm}{0\mnmm}},
+  overlay last    ={\columnAccentLine{0\mnmm}{5\mnmm}}
+}
+
+%% ==============================================================
+% remark：Apple風の補足・注意環境
+% 使用色：白・黒・マゼンタのみ
+%
+% 見出し帯はすべて overlay で描画し，本文は top で場所を空ける．
+% （tcolorbox の attach boxed title は本文位置の補正が絡んで
+%   ずれやすいため，見出しは自前で組んでいる．）
+%
+%   frame.north west を原点として，上辺からの距離で位置を指定する：
+%     \remarkHeadY     … アクセントドットの中心
+%     \remarkTitleBase … 見出し文字のベースライン
+%     \remarkRuleY     … 区切り罫線
+%     top              … 本文の先頭（罫線より下）
+%
+% !! この { } の中に空行を入れないこと（pgfkeys が \par で壊れる）!!
+% ==============================================================
+
+\colorlet{remarkMagenta}{magenta!72!black}
+\colorlet{remarkInk}{black!88}
+\colorlet{remarkBackground}{black!2.0}
+\colorlet{remarkRule}{black!18}
+\colorlet{remarkSubtitle}{black!52}
+
+% ---- 見出し帯の寸法（調整はここ1か所で） ----
+\newlength{\remarkPad}        \setlength{\remarkPad}{6\mnmm}      % 左右の内側余白
+\newlength{\remarkDotR}       \setlength{\remarkDotR}{1.1\mnmm}   % ドットの半径
+\newlength{\remarkDotX}       \setlength{\remarkDotX}{7.1\mnmm}   % ドット中心の x（左端が \remarkPad に揃う）
+\newlength{\remarkHeadY}      \setlength{\remarkHeadY}{5.9\mnmm}  % ドット中心の深さ
+\newlength{\remarkTitleX}     \setlength{\remarkTitleX}{10.4\mnmm}% 見出し文字の左端
+\newlength{\remarkTitleBase}  \setlength{\remarkTitleBase}{7.0\mnmm}
+\newlength{\remarkRuleY}      \setlength{\remarkRuleY}{10.2\mnmm}
+
+% ---- 見出しの中身 ----
+\makeatletter
+\newcommand{\remark@head}[1]{%
+  \sffamily\bfseries\fontsize{9.5\mnpt}{11\mnvpt}\selectfont
+  \color{remarkInk}Remark%
+  \ifstrempty{#1}{}{%
+    \hspace{0.72em}%
+    {\color{remarkRule}\rule[-0.14em]{0.4pt}{0.92em}}%
+    \hspace{0.72em}%
+    {\normalfont\sffamily\color{remarkSubtitle}#1}%
+  }%
+}
+
+\newtcolorbox{remark}[1][]{
+  enhanced,
+  breakable,
+  %
+  % ---- 基本色（枠線は出さず，面だけで見せる） ----
+  colback=remarkBackground,
+  colframe=remarkBackground,
+  coltext=remarkInk,
+  %
+  % ---- 外形 ----
+  boxrule=0pt,
+  arc=3\mnmm,
+  outer arc=3\mnmm,
+  boxsep=0pt,
+  %
+  % ---- 余白（top は見出し帯のぶんを含む） ----
+  left=\remarkPad,
+  right=\remarkPad,
+  top=13.6\mnmm,
+  bottom=5.5\mnmm,
+  %
+  before skip=1.0\baselineskip plus 8\mnvpt minus 2\mnvpt,
+  after skip=1.0\baselineskip plus 8\mnvpt minus 2\mnvpt,
+  %
+  % ---- 本文 ----
+  before upper={%
+    \setlength{\parindent}{1\zw}%
+  },
+  %
+  % ---- 見出し帯（1ページ目・分割しない場合のみ） ----
+  overlay unbroken and first={%
+    \fill[remarkMagenta]
+      ([xshift=\remarkDotX, yshift=-\remarkHeadY]frame.north west)
+      circle[radius=\remarkDotR];
+    \node[anchor=base west, inner sep=0pt, outer sep=0pt]
+      at ([xshift=\remarkTitleX, yshift=-\remarkTitleBase]frame.north west)
+      {\remark@head{#1}};
+    \draw[remarkRule, line width=0.4pt]
+      ([xshift=\remarkPad,  yshift=-\remarkRuleY]frame.north west) --
+      ([xshift=-\remarkPad, yshift=-\remarkRuleY]frame.north east);%
+  },
+  %
+  % ---- 改ページ時 ----
+  pad at break*=2\mnmm
+}
+\makeatother
+
+% ---- reviewbox: 丸角・影付きの復習ボックス（オプションでタイトル） ----
+\newtcolorbox{reviewbox}[1][]{
+  enhanced, breakable,
+  colback=white, colframe=appleLine,
+  boxrule=0.35\mnpt, arc=4\mnmm, boxsep=1\mnmm,
+  left=7\mnmm, right=7\mnmm, top=4\mnmm, bottom=4\mnmm,
+  before skip=0.9\baselineskip plus 6\mnvpt minus 2\mnvpt,
+  after skip =0.9\baselineskip plus 6\mnvpt minus 2\mnvpt,
+  fonttitle=\bfseries\sffamily,
+  coltitle=appleInk,
+  title=#1,
+  drop fuzzy shadow
+}
+
+% ---- mondai: 問題・解答の上下分割ボックス ----
+\newcounter{mondaibangou}
+\newtcolorbox{mondai}[1][]{%
+  enhanced, boxrule=1\mnpt,
+  boxsep=1\mnmm, middle=2\mnmm,      % 【追加】既定 1mm / 2mm（絶対値）を換算
+  beforeafter skip balanced=0.5\baselineskip plus 2\mnvpt,
+  top=2\mnpt, left=44\mnpt, right=4\mnpt, bottom=2\mnpt, arc=0mm,
+  colframe=magenta!30!gray,
+  underlay={%
+    \node[inner sep=1\mnpt, magenta!50!black, fill=magenta!10!white]
+      at ([xshift=22\mnpt,yshift=-9\mnpt]interior.north west)
+      {\stepcounter{mondaibangou}\bfseries\gtfamily 問題\themondaibangou};},
+  segmentation code={%
+    \draw[dashed] (segmentation.west) -- (segmentation.east);
+    \node[inner sep=1\mnpt, magenta!50!black, fill=magenta!10!white]
+      at ([xshift=22\mnpt,yshift=-8\mnpt]segmentation.south west)
+      {\bfseries\gtfamily 解答};},
+  before upper={\setlength{\parindent}{1\zw}},
+  before lower={\setlength{\parindent}{1\zw}},
+  #1%
+}
+
+% ---- kans: 感想・メモ用の点線枠環境 ----
+% 書式: \begin{kans}[副題]{主題}[オフセットpt][追加オプション]
+\DeclareTColorBox{kans}{ o m O{3} O{} }{%
+  enhanced, colback=white, colframe=white,
+  attach boxed title to top left={xshift=10\mnmm, yshift=-\tcboxedtitleheight/2},
+  fonttitle=\bfseries,
+  varwidth boxed title=0.85\linewidth,
+  coltitle=black, fonttitle=\gtfamily,
+  enlarge top by=2\mnmm, enlarge bottom by=2\mnmm,
+  boxsep=1\mnmm, left=4\mnmm, right=4\mnmm, top=2\mnmm, bottom=2\mnmm,
+  beforeafter skip balanced=0.5\baselineskip plus 2\mnvpt,
+  breakable, sharp corners,
+  boxed title style={colback=white, left=0mm, right=0mm, boxsep=1\mnmm},
+  borderline={.75pt}{#3pt}{black,dotted},
+  IfValueTF={#1}{title=【#2】〈#1〉}{title=【#2】},#4%
+}
+
+% ==============================================================
+% § 11. 縦線付き環境（framed ベース）
+% ==============================================================
+
+\RequirePackage{framed}
+
+% ---- aleftbar: 左縦線付き環境（右へのオフセット指定可） ----
+% 書式: \begin{aleftbar}[オフセット幅] ... \end{aleftbar}
+\newenvironment{aleftbar}[1][0.0em]{%
+  \par\begingroup
+  \setlength{\FrameRule}{0.4\mnpt}%  縦線の太さ
+  \setlength{\FrameSep}{0.0em}%   縦線と本文の間隔
+  \noindent\hspace*{#1}%
+  \begin{minipage}{\dimexpr\linewidth-#1\relax}%
+    \begin{leftbar}%
+    \ignorespaces
+}{%
+    \end{leftbar}%
+  \end{minipage}%
+  \par\endgroup
+}
+
+% ==============================================================
+% § 12. 図・グラフ（TikZ / pgfplots）
+% ==============================================================
+
+\RequirePackage{tikz}
+\usetikzlibrary{intersections,calc,arrows.meta,calendar,shadows.blur,matrix,fit,positioning}
+% フローチャート用（diamond 等の図形ノード）
+\usetikzlibrary{shapes.geometric}
+\RequirePackage{tikz-3dplot}  % 3D 座標系の描画
+
+\RequirePackage{pgfplots}
+\usepgfplotslibrary{fillbetween}
+\pgfplotsset{compat=1.17}
+
+% --------------------------------------------------------------
+% § 12.1 本文 tikzpicture の自動スケール（A4 版との改ページ位置合わせ）
+% --------------------------------------------------------------
+%
+% 本文ソース（contents/*.tex）の tikzpicture は，A4 版の実寸
+% （x=13mm，(0,1.6) ＝ 1.6cm など）で座標が書かれている．これらは
+% \mnmm / \mnsc の換算を通らないため，そのままでは B5 でも A4 と同じ
+% 物理サイズで描かれ，版面に対して相対的に大きくなる（実測：サラスの
+% 方法の図で約 14pt ＝ ほぼ 1 行分の超過）．ページが埋まっている箇所で
+% は，この超過が A4 版より 1 行早い改ページを引き起こす．
+%
+% そこで every picture フックで全 tikzpicture に scale=\mnpt/1pt
+% （= 文字サイズ比 0.833790）を自動適用し，図全体を A4 版の相似形に
+% 縮める．scale はユーザー指定の x= / y= 単位にも合成される
+% （x=13mm → 実効 13mm×0.83379）．ノード内のテキストは scale の影響を
+% 受けず，文書のフォントサイズ（既に A4 比 0.83379）で組まれるため，
+% 結果として図は文字も含めて A4 版の厳密な相似形になる．
+% A4 版でこの sty を使った場合は \mnpt = 1pt なので scale=1（無効果）．
+%
+% ただし次の tikzpicture は版面実寸（\linewidth 等）で座標を取るため
+% スケールしてはならない．これらでは \mn@scalepic を偽にして除外する：
+%   (1) tcolorbox が枠・仕切り線を描く内部 picture
+%       （overlay / underlay / borderline / boxed title を含む）
+%   (2) この sty 自身が組む見出し・目次の picture（§7・§8．
+%       座標は既に \mnmm / \mnpt で換算済み）
+%
+% 本文中で例外的に「実寸のまま」描きたい図がある場合は，
+%   {\mnnoscale \begin{tikzpicture}...\end{tikzpicture}}
+% とグループ内で \mnnoscale を前置すればよい．
+
+\RequirePackage{etoolbox}
+
+\newif\ifmn@scalepic
+\mn@scalepictrue
+
+% 図に適用する倍率（= \mnpt の pt 値）．A4 では 1.0
+\newcommand*{\mn@picscale}{\strip@pt\mnpt}
+
+% every picture から呼ばれる条件付きスケール
+\tikzset{
+  mn auto scale/.code={%
+    \ifmn@scalepic
+      \pgfkeysalso{scale=\mn@picscale}%
+    \fi
+  },
+}
+% 他パッケージの every picture 設定より後に確実に追加する
+\AtBeginDocument{%
+  \tikzset{every picture/.append style={mn auto scale}}%
+}
+
+% 直後の tikzpicture のスケールを抑止（グループ内で使用）
+\newcommand*{\mnnoscale}{\mn@scalepicfalse}
+
+% ---- 除外 (1)：tcolorbox の内部描画 ----
+% tcolorbox が枠・overlay・borderline・boxed title 等を描く内部 picture は
+% 実寸座標（frame ノード等）で描くため，スケールしてはならない．
+% 内部 picture の起動方法は tcolorbox のバージョンで異なるため，
+% 既知の全機構に対して除外フックを張る（存在しない環境への
+% \AddToHook は無害なので，複数バージョンを同時にカバーできる）：
+%   ・〜v6.2  ：環境 tikzpicture@tcb@hooked の中から \tikzpicture を
+%               コマンド形式で起動（tcbskins.code.tex）
+%   ・v6.3〜 ：環境 tcb@drawing の中から \begin{tikzpicture} を起動
+%               （tcolorbox.sty．v6.10 現在も同名）
+% いずれも描画用環境のグループ内でフラグを折れば，内側の picture の
+% every picture 処理時にスケールが抑止される．
+% ※ 将来 tcolorbox が描画環境名を変更した場合は，ここに
+%   \AddToHook{env/<新環境名>/begin}{\mn@scalepicfalse} を追加すること．
+%   症状：枠内の文字が本文より小さくなる／枠線がずれる．
+\AddToHook{env/tikzpicture@tcb@hooked/begin}{\mn@scalepicfalse}
+\AddToHook{env/tcb@drawing/begin}{\mn@scalepicfalse}
+% 上下分割線を描く picture（\tcb@draw@pseudo@segmentation．v6.2〜v6.10 で
+% 同一実装）も除外する．
+\patchcmd{\tcb@draw@pseudo@segmentation}
+  {\begingroup}{\begingroup\mn@scalepicfalse}
+  {}{\PackageWarning{mathnote_cmyk}{Failed to patch tcb pseudo segmentation}}
+
+% ==============================================================
+% § 13. 表・リスト・回り込み
+% ==============================================================
+
+% 二段組（\columnseprule で中央の仕切り線を表示）
+\RequirePackage{multicol}
+\setlength{\columnseprule}{.5pt}
+
+% 箇条書きの拡張（shortlabels でラベル省略記法，inline で横並び箇条書き）
+\RequirePackage[shortlabels,inline]{enumitem}
+\setlist[description]{font={\bfseries\sffamily}}
+
+% 長さの計算（\widthof でラベル幅を測るために使用）
+\RequirePackage{calc}
+
+% ---- description 環境の整形スタイル ----
+% 従来の `\item[ラベル] \mbox{} \\ 本文` という改行の手動指定を置き換える．
+%
+%   \labelwidthof{見本}
+%     description のラベル書式（\bfseries\sffamily）で組んだときの幅を返す．
+%     labelwidth の指定に用いる．
+%
+%   descalign  ：ラベルを一定幅の欄に左揃えし，本文をその右にぶら下げる．
+%                ラベルが短く，本文も短い場合に適する．
+%                最長ラベルに合わせて labelwidth を必ず descalign の
+%                **後に** 指定すること（既定値 4\zw を上書きするため）：
+%                  \begin{description}[descalign,
+%                      labelwidth=\labelwidthof{最長のラベル}]
+%
+%   descnext   ：ラベルを独立した行に置き，本文を次行から字下げして始める．
+%                ラベルが長い場合や本文が数行にわたる場合に適する．
+%                labelwidth は指定しない（指定すると改行が無効になる）：
+%                  \begin{description}[descnext]
+\newcommand{\labelwidthof}[1]{\widthof{\bfseries\sffamily #1}}
+
+\SetEnumitemKey{descalign}{
+  labelwidth = 4\zw,
+  labelsep   = 1\zw,
+  leftmargin = !,
+  align      = left,
+  itemsep    = 0.5\baselineskip,
+  parsep     = 0pt
+}
+
+\SetEnumitemKey{descnext}{
+  style      = nextline,
+  leftmargin = 2\zw,
+  itemsep    = 0.5\baselineskip,
+  parsep     = 0pt
+}
+
+% 図の回り込み
+\RequirePackage{wrapfig}
+
+% ---- 図・表のキャプション ----
+% キャプションのラベル（「図 1.2」「表 1.1」）を太字サンセリフに．
+% caption は hyperref より前に読み込むこと．
+\RequirePackage[labelfont={bf,sf},labelsep=quad,font=small]{caption}
+
+% 図・表の番号を「章番号.通し番号」にし，章ごとにリセットする
+\renewcommand{\thefigure}{\thepart.\arabic{figure}}
+\renewcommand{\thetable}{\thepart.\arabic{table}}
+\@addtoreset{figure}{part}
+\@addtoreset{table}{part}
+
+% \figref{ラベル} → 「図 1.2」（リンク付き．\label{fig:ラベル} が必要）
+% \tabref{ラベル} → 「表 1.1」（リンク付き．\label{tab:ラベル} が必要）
+\newcommand{\figref}[1]{\hyperref[fig:#1]{図\ref*{fig:#1}}}
+\newcommand{\tabref}[1]{\hyperref[tab:#1]{表\ref*{tab:#1}}}
+
+% 表組みの拡張
+\RequirePackage{array}
+\RequirePackage{makecell}
+
+% \mnsc{<長さ>}: A4 版の実寸で書かれた絶対長を，この版の寸法に換算する．
+%   \mnpt は「A4 の 1pt」に当たる長さなので，その sp 値との整数比を掛ければ
+%   任意の単位（pt/mm/cm/zw…）の長さをそのまま換算できる．
+%   （\dimexpr の a*b/c は 64bit 中間精度で計算されるため桁あふれしない．)
+%   A4 版では \mnpt = 1pt なので恒等変換になる．
+%   本文中で図幅などを A4 実寸で指定したいときにも使える：
+%     \includegraphics[width=\mnsc{80mm}]{...}
+%     \begin{minipage}{\mnsc{6cm}} ...
+%   ※ \linewidth・\textwidth に比例する長さは，版面幅自体が既に換算済み
+%     なので \mnsc に渡してはならない（二重に縮む）．
+\newcommand*{\mnsc}[1]{\dimexpr(#1)*\number\dimexpr\mnpt\relax/65536\relax}
+
+% ---- \enlargethispage の自動換算 ----
+% 本文ソースには \enlargethispage{7mm} のような「A4 実寸」の指定が
+% 複数ある．そのままでは B5 でも 7mm 広がってしまい，版面比で A4 より
+% 大きく広がるため，A4 版と改ページ位置が揃わなくなる（広げた先に
+% 次の行が入りうる）．引数を \mnsc で換算し，A4 版と同じ「行数換算」で
+% 広がるようにする（A4 では \mnsc は恒等変換なので挙動不変）．
+% \enlargethispage*（詰め込み許可付き）も同様に扱う．
+%
+% 【重要】tcolorbox（breakable）は，pad at break* 使用時などに
+% 「現在の版面から実寸で計算した」量で \enlargethispage* を内部的に
+% 呼ぶ（tcbbreakable.code.tex の \tcb@check@for@final@box と
+% \tcb@enlbreak@next@final の 2 箇所）．これらの量は既に B5 実寸なので
+% 換算してはならない（換算すると量が不足し，A4 では収まる箱が
+% 次ページへ送られてしまう）．この 2 箇所は無換算の
+% \mn@orig@enlargethispage を使うようパッチして除外する．
+\AtBeginDocument{%
+  \let\mn@orig@enlargethispage\enlargethispage
+  \DeclareRobustCommand{\enlargethispage}{%
+    \@ifstar{\mn@enlargethispage@star}{\mn@enlargethispage@plain}}%
+}
+\newcommand*{\mn@enlargethispage@star}[1]{%
+  \mn@orig@enlargethispage*{\dimexpr\mnsc{#1}\relax}}
+\newcommand*{\mn@enlargethispage@plain}[1]{%
+  \mn@orig@enlargethispage{\dimexpr\mnsc{#1}\relax}}
+% tcolorbox 内部の 2 呼び出しを無換算版に差し替え
+\patchcmd{\tcb@check@for@final@box}
+  {\enlargethispage*}{\mn@orig@enlargethispage*}
+  {}{\PackageWarning{mathnote_cmyk}{Failed to patch tcb final box enlarge}}
+\patchcmd{\tcb@enlbreak@next@final}
+  {\enlargethispage}{\mn@orig@enlargethispage}
+  {}{\PackageWarning{mathnote_cmyk}{Failed to patch tcb enlbreak}}
+
+% 幅指定付きの列型
+%   L{幅}: 左揃え・高さ自動
+%   B{幅}: 中央揃え・太字
+% 【修正 2026/08/11】幅は「A4 版での実寸」と解釈し \mnsc で自動換算する．
+%   これにより L{6.8cm} のような絶対指定を含む表も，A4 版と同一の
+%   .tex ソースのまま，この版で相似に縮んだ表として組める．
+%   （\linewidth に比例する幅を使いたい列は，換算不要なので素の
+%     >{\raggedright\arraybackslash}m{0.4\linewidth} のように書く．）
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}m{\mnsc{#1}}}
+\newcolumntype{B}[1]{>{\centering\arraybackslash\bfseries}m{\mnsc{#1}}}
+
+\setlength{\tabcolsep}{8\mnpt}  % 列間の水平余白
+
+% 表の罫線（\toprule / \midrule / \bottomrule）
+\RequirePackage{booktabs}
+
+% ---- フローチャート用の TikZ スタイル（本文の figure で使用） ----
+%   mathnote.sty（A4 版）と同じ定義．ノードの内側余白・角丸・矢じりは
+%   tikz の scale で縮まないため A4 換算単位 \mnpt で書く（矢じりは
+%   キー解析の都合で \mnmm が使えないので，A4 の 2mm を換算した実寸）．
+%   flowbox  … 処理・状態を表す角丸の箱
+%   flowbox* … 強調したい箱（薄灰の塗り＋太字）は flowbox,flowhl と併用
+%   flowq    … 判断（ひし形）
+%   flowlab  … 定理・補題などのラベル片
+%   flowarr  … 矢印
+\tikzset{
+  flowbox/.style={draw=appleGrayDark, rounded corners=3\mnpt, minimum height=1.6em,
+                  inner sep=5\mnpt, align=center, font=\small, text=appleInk},
+  flowhl/.style ={fill=appleGrayLight, font=\small\bfseries},
+  flowq/.style  ={draw=appleGrayDark, diamond, aspect=2.6, inner sep=1.5\mnpt,
+                  align=center, font=\small, text=appleInk},
+  flowlab/.style={draw=appleGrayDark, rounded corners=2\mnpt, fill=appleGrayLight,
+                  inner sep=4\mnpt, font=\small, text=appleInk},
+  flowarr/.style={-{Stealth[length=1.67mm]}, thick, draw=appleGrayDark},
+  flowtxt/.style={font=\scriptsize, text=appleGray},
+}
+
+% ---- 本文図版のアクセント色 ----
+% 図版は黒（灰）系とマゼンタ系の 2 系統のみで描く．
+% 強調したい部分（注目する元・部分集合・矢印など）にだけ figaccent を使う．
+\colorlet{figaccent}{magenta!85!black}
+
+% ==============================================================
+% § 14. ハイパーリンク・参考文献・索引
+% ==============================================================
+
+\RequirePackage{url}
+\RequirePackage{hyperref}
+\hypersetup{
+  colorlinks = true,
+  citecolor  = {magenta!40!black},
+  linkcolor  = {magenta!40!black},
+  urlcolor   = {magenta!70!black},
+}
+% PDF ブックマークに節番号を付与
+\RequirePackage[numbered]{bookmark}
+
+% ---- 参考文献（biblatex） ----
+% 番号スタイル，引用順ソート，hyperref 連携
+\RequirePackage[style=numeric,sorting=none,hyperref=auto]{biblatex}
+% 著者名を「姓 名」順に
+\DeclareNameAlias{default}{family-given}
+\renewcommand*{\revsdnamepunct}{\addspace}
+% 名前とタイトルの間のデリミタをスペースに変更
+\DeclareDelimFormat{nametitledelim}{\addspace}
+% 連名の区切り
+\DeclareDelimFormat{multinamedelim}{\addcomma\space}
+\DeclareDelimFormat{finalnamedelim}{\space and\space}
+\DeclareDelimFormat{andothersdelim}{\space and\space}
+% 本のタイトルを通常フォント（イタリックにしない）で表示
+\DeclareFieldFormat[book]{title}{\normalfont{#1}}
+\addbibresource{bibliography.bib}
+
+% ---- 索引 ----
+\RequirePackage{makeidx}
+\makeindex
+
+% 索引のレイアウト（ltjsarticle の theindex を置き換える）
+%   ・3 段組にする（2 段組では数行だけが次ページに溢れ，ほぼ白紙の
+%     索引ページができていた）．
+%   ・見出し（あ，か，…）の直後 2 項目では改段しない．見出しが項目
+%     1 つだけを連れて段の下端に取り残されるのを防ぐ．
+%   ・グループの切れ目（\indexspace）を改段位置として優先する．
+\newcount\mn@idxkeep
+\renewenvironment{theindex}{%
+  \clearpage
+  \columnseprule.4pt \columnsep 1.5\zw
+  \def\presectionname{}\def\postsectionname{}%
+  \begin{multicols}{3}[\section*{\indexname}]%
+  \@mkboth{\indexname}{\indexname}%
+  \plainifnotempty
+  \parindent\z@
+  \parskip\z@ \@plus .3\jsc@mpt\relax
+  \let\item\mn@idxitem
+  \let\indexspace\mn@indexspace
+  \raggedright
+  \footnotesize\narrowbaselines
+  \global\mn@idxkeep\tw@
+}{%
+  \end{multicols}%
+  \clearpage
+}
+\newcommand{\mn@idxitem}{\par
+  \ifnum\mn@idxkeep>\z@ \nobreak\global\advance\mn@idxkeep\m@ne \fi
+  \hangindent 4\zw}
+\renewcommand{\subitem}{\mn@idxitem \hspace*{2\zw}}
+\renewcommand{\subsubitem}{\mn@idxitem \hspace*{3\zw}}
+\newcommand{\mn@indexspace}{\par \penalty-200
+  \vskip 10\jsc@mpt \@plus5\jsc@mpt \@minus3\jsc@mpt\relax
+  \global\mn@idxkeep\tw@}
+
+% ==============================================================================
+% § 15. Title Page — Apple-inspired monochrome design (Dark Hero)
+% ==============================================================================
+%
+% Apple の "Pro" 系製品ページを意識したダーク表紙．
+%   - 黒背景 + 白 / グレイのみのモノトーン
+%   - 上部にはアイブロウ（シリーズ名）だけを置き，
+%     タイトルブロックはページ下部にアンカーする
+%   - 左揃え・階層構造・メタデータの構成は A4 版と共通
+%   - 表紙以降のページは自動的に白背景へ戻る
+%
+% CMYK/B5 版では A4 版の表紙と完全な相似形になるよう，
+% すべての絶対寸法を \mnpt / \mnmm / \mnvpt で指定する．
+
+\RequirePackage{titletoc}   % TOC styling
+\RequirePackage{pagecolor}  % page background color
+
+% ---- Dark-mode neutrals（表紙・裏表紙専用） ----
+\definecolor{appleDarkLine} {HTML}{48484A}  % 罫線（ダーク背景用）
+\definecolor{appleDarkMuted}{HTML}{98989D}  % 副次テキスト（ダーク背景用）
+\definecolor{appleDarkSub}  {HTML}{D2D2D7}  % サブタイトル用の明るいグレイ
+
+% ---- 表紙背景（印刷用リッチブラック） ----
+% CMYK 版では appleInk（HTML 1D1D1F）をそのまま変換すると K 単色に近く，
+% ベタ面が印刷で締まらず「濃いグレイ」に見えてしまう．全面ベタの表紙・
+% 裏表紙にはリッチブラックを用いる．総インキ量は 255% で，Japan Color
+% coated の上限（およそ 350%）に十分収まる．
+%   画面表示と完全に揃えたい／単色黒で刷りたい場合は，次の 1 行を
+%   \colorlet{MathNoteCoverBG}{appleInk} に差し替えればよい．
+\definecolor{appleInkRich}{cmyk}{0.60,0.50,0.45,1.00}
+\colorlet{MathNoteCoverBG}{appleInkRich}
+
+% English date used on the cover.  The definition is local to \tituloum, so
+% Japanese \today can still be used normally in the body of the document.
+\newcommand{\MathNoteEnglishToday}{%
+  \number\year\space
+  \ifcase\month\or
+    January\or February\or March\or April\or May\or June\or
+    July\or August\or September\or October\or November\or December\fi
+  \space\number\day
+}
+
+% Title-page typography.
+\newcommand{\MathNoteCoverLabelFont}{%
+  \sffamily\bfseries\fontsize{9.5\mnpt}{11.5\mnvpt}\selectfont
+}
+\newcommand{\MathNoteCoverTitleFont}{%
+  \sffamily\bfseries\fontsize{34\mnpt}{40\mnvpt}\selectfont
+}
+\newcommand{\MathNoteCoverSubtitleFont}{%
+  \sffamily\mdseries\fontsize{14\mnpt}{19\mnvpt}\selectfont
+}
+\newcommand{\MathNoteCoverMetaLabelFont}{%
+  \sffamily\bfseries\fontsize{7.5\mnpt}{9\mnvpt}\selectfont
+}
+\newcommand{\MathNoteCoverMetaFont}{%
+  \sffamily\mdseries\fontsize{10.5\mnpt}{13\mnvpt}\selectfont
+}
+
+% \tituloum{main title}{author}{series/category}{subtitle}{date / edition}
+%
+% Design policy:
+%   - all fixed cover text is English;
+%   - monochrome only (near-black background + white + neutral grays);
+%   - left-aligned, bottom-anchored title block, Apple "Pro" hierarchy;
+%   - main title is set in a 0.88\textwidth parbox, so titles of roughly
+%     two or three lines wrap naturally instead of running off the page;
+%   - if #3 is empty, "MATHEMATICS NOTE" is used as the eyebrow label;
+%   - if #5 contains \today, it is rendered in English on the cover;
+%   - all absolute lengths are scaled with \mnmm / \mnpt for the B5 edition.
+% 表紙の裏・裏表紙の裏にシリーズラベルを置くかどうか．
+% 製本用に完全な白紙にしたい場合は \MathNoteVersoLabelfalse を宣言する．
+\newif\ifMathNoteVersoLabel \MathNoteVersoLabeltrue
+
+\newcommand{\tituloum}[5]{%
+  \begin{titlepage}
+    \thispagestyle{empty}%
+    \newgeometry{top=30\mnmm,bottom=25\mnmm,left=24\mnmm,right=24\mnmm}%
+    \pagecolor{MathNoteCoverBG}%
+    \color{white}%
+    \begingroup
+      % Make \today English only inside the title page.
+      \let\today\MathNoteEnglishToday
+      \raggedright
+
+      % Eyebrow / series label（上部・ミュートグレイ）
+      {\MathNoteCoverLabelFont\color{appleDarkMuted}%
+        \if\relax\detokenize{#3}\relax
+          MATHEMATICS NOTE%
+        \else
+          \MakeUppercase{#3}%
+        \fi
+        \par
+      }%
+
+      % タイトルブロックをページ下部へ押し下げる
+      \vfill
+
+      % Main title. A fixed-width parbox lets long English titles wrap
+      % cleanly while preserving the large display size.
+      % 【変更 2026/08/15】行長を「B5 表紙の \textwidth 比」でなく
+      % 「A4 表紙の版面幅 162mm（= 210 − 24x2）の A4 換算」で与える．
+      % B5 の紙は A4 の相似形ではない（幅比 182/210 = 0.867 ≠ 文字比
+      % 0.834）ため，\textwidth 比のままでは行長が文字サイズに対して
+      % 約 4% 広くなり，タイトル・サブタイトルの改行位置が A4 版と
+      % 変わってしまう（実測：サブタイトルの折り返し位置が相違）．
+      % 罫線や下部メタデータは「紙面いっぱい」に引く意匠なので
+      % \textwidth 比のまま（改行位置には影響しない）．
+      \parbox[t]{0.88\mnsc{162mm}}{%
+        \MathNoteCoverTitleFont\color{white}%
+        \raggedright
+        \hyphenpenalty=10000\exhyphenpenalty=10000%
+        #1\par
+      }%
+
+      % Hairline under the title block
+      \vspace{7\mnmm}%
+      {\color{white}\rule{0.19\textwidth}{1.15\mnpt}\par}%
+
+      % Subtitle is optional. If omitted, no empty gap is left behind.
+      \if\relax\detokenize{#4}\relax
+      \else
+        \vspace{7\mnmm}%
+        % 【変更 2026/08/15】タイトルと同じ理由で A4 換算の行長にする．
+        \parbox[t]{0.76\mnsc{162mm}}{%
+          \MathNoteCoverSubtitleFont\color{appleDarkSub}%
+          \raggedright #4\par
+        }%
+      \fi
+
+      % タイトルブロックとメタデータの間の固定ギャップ
+      \vspace{16\mnmm}%
+
+      % Bottom metadata: quiet, compact, and fully English.
+      \noindent
+      \begin{minipage}[b]{0.48\textwidth}
+        {\MathNoteCoverMetaLabelFont\color{appleDarkMuted}\MakeUppercase{WRITTEN BY}\par}%
+        \vspace{1.8\mnmm}%
+        {\sffamily\bfseries\fontsize{14\mnpt}{17\mnvpt}\selectfont\color{white}#2\par}%
+      \end{minipage}%
+      \hfill
+      \begin{minipage}[b]{0.42\textwidth}
+        \raggedleft
+        \if\relax\detokenize{#5}\relax
+        \else
+          {\MathNoteCoverMetaLabelFont\color{appleDarkMuted}\MakeUppercase{UPDATED}\par}%
+          \vspace{1.8\mnmm}%
+          {\MathNoteCoverMetaFont\color{appleDarkSub}#5\par}%
+        \fi
+      \end{minipage}%
+
+      \vspace{3.5\mnmm}%
+      {\color{appleDarkLine}\rule{\textwidth}{0.45\mnpt}\par}%
+      \vspace{2.8\mnmm}%
+      {\sffamily\fontsize{7.5\mnpt}{9\mnvpt}\selectfont\color{appleDarkMuted}%
+        NAMACHAN \hfill TYPESET WITH \LaTeX\par}%
+    \endgroup
+    \restoregeometry
+  \end{titlepage}%
+  % シリーズラベルを保存し，裏表紙側（\MathNoteBackCover）でも再利用する
+  \gdef\MathNoteCoverSeries{%
+    \if\relax\detokenize{#3}\relax
+      MATHEMATICS NOTE%
+    \else
+      \MakeUppercase{#3}%
+    \fi
+  }%
+  % ---- 表紙の裏（verso）----
+  % 背景は白に戻し，シリーズラベルだけを中央下部にごく小さく置く．
+  % 黒い表紙 → 白の静かな導入 → 本文，という流れをつくる．
+  \begingroup
+    \pagecolor{white}%
+    \thispagestyle{empty}%
+    \null
+    \ifMathNoteVersoLabel
+      \vfill
+      \begin{center}
+        {\MathNoteCoverMetaLabelFont\color{appleGray}%
+          \MathNoteCoverSeries\par
+        }%
+      \end{center}
+      \vspace{22\mnmm}%
+    \fi
+    \clearpage
+  \endgroup
+  % 表紙 + 表紙裏を「前付け」として扱い，ページカウンタを 1 に戻す．
+  % これにより直後の \cleardoublepage が余計な白ページを挟まない．
+  \setcounter{page}{1}%
+  % 表紙まわり以降のページを白背景へ戻す（\pagecolor はグローバルに効くため）
+  \pagecolor{white}%
+}
+
+% \MathNoteBackCover{title}{edition}
+%
+% 巻末（本文の後ろ）を組む．出力されるのは次の 3 ページ：
+%   (1) 白の空ページ … 索引などの本文と，巻末ブロックの間の「間（ま）」．
+%   (2) 裏表紙の裏（見返し）… 白背景．上部中央にシリーズラベルのみ．
+%       表紙裏（verso）と上下対称になる．
+%   (3) 裏表紙 … ダーク背景．中央に短い白罫線 → タイトル → EDITION 表記，
+%       最下部に表紙と同じフッター（NAMACHAN / TYPESET WITH LaTeX）．
+%
+% スター付き（\MathNoteBackCover*）にすると，裏表紙が偶数ページに来るよう
+% (1) の前に白の空ページをもう 1 枚挟む（冊子印刷用）．
+%
+% 白の空ページが不要なら \MathNoteBackCoverBlankfalse を宣言すればよい．
+\newif\ifMathNoteBackCoverBlank \MathNoteBackCoverBlanktrue
+
+% シリーズラベルが未定義（\tituloum 未使用）の場合のフォールバック
+\providecommand{\MathNoteCoverSeries}{MATHEMATICS NOTE}
+
+\NewDocumentCommand{\MathNoteBackCover}{s m m}{%
+  \clearpage
+  \pagestyle{empty}%
+  \IfBooleanT{#1}{%
+    % 裏表紙（3 ページ後）が偶数ページに来るようパリティを調整する
+    \ifodd\value{page}\else
+      \thispagestyle{empty}\null\clearpage
+    \fi
+  }%
+  % (1) 本文と巻末ブロックの間に置く白の空ページ
+  \ifMathNoteBackCoverBlank
+    \thispagestyle{empty}\null\clearpage
+  \fi
+  \begingroup
+    % (2) 裏表紙の裏（見返し）．背景は白のまま，シリーズラベルだけを
+    %     上部中央に置く．表紙裏（verso）と上下対称になる．
+    \pagecolor{white}%
+    \thispagestyle{empty}%
+    \null
+    \ifMathNoteVersoLabel
+      \vspace{22\mnmm}%
+      \begin{center}
+        {\MathNoteCoverMetaLabelFont\color{appleGray}%
+          \MathNoteCoverSeries\par
+        }%
+      \end{center}
+      \vfill
+    \fi
+    \clearpage
+    % (3) 裏表紙（ここからダーク背景）
+    \pagecolor{MathNoteCoverBG}%
+    \color{white}%
+    \thispagestyle{empty}%
+    \vspace*{\fill}%
+    \begin{center}
+      {\color{white}\rule{0.14\textwidth}{1.15\mnpt}\par}%
+      \vspace{6\mnmm}%
+      {\sffamily\bfseries\fontsize{20\mnpt}{24\mnvpt}\selectfont\color{white}#2\par}%
+      \vspace{3.2\mnmm}%
+      {\MathNoteCoverMetaFont\color{appleDarkMuted}\MakeUppercase{#3}\par}%
+    \end{center}
+    \vspace*{\fill}%
+    % Footer: 表紙と同じ構成
+    \noindent
+    {\color{appleDarkLine}\rule{\textwidth}{0.45\mnpt}\par}%
+    \vspace{2.8\mnmm}%
+    {\sffamily\fontsize{7.5\mnpt}{9\mnvpt}\selectfont\color{appleDarkMuted}%
+      NAMACHAN \hfill TYPESET WITH \LaTeX\par}%
+    \clearpage
+  \endgroup
+  \pagecolor{white}%
+}
+% ==============================================================
+% § 16. ユーザー定義マクロ
+% ==============================================================
+
+% ---- 微分・高階微分 ----
+\newcommand{\dash}  [1]{#1^\prime}
+\newcommand{\ddash} [1]{#1^{\prime\prime}}
+\newcommand{\dddash}[1]{#1^{\prime\prime\prime}}
+\newcommand{\hodash}[2]{#2^{(#1)}}  % 使い方: \hodash{n}{f} → f^{(n)}
+
+% enumerate のラベルを (1)(2)... に変更
+\renewcommand{\labelenumi}{(\arabic{enumi})}
+
+% ---- 執筆中マーカー ----
+% \draftpart[補足]  … 章の冒頭（abstract の直後）に置き，
+%                     その章全体がまだ草稿であることを読者に伝える．
+% \draftnote{メモ}  … 本文の途中に置く，個別の「ここは未完」マーカー．
+\colorlet{draftAccent}{magenta!72!black}
+\colorlet{draftBack}  {magenta!5}
+
+\newcommand{\draftpart}[1][]{%
+  \begin{tcolorbox}[
+      enhanced, breakable, sharp corners,
+      colback=draftBack, colframe=draftBack,
+      boxrule=0pt, borderline west={2pt}{0pt}{draftAccent},
+      boxsep=1\mnmm,
+      left=5\mnmm, right=5\mnmm, top=3\mnmm, bottom=3\mnmm,
+      before skip=1.0\baselineskip, after skip=1.2\baselineskip,
+    ]
+    {\sffamily\bfseries\color{draftAccent}執筆中}\par\smallskip
+    {\sffamily\small
+      この章は草稿である．内容・構成・記号は今後変更される可能性がある．%
+      \ifstrempty{#1}{}{\par\smallskip #1}}%
+  \end{tcolorbox}%
+}
+
+\newcommand{\draftnote}[1]{%
+  \begin{tcolorbox}[
+      enhanced, breakable, sharp corners,
+      colback=draftBack, colframe=draftBack,
+      boxrule=0pt, borderline west={2pt}{0pt}{draftAccent},
+      boxsep=1\mnmm,
+      left=4\mnmm, right=4\mnmm, top=2\mnmm, bottom=2\mnmm,
+      before skip=0.8\baselineskip, after skip=0.8\baselineskip,
+    ]
+    {\sffamily\bfseries\small\color{draftAccent}執筆中}%
+    \hspace{0.9em}{\sffamily\small #1}%
+  \end{tcolorbox}%
+}
+
+% ---- 数学演算子 ----
+\newcommand{\kaijou}{\ensuremath{\mkern1mu!\mkern1mu}}  % 階乗 !
+\newcommand{\dom}{\mathop{\mathrm{dom}}\nolimits}       % 定義域
+\newcommand{\ran}{\mathop{\mathrm{ran}}\nolimits}       % 値域
+\newcommand{\relmiddle}[1]{\,\middle|\,}                % 集合の条件部 |
+
+\DeclareMathOperator{\Ker} {Ker}
+\DeclareMathOperator{\sgn} {sgn}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\Span}{Span}
+\let\Im\relax
+\DeclareMathOperator{\Im}{Im}
+
+\newcommand{\opsub}[1]{\scalebox{0.85}{$\scriptscriptstyle #1$}}
+
+\newcommand{\Kadd}{\mathbin{\underset{\opsub{K}}{+}}}
+\newcommand{\Vadd}{\mathbin{\underset{\opsub{V}}{+}}}
+\newcommand{\Kmul}{\mathbin{\underset{\opsub{K}}{\ast}}}
+\newcommand{\scalmul}{\mathbin{\underset{\opsub{V}}{\ast}}}
+
+% ======================================================================
+% ---- 論理記号 ----
+% ----------------------------------------------------------------------
+% 【記法の方針】
+%   (1) 散文（地の文・定義文・命題の主張）では論理記号を用いず，日本語で
+%       「かつ」「または」「〜ならば」「任意の〜に対して」「〜が存在して」
+%       と書く．
+%   (2) 論理式として数式に書き下すときは論理記号だけを用い，数式のなかに
+%       日本語を混ぜない（\text{かつ} などを書かない）．
+%   (3) ひとつの記号にひとつの意味だけを担わせる．とくに \to は写像と極限
+%       に予約し，含意には \limp（⇒）を用いる．
+%
+%   矢印を長くしたい（⟹ ⟺ にしたい）場合は，下の \limp と \lequiv の
+%   定義を \Longrightarrow / \Longleftrightarrow に変えるだけでよい．
+% ======================================================================
+
+% -- 結合子 --
+% 論理積 \land，論理和 \lor，否定 \lnot は LaTeX 標準のものを用いる．
+% 論理的同値（「つねに真」というメタ言語の主張）には \equiv を用いる．
+\newcommand{\limp}  {\mathrel{\Rightarrow}}      % 含意「ならば」
+\newcommand{\lequiv}{\mathrel{\Leftrightarrow}}  % 同値
+
+% -- 量化子 --
+% 使い方: \lall{x \in \mathbb{R}} \lst x^2 \geqq 0
+%         \lall{a \in A} \lsep \lexu{b \in B} \lst (a, b) \in G
+\newcommand{\lall}[1]{\forall\, #1}    % 全称量化子
+\newcommand{\lex} [1]{\exists\, #1}    % 存在量化子
+\newcommand{\lexu}[1]{\exists!\, #1}   % 一意存在量化子
+\newcommand{\lst}     {\,:\,}          % 量化子と述語の区切り
+\newcommand{\lsep}    {,\;}            % 量化子を並べるときの区切り
+
+% -- 数式中で日本語の接続詞が必要になったとき --
+% 上の方針 (2) により原則として使わない．図や表など，やむをえず数式に
+% 日本語を入れる場合にだけ用いること．
+\newcommand{\katsu} {\mathrel{\text{かつ}}}
+\newcommand{\matawa}{\mathrel{\text{または}}}
+\newcommand{\naraba}{\mathrel{\text{ならば}}}
+
+% ---- 不等号を二重線に統一 ----
+\renewcommand{\le} {\leqq}
+\renewcommand{\ge} {\geqq}
+\renewcommand{\leq}{\leqq}
+\renewcommand{\geq}{\geqq}
+
+% ---- 《題》スタイルの強調 ----
+\newcommand\kakko[1]{\noindent\textbf{《#1》}}
+
+% ---- underbrace のラベルが長いときに自動的に中央揃えにする ----
+\newlength{\wdTempA}
+\newlength{\wdTempB}
+\newcommand{\adunderbrace}[2]{%
+  \settowidth{\wdTempA}{$#1$}%
+  \settowidth{\wdTempB}{${\scriptstyle #2}$}%
+  \ifthenelse{\wdTempA<\wdTempB}{%
+    \hspace*{.5\wdTempA}\hspace*{-.5\wdTempB}%
+    \underbrace{#1}_{#2}%
+    \hspace*{.5\wdTempA}\hspace*{-.5\wdTempB}%
+  }{%
+    \underbrace{#1}_{#2}%
+  }%
+}
+
+%---- 証明のステップを強調表示するコマンド ----
+\newcommand{\proofstep}[1]{%
+  \par\smallskip
+  \noindent
+  \normalsize{■}%
+  \hspace{0.5\zw}%
+  \textbf{#1}\par\smallskip
+}
+
+% ---- 丸付き文字（\ctext{A} → 丸囲み A） ----
+\newcommand{\ctext}[1]{\raise0.2ex\hbox{\textcircled{\scriptsize{#1}}}}
+
+% ---- 横罫線（\HRule{太さ}） ----
+\newcommand{\HRule}[1]{\rule{\linewidth}{#1}}
+
+% \qty を siunitx の \SI に置換（amsmath との衝突回避）
+\AtBeginDocument{\RenewCommandCopy\qty\SI}
+
+% ---- \chikan: 置換の表記コマンド ----
+% \chikan{x,y}{a,b}  → 置換表示（全要素）
+% \chikan*{x,y}{a,b} → 不動点（上下一致）を自動的に除いた置換表示
+\RequirePackage{expl3}
+\ExplSyntaxOn
+\NewDocumentCommand{\chikan}{s m m}{
+  \group_begin:
+  \clist_set:Nn \l_tmpa_clist {#2}
+  \clist_set:Nn \l_tmpb_clist {#3}
+  \IfBooleanTF{#1}
+  {
+    % スターあり: 上下一致（不動点）を除いてから出力
+    \seq_clear:N \l_tmpa_seq
+    \seq_clear:N \l_tmpb_seq
+    \int_step_inline:nn { \clist_count:N \l_tmpa_clist } {
+      \str_set:Nx \l_tmpa_str { \clist_item:Nn \l_tmpa_clist {##1} }
+      \str_set:Nx \l_tmpb_str { \clist_item:Nn \l_tmpb_clist {##1} }
+      \str_if_eq:NNF \l_tmpa_str \l_tmpb_str {
+        \seq_put_right:NV \l_tmpa_seq \l_tmpa_str
+        \seq_put_right:NV \l_tmpb_seq \l_tmpb_str
+      }
+    }
+    % 全て不動点の場合は元のリストを安全に出力
+    \int_compare:nNnTF { \seq_count:N \l_tmpa_seq } > { 0 }
+      { \__chikan_render_seq:NN  \l_tmpa_seq  \l_tmpb_seq  }
+      { \__chikan_render_clist:NN \l_tmpa_clist \l_tmpb_clist }
+  }
+  {
+    % スターなし: そのまま出力
+    \__chikan_render_clist:NN \l_tmpa_clist \l_tmpb_clist
+  }
+  \group_end:
+}
+\cs_new:Nn \__chikan_render_clist:NN {
+  \left(
+  \begin{array}{ *{ \clist_count:N #1 } {c} }
+    \clist_use:Nn #1 { & } \\
+    \clist_use:Nn #2 { & }
+  \end{array}
+  \right)
+}
+\cs_new:Nn \__chikan_render_seq:NN {
+  \left(
+  \begin{array}{ *{ \seq_count:N #1 } {c} }
+    \seq_use:Nn #1 { & } \\
+    \seq_use:Nn #2 { & }
+  \end{array}
+  \right)
+}
+\ExplSyntaxOff
+
+% \input したサブファイルが独自の \documentclass を持っていても無視する
+\RequirePackage{docmute}
+
+% ==============================================================
+% § 17. 証明環境のカスタマイズ
+% ==============================================================
+
+% QED マーク・証明名・\qed コマンドをまとめて設定
+\renewcommand{\qedsymbol}{$\blacksquare$}
+\renewcommand{\proofname}{\textbf{証明}}
+\renewcommand{\qed}{\unskip\nobreak\quad\qedsymbol}
+
+% proof 環境の本体を再定義
+% \@addpunct のために \makeatletter が必要
+\makeatletter
+\renewenvironment{proof}[1][\proofname]{\par
+  \pushQED{\qed}%
+  \normalfont \topsep6\mnvpt\@plus6\mnvpt\relax
+  \trivlist
+  \item[\hskip\labelsep\normalfont#1\@addpunct{.}]%
+  \mbox{}\par\nobreak\ignorespaces
+}{%
+  \popQED\endtrivlist\@endpefalse
+}
+\makeatother
+
+% ==============================================================
+% § 18. ドキュメント全体の設定
+% ==============================================================
+
+% secnumdepth はクラスファイルで設定済み（subsubsection まで）
+
+% 全数式を displaystyle で組む（インライン数式も大きく表示）
+\everymath{\displaystyle}
+
+% 行送りを標準より 6% 広げる
+\AtBeginDocument{%
+  \linespread{1.06}\selectfont
+  % 【追加】段落間にごく小さな伸び代（自然長は 0pt のまま）．
+  % 段落数の多いページで \flushbottom が下端まで詰めやすくなる．
+  % 見た目に影響が出ると感じたら削除してよい．
+  \setlength{\parskip}{0pt plus 1\mnvpt}%
+}
+
+% 【追加】ページ下端をそろえる（\flushbottom）．
+%   ltjsarticle は一段組のとき \raggedbottom を指定するため，
+%   定理ボックスや見出しが次ページへ送られると下に大きな余白が残っていた．
+%   上の各種スキップに伸び代を持たせ，ページ内の空きを均等に配分する．
+\flushbottom
