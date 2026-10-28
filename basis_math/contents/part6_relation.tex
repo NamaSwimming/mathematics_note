@@ -1,0 +1,418 @@
+\phantomsection
+\part{関係}
+
+\begin{abstract}
+この章では，「$=$」「$\leqq$」「$\subset$」のように$2$つの元の間に成り立つかどうかが定まる「関係」を，集合の言葉で定式化する．まず二項関係を直積の部分集合として定義し，反射律・対称律・反対称律・推移律といった性質を整理する．次に，「同じとみなす」ための同値関係を導入し，同値類と商集合を定義して，商集合が集合の分割を与えることを確認する．そのうえで，\partref{写像}で述べたwell-definedの概念を商集合上の写像として述べ直し，剰余類の演算を例として扱う．最後に，大小関係を一般化した順序関係に触れよう．
+\end{abstract}
+
+\phantomsection
+\section{二項関係}
+
+\phantomsection
+\subsection{関係の定義}
+
+実数どうしの「$x \leqq y$」，集合どうしの「$A \subset B$」，自然数どうしの「$a$は$b$を割り切る」のように，数学には$2$つの元の間に成り立つかどうかが定まる「関係」が数多く現れる．
+写像を直積の部分集合として定義した（\deref{写像の厳密な定義}）のと同じように，関係も直積の部分集合として定義することができる．
+
+\phantomsection
+\begin{definition}{二項関係}{二項関係}
+  $A$を集合とする．直積$A \times A$の部分集合$R$を，$A$上の\emph{二項関係}\index{にこうかんけい@二項関係}（または単に関係）という．
+  $(a, b) \in R$であることを$a \mathrel{R} b$とかき，$a$と$b$は関係$R$にあるという．
+\end{definition}
+
+すなわち，関係$R$とは「関係にある組$(a, b)$をすべて集めた集合」のことである．実際の場面では，$R$を集合として書き下すことは少なく，$\leqq$や$\sim$などの記号を用いて$a \leqq b$，$a \sim b$のようにかくことが多い．
+
+\phantomsection
+\begin{example}{二項関係の例}{二項関係の例}
+  \begin{enumerate}[(A)]
+    \item 実数の大小関係$\leqq$は，$\{ (x, y) \in \mathbb{R} \times \mathbb{R} \mid x \leqq y \}$という$\mathbb{R}$上の関係である．
+    \item 自然数$a$，$b$について，ある$k \in \mathbb{N}$が存在して$b = ka$となるとき，$a$は$b$を\emph{割り切る}\index{わりきる@割り切る}といい，$a \mid b$とかく．$\mid$は$\mathbb{N}$上の関係である．
+    \item 集合$X$に対して，包含関係$\subset$はべき集合$\mathcal{P}(X)$上の関係である．
+    \item $n \in \mathbb{N}$を固定する．整数$a$，$b$について，$a - b$が$n$の倍数であるとき，すなわちある整数$k$が存在して$a - b = nk$となるとき，$a$と$b$は$n$を法として\emph{合同}\index{ごうどう@合同}であるといい，
+          \[
+            a \equiv b \pmod{n}
+          \]
+          とかく．これは$\mathbb{Z}$上の関係である．$a \equiv b \pmod{n}$は，「$a$と$b$を$n$で割った余りが等しい」ことと同値である．
+  \end{enumerate}
+\end{example}
+
+\begin{remark}[関係と写像]
+  \deref{二項関係}を少し一般化して，直積$A \times B$の部分集合を「$A$から$B$への関係」とよぶことにすれば，写像の厳密な定義（\deref{写像の厳密な定義}）は，写像とは
+  \[
+    \lall{a \in A} \lsep \lexu{b \in B} \lst (a, b) \in G
+  \]
+  を満たす$A$から$B$への関係$G$のことである，と読める．すなわち写像は，関係のうち「各$a$に対して，関係にある$b$がただひとつ定まる」という特別なものである．関係のほうでは，ひとつの$a$に対して関係にある$b$がいくつあってもよく，ひとつもなくてもよい．
+\end{remark}
+
+\phantomsection
+\subsection{関係の性質}
+
+関係がもちうる性質のうち，基本的なものに名前をつけておこう．
+
+\phantomsection
+\begin{definition}{反射律・対称律・反対称律・推移律}{関係の性質}
+  $R$を集合$A$上の関係とする．
+  \begin{description}
+    \item[反射律\index{はんしゃりつ@反射律}]
+          任意の$a \in A$に対して，$a \mathrel{R} a$である．
+    \item[対称律\index{たいしょうりつ@対称律}]
+          任意の$a, b \in A$に対して，$a \mathrel{R} b$ならば$b \mathrel{R} a$である．
+    \item[反対称律\index{はんたいしょうりつ@反対称律}]
+          任意の$a, b \in A$に対して，$a \mathrel{R} b$かつ$b \mathrel{R} a$ならば$a = b$である．
+    \item[推移律\index{すいいりつ@推移律}]
+          任意の$a, b, c \in A$に対して，$a \mathrel{R} b$かつ$b \mathrel{R} c$ならば$a \mathrel{R} c$である．
+  \end{description}
+\end{definition}
+
+\exref{二項関係の例}の関係について，これらの性質が成り立つかどうかをまとめると，次のようになる．
+
+\begin{center}
+  \begin{tabular}{|l|c|c|c|c|} \hline
+    \textbf{関係}                      & \textbf{反射律} & \textbf{対称律} & \textbf{反対称律} & \textbf{推移律} \\ \hline
+    $\mathbb{R}$上の$=$               & ○      & ○      & ○        & ○      \\ \hline
+    $\mathbb{R}$上の$\leqq$           & ○      & ×      & ○        & ○      \\ \hline
+    $\mathbb{R}$上の$<$               & ×      & ×      & ○        & ○      \\ \hline
+    $\mathbb{N}$上の$\mid$            & ○      & ×      & ○        & ○      \\ \hline
+    $\mathcal{P}(X)$上の$\subset$     & ○      & ×\footnotemark & ○        & ○      \\ \hline
+    $\mathbb{Z}$上の$\equiv \pmod{n}$ & ○      & ○      & ×\footnotemark & ○      \\ \hline
+  \end{tabular}
+\end{center}
+\addtocounter{footnote}{-1}
+\footnotetext{$X \ne \varnothing$の場合．$X = \varnothing$ならば$\mathcal{P}(X) = \{\varnothing\}$であり，対称律も成り立つ．}
+\stepcounter{footnote}
+\footnotetext{$n \geqq 2$の場合．たとえば$0 \equiv n \pmod{n}$かつ$n \equiv 0 \pmod{n}$であるが$0 \ne n$である．}
+
+$<$が反対称律を満たすのは，「$a < b$かつ$b < a$」を満たす$a$，$b$が存在せず，仮定が偽となるためである（空虚な真）．
+このように，$4$つの性質は互いに独立であり，どの組合せを満たすかによって関係の性格が決まる．とくに重要なのが，次節で扱う同値関係と，最後の節で扱う順序関係である．
+
+\phantomsection
+\section{同値関係}
+
+\phantomsection
+\subsection{同値関係と同値類}
+
+数学では，異なる対象を「ある観点からは同じもの」とみなしたい場面がしばしばある．たとえば，$1/2$と$2/4$は分数の表し方としては異なるが，有理数としては同じである．また，整数を$3$で割った余りだけに注目するならば，$1$と$4$と$7$は同じとみなせる．
+このような「同じとみなす」関係がもつべき性質を抽出したものが，同値関係である．
+
+\phantomsection
+\begin{definition}{同値関係}{同値関係}
+  集合$A$上の関係$\sim$が反射律・対称律・推移律を満たすとき，$\sim$を$A$上の\emph{同値関係}\index{どうちかんけい@同値関係}という．すなわち，任意の$a, b, c \in A$に対して，次が成り立つ：
+  \begin{enumerate}[label=(\roman*),leftmargin=3.2em]
+    \item $a \sim a$である．
+    \item $a \sim b$ならば$b \sim a$である．
+    \item $a \sim b$かつ$b \sim c$ならば$a \sim c$である．
+  \end{enumerate}
+\end{definition}
+
+\phantomsection
+\begin{prop}{合同は同値関係}{合同は同値関係}
+  $n \in \mathbb{N}$とする．$n$を法とする合同$\equiv \pmod{n}$は，$\mathbb{Z}$上の同値関係である．
+\end{prop}
+
+\begin{tleftbar}
+  \begin{proof}
+    $a, b, c \in \mathbb{Z}$とする．
+    反射律について，$a - a = n \cdot 0$であるから$a \equiv a \pmod{n}$である．
+    対称律について，$a - b = nk$（$k \in \mathbb{Z}$）ならば$b - a = n(-k)$であるから，$b \equiv a \pmod{n}$である．
+    推移律について，$a - b = nk$，$b - c = nl$（$k, l \in \mathbb{Z}$）ならば，$a - c = (a - b) + (b - c) = n(k + l)$であるから，$a \equiv c \pmod{n}$である．これが証明すべきことであった．
+  \end{proof}
+\end{tleftbar}
+
+\phantomsection
+\begin{example}{同値関係の例}{同値関係の例}
+  \begin{enumerate}[(A)]
+    \item 任意の集合$A$上の等号$=$は，同値関係である．
+    \item ある大学の学生全体の集合上で，「$x$と$y$は誕生月が同じである」という関係は同値関係である．
+    \item $X = \{ (a, b) \in \mathbb{Z} \times \mathbb{Z} \mid b \ne 0 \}$上の関係$\sim$を
+          \[
+            (a, b) \sim (c, d) \lequiv ad = bc
+          \]
+          で定める．これは「分数$a/b$と$c/d$が有理数として等しい」ことを，割り算を用いずに表したものであり，同値関係である．
+          反射律と対称律は明らかである．推移律について，$(a, b) \sim (c, d)$かつ$(c, d) \sim (e, f)$とすると，$ad = bc$，$cf = de$であるから，
+          \[
+            adf = bcf = bde
+          \]
+          となり，$d(af - be) = 0$である．$d \ne 0$より$af = be$，すなわち$(a, b) \sim (e, f)$である．
+  \end{enumerate}
+  一方，$\mathbb{R}$上の$\leqq$は対称律を満たさないので，同値関係ではない．
+\end{example}
+
+同値関係が与えられると，互いに同値な元をひとまとめにすることができる．
+
+\phantomsection
+\begin{definition}{同値類}{同値類}
+  $\sim$を集合$A$上の同値関係とする．$a \in A$に対して，$a$と同値な元全体の集合
+  \[
+    [a] \coloneqq \{ x \in A \mid x \sim a \}
+  \]
+  を，$a$の\emph{同値類}\index{どうちるい@同値類}という．また，$C$がある元の同値類であるとき，$a \in C$を満たす$a$を$C$の\emph{代表元}\index{だいひょうげん@代表元}という．
+\end{definition}
+
+\phantomsection
+\begin{example}{剰余類}{剰余類}
+  $\mathbb{Z}$上の同値関係$\equiv \pmod{3}$について，
+  \begin{align*}
+    [0] & = \{ \ldots, -6, -3, 0, 3, 6, \ldots \}, \\
+    [1] & = \{ \ldots, -5, -2, 1, 4, 7, \ldots \}, \\
+    [2] & = \{ \ldots, -4, -1, 2, 5, 8, \ldots \}
+  \end{align*}
+  である．$[3] = [0]$，$[4] = [1]$，$[-1] = [2]$のように，ほかの整数の同値類はこの$3$つのいずれかと一致する．$n$を法とする合同についての同値類を，$n$を法とする\emph{剰余類}\index{じょうよるい@剰余類}という．
+\end{example}
+
+\exref{剰余類}では，$3$つの同値類は互いに共通部分をもたず，あわせると$\mathbb{Z}$全体になっていた．これは一般に成り立つ．
+
+\phantomsection
+\begin{prop}{同値類の性質}{同値類の性質}
+  $\sim$を集合$A$上の同値関係とし，$a, b \in A$とする．このとき，次が成り立つ：
+  \begin{enumerate}[label=(\roman*),leftmargin=3.2em]
+    \item $a \in [a]$である．
+    \item $a \sim b$であることと，$[a] = [b]$であることは同値である．
+    \item $[a] \ne [b]$ならば，$[a] \cap [b] = \varnothing$である．
+  \end{enumerate}
+\end{prop}
+
+\begin{tleftbar}
+  \begin{proof}
+    (i)は反射律$a \sim a$から従う．
+
+    (ii)について，$a \sim b$とする．$x \in [a]$ならば$x \sim a$であり，推移律より$x \sim b$，すなわち$x \in [b]$である．よって$[a] \subset [b]$である．対称律より$b \sim a$でもあるから，同様に$[b] \subset [a]$であり，$[a] = [b]$である．
+    逆に$[a] = [b]$ならば，(i)より$a \in [a] = [b]$であるから，$a \sim b$である．
+
+    (iii)について，対偶「$[a] \cap [b] \ne \varnothing$ならば$[a] = [b]$」を示す．$x \in [a] \cap [b]$とすると，$x \sim a$かつ$x \sim b$である．対称律より$a \sim x$であり，推移律より$a \sim b$である．よって(ii)より$[a] = [b]$である．これが証明すべきことであった．
+  \end{proof}
+\end{tleftbar}
+
+(ii)より，同値類$[a]$は代表元$a$の選び方によらず定まる．たとえば\exref{剰余類}の$[1]$と$[4]$は，同じ集合を異なる代表元で表したものにすぎない．
+
+\phantomsection
+\subsection{商集合と分割}
+
+同値類そのものを元とする集合を考えよう．
+
+\phantomsection
+\begin{definition}{商集合}{商集合}
+  $\sim$を集合$A$上の同値関係とする．同値類全体の集合
+  \[
+    A / {\sim} \coloneqq \{ [a] \mid a \in A \}
+  \]
+  を，$A$の$\sim$による\emph{商集合}\index{しょうしゅうごう@商集合}という．また，写像
+  \[
+    \pi \colon A \ni a \mapsto [a] \in A / {\sim}
+  \]
+  を\emph{自然な射影}\index{しぜんなしゃえい@自然な射影}という．
+\end{definition}
+
+商集合の定義より，$A / {\sim}$のどの元も，ある$a \in A$を用いて$[a] = \pi(a)$と表せるから，自然な射影$\pi$は全射である．
+また，\prref{同値類の性質}(ii)より，$a, a' \in A$に対して
+\[
+  \pi(a) = \pi(a') \lequiv a \sim a'
+\]
+である．つまり，$\pi$は「同値な元を同じ元にうつし，同値でない元を異なる元にうつす」写像である．
+
+たとえば，$\mathbb{Z}$の$\equiv \pmod{3}$による商集合は$\{ [0], [1], [2] \}$であり，これを$\mathbb{Z}/3\mathbb{Z}$とかく．一般に，$n$を法とする合同による商集合を$\mathbb{Z}/n\mathbb{Z}$とかく．
+\figref{剰余類と自然な射影}のように，自然な射影$\pi$は，ひとつの同値類に属する無数の整数をまとめて，$\mathbb{Z}/3\mathbb{Z}$のただひとつの元にうつす．
+
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}[
+      >=Latex, font=\small, line cap=round, line join=round,
+      cls/.style    ={draw=black!50, fill=black!4, line width=0.5pt,
+                      rounded corners=6pt, minimum width=\mnsc{6.2cm},
+                      minimum height=\mnsc{0.62cm}, inner sep=0pt},
+      clsacc/.style ={cls, draw=figaccent!60, fill=figaccent!10},
+      num/.style    ={font=\small, text=black!85},
+      elem/.style   ={circle, fill=black!85, inner sep=1.3pt},
+      proj/.style   ={-{Latex[length=1.8mm,width=1.3mm]}, draw=black!70,
+                      line width=0.55pt, shorten <=3pt, shorten >=3pt},
+    ]
+    % Z を 3 つの同値類（剰余類）に切り分ける
+    \draw[draw=black!60, line width=0.7pt, rounded corners=10pt]
+      (-3.45,-1.55) rectangle (3.45,1.55);
+    \node[font=\small, text=black!70, anchor=south west] at (-3.45,1.58) {$\mathbb{Z}$};
+    \foreach \r/\y/\st in {0/0.9/cls, 1/0/clsacc, 2/-0.9/cls} {
+      \node[\st] (C\r) at (0,\y) {};
+      \foreach \k [count=\i from 0] in {-2,-1,0,1,2} {
+        \pgfmathtruncatemacro{\v}{3*\k+\r}
+        \node[num] at (-2.2+1.1*\i,\y) {$\v$};
+      }
+      \node[num] at (-2.85,\y) {$\cdots$};
+      \node[num] at ( 2.85,\y) {$\cdots$};
+    }
+    % 商集合 Z/3Z
+    \draw[draw=black!60, fill=black!4, line width=0.7pt]
+      (6.1,0) ellipse [x radius=0.85, y radius=1.45];
+    \node[font=\small, text=black!70] at (6.1,1.8) {$\mathbb{Z}/3\mathbb{Z}$};
+    \foreach \r/\y in {0/0.9, 2/-0.9} {
+      \node[elem] (P\r) at (6.1,\y) {};
+      \node[anchor=west, xshift=2.5pt] at (P\r) {$[\r]$};
+    }
+    \node[elem, fill=figaccent] (P1) at (6.1,0) {};
+    \node[anchor=west, xshift=2.5pt, text=figaccent] at (P1) {$[1]$};
+    % 自然な射影 π
+    \draw[proj] (C0.east) -- (P0);
+    \draw[proj, draw=figaccent] (C1.east) -- (P1);
+    \draw[proj] (C2.east) -- (P2);
+    \node[font=\small, text=black!70] at (4.4,1.3) {$\pi$};
+  \end{tikzpicture}
+  \caption{$\mathbb{Z}$を$3$を法とする剰余類に分割し，各類を$\mathbb{Z}/3\mathbb{Z}$の$1$点にうつす}
+  \label{fig:剰余類と自然な射影}
+\end{figure}
+
+商集合が$A$をどのように「切り分けて」いるかを述べるために，次の用語を導入する．
+
+\phantomsection
+\begin{definition}{分割}{分割}
+  集合$A$の部分集合からなる集合$\mathcal{C}$が次の$3$つを満たすとき，$\mathcal{C}$を$A$の\emph{分割}\index{ぶんかつ@分割}という：
+  \begin{enumerate}[label=(\roman*),leftmargin=3.2em]
+    \item $\mathcal{C}$の各元は空集合でない．
+    \item $C, C' \in \mathcal{C}$が$C \ne C'$ならば，$C \cap C' = \varnothing$である．
+    \item $A$の各元は，$\mathcal{C}$のいずれかの元に属する．
+  \end{enumerate}
+\end{definition}
+
+\phantomsection
+\begin{prop}{商集合は分割を与える}{商集合は分割を与える}
+  $\sim$を集合$A$上の同値関係とすると，商集合$A / {\sim}$は$A$の分割である．
+\end{prop}
+
+\begin{tleftbar}
+  \begin{proof}
+    \prref{同値類の性質}(i)より，各同値類$[a]$は$a$を含むから空集合でなく，また$A$の各元$a$は同値類$[a]$に属する．よって分割の条件(i)，(iii)が成り立つ．条件(ii)は\prref{同値類の性質}(iii)そのものである．これが証明すべきことであった．
+  \end{proof}
+\end{tleftbar}
+
+\begin{remark}[同値関係と分割は同じものの$2$つの見方]
+  \prref{商集合は分割を与える}の逆も成り立つ．すなわち，$\mathcal{C}$を$A$の分割とし，$a, b \in A$に対して
+  \[
+    a \sim b \lequiv \text{$a$と$b$は$\mathcal{C}$の同じ元に属する}
+  \]
+  と定めると，$\sim$は$A$上の同値関係であり，その商集合$A / {\sim}$は$\mathcal{C}$に一致する．
+  したがって，「同値関係を与えること」と「分割を与えること」は，同じことを異なる言葉で述べたものにほかならない．同値関係は「どの元とどの元を同じとみなすか」という局所的な見方であり，分割は「全体をどのように切り分けるか」という大域的な見方である．
+\end{remark}
+
+\phantomsection
+\section{商集合上の写像}
+
+\phantomsection
+\subsection{well-definedふたたび}
+
+商集合$A / {\sim}$上の写像を定めるとき，もっとも自然な方法は，同値類$[a]$の行き先を代表元$a$を用いて定めることである．しかし，同値類は複数の代表元をもちうるので，こうして定めた行き先が代表元の選び方によらないことを確かめなければならない．
+これは，\subsecref{well-defined}で扱った状況において，全射$h$を自然な射影$\pi$としたものにほかならない．
+
+\phantomsection
+\begin{theorem}{商集合上の写像}{商集合上の写像}
+  $\sim$を集合$A$上の同値関係，$\pi \colon A \to A / {\sim}$を自然な射影とし，写像$f \colon A \to Z$が
+  \[
+    a \sim a' \limp f(a) = f(a') \qquad (a, a' \in A)
+  \]
+  を満たすとする．このとき，写像$g \colon A / {\sim} \to Z$であって$f = g \circ \pi$を満たすものが，ただひとつ存在する．すなわち，
+  \[
+    g([a]) \coloneqq f(a) \qquad (a \in A)
+  \]
+  はwell-definedである．
+\end{theorem}
+
+\begin{tleftbar}
+  \begin{proof}
+    自然な射影$\pi$は全射であり，$a, a' \in A$に対して，
+    \[
+      \pi(a) = \pi(a') \limp a \sim a' \limp f(a) = f(a')
+    \]
+    が成り立つ．よって\deref{well-defined}より，$g([a]) \coloneqq f(a)$は写像$g \colon A / {\sim} \to Z$を定め，$f = g \circ \pi$を満たす．
+
+    一意性を示す．$g, g' \colon A / {\sim} \to Z$がともに$f = g \circ \pi = g' \circ \pi$を満たすとする．任意の$C \in A / {\sim}$に対して，$\pi$は全射であるから$C = \pi(a)$を満たす$a \in A$が存在し，
+    \[
+      g(C) = g(\pi(a)) = f(a) = g'(\pi(a)) = g'(C)
+    \]
+    である．よって$g = g'$である．これが証明すべきことであった．
+  \end{proof}
+\end{tleftbar}
+
+\phantomsection
+\begin{example}{剰余類の演算}{剰余類の演算}
+  $n \in \mathbb{N}$とし，$\mathbb{Z}/n\mathbb{Z}$における和を
+  \[
+    [a] + [b] \coloneqq [a + b] \qquad (a, b \in \mathbb{Z})
+  \]
+  で定めたい．これがwell-definedであること，すなわち右辺が代表元$a$，$b$の選び方によらないことを確かめよう．
+  $[a] = [a']$，$[b] = [b']$とすると，\prref{同値類の性質}(ii)より$a - a' = nk$，$b - b' = nl$（$k, l \in \mathbb{Z}$）と表せる．このとき
+  \[
+    (a + b) - (a' + b') = n(k + l)
+  \]
+  であるから，$a + b \equiv a' + b' \pmod{n}$，すなわち$[a + b] = [a' + b']$である．よって和はwell-definedである．
+
+  たとえば$\mathbb{Z}/3\mathbb{Z}$では，$[1] + [2] = [3] = [0]$，$[2] + [2] = [4] = [1]$である．これは「$3$で割った余り」の足し算にほかならない．
+\end{example}
+
+一方，代表元を用いた定義がいつもうまくいくとは限らない．
+たとえば，$\mathbb{Z}/3\mathbb{Z}$から$\mathbb{Z}$への写像を「$g([a]) \coloneqq a$」で定めようとしても，$[0] = [3]$であるのに$0 \ne 3$であるから，$g([0])$の値が代表元の選び方によって変わってしまう．よってこの$g$はwell-definedでない．
+
+\begin{remark}[代表元を用いた定義の確認]
+  商集合上の写像や演算を代表元を用いて定めるときには，それが代表元の選び方によらないことを，必ず確認しなければならない．\thref{商集合上の写像}は，この確認さえ済めば写像がただひとつ定まることを保証している．
+  \exref{有理数の関数のwell-defined性}は，まさにこの構造をしていた．実際，\exref{同値関係の例}(C)の同値関係$\sim$について，$X / {\sim}$の各元$[(a, b)]$を有理数$a/b$と同一視すれば，$h \colon X \to \mathbb{Q}$は自然な射影$\pi$にあたる．
+\end{remark}
+
+\begin{mycolumn}
+  同値関係と商集合は，数の体系を構成する際にも用いられる．
+  たとえば整数は，自然数の組$(a, b)$（$a, b \in \mathbb{N}$）を「$a - b$」の表し方とみなし，$(a, b) \sim (c, d) \lequiv a + d = b + c$という同値関係による商集合として構成できる．引き算を用いずに「差が等しい」ことを表しているのである．
+  同様に，有理数は\exref{同値関係の例}(C)の同値関係による商集合として構成でき，実数も有理数の列を用いた同値関係（コーシー列の同値類）によって構成できる．
+  このように，「新しい数を，古い数の組の同値類として作る」という考え方は，現代数学の基本的な手法のひとつである．
+\end{mycolumn}
+
+\phantomsection
+\section{順序関係}
+
+最後に，大小関係を一般化した関係を扱う．
+
+\phantomsection
+\begin{definition}{半順序・全順序}{半順序・全順序}
+  集合$A$上の関係$\preceq$が反射律・反対称律・推移律を満たすとき，$\preceq$を$A$上の\emph{半順序}\index{はんじゅんじょ@半順序}（または順序）といい，組$(A, \preceq)$を\emph{半順序集合}\index{はんじゅんじょしゅうごう@半順序集合}という．
+  さらに，任意の$a, b \in A$に対して$a \preceq b$または$b \preceq a$が成り立つとき，$\preceq$を\emph{全順序}\index{ぜんじゅんじょ@全順序}という．
+\end{definition}
+
+\phantomsection
+\begin{example}{半順序の例}{半順序の例}
+  \begin{enumerate}[(A)]
+    \item $\mathbb{R}$上の$\leqq$は全順序である．
+    \item 集合$X$のべき集合$\mathcal{P}(X)$上の$\subset$は半順序である．しかし，$X = \{1, 2\}$のとき，$\{1\} \subset \{2\}$も$\{2\} \subset \{1\}$も成り立たないので，全順序ではない．
+    \item $\mathbb{N}$上の$\mid$は半順序である．しかし，$2 \mid 3$も$3 \mid 2$も成り立たないので，全順序ではない．
+  \end{enumerate}
+\end{example}
+
+\begin{wrapfigure}[9]{r}{\mnsc{5.6cm}}
+  \centering
+  \begin{tikzpicture}[
+      x=1.3cm, y=0.95cm, font=\small,
+      ps/.style     ={inner sep=2pt, text=black!85},
+      psacc/.style  ={ps, text=figaccent},
+      cover/.style  ={draw=black!45, line width=0.5pt, shorten <=1pt, shorten >=1pt},
+      chain/.style  ={draw=figaccent, line width=1.4pt, shorten <=1pt, shorten >=1pt},
+    ]
+    \node[psacc] (e)   at ( 0,0) {$\varnothing$};
+    \node[psacc] (1)   at (-1,1) {$\{1\}$};
+    \node[ps]    (2)   at ( 0,1) {$\{2\}$};
+    \node[ps]    (3)   at ( 1,1) {$\{3\}$};
+    \node[psacc] (12)  at (-1,2) {$\{1,2\}$};
+    \node[ps]    (13)  at ( 0,2) {$\{1,3\}$};
+    \node[ps]    (23)  at ( 1,2) {$\{2,3\}$};
+    \node[psacc] (123) at ( 0,3) {$\{1,2,3\}$};
+    \foreach \a/\b in {e/2, e/3, 1/13, 2/12, 2/23, 3/13, 3/23, 13/123, 23/123}
+      \draw[cover] (\a) -- (\b);
+    % 全順序をなす部分（鎖）を太線で示す
+    \foreach \a/\b in {e/1, 1/12, 12/123}
+      \draw[chain] (\a) -- (\b);
+  \end{tikzpicture}
+  \caption{$(\mathcal{P}(\{1,2,3\}), \subset)$のハッセ図}
+  \label{fig:ハッセ図}
+\end{wrapfigure}
+半順序では，$2$つの元が「比べられない」ことがありうる．日常的な「大小」の感覚は全順序にもとづいているので，半順序を扱うときにはこの点に注意が必要である．
+
+有限の半順序集合は，$a \preceq b$かつ$a \ne b$で，その間にほかの元がないときに，$a$を下，$b$を上に置いて線で結んだ図で表すと見通しがよい．このような図を\emph{ハッセ図}\index{はっせず@ハッセ図}という．
+\figref{ハッセ図}は$\mathcal{P}(\{1, 2, 3\})$の包含関係のハッセ図である．線を下から上へたどって行ける$2$元は比べることができ，$\{1\}$と$\{2, 3\}$のようにたどって行けない$2$元は比べられない．
+また，太線で示した$\varnothing \subset \{1\} \subset \{1, 2\} \subset \{1, 2, 3\}$のように，一列に並ぶ元だけを取り出せば，その範囲では全順序になっている．
+
+\begin{remark}[最大元の一意性と反対称律]
+  \deref{最大値・最小値}にならって，半順序集合$(A, \preceq)$の元$M$が「任意の$a \in A$に対して$a \preceq M$」を満たすとき，$M$を$A$の最大元という．
+  \prref{最大値の一意性}の証明では，「$M' \leqq M$かつ$M \leqq M'$ならば$M = M'$」という推論を用いたが，これはまさに反対称律である．したがって，同じ証明により，半順序集合の最大元も存在するとすればただひとつである．
+  このように，ある性質の証明が実際にはどの仮定を用いているのかを見極めると，その性質が成り立つ範囲を広げることができる．
+\end{remark}
