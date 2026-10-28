@@ -1480,6 +1480,40 @@
 \RequirePackage{makeidx}
 \makeindex
 
+% 索引のレイアウト（ltjsarticle の theindex を置き換える）
+%   ・3 段組にする（2 段組では数行だけが次ページに溢れ，ほぼ白紙の
+%     索引ページができていた）．
+%   ・見出し（あ，か，…）の直後 2 項目では改段しない．見出しが項目
+%     1 つだけを連れて段の下端に取り残されるのを防ぐ．
+%   ・グループの切れ目（\indexspace）を改段位置として優先する．
+\newcount\mn@idxkeep
+\renewenvironment{theindex}{%
+  \clearpage
+  \columnseprule.4pt \columnsep 1.5\zw
+  \def\presectionname{}\def\postsectionname{}%
+  \begin{multicols}{3}[\section*{\indexname}]%
+  \@mkboth{\indexname}{\indexname}%
+  \plainifnotempty
+  \parindent\z@
+  \parskip\z@ \@plus .3\jsc@mpt\relax
+  \let\item\mn@idxitem
+  \let\indexspace\mn@indexspace
+  \raggedright
+  \footnotesize\narrowbaselines
+  \global\mn@idxkeep\tw@
+}{%
+  \end{multicols}%
+  \clearpage
+}
+\newcommand{\mn@idxitem}{\par
+  \ifnum\mn@idxkeep>\z@ \nobreak\global\advance\mn@idxkeep\m@ne \fi
+  \hangindent 4\zw}
+\renewcommand{\subitem}{\mn@idxitem \hspace*{2\zw}}
+\renewcommand{\subsubitem}{\mn@idxitem \hspace*{3\zw}}
+\newcommand{\mn@indexspace}{\par \penalty-200
+  \vskip 10\jsc@mpt \@plus5\jsc@mpt \@minus3\jsc@mpt\relax
+  \global\mn@idxkeep\tw@}
+
 % ==============================================================================
 % § 15. Title Page — Apple-inspired monochrome design (Dark Hero)
 % ==============================================================================
@@ -1550,6 +1584,10 @@
 %   - if #3 is empty, "MATHEMATICS NOTE" is used as the eyebrow label;
 %   - if #5 contains \today, it is rendered in English on the cover;
 %   - all absolute lengths are scaled with \mnmm / \mnpt for the B5 edition.
+% 表紙の裏・裏表紙の裏にシリーズラベルを置くかどうか．
+% 製本用に完全な白紙にしたい場合は \MathNoteVersoLabelfalse を宣言する．
+\newif\ifMathNoteVersoLabel \MathNoteVersoLabeltrue
+
 \newcommand{\tituloum}[5]{%
   \begin{titlepage}
     \thispagestyle{empty}%
@@ -1650,13 +1688,15 @@
     \pagecolor{white}%
     \thispagestyle{empty}%
     \null
-    \vfill
-    \begin{center}
-      {\MathNoteCoverMetaLabelFont\color{appleGray}%
-        \MathNoteCoverSeries\par
-      }%
-    \end{center}
-    \vspace{22\mnmm}%
+    \ifMathNoteVersoLabel
+      \vfill
+      \begin{center}
+        {\MathNoteCoverMetaLabelFont\color{appleGray}%
+          \MathNoteCoverSeries\par
+        }%
+      \end{center}
+      \vspace{22\mnmm}%
+    \fi
     \clearpage
   \endgroup
   % 表紙 + 表紙裏を「前付け」として扱い，ページカウンタを 1 に戻す．
@@ -1703,13 +1743,15 @@
     \pagecolor{white}%
     \thispagestyle{empty}%
     \null
-    \vspace{22\mnmm}%
-    \begin{center}
-      {\MathNoteCoverMetaLabelFont\color{appleGray}%
-        \MathNoteCoverSeries\par
-      }%
-    \end{center}
-    \vfill
+    \ifMathNoteVersoLabel
+      \vspace{22\mnmm}%
+      \begin{center}
+        {\MathNoteCoverMetaLabelFont\color{appleGray}%
+          \MathNoteCoverSeries\par
+        }%
+      \end{center}
+      \vfill
+    \fi
     \clearpage
     % (3) 裏表紙（ここからダーク背景）
     \pagecolor{MathNoteCoverBG}%
