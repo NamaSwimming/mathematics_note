@@ -56,3 +56,22 @@ linear_algebra/*.fls
 linear_algebra/*.fdb_latexmk
 linear_algebra/*.synctex.gz
 linear_algebra/*.synctex(busy)
+
+# LaTeX intermediate files (basis_math)
+basis_math/*.aux
+basis_math/*.log
+basis_math/*.toc
+basis_math/*.bbl
+basis_math/*.bbl-SAVE-ERROR
+basis_math/*.bcf
+basis_math/*.blg
+basis_math/*.idx
+basis_math/*.ilg
+basis_math/*.ind
+basis_math/*.run.xml
+basis_math/*.out
+basis_math/*.fls
+basis_math/*.fdb_latexmk
+basis_math/*.synctex.gz
+basis_math/*.synctex(busy)
+basis_math/basis_math_cmyk_B5.pdf
