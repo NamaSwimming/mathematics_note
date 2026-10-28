@@ -2,7 +2,7 @@
 \part{写像}
 
 \begin{abstract}
-この章では，集合とならんで現代数学の基礎をなす「写像」を導入する．まず写像を「各元にただひとつの元を対応させる規則」として定義し，自動販売機などの身近な例で直感的な理解を深める．続いて，直積と記号$\exists!$を用いた写像の厳密な定義を紹介する．次に，像・値域・逆像といった写像に付随する集合を定義する．そのうえで，単射・全射・全単射という写像の重要な性質を，図と具体例をもとに確認し，最後に像・逆像と集合演算の関係を整理しよう．
+この章では，集合とならんで現代数学の基礎をなす「写像」を導入する．まず写像を「各元にただひとつの元を対応させる規則」として定義し，自動販売機などの身近な例で直感的な理解を深める．続いて，直積と記号$\exists!$を用いた写像の厳密な定義を紹介し，恒等写像や写像の制限を導入する．次に，像・値域・逆像といった写像に付随する集合を定義する．そのうえで，単射・全射・全単射という写像の重要な性質を，図と具体例をもとに確認し，像・逆像と集合演算の関係を整理する．最後に，写像の合成と逆写像を扱い，\partref{用語の定義}で触れたwell-definedの概念を写像の言葉で述べ直そう．
 \end{abstract}
 
 \phantomsection
@@ -20,6 +20,15 @@
   mapsetname/.style ={font=\small, text=black!70},
   maplabL/.style    ={anchor=east, xshift=-2.5pt},
   maplabR/.style    ={anchor=west, xshift=2.5pt},
+  % 色は黒（灰）系＋マゼンタ系のみ．写像そのもの（対応の矢印と写像の名前）を
+  % マゼンタで描き，集合・元は灰と黒で描く．
+  mapname/.style    ={font=\small, text=figaccent},
+  mapacc/.style     ={maparrow, draw=figaccent},
+  mapaccsub/.style  ={draw=figaccent!60, fill=figaccent!10, line width=0.5pt},
+  mapaccleader/.style={draw=figaccent!70, line width=0.4pt},
+  mapacclab/.style  ={font=\small, text=figaccent!85!black},
+  % 像に入らない元など「対応の相手がない」元は白抜きで示す
+  mapelemfree/.style={circle, draw=black!85, fill=white, line width=0.6pt, inner sep=1.1pt},
 }
 
 \phantomsection
@@ -52,7 +61,7 @@
   とかく\footnote{これを$ f \colon A \ni a \mapsto b \in B$とかくときもある．}．
 \end{definition}
 
-\begin{wrapfigure}{r}{6.0cm}
+\begin{wrapfigure}{r}{\mnsc{6.0cm}}
   \centering
   \begin{tikzpicture}[mapfig]
     % 集合
@@ -60,7 +69,7 @@
     \draw[mapset] ( 1.75,0) ellipse [x radius=0.95, y radius=1.25];
     \node[mapsetname] at (-1.75,1.55) {$A$};
     \node[mapsetname] at ( 1.75,1.55) {$B$};
-    \node[mapsetname] at (0,1.35) {$f$};
+    \node[mapname] at (0,1.35) {$f$};
     % 要素
     \coordinate (A1) at (-1.75, 0.75);
     \coordinate (A2) at (-1.75, 0);
@@ -68,7 +77,8 @@
     \coordinate (Ba) at ( 1.75, 0.75);
     \coordinate (Bb) at ( 1.75, 0);
     \coordinate (Bc) at ( 1.75,-0.75);
-    \foreach \p in {A1,A2,A3,Ba,Bb,Bc} \node[mapelem] at (\p) {};
+    \foreach \p in {A1,A2,A3,Ba,Bb} \node[mapelem] at (\p) {};
+    \node[mapelemfree] at (Bc) {};% どの元にも対応しない
     \node[maplabL] at (A1) {$1$};
     \node[maplabL] at (A2) {$2$};
     \node[maplabL] at (A3) {$3$};
@@ -76,9 +86,9 @@
     \node[maplabR] at (Bb) {$b$};
     \node[maplabR] at (Bc) {$c$};
     % 対応
-    \draw[maparrow] (A1) to[bend left=10] (Ba);
-    \draw[maparrow] (A2) -- (Bb);
-    \draw[maparrow] (A3) to[bend left=12] (Ba);
+    \draw[mapacc] (A1) to[bend left=10] (Ba);
+    \draw[mapacc] (A2) -- (Bb);
+    \draw[mapacc] (A3) to[bend left=12] (Ba);
   \end{tikzpicture}
   \caption{写像 $f \colon A \to B$}
 \end{wrapfigure}
@@ -128,7 +138,7 @@ $A=\{ 1,2 ,3 \}$， $B=\{ a, b,c \}$とする．$f(1) = a$，$f(2) = b$，$f(3) 
 \phantomsection
 \subsection{写像の厳密な定義}
 
-\deref{写像}では，写像を「元にただひとつの元を対応させる\emph{規則}」として定義した．この定義は直感的でわかりやすいが，「規則」という言葉自体は数学的に定義されていない，という弱点がある．そこで本項では，集合の言葉だけを用いた写像の厳密な定義を紹介する．準備として，順序対・直積と，記号$\exists!$を導入しよう．
+\deref{写像}では，写像を「元にただひとつの元を対応させる規則」として定義した．この定義は直感的でわかりやすいが，「規則」という言葉自体は数学的に定義されていない，という弱点がある．そこで本項では，集合の言葉だけを用いた写像の厳密な定義を紹介する．準備として，順序対・直積と，記号$\exists!$を導入しよう．
 
 \phantomsection
 \begin{definition}{順序対と直積}{順序対と直積}
@@ -149,7 +159,7 @@ $A=\{ 1,2 ,3 \}$， $B=\{ a, b,c \}$とする．$f(1) = a$，$f(2) = b$，$f(3) 
 
 \phantomsection
 \begin{definition}{記号$\exists!$}{一意存在の記号}
-  $P(y)$を述語とする．「$P(y)$を満たす$y \in B$が\textbf{ただひとつ}存在する」ことを
+  $P(y)$を述語とする．「$P(y)$を満たす$y \in B$がただひとつ存在する」ことを
   \[
     \lexu{y \in B} \lst P(y)
   \]
@@ -187,10 +197,37 @@ $A=\{ 1,2 ,3 \}$， $B=\{ a, b,c \}$とする．$f(1) = a$，$f(2) = b$，$f(3) 
   \[
     G = \{ (x, x^2) \mid x \in \mathbb{R} \} \subset \mathbb{R} \times \mathbb{R}
   \]
-  であり，これはまさに$y = x^2$の\emph{グラフ}である．すなわち，厳密な定義は「写像とは，そのグラフのことである」という見方を与えている\footnote{ただし，集合$G$だけからは終域$B$は復元できない（「式」と「写像」の違いに関する先の注意を参照）．そこで，終域の情報まで込めて，写像を3つ組$(A, B, G)$として定義する流儀もある．}．
+  であり，これはまさに$y = x^2$のグラフである．すなわち，厳密な定義は「写像とは，そのグラフのことである」という見方を与えている\footnote{ただし，集合$G$だけからは終域$B$は復元できない（「式」と「写像」の違いに関する先の注意を参照）．そこで，終域の情報まで込めて，写像を3つ組$(A, B, G)$として定義する流儀もある．}．
 \end{remark}
 
 なお，本書では以後も\deref{写像}の直感的な定義に基づいて議論を進めるが，「規則」という言葉が集合の言葉で正当化できることは，記憶にとどめておいてほしい．
+
+\phantomsection
+\subsection{恒等写像と制限}
+
+どの集合に対しても考えられる基本的な写像と，写像から新しい写像を作る操作をひとつ導入しておこう．
+
+\phantomsection
+\begin{definition}{恒等写像・包含写像・制限}{恒等写像・包含写像・制限}
+  \begin{description}
+    \item[恒等写像\index{こうとうしゃぞう@恒等写像}]\mbox{}\\
+          集合$A$に対して，各$a \in A$に$a$自身を対応させる写像$A \ni a \mapsto a \in A$を，$A$上の恒等写像といい，$\mathrm{id}_A$とかく．
+    \item[包含写像\index{ほうがんしゃぞう@包含写像}]\mbox{}\\
+          集合$A$，$B$が$A \subset B$を満たすとき，写像$A \ni a \mapsto a \in B$を包含写像という．
+    \item[制限\index{せいげん@制限}]\mbox{}\\
+          写像$f \colon A \to B$と$A' \subset A$に対して，写像$A' \ni a \mapsto f(a) \in B$を$f$の$A'$への制限といい，$f|_{A'}$とかく．
+  \end{description}
+\end{definition}
+
+たとえば，$f \colon \mathbb{R} \ni x \mapsto x^2 \in \mathbb{R}$の$[0, \infty)$への制限$f|_{[0, \infty)}$は，$[0, \infty) \ni x \mapsto x^2 \in \mathbb{R}$である．
+
+\begin{remark}[恒等写像と包含写像の違い]
+  恒等写像$\mathrm{id}_A$と，$A \subset B$のときの包含写像$A \to B$は，どちらも「各$a$に$a$自身を対応させる」写像であるが，$A \ne B$ならば終域が異なるので，写像としては別のものである．「式」と「写像」の違いに関する注意で述べたように，写像は対応の規則だけでなく，定義域と終域を込めて定まるのである．
+  同様に，制限$f|_{A'}$は$f$と同じ規則で定まるが，定義域が異なるので$f$とは別の写像であり，のちに見るように，単射であるかどうかといった性質も変わりうる．
+\end{remark}
+
+\phantomsection
+\section{像と逆像}
 
 \subsection{像と値域，逆像}
 
@@ -223,7 +260,7 @@ $A=\{ 1,2 ,3 \}$， $B=\{ a, b,c \}$とする．$f(1) = a$，$f(2) = b$，$f(3) 
 
 \begin{remark}[逆像と逆写像]
   \deref{逆像}で定義した逆像は「写像」ではなく，あくまで「集合」であることに注意したい．
-  逆像と紛らわしい単語に「逆写像」があるが，逆写像は$f$が全単射であるときに定義される写像である．その一方で，逆像は$f$が全単射でなくても定義される．
+  逆像と紛らわしい単語に「逆写像」があるが，逆写像は$f$が全単射であるときに定義される写像である（\deref{逆写像}）．その一方で，逆像は$f$が全単射でなくても定義される．
 \end{remark}
 
 \begin{figure}[ht]
@@ -236,14 +273,14 @@ $A=\{ 1,2 ,3 \}$， $B=\{ a, b,c \}$とする．$f(1) = a$，$f(2) = b$，$f(3) 
       \draw[mapset] ( 1.75,0) ellipse [x radius=0.95, y radius=1.25];
       \node[mapsetname] at (-1.75,-1.55) {$A$};
       \node[mapsetname] at ( 1.75,-1.55) {$B$};
-      \node[mapsetname] at (0,1.35) {$f$};
+      \node[mapname] at (0,1.35) {$f$};
       % A' = {1, 2} とその像 f(A') = {a, b}
-      \draw[mapsub] (-1.75,0.375) ellipse [x radius=0.55, y radius=0.85];
-      \draw[mapsub] ( 1.75,0.125) ellipse [x radius=0.50, y radius=0.85];
-      \draw[mapleader] (-2.14,0.98) -- (-2.45,1.35)
-        node[anchor=south, font=\small] {$A'$};
-      \draw[mapleader] ( 2.10,0.72) -- ( 2.45,1.35)
-        node[anchor=south, font=\small] {$f(A')$};
+      \draw[mapaccsub] (-1.75,0.375) ellipse [x radius=0.55, y radius=0.85];
+      \draw[mapaccsub] ( 1.75,0.125) ellipse [x radius=0.50, y radius=0.85];
+      \draw[mapaccleader] (-2.14,0.98) -- (-2.45,1.35)
+        node[anchor=south, mapacclab] {$A'$};
+      \draw[mapaccleader] ( 2.10,0.72) -- ( 2.45,1.35)
+        node[anchor=south, mapacclab] {$f(A')$};
       % 要素
       \coordinate (A1) at (-1.75, 0.75);
       \coordinate (A2) at (-1.75, 0);
@@ -256,9 +293,9 @@ $A=\{ 1,2 ,3 \}$， $B=\{ a, b,c \}$とする．$f(1) = a$，$f(2) = b$，$f(3) 
       \node[maplabL] at (A3) {$3$};
       \node[maplabR] at (Ba) {$a$};
       \node[maplabR] at (Bb) {$b$};
-      % 対応
-      \draw[maparrow] (A1) to[bend left=10] (Ba);
-      \draw[maparrow] (A2) -- (Bb);
+      % 対応（A' の元からの矢印だけを強調）
+      \draw[mapacc]   (A1) to[bend left=10] (Ba);
+      \draw[mapacc]   (A2) -- (Bb);
       \draw[maparrow] (A3) to[bend left=12] (Ba);
     \end{tikzpicture}
     \caption{$A' = \{1, 2\}$ の像 $f(A') = \{a, b\}$}
@@ -272,14 +309,14 @@ $A=\{ 1,2 ,3 \}$， $B=\{ a, b,c \}$とする．$f(1) = a$，$f(2) = b$，$f(3) 
       \draw[mapset] ( 1.75,0) ellipse [x radius=0.95, y radius=1.35];
       \node[mapsetname] at (-1.75,-1.65) {$A$};
       \node[mapsetname] at ( 1.75,-1.65) {$B$};
-      \node[mapsetname] at (0,1.35) {$f$};
+      \node[mapname] at (0,1.35) {$f$};
       % B' = {a} とその逆像 f^{-1}(B') = {1, 2, 3}
-      \draw[mapsub] ( 1.75,0.5) ellipse [x radius=0.45, y radius=0.42];
-      \draw[mapsub] (-1.75,0.30) ellipse [x radius=0.60, y radius=1.00];
-      \draw[mapleader] (-2.17,1.01) -- (-2.45,1.45)
-        node[anchor=south, font=\small] {$f^{-1}(B')$};
-      \draw[mapleader] ( 2.07,0.80) -- ( 2.40,1.45)
-        node[anchor=south, font=\small] {$B'$};
+      \draw[mapaccsub] ( 1.75,0.5) ellipse [x radius=0.45, y radius=0.42];
+      \draw[mapaccsub] (-1.75,0.30) ellipse [x radius=0.60, y radius=1.00];
+      \draw[mapaccleader] (-2.17,1.01) -- (-2.45,1.45)
+        node[anchor=south, mapacclab] {$f^{-1}(B')$};
+      \draw[mapaccleader] ( 2.07,0.80) -- ( 2.40,1.45)
+        node[anchor=south, mapacclab] {$B'$};
       % 要素
       \coordinate (A1) at (-1.75, 0.95);
       \coordinate (A2) at (-1.75, 0.30);
@@ -294,10 +331,10 @@ $A=\{ 1,2 ,3 \}$， $B=\{ a, b,c \}$とする．$f(1) = a$，$f(2) = b$，$f(3) 
       \node[maplabL] at (A4) {$4$};
       \node[maplabR] at (Ba) {$a$};
       \node[maplabR] at (Bb) {$b$};
-      % 対応
-      \draw[maparrow] (A1) to[bend left=10] (Ba);
-      \draw[maparrow] (A2) -- (Ba);
-      \draw[maparrow] (A3) to[bend right=8] (Ba);
+      % 対応（B' に入る矢印だけを強調）
+      \draw[mapacc]   (A1) to[bend left=10] (Ba);
+      \draw[mapacc]   (A2) -- (Ba);
+      \draw[mapacc]   (A3) to[bend right=8] (Ba);
       \draw[maparrow] (A4) to[bend right=12] (Bb);
     \end{tikzpicture}
     \caption{$B' = \{a\}$ の逆像 $f^{-1}(B') = \{1, 2, 3\}$}
@@ -306,6 +343,10 @@ $A=\{ 1,2 ,3 \}$， $B=\{ a, b,c \}$とする．$f(1) = a$，$f(2) = b$，$f(3) 
 
 
 
+\phantomsection
+\section{単射・全射・全単射}
+
+\phantomsection
 \subsection{単射\index{たんしゃ@単射}}
 
 \begin{definition}{単射}{単射}
@@ -315,9 +356,8 @@ $A=\{ 1,2 ,3 \}$， $B=\{ a, b,c \}$とする．$f(1) = a$，$f(2) = b$，$f(3) 
 \phantomsection
 \begin{example}[
     sidebyside,
-    lefthand width=7.4cm,
-    righthand width=6.2cm,
-    sidebyside gap=4mm,
+    righthand width=\mnsc{6.2cm},
+    sidebyside gap=\mnsc{4mm},
   ]{単射の図解}{単射の図解}
   集合$A = \{1, 2, 3\}$，$B = \{a, b, c, d\}$と写像
   \[
@@ -336,7 +376,7 @@ $A=\{ 1,2 ,3 \}$， $B=\{ a, b,c \}$とする．$f(1) = a$，$f(2) = b$，$f(3) 
     \draw[mapset] ( 1.75,0) ellipse [x radius=0.95, y radius=1.35];
     \node[mapsetname] at (-1.75,1.65) {$A$};
     \node[mapsetname] at ( 1.75,1.65) {$B$};
-    \node[mapsetname] at (0,1.4) {$f$};
+    \node[mapname] at (0,1.4) {$f$};
     % 要素
     \coordinate (A1) at (-1.75, 0.75);
     \coordinate (A2) at (-1.75, 0);
@@ -345,7 +385,8 @@ $A=\{ 1,2 ,3 \}$， $B=\{ a, b,c \}$とする．$f(1) = a$，$f(2) = b$，$f(3) 
     \coordinate (Bb) at ( 1.75, 0.32);
     \coordinate (Bc) at ( 1.75,-0.32);
     \coordinate (Bd) at ( 1.75,-0.95);
-    \foreach \p in {A1,A2,A3,Ba,Bb,Bc,Bd} \node[mapelem] at (\p) {};
+    \foreach \p in {A1,A2,A3,Ba,Bb,Bc} \node[mapelem] at (\p) {};
+    \node[mapelemfree] at (Bd) {};% 像に入らない（全射でない）
     \node[maplabL] at (A1) {$1$};
     \node[maplabL] at (A2) {$2$};
     \node[maplabL] at (A3) {$3$};
@@ -354,9 +395,9 @@ $A=\{ 1,2 ,3 \}$， $B=\{ a, b,c \}$とする．$f(1) = a$，$f(2) = b$，$f(3) 
     \node[maplabR] at (Bc) {$c$};
     \node[maplabR] at (Bd) {$d$};
     % 対応
-    \draw[maparrow] (A1) to[bend left=8] (Ba);
-    \draw[maparrow] (A2) to[bend left=6] (Bb);
-    \draw[maparrow] (A3) to[bend right=6] (Bc);
+    \draw[mapacc] (A1) to[bend left=8] (Ba);
+    \draw[mapacc] (A2) to[bend left=6] (Bb);
+    \draw[mapacc] (A3) to[bend right=6] (Bc);
   \end{tikzpicture}
 \end{example}
 
@@ -381,9 +422,8 @@ $A=\{ 1,2 ,3 \}$， $B=\{ a, b,c \}$とする．$f(1) = a$，$f(2) = b$，$f(3) 
 \phantomsection
 \begin{example}[
     sidebyside,
-    lefthand width=7.4cm,
-    righthand width=6.2cm,
-    sidebyside gap=4mm,
+    righthand width=\mnsc{6.2cm},
+    sidebyside gap=\mnsc{4mm},
   ]{全射の図解}{全射の図解}
   集合$A = \{1, 2, 3\}$，$B = \{a, b\}$と写像
   \[
@@ -402,7 +442,7 @@ $A=\{ 1,2 ,3 \}$， $B=\{ a, b,c \}$とする．$f(1) = a$，$f(2) = b$，$f(3) 
     \draw[mapset] ( 1.75,0) ellipse [x radius=0.95, y radius=1.25];
     \node[mapsetname] at (-1.75,1.55) {$A$};
     \node[mapsetname] at ( 1.75,1.55) {$B$};
-    \node[mapsetname] at (0,1.35) {$f$};
+    \node[mapname] at (0,1.35) {$f$};
     % 要素
     \coordinate (A1) at (-1.75, 0.75);
     \coordinate (A2) at (-1.75, 0);
@@ -416,9 +456,9 @@ $A=\{ 1,2 ,3 \}$， $B=\{ a, b,c \}$とする．$f(1) = a$，$f(2) = b$，$f(3) 
     \node[maplabR] at (Ba) {$a$};
     \node[maplabR] at (Bb) {$b$};
     % 対応
-    \draw[maparrow] (A1) to[bend left=10] (Ba);
-    \draw[maparrow] (A2) -- (Ba);
-    \draw[maparrow] (A3) to[bend right=8] (Bb);
+    \draw[mapacc] (A1) to[bend left=10] (Ba);
+    \draw[mapacc] (A2) -- (Ba);
+    \draw[mapacc] (A3) to[bend right=8] (Bb);
   \end{tikzpicture}
 \end{example}
 
@@ -426,7 +466,7 @@ $A=\{ 1,2 ,3 \}$， $B=\{ a, b,c \}$とする．$f(1) = a$，$f(2) = b$，$f(3) 
   \[
     f \colon \mathbb{R} \ni x \mapsto x^2 \in [0, \infty)
   \]
-  は全射である．実際，任意の$b \in [0, \infty)$に対して，$x = \sqrt{b}$とおけば$f(x) = b$である．
+  は全射である．実際，$b \in [0, \infty)$を任意にとるとき，$x = \sqrt{b}$とおけば$f(x) = b$となる．
   一方，$f(-1) = f(1) = 1$であるから，$f$は単射でない．
 
   なお，\exref{写像の例と写像でない例}の$x \mapsto x^2$とは式が同じで終域だけが異なるが，終域を$\mathbb{R}$とすると全射でなくなる．写像の性質は，式だけでなく定義域・終域を込めて定まるのである．
@@ -448,9 +488,8 @@ $A=\{ 1,2 ,3 \}$， $B=\{ a, b,c \}$とする．$f(1) = a$，$f(2) = b$，$f(3) 
 \phantomsection
 \begin{example}[
     sidebyside,
-    lefthand width=7.4cm,
-    righthand width=6.2cm,
-    sidebyside gap=4mm,
+    righthand width=\mnsc{6.2cm},
+    sidebyside gap=\mnsc{4mm},
   ]{全単射の図解}{全単射の図解}
   集合$A = \{1, 2, 3\}$，$B = \{a, b, c\}$と写像
   \[
@@ -469,7 +508,7 @@ $A=\{ 1,2 ,3 \}$， $B=\{ a, b,c \}$とする．$f(1) = a$，$f(2) = b$，$f(3) 
     \draw[mapset] ( 1.75,0) ellipse [x radius=0.95, y radius=1.25];
     \node[mapsetname] at (-1.75,1.55) {$A$};
     \node[mapsetname] at ( 1.75,1.55) {$B$};
-    \node[mapsetname] at (0,1.35) {$f$};
+    \node[mapname] at (0,1.35) {$f$};
     % 要素
     \coordinate (A1) at (-1.75, 0.75);
     \coordinate (A2) at (-1.75, 0);
@@ -485,9 +524,9 @@ $A=\{ 1,2 ,3 \}$， $B=\{ a, b,c \}$とする．$f(1) = a$，$f(2) = b$，$f(3) 
     \node[maplabR] at (Bb) {$b$};
     \node[maplabR] at (Bc) {$c$};
     % 対応（1→c, 2→b, 3→a）
-    \draw[maparrow] (A1) -- (Bc);
-    \draw[maparrow] (A2) -- (Bb);
-    \draw[maparrow] (A3) -- (Ba);
+    \draw[mapacc] (A1) -- (Bc);
+    \draw[mapacc] (A2) -- (Bb);
+    \draw[mapacc] (A3) -- (Ba);
   \end{tikzpicture}
 \end{example}
 
@@ -516,9 +555,13 @@ $A=\{ 1,2 ,3 \}$， $B=\{ a, b,c \}$とする．$f(1) = a$，$f(2) = b$，$f(3) 
           \[
             h'  \colon [-\pi/2 , \pi/2 ]  \ni x \mapsto  2 \sin  x  \in [-2,2]
           \]
-          は全単射である．
+          は全単射である．$h'$は，$h$を$[-\pi/2, \pi/2]$に制限し，さらに終域を$[-2, 2]$に取り替えたものである．
   \end{enumerate}
-  \end{example}
+\end{example}
+
+\phantomsection
+\section{像・逆像と集合演算}
+
 \phantomsection
 \subsection{像・逆像の基本公式}
 
@@ -576,7 +619,7 @@ $A=\{ 1,2 ,3 \}$， $B=\{ a, b,c \}$とする．$f(1) = a$，$f(2) = b$，$f(3) 
   \end{proof}
 \end{tleftbar}
 
-なぜ等号が崩れるのかというと，この$f$が異なる元$1$と$-1$を\textbf{同じ元}$1$にうつしてしまうからである．実際，$f$が単射であれば，この現象は起こらない．
+なぜ等号が崩れるのかというと，この$f$が異なる元$1$と$-1$を同じ元$1$にうつしてしまうからである．実際，$f$が単射であれば，この現象は起こらない．
 
 \phantomsection
 \begin{prop}{単射と像の共通部分}{単射と像の共通部分}
@@ -593,24 +636,100 @@ $A=\{ 1,2 ,3 \}$， $B=\{ a, b,c \}$とする．$f(1) = a$，$f(2) = b$，$f(3) 
     \[
       b = f(a_1) = f(a_2)
     \]
-    である．$f$は単射なので，$f(a_1) = f(a_2)$から$a_1 = a_2$が従う．よって$a_1 \in A_1 \cap A_2$であり，$b = f(a_1) \in f(A_1 \cap A_2)$である．これが証明すべきことであった．
+    である．ここで$f$は単射であるから，この等式から$a_1 = a_2$が従う．よって$a_1$は$A_1$と$A_2$の両方に属し，$a_1 \in A_1 \cap A_2$である．したがって$b = f(a_1)$は$f(A_1 \cap A_2)$に属する．これが証明すべきことであった．
   \end{proof}
 \end{tleftbar}
 
 この命題は，単射という性質がなぜ重要なのかを示すひとつの例である．逆像がつねに集合演算と相性がよいのに対して，像のふるまいは写像の性質（単射かどうか）に応じて変わるのである．
 
 \phantomsection
-\subsection{写像の合成とwell-defined}
-\label{subsec:写像の合成とwell-defined}
+\subsection{像と逆像の往復}
 
-\partref{用語の定義}では，「対象の表し方によらず値が定まること」をwell-definedとよんだ．写像の言葉が使えるようになったいま，この概念をもう少し正確に述べ直しておこう．準備として，写像の合成を定義する．
+部分集合$A' \subset A$の像をとってから逆像をとると，$A'$に戻るのだろうか．また，$B' \subset B$の逆像をとってから像をとるとどうなるだろうか．
 
 \phantomsection
-\begin{definition}{合成写像}{合成写像}
+\begin{prop}{像と逆像の往復}{像と逆像の往復}
+  写像$f \colon A \to B$と$A' \subset A$，$B' \subset B$に対して，次が成り立つ：
+  \begin{enumerate}[label=(\roman*),leftmargin=3.2em]
+    \item $A' \subset f^{-1}(f(A'))$であり，$f$が単射ならば等号が成り立つ．
+    \item $f(f^{-1}(B')) \subset B'$であり，$f$が全射ならば等号が成り立つ．
+  \end{enumerate}
+\end{prop}
+
+\begin{tleftbar}
+  \begin{proof}
+    (i)について，$a \in A'$とすると$f(a) \in f(A')$であるから，逆像の定義より$a \in f^{-1}(f(A'))$である．よって$A' \subset f^{-1}(f(A'))$である．
+    次に$f$が単射であるとし，$a \in f^{-1}(f(A'))$とする．$f(a) \in f(A')$より，ある$a' \in A'$が存在して$f(a) = f(a')$である．$f$は単射であるから$a = a'$であり，$a \in A'$である．よって等号が成り立つ．
+
+    (ii)について，$b \in f(f^{-1}(B'))$とすると，ある$a \in f^{-1}(B')$が存在して$b = f(a)$である．$a \in f^{-1}(B')$より$f(a) \in B'$であるから，$b \in B'$である．よって$f(f^{-1}(B')) \subset B'$である．
+    次に$f$が全射であるとし，$b \in B'$とする．$f$は全射であるから，ある$a \in A$が存在して$f(a) = b$である．$f(a) = b \in B'$より$a \in f^{-1}(B')$であるから，$b = f(a) \in f(f^{-1}(B'))$である．よって等号が成り立つ．これが証明すべきことであった．
+  \end{proof}
+\end{tleftbar}
+
+\phantomsection
+\begin{example}{像と逆像の往復で等号が成り立たない例}{像と逆像の往復で等号が成り立たない例}
+  $f \colon \mathbb{R} \ni x \mapsto x^2 \in \mathbb{R}$とする．この$f$は単射でも全射でもない．
+  \begin{enumerate}[(A)]
+    \item $A' = [0, 1]$とすると，$f(A') = [0, 1]$であり，$f^{-1}(f(A')) = [-1, 1] \supsetneq A'$である．
+    \item $B' = [-1, 1]$とすると，$f^{-1}(B') = [-1, 1]$であり，$f(f^{-1}(B')) = [0, 1] \subsetneq B'$である．
+  \end{enumerate}
+\end{example}
+
+\begin{remark}[逆像は像の「逆」ではない]
+  \exref{像と逆像の往復で等号が成り立たない例}からわかるように，像をとる操作と逆像をとる操作は，一般には互いに打ち消しあわない．(A)で$A'$が大きくなったのは，$f$が単射でないために，$A'$の外の元$-1$なども同じ像にうつるからである．(B)で$B'$が小さくなったのは，$f$が全射でないために，負の数が$f$の像に現れないからである．
+  記号$f^{-1}$は「逆」を連想させるが，逆像$f^{-1}(B')$は，$f$でうつして$B'$に入る元を集めた集合にすぎないことに注意しよう．
+\end{remark}
+
+\phantomsection
+\section{写像の合成}
+
+\phantomsection
+\subsection{合成写像}
+
+写像を$2$つ続けて施すと，新しい写像が得られる．
+
+\phantomsection
+\begin{definition}[
+    sidebyside,
+    righthand width=\mnsc{6.2cm},
+    sidebyside gap=\mnsc{4mm},
+  ]{合成写像}{合成写像}
   写像$h \colon X \to Y$と$g \colon Y \to Z$に対して，各$x \in X$に$g(h(x)) \in Z$を対応させる写像を$h$と$g$の\emph{合成写像}\index{ごうせいしゃぞう@合成写像}といい，$g \circ h \colon X \to Z$とかく：
   \[
     (g \circ h)(x) \coloneqq g(h(x)) \qquad (x \in X)
   \]
+
+  \tcblower
+
+  \centering
+  \begin{tikzpicture}[mapfig]
+    % 集合
+    \foreach \c/\n in {-2.05/X, 0/Y, 2.05/Z} {
+      \draw[mapset] (\c,0) ellipse [x radius=0.62, y radius=1.05];
+      \node[mapsetname] at (\c,-1.35) {$\n$};
+    }
+    % 元
+    \coordinate (x1) at (-2.05, 0.45);
+    \coordinate (x2) at (-2.05,-0.45);
+    \coordinate (y1) at ( 0, 0.6);
+    \coordinate (y2) at ( 0, 0);
+    \coordinate (y3) at ( 0,-0.6);
+    \coordinate (z1) at ( 2.05, 0.4);
+    \coordinate (z2) at ( 2.05,-0.4);
+    \foreach \p in {x1,x2,y1,y3,z1,z2} \node[mapelem] at (\p) {};
+    \node[mapelemfree] at (y2) {};
+    % h と g（灰）
+    \draw[maparrow] (x1) -- (y1);
+    \draw[maparrow] (x2) -- (y3);
+    \draw[maparrow] (y1) -- (z1);
+    \draw[maparrow] (y2) -- (z1);
+    \draw[maparrow] (y3) -- (z2);
+    \node[mapsetname] at (-1.02,0.98) {$h$};
+    \node[mapsetname] at ( 1.02,0.98) {$g$};
+    % 合成 g∘h（マゼンタ）：X から Z へ直接
+    \draw[mapacc] (-2.05,1.12) to[bend left=28]
+      node[midway, above, mapname] {$g \circ h$} (2.05,1.12);
+  \end{tikzpicture}
 \end{definition}
 
 「先に$h$，次に$g$」を施す写像が$g \circ h$であり，記号の順序が施す順序と逆になることに注意しよう．
@@ -656,18 +775,228 @@ $A=\{ 1,2 ,3 \}$， $B=\{ a, b,c \}$とする．$f(1) = a$，$f(2) = b$，$f(3) 
     (g \circ f)(x) = (\sin x)^2 = \sin^2 x, \qquad
     (f \circ g)(x) = \sin(x^2)
   \]
-  である．これらは異なる関数であり（たとえば$x = \sqrt{\pi}$で値が異なる），$g \circ f \ne f \circ g$である．
+  である．たとえば$x = \sqrt{\pi}$とすると，$(f \circ g)(x) = \sin \pi = 0$であるのに対し，$(g \circ f)(x) = \sin^2 \sqrt{\pi}$は$0$でない．よってこれらは異なる関数であり，$g \circ f \ne f \circ g$である．
   \exref{加法の合成}とは対照的に，合成の順序を入れ替えると一般には別の写像になる．
 \end{example}
 
-さて，次のような状況を考える．写像$f \colon X \to Z$と全射$h \colon X \to Y$が与えられていて，$Y$の元$y$に対して「$h(x) = y$を満たす$x$をひとつ選び，その$f(x)$を$y$の行き先とする」という規則で，写像$g \colon Y \to Z$をつくりたい．$h$は全射だから，どの$y \in Y$に対しても$h(x) = y$を満たす$x \in X$は少なくともひとつ存在する．しかし，そのような$x$は一般にはひとつとは限らない．$h(x_1) = h(x_2) = y$を満たす$x_1 \ne x_2$があったとき，$f(x_1) \ne f(x_2)$であれば，$g(y)$の値は「どちらの$x$を選んだか」によって変わってしまい，$g$は写像の定義（\deref{写像}）の「ただひとつ対応させる」という条件を満たさない．この状況を整理したものが，次の定義である．
+このように合成の交換法則は一般には成り立たないが，結合律は成り立つ．
+
+\phantomsection
+\begin{prop}{合成の結合律と恒等写像}{合成の結合律と恒等写像}
+  写像$f \colon A \to B$，$g \colon B \to C$，$h \colon C \to D$に対して，次が成り立つ：
+  \begin{enumerate}[label=(\roman*),leftmargin=3.2em]
+    \item $(h \circ g) \circ f = h \circ (g \circ f)$である．
+    \item $f \circ \mathrm{id}_A = f$かつ$\mathrm{id}_B \circ f = f$である．
+  \end{enumerate}
+\end{prop}
+
+\begin{tleftbar}
+  \begin{proof}
+    (i)について，両辺はともに$A$から$D$への写像であり，任意の$a \in A$に対して，
+    \[
+      \bigl( (h \circ g) \circ f \bigr)(a) = (h \circ g)(f(a)) = h(g(f(a))),
+      \qquad
+      \bigl( h \circ (g \circ f) \bigr)(a) = h((g \circ f)(a)) = h(g(f(a)))
+    \]
+    であるから，両者は等しい．
+
+    (ii)について，任意の$a \in A$に対して$(f \circ \mathrm{id}_A)(a) = f(a)$，$(\mathrm{id}_B \circ f)(a) = f(a)$である．これが証明すべきことであった．
+  \end{proof}
+\end{tleftbar}
+
+結合律が成り立つので，$3$つ以上の写像の合成は，括弧を省略して$h \circ g \circ f$とかいてよい．
+
+単射・全射という性質は，合成とどのように関わるだろうか．
+
+\phantomsection
+\begin{prop}{単射・全射と合成}{単射・全射と合成}
+  写像$f \colon A \to B$，$g \colon B \to C$に対して，次が成り立つ：
+  \begin{enumerate}[label=(\roman*),leftmargin=3.2em]
+    \item $f$と$g$がともに単射ならば，$g \circ f$は単射である．
+    \item $f$と$g$がともに全射ならば，$g \circ f$は全射である．
+    \item $g \circ f$が単射ならば，$f$は単射である．
+    \item $g \circ f$が全射ならば，$g$は全射である．
+  \end{enumerate}
+\end{prop}
+
+\begin{tleftbar}
+  \begin{proof}
+    (i)について，$a_1, a_2 \in A$が$g(f(a_1)) = g(f(a_2))$を満たすとする．$g$は単射であるから$f(a_1) = f(a_2)$であり，$f$は単射であるから$a_1 = a_2$である．
+
+    (ii)について，$c \in C$を任意にとる．$g$は全射であるから，ある$b \in B$が存在して$g(b) = c$である．さらに$f$は全射であるから，ある$a \in A$が存在して$f(a) = b$である．このとき$(g \circ f)(a) = c$である．
+
+    (iii)について，$a_1, a_2 \in A$が$f(a_1) = f(a_2)$を満たすとする．両辺を$g$でうつせば$(g \circ f)(a_1) = (g \circ f)(a_2)$であり，$g \circ f$は単射であるから$a_1 = a_2$である．
+
+    (iv)について，$c \in C$を任意にとる．$g \circ f$は全射であるから，ある$a \in A$が存在して$g(f(a)) = c$である．$b \coloneqq f(a) \in B$とおけば$g(b) = c$である．これが証明すべきことであった．
+  \end{proof}
+\end{tleftbar}
+
+\begin{remark}[(iii)，(iv)で結論されるのはどちらか]
+  \prref{単射・全射と合成}の(iii)で単射と結論されるのは先に施す$f$であり，(iv)で全射と結論されるのは後に施す$g$である．逆の組合せは一般には成り立たない．
+  たとえば，$A = \{1\}$，$B = \{1, 2\}$，$C = \{1\}$とし，$f(1) = 1$，$g(1) = g(2) = 1$とすると，$g \circ f = \mathrm{id}_{\{1\}}$は単射かつ全射であるが，$g$は単射でなく，$f$は全射でない．
+  「$g \circ f$が単射ならば，$A$の異なる元は最後まで区別されるのだから，最初の$f$の段階で区別されていなければならない」「$g \circ f$が全射ならば，$C$のどの元にも届くのだから，最後の$g$の段階で届いていなければならない」と考えると覚えやすい．
+\end{remark}
+
+\phantomsection
+\subsection{逆写像\index{ぎゃくしゃぞう@逆写像}}
+
+写像$f \colon A \to B$が全単射であるとき，どの$b \in B$に対しても，$f(a) = b$を満たす$a \in A$は，全射性より存在し，単射性よりただひとつである．このことを命題の形で述べておこう．
+
+\phantomsection
+\begin{prop}{全単射の言い換え}{全単射の言い換え}
+  写像$f \colon A \to B$について，$f$が全単射であることと，
+  \[
+    \lall{b \in B} \lsep \lexu{a \in A} \lst f(a) = b
+  \]
+  が成り立つことは同値である．
+\end{prop}
+
+\begin{tleftbar}
+  \begin{proof}
+    \deref{一意存在の記号}より，上の論理式は，任意の$b \in B$について次の$2$つが成り立つことを意味する：
+    \begin{itemize}
+      \item 存在：$f(a) = b$を満たす$a \in A$が存在する．
+      \item 一意性：$f(a) = b$かつ$f(a') = b$ならば$a = a'$である．
+    \end{itemize}
+    前者がすべての$b \in B$について成り立つことは，$f$が全射であることにほかならない．後者がすべての$b \in B$について成り立つことは，「$f(a) = f(a')$ならば$a = a'$」，すなわち$f$が単射であることにほかならない．これが証明すべきことであった．
+  \end{proof}
+\end{tleftbar}
+
+\prref{全単射の言い換え}の論理式は，写像の厳密な定義（\deref{写像の厳密な定義}）の条件で$A$と$B$の役割を入れ替えた形をしている．したがって，全単射$f$に対しては，「逆向きの対応」がふたたび写像を定める．
 
 \phantomsection
 \begin{definition}[
     sidebyside,
-    lefthand width=8.6cm,
-    righthand width=4.6cm,
-    sidebyside gap=4mm,
+    righthand width=\mnsc{6.2cm},
+    sidebyside gap=\mnsc{4mm},
+  ]{逆写像}{逆写像}
+  写像$f \colon A \to B$が全単射であるとき，各$b \in B$に対して，$f(a) = b$を満たすただひとつの$a \in A$を対応させる写像を，$f$の\emph{逆写像}といい，$f^{-1} \colon B \to A$とかく．すなわち，$a \in A$，$b \in B$に対して
+  \[
+    f^{-1}(b) = a \lequiv f(a) = b
+  \]
+  である．
+
+  \tcblower
+
+  \centering
+  \begin{tikzpicture}[mapfig]
+    % 集合
+    \draw[mapset] (-1.75,0) ellipse [x radius=0.75, y radius=1.3];
+    \draw[mapset] ( 1.75,0) ellipse [x radius=0.75, y radius=1.3];
+    \node[mapsetname] at (-1.75,-1.6) {$A$};
+    \node[mapsetname] at ( 1.75,-1.6) {$B$};
+    % 元
+    \coordinate (A1) at (-1.75, 0.8);
+    \coordinate (A2) at (-1.75, 0);
+    \coordinate (A3) at (-1.75,-0.8);
+    \coordinate (Ba) at ( 1.75, 0.8);
+    \coordinate (Bb) at ( 1.75, 0);
+    \coordinate (Bc) at ( 1.75,-0.8);
+    \foreach \p in {A1,A2,A3,Ba,Bb,Bc} \node[mapelem] at (\p) {};
+    \node[maplabL] at (A1) {$1$};
+    \node[maplabL] at (A2) {$2$};
+    \node[maplabL] at (A3) {$3$};
+    \node[maplabR] at (Ba) {$a$};
+    \node[maplabR] at (Bb) {$b$};
+    \node[maplabR] at (Bc) {$c$};
+    % f（灰）と f^{-1}（マゼンタ）：同じ対応を逆向きにたどる
+    \foreach \a/\b in {A1/Ba, A2/Bb, A3/Bc} {
+      \draw[maparrow] (\a) to[bend left=10] (\b);
+      \draw[mapacc]   (\b) to[bend left=10] (\a);
+    }
+    \node[mapsetname] at (0,1.3) {$f$};
+    \node[mapname]    at (0,-1.3) {$f^{-1}$};
+  \end{tikzpicture}
+\end{definition}
+
+\phantomsection
+\begin{example}{逆写像の例}{逆写像の例}
+  \begin{enumerate}[(A)]
+    \item $f \colon \mathbb{R} \ni x \mapsto 2x + 1 \in \mathbb{R}$は全単射であり，$y = 2x + 1$を$x$について解くと$x = (y - 1)/2$であるから，
+          \[
+            f^{-1} \colon \mathbb{R} \ni y \mapsto \frac{y - 1}{2} \in \mathbb{R}
+          \]
+          である．
+    \item \exref{単射・全射・全単射}の全単射$h' \colon [-\pi/2, \pi/2] \ni x \mapsto 2 \sin x \in [-2, 2]$の逆写像は，逆正弦関数$\arcsin$を用いて$[-2, 2] \ni y \mapsto \arcsin (y/2) \in [-\pi/2, \pi/2]$と表される．
+          $h \colon \mathbb{R} \to \mathbb{R}$のままでは全単射でないので逆写像は存在しないが，定義域を制限し終域を取り替えることで，逆写像を考えられるようになるのである．
+  \end{enumerate}
+\end{example}
+
+逆写像は，合成と恒等写像を用いて特徴づけることができる．
+
+\phantomsection
+\begin{theorem}{全単射と逆写像}{全単射と逆写像}
+  写像$f \colon A \to B$について，次の$2$つは同値である：
+  \begin{enumerate}[label=(\roman*),leftmargin=3.2em]
+    \item $f$は全単射である．
+    \item ある写像$g \colon B \to A$が存在して，$g \circ f = \mathrm{id}_A$かつ$f \circ g = \mathrm{id}_B$が成り立つ．
+  \end{enumerate}
+  さらに，このとき(ii)の$g$はただひとつであり，$g = f^{-1}$である．
+\end{theorem}
+
+\begin{tleftbar}
+  \begin{proof}
+    (i)$\limp$(ii)：$g = f^{-1}$とすればよい．実際，$a \in A$に対して$b = f(a)$とおくと，\deref{逆写像}より$f^{-1}(b) = a$であるから$(f^{-1} \circ f)(a) = a$である．また，$b \in B$に対して$a = f^{-1}(b)$とおくと，$f(a) = b$であるから$(f \circ f^{-1})(b) = b$である．
+
+    (ii)$\limp$(i)：$\mathrm{id}_A$は単射であるから，$g \circ f = \mathrm{id}_A$と\prref{単射・全射と合成}(iii)より$f$は単射である．また，$\mathrm{id}_B$は全射であるから，$f \circ g = \mathrm{id}_B$と\prref{単射・全射と合成}(iv)より$f$は全射である．
+
+    最後に一意性を示す．$g, g' \colon B \to A$がともに(ii)を満たすとすると，\prref{合成の結合律と恒等写像}より
+    \[
+      g = g \circ \mathrm{id}_B = g \circ (f \circ g') = (g \circ f) \circ g' = \mathrm{id}_A \circ g' = g'
+    \]
+    である．(i)$\limp$(ii)の証明より$f^{-1}$は(ii)を満たすから，$g = f^{-1}$である．これが証明すべきことであった．
+  \end{proof}
+\end{tleftbar}
+
+一意性の証明は，\prref{逆行列の一意性}の証明$B = BE = B(AC) = (BA)C = EC = C$とまったく同じ形をしていることに注意しよう．\thref{全単射と逆写像}より，$f$が全単射ならば$f^{-1}$も全単射であり，$(f^{-1})^{-1} = f$である．
+
+\phantomsection
+\begin{cor}{合成写像の逆写像}{合成写像の逆写像}
+  写像$f \colon A \to B$，$g \colon B \to C$がともに全単射ならば，$g \circ f$も全単射であり，
+  \[
+    (g \circ f)^{-1} = f^{-1} \circ g^{-1}
+  \]
+  が成り立つ．
+\end{cor}
+
+\begin{tleftbar}
+  \begin{proof}
+    \prref{合成の結合律と恒等写像}を用いると，
+    \[
+      (f^{-1} \circ g^{-1}) \circ (g \circ f)
+      = f^{-1} \circ (g^{-1} \circ g) \circ f
+      = f^{-1} \circ \mathrm{id}_B \circ f
+      = f^{-1} \circ f
+      = \mathrm{id}_A
+    \]
+    であり，同様に$(g \circ f) \circ (f^{-1} \circ g^{-1}) = \mathrm{id}_C$である．よって\thref{全単射と逆写像}より，$g \circ f$は全単射であり，その逆写像は$f^{-1} \circ g^{-1}$である．これが証明すべきことであった．
+  \end{proof}
+\end{tleftbar}
+
+逆写像をとると合成の順序が入れ替わることに注意しよう．「先に$f$，次に$g$」を施したものを元に戻すには，「先に$g$を戻し，次に$f$を戻す」必要があるからである．線型代数学で学ぶ行列の積の逆行列の公式$(AB)^{-1} = B^{-1} A^{-1}$も，同じ構造をもっている．
+
+\begin{remark}[記号$f^{-1}$のふたつの意味]
+  記号$f^{-1}$は，逆像$f^{-1}(B')$（\deref{逆像}）と逆写像$f^{-1}(b)$（\deref{逆写像}）の両方に用いられる．逆像は任意の写像に対して定義される「$B$の部分集合から$A$の部分集合を作る操作」であり，逆写像は全単射に対してのみ定義される「$B$の元を$A$の元にうつす写像」である．
+  $f$が全単射のときには，$B' \subset B$の$f$による逆像と$f^{-1}$による像は一致する：
+  \[
+    \{ a \in A \mid f(a) \in B' \} = \{ f^{-1}(b) \mid b \in B' \}
+  \]
+  よって，この場合にはどちらの意味に読んでも$f^{-1}(B')$は同じ集合を表し，記号の衝突は起こらない．
+\end{remark}
+
+\phantomsection
+\subsection{well-defined}
+\label{subsec:well-defined}
+
+\partref{用語の定義}では，「対象の表し方によらず値が定まること」をwell-definedとよんだ．写像の合成が使えるようになったいま，この概念をもう少し正確に述べ直しておこう．
+
+次のような状況を考える．写像$f \colon X \to Z$と全射$h \colon X \to Y$が与えられていて，$Y$の元$y$に対して「$h(x) = y$を満たす$x$をひとつ選び，その$f(x)$を$y$の行き先とする」という規則で，写像$g \colon Y \to Z$をつくりたい．$h$は全射だから，どの$y \in Y$に対しても$h(x) = y$を満たす$x \in X$は少なくともひとつ存在する．しかし，そのような$x$は一般にはひとつとは限らない．$h(x_1) = h(x_2) = y$を満たす$x_1 \ne x_2$があったとき，$f(x_1) \ne f(x_2)$であれば，$g(y)$の値は「どちらの$x$を選んだか」によって変わってしまい，$g$は写像の定義（\deref{写像}）の「ただひとつ対応させる」という条件を満たさない．この状況を整理したものが，次の定義である．
+
+\phantomsection
+\begin{definition}[
+    sidebyside,
+    righthand width=\mnsc{4.6cm},
+    sidebyside gap=\mnsc{4mm},
   ]{well-defined}{well-defined}
   写像$f \colon X \to Z$と全射$h \colon X \to Y$を考える．任意の$x_1, x_2 \in X$に対して，
   \[
@@ -692,8 +1021,8 @@ $A=\{ 1,2 ,3 \}$， $B=\{ a, b,c \}$とする．$f(1) = a$，$f(2) = b$，$f(3) 
       (X) -- (Y) node[midway, left=1pt] {$h$};
     \draw[->, draw=black!70, line width=0.55pt, shorten <=3pt, shorten >=3pt]
       (X) -- (Z) node[midway, above right=-1pt] {$f$};
-    \draw[->, dashed, draw=black!70, line width=0.55pt, shorten <=3pt, shorten >=3pt]
-      (Y) -- (Z) node[midway, below right=-1pt] {$g$};
+    \draw[->, dashed, draw=figaccent, line width=0.7pt, shorten <=3pt, shorten >=3pt]
+      (Y) -- (Z) node[midway, below right=-1pt, text=figaccent] {$g$};
   \end{tikzpicture}
   \par\smallskip
   {\small $f = g \circ h$}
@@ -721,7 +1050,5 @@ $A=\{ 1,2 ,3 \}$， $B=\{ a, b,c \}$とする．$f(1) = a$，$f(2) = b$，$f(3) 
 \end{example}
 
 \begin{remark}[「細かい」という言い回し]
-  \deref{well-defined}の条件「$h(x_1) = h(x_2)$ならば$f(x_1) = f(x_2)$」は，$X$を「$h$の値が等しい元どうし」で分類したとき，その分類が「$f$の値が等しい元どうし」の分類より\emph{細かい}，と言い表されることがある．同じ$h$の値をもつ元たちは，かならず同じ$f$の値をもつ（が，逆は要求しない）からである．同値関係や商集合の言葉を学ぶと，この定義はさらに簡潔に述べ直すことができる．
+  \deref{well-defined}の条件「$h(x_1) = h(x_2)$ならば$f(x_1) = f(x_2)$」は，$X$を「$h$の値が等しい元どうし」で分類したとき，その分類が「$f$の値が等しい元どうし」の分類より細かい，と言い表されることがある．同じ$h$の値をもつ元たちは，かならず同じ$f$の値をもつ（が，逆は要求しない）からである．同値関係や商集合の言葉を学ぶと，この定義はさらに簡潔に述べ直すことができる（\partref{関係}）．
 \end{remark}
-
-% NOTE: この部は執筆中（今後，節を追記する可能性あり）
