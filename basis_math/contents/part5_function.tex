@@ -181,7 +181,7 @@ $A=\{ 1,2 ,3 \}$， $B=\{ a, b,c \}$とする．$f(1) = a$，$f(2) = b$，$f(3) 
 
 \phantomsection
 \begin{definition}{写像（厳密な定義）}{写像の厳密な定義}
-  $A$，$B$を集合とする．$A$から$B$への\emph{写像}$f$とは，直積$A \times B$の部分集合$G \subset A \times B$であって，
+  $A,B$を集合とする．$A$から$B$への\emph{写像}$f$とは，直積$A \times B$の部分集合$G \subset A \times B$であって，
   \[
     \lall{a \in A} \lsep \lexu{b \in B} \lst (a, b) \in G
   \]
@@ -213,7 +213,7 @@ $A=\{ 1,2 ,3 \}$， $B=\{ a, b,c \}$とする．$f(1) = a$，$f(2) = b$，$f(3) 
     \item[恒等写像\index{こうとうしゃぞう@恒等写像}]\mbox{}\\
           集合$A$に対して，各$a \in A$に$a$自身を対応させる写像$A \ni a \mapsto a \in A$を，$A$上の恒等写像といい，$\mathrm{id}_A$とかく．
     \item[包含写像\index{ほうがんしゃぞう@包含写像}]\mbox{}\\
-          集合$A$，$B$が$A \subset B$を満たすとき，写像$A \ni a \mapsto a \in B$を包含写像という．
+          集合$A,B$が$A \subset B$を満たすとき，写像$A \ni a \mapsto a \in B$を包含写像という．
     \item[制限\index{せいげん@制限}]\mbox{}\\
           写像$f \colon A \to B$と$A' \subset A$に対して，写像$A' \ni a \mapsto f(a) \in B$を$f$の$A'$への制限といい，$f|_{A'}$とかく．
   \end{description}
@@ -340,6 +340,41 @@ $A=\{ 1,2 ,3 \}$， $B=\{ a, b,c \}$とする．$f(1) = a$，$f(2) = b$，$f(3) 
     \caption{$B' = \{a\}$ の逆像 $f^{-1}(B') = \{1, 2, 3\}$}
   \end{minipage}
 \end{figure}
+
+「$\theta$が$0 \leqq \theta < 2\pi$の範囲を動くときの$\sin \theta + \cos \theta$の動く範囲を求めよ」のような問題は，像の言葉でいえば，集合の等式$f(A') = I$を満たす集合$I$を求めることにほかならない．\prref{相等と相互包含}より，これは
+\begin{enumerate}[label=(\roman*),leftmargin=3.2em]
+  \item $f(A') \subset I$，すなわち任意の$a \in A'$に対して$f(a) \in I$であること，
+  \item $I \subset f(A')$，すなわち任意の$y \in I$に対して$f(a) = y$となる$a \in A'$が存在すること
+\end{enumerate}
+の両方を示すことを意味する．(i)は「不等式がつねに成り立つ」という全称の主張であり，(ii)は「その値を実際にとる」という存在の主張である．
+
+\phantomsection
+\begin{example}{値域を求める}{値域を求める}
+  写像
+  \[
+    f \colon [0, 2\pi) \ni \theta \mapsto \sin \theta + \cos \theta \in \mathbb{R}
+  \]
+  の値域が$f([0, 2\pi)) = [-\sqrt{2}, \sqrt{2}]$であることを示そう．加法定理より，任意の$\theta$に対して
+  \[
+    f(\theta) = \sqrt{2} \left( \sin \theta \cos \frac{\pi}{4} + \cos \theta \sin \frac{\pi}{4} \right) = \sqrt{2} \sin \left( \theta + \frac{\pi}{4} \right)
+  \]
+  である．
+  \begin{enumerate}[label=(\roman*),leftmargin=3.2em]
+    \item 任意の$\theta \in [0, 2\pi)$に対して$-1 \leqq \sin(\theta + \pi/4) \leqq 1$であるから，$f(\theta) \in [-\sqrt{2}, \sqrt{2}]$である．
+    \item $t \in [-\sqrt{2}, \sqrt{2}]$を任意にとる．$t / \sqrt{2} \in [-1, 1]$であり，$\sin$は長さ$2\pi$の区間$[\pi/4, 9\pi/4)$上で$[-1, 1]$のすべての値をとるから，$\sin \varphi = t / \sqrt{2}$を満たす$\varphi \in [\pi/4, 9\pi/4)$が存在する．$\theta = \varphi - \pi/4$とおけば，$\theta \in [0, 2\pi)$かつ$f(\theta) = \sqrt{2} \sin \varphi = t$である．
+  \end{enumerate}
+  (i)，(ii)と\prref{相等と相互包含}より，$f([0, 2\pi)) = [-\sqrt{2}, \sqrt{2}]$である．
+\end{example}
+
+\begin{remark}[「範囲」を述べるときの注意]
+  \exref{値域を求める}は，「$0 \leqq \theta < 2\pi$より$-1 \leqq \sin(\theta + \pi/4) \leqq 1$．よって$-\sqrt{2} \leqq t \leqq \sqrt{2}$」とだけ書かれることが多い．しかし，この文が文字どおりに述べているのは(i)，すなわち$f([0, 2\pi)) \subset [-\sqrt{2}, \sqrt{2}]$だけであり，$t$が$[-\sqrt{2}, \sqrt{2}]$のすべての値をとりうること(ii)は述べられていない．値域を主張したいのであれば，「$\theta$が$[0, 2\pi)$を動くとき，$\theta + \pi/4$の動く範囲は$[\pi/4, 9\pi/4)$であるから，$\sin(\theta + \pi/4)$の動く範囲は$[-1, 1]$」のように，「動く範囲」を主語にして述べよう．
+
+  また，同じ部分を「$0 \leqq \theta < 2\pi \lequiv \pi/4 \leqq \theta + \pi/4 < 9\pi/4$なので」と同値記号で書いても，値域を述べたことにはならない．条件の同値と値域とは別のものだからである．たとえば，$0$でない実数$x$に対しては
+  \[
+    x \geqq 1 \quad \lequiv \quad 0 \leqq \frac{1}{x} \leqq 1
+  \]
+  が成り立つが，$x$が$[1, \infty)$を動くときの$1/x$の動く範囲は$(0, 1]$であって，$[0, 1]$ではない．写像$h \colon \mathbb{R} \setminus \{0\} \ni x \mapsto 1/x \in \mathbb{R}$を用いれば，上の同値が述べているのは逆像についての等式$h^{-1}([0, 1]) = [1, \infty)$であり，像$h([1, \infty)) = (0, 1]$とは別の主張である．像と逆像の関係については，のちに\prref{像と逆像の往復}で整理する．
+\end{remark}
 
 
 
@@ -748,7 +783,7 @@ $A=\{ 1,2 ,3 \}$， $B=\{ a, b,c \}$とする．$f(1) = a$，$f(2) = b$，$f(3) 
     (g \circ h)(x) = g(h(x)) = g(x + 2) = (x + 2) + 5 = x + 7
   \]
   であり，たとえば$(g \circ h)(3) = (3 + 2) + 5 = 10$である．
-  すなわち，$3 + 2 + 5$という計算は，$3$に写像$h$，$g$を順に施したものと見ることができる．
+  すなわち，$3 + 2 + 5$という計算は，$3$に写像$h,g$を順に施したものと見ることができる．
   この例では$(h \circ g)(x) = (x + 5) + 2 = x + 7$でもあり，$g \circ h = h \circ g$が成り立つ．
 \end{example}
  
