@@ -3,19 +3,6 @@
 
 \begin{abstract}
 この章では，解析学の議論の土台となる「数」に関する用語や概念を整理する．まず高校までに学んだ数の体系を振り返り，自然数から複素数へと数を拡張してきた動機を確認する．次に，実数の順序構造に注目し，最大元・最小元，上界・下界といった概念を定義する．そのうえで，最大元・最小元の一般化として上限・下限を導入し，その判定条件をいくつかの形で与える．これらの概念は，\partref{実数の連続性}で「実数の連続性」を述べるための言葉として不可欠なものである．
-
-なお，解析学を学習するにあたって，日本の大学の講義においてはまず「数列の極限」を定義し直すことから始めることが多い．大学で学ぶ「実数列の収束」の定義（\partref{極限}）は次のようなものである：
-  \begin{quotation}
-  実数列 $(a_n)_{n \in \mathbb{N}}$ が $a \in \mathbb{R}$ に収束するとは，次が成り立つことである：
-
-  任意の $\varepsilon > 0$ に対して，ある $n_0 \in \mathbb{N}$ が存在し，すべての $n \in \mathbb{N}$ に対して $n \geqq n_0$ ならば
-  \[
-    \abs{a_n - a} < \varepsilon
-  \]
-  が成立する．
-  \end{quotation}
-この定義は，いわゆる$\varepsilon$--$N$論法とよばれるものであり，高校で学んだ「数列がある値に限りなく近づく」という直感的な説明を厳密に表現したものである．
-この定義を正確に理解するためにも，まずは「数」についていくつかの用語を定義することからはじめよう．
 \end{abstract}
 
 \phantomsection
@@ -24,13 +11,27 @@
 \phantomsection
 \subsection{数の種類}
 
+解析学を学ぶにあたって，大学の講義ではまず「数列の極限」を定義し直すことから始めることが多い．
+大学で学ぶ「実数列の収束」の定義（\partref{極限}）は，次のようなものである：
+\begin{quotation}
+  実数列$(a_n)_{n \in \mathbb{N}}$が$a \in \mathbb{R}$に収束するとは，次が成り立つことである：
+
+  任意の$\varepsilon > 0$に対して，ある$n_0 \in \mathbb{N}$が存在し，すべての$n \in \mathbb{N}$に対して$n \geqq n_0$ならば
+  \[
+    \abs{a_n - a} < \varepsilon
+  \]
+  が成り立つ．
+\end{quotation}
+この定義は，いわゆる\emph{$\varepsilon$--$N$論法}とよばれるものであり，高校で学んだ「数列がある値に限りなく近づく」という直感的な説明を厳密に表現したものである．
+この定義を正確に理解するためにも，まずは「数」についていくつかの用語を定義することから始めよう．
+
 まず，高校で学んできた「数」を振り返ってみよう．
 
 \begin{reviewbox}[数の集合]
   \small
   \begin{tabular}{@{}p{14\zw}@{\hspace{1.5\zw}}l@{}}
     自然数（natural numbers）&
-    $\mathbb{N} = \{1,2,3,\ldots\}$\\[0.35\baselineskip]
+    $\mathbb{N} = \{1,2,3,\ldots\}$\footnotemark\\[0.35\baselineskip]
 
     整数（integers）&
     $\mathbb{Z} = \{\ldots,-2,-1,0,1,2,\ldots\}$\\[0.35\baselineskip]
@@ -42,103 +43,98 @@
     $\mathbb{R}$\\[0.35\baselineskip]
 
     複素数（complex numbers）&
-    $\mathbb{C} = \{ a + bi \mid a,b \in \mathbb{R},\ i^2 = -1 \}$
+    $\mathbb{C} = \{ a + bi \mid a,b \in \mathbb{R} \}$
   \end{tabular}
+  \footnotetext{自然数に$0$を含める流儀もあるが，本書では自然数に$0$を含めないものとする．}
 \end{reviewbox}
 
 高校まではあまりなかった視点かもしれないが，ここで少し考察に付き合ってほしい．
-$n,m\in\mathbb{N}$とすると $m+n\in\mathbb{N}$，$mn\in\mathbb{N}$である．大学で学ぶ言葉を使うと，このことは「$\mathbb{N}$は加法と乗法に関して閉じている」という\footnote{「閉じている」とは，ある集合に対して，その集合の要素同士で演算を行ったときに，結果もその集合の要素になることを指す．}．
-しかし $n-m$ や $n\div m$ は $\mathbb{N}$ に属さない場合がある（たとえば $2-3$ や $2\div 3$）．
+$m,n \in \mathbb{N}$とすると，$m+n \in \mathbb{N}$かつ$mn \in \mathbb{N}$である．
+大学で学ぶ言葉を使うと，このことを「$\mathbb{N}$は加法と乗法に関して\emph{閉じている}」という\footnote{一般に，ある集合の元どうしで演算を行った結果がつねにその集合の元になるとき，その集合はその演算に関して閉じているという．}．
+しかし，$n-m$や$n \div m$は$\mathbb{N}$に属さない場合がある（たとえば$2-3$や$2 \div 3$）．
 
-このことから，我々は自然数を拡張して整数，さらに有理数を導入した．実際，任意の $a,b\in\mathbb{Q}$ に対して
-$ a + b \in \mathbb{Q}$，$ a - b \in \mathbb{Q}$，$ a \cdot b \in \mathbb{Q}$，$ a \div b \in \mathbb{Q}\ (b \ne 0)$
-が成り立つ．このように，有理数は加法，減法，乗法，除法に関して閉じている．
-
-しかし，$\mathbb{Q}$にも属さない数がある．たとえば $\sqrt{2}$ は有理数に属さない．さらに数列
+そこで，自然数を拡張して整数を，さらに有理数を導入したのであった．
+実際，任意の$a,b \in \mathbb{Q}$に対して
 \[
- a_n = \left( 1+\frac{1}{n} \right)^n
+  a + b \in \mathbb{Q},\quad a - b \in \mathbb{Q},\quad ab \in \mathbb{Q},\quad a \div b \in \mathbb{Q}~(b \ne 0)
 \]
-を考えると，各 $n \in \mathbb{N}$ で $a_n\in\mathbb{Q}$ であるにもかかわらず，
+が成り立つ．このように，有理数は加法・減法・乗法・除法に関して閉じている．
+
+しかし，$\mathbb{Q}$に属さない数もある．たとえば$\sqrt{2}$は有理数ではない．さらに，数列
 \[
-\lim_{n \to \infty} \left(1+\frac{1}{n}\right)^n = e \in \mathbb{R} \setminus \mathbb{Q}
+  a_n = \left( 1+\frac{1}{n} \right)^n
+\]
+を考えると，各$n \in \mathbb{N}$について$a_n \in \mathbb{Q}$であるにもかかわらず，
+\[
+  \lim_{n \to \infty} \left(1+\frac{1}{n}\right)^n = e \in \mathbb{R} \setminus \mathbb{Q}
 \]
 となり，極限として無理数が現れる．つまり，有理数列の極限が無理数になる場合もあるのである．
 
-これらをふまえ，実数体 $\mathbb{R}$ を考えるにあたって，空でない部分集合
-$A\subset\mathbb{R}$ が上に有界であるならば，$A$の上限 $\sup A$ が
-$\mathbb{R}$ に存在することを，\textbf{実数の連続性の公理}として認めることにする%
-\footnote{同様に，空でない部分集合 $A\subset\mathbb{R}$ が下に有界であるならば，$A$の下限 $\inf A$ も $\mathbb{R}$ に存在する．}．
+このような事情をふまえ，実数全体の集合$\mathbb{R}$については，空でない部分集合$A \subset \mathbb{R}$が上に有界ならば$A$の上限$\sup A$が$\mathbb{R}$に存在することを，\emph{実数の連続性の公理}として認めることにする\footnote{同様に，空でない部分集合$A \subset \mathbb{R}$が下に有界ならば，$A$の下限$\inf A$も$\mathbb{R}$に存在する．上限・下限は本章で定義し，この公理は\partref{実数の連続性}で改めて述べる．}．
 
-さらに我々は $i=\sqrt{-1}$ を満たす数 $i$ を導入し，複素数体 $\mathbb{C}$ を構成する．
-このようにして，自然数 $\mathbb{N}$，整数 $\mathbb{Z}$，有理数 $\mathbb{Q}$，実数 $\mathbb{R}$，複素数 $\mathbb{C}$ という数の体系が構築される．
+さらに，$i^2 = -1$を満たす数$i$を導入して，複素数全体の集合$\mathbb{C}$を構成する．
+このようにして，自然数$\mathbb{N}$，整数$\mathbb{Z}$，有理数$\mathbb{Q}$，実数$\mathbb{R}$，複素数$\mathbb{C}$という数の体系が構築される．
 
-これらを踏まえた上で，厳密に「数」に関する議論を進めていきたいが，そのためにはいくつかの用語を定義する必要がある．
-そこでまずは「慣れ親しんだ集合」として，$\mathbb{R}$ の部分集合 $A$ を中心に議論を進めていこう．
+これらをふまえて「数」に関する議論を厳密に進めていきたいが，そのためにはいくつかの用語を定義する必要がある．
+そこでまずは「慣れ親しんだ集合」として，$\mathbb{R}$の部分集合$A$を中心に議論を進めていこう．
 
 \phantomsection
 \subsection{実数の順序構造}
 
 \begin{prop}{実数の稠密性}{real_dense}
-任意の$a,b \in \mathbb{R}$に対して，$a < b$ ならば
-\[
-a < c < b
-\]
-を満たす $c \in \mathbb{R}$ が存在する．
+  任意の$a,b \in \mathbb{R}$に対して，$a < b$ならば
+  \[
+    a < c < b
+  \]
+  を満たす$c \in \mathbb{R}$が存在する．
 \end{prop}
 
 \begin{tleftbar}
-\begin{proof}
-$c = (a+b)/2$ とおけば，これは $a < c < b$ を満たす．
-\end{proof}
+  \begin{proof}
+    $c = (a+b)/2$とおけば，これは$a < c < b$を満たす．これが証明すべきことであった．
+  \end{proof}
 \end{tleftbar}
 
-命題\prref{real_dense}の証明では，やや天下り的に
-「$c = (a+b)/2$ とおけばよい」と書いた．
-我々は，理由をいっさい述べることなくこのような数をとることにした．
-しかし，このように$c$を選ぶと都合がいいことは，数直線上で $a$ と $b$ のちょうど真ん中にある数を選んでいると考えれば自ずと理解できる．
+\prref{real_dense}の証明では，やや天下り的に「$c = (a+b)/2$とおけばよい」と書いた．
+理由をいっさい述べることなくこのような数をとったが，このように$c$を選ぶと都合がよいことは，数直線上で$a$と$b$のちょうど真ん中にある数を選んでいると考えれば自然に理解できる．
 
-もちろん，$c$ の選び方は一通りではない．
-たとえば，$a$と$b$の対数平均を考えて，
+もちろん，$c$の選び方はひと通りではない．
+たとえば$0 < a < b$のときは，$a$と$b$の対数平均
 \[
   c = \frac{b-a}{\log b - \log a}
 \]
-とおいても，$a < c < b$ が成り立つ．
-また，証明において重要なのは，条件を満たす $c$ が少なくとも1つ存在することを示すことであり，
-その $c$ をどのように発見したかまで説明する必要はない．
+をとっても，$a < c < b$が成り立つ．
+また，証明において重要なのは，条件を満たす$c$が少なくとも$1$つ存在することを示すことであり，その$c$をどのように発見したかまで説明する必要はない．
 
 \begin{prop}{任意の正数より小さい非負実数}{nonnegative_less_than_all_positive}
-  $a \geqq 0$ とする．
-  任意の $\varepsilon > 0$ に対して $a < \varepsilon$ が成り立つならば，
-  $a = 0$ である．
+  $a \geqq 0$とする．
+  任意の$\varepsilon > 0$に対して$a < \varepsilon$が成り立つならば，$a = 0$である．
 \end{prop}
 
 \begin{tleftbar}
-\begin{proof}
-背理法で示す．
-$a \neq 0$ と仮定する．
-$a \geqq 0$ であるから，このとき $a > 0$ である．
+  \begin{proof}
+    背理法で示す．$a \ne 0$と仮定する．
+    $a \geqq 0$であるから，このとき$a > 0$である．
 
-命題\prref{real_dense}より，$0 < \varepsilon < a$ を満たす
-$\varepsilon \in \mathbb{R}$ が存在する．
-特に $\varepsilon > 0$ であるが，仮定より $a < \varepsilon$ でなければならない．
-これは $\varepsilon < a$ に矛盾する．
+    \prref{real_dense}より，$0 < \varepsilon < a$を満たす$\varepsilon \in \mathbb{R}$が存在する．
+    とくに$\varepsilon > 0$であるから，仮定より$a < \varepsilon$でなければならない．
+    これは$\varepsilon < a$に矛盾する．
 
-したがって，$a = 0$ である．これが証明すべきことであった．
-\end{proof}
+    したがって，$a = 0$である．これが証明すべきことであった．
+  \end{proof}
 \end{tleftbar}
 
 \begin{remark}[「任意の$\varepsilon>0$」の読み方]
-  ここで，「任意の $\varepsilon>0$ に対して $a<\varepsilon$ が成り立つ」とは，ある特定の $\varepsilon$ に対してのみ成り立つという意味ではなく，どれほど小さい正数 $\varepsilon$ をとっても $a<\varepsilon$ が成り立つという意味である．
-  たとえば，$a=1$ として $\varepsilon=2$ をとれば確かに $a<\varepsilon$ となるが，これは仮定を満たすことを意味しない．実際，$\varepsilon=1/2$ とすれば $a<\varepsilon$ は成り立たない．
-  したがって，$a>0$ である限り，$a$ より小さい正数 $\varepsilon$ をとることで必ず仮定に反する．
+  「任意の$\varepsilon > 0$に対して$a < \varepsilon$が成り立つ」とは，ある特定の$\varepsilon$に対してのみ成り立つという意味ではなく，どれほど小さい正数$\varepsilon$をとっても$a < \varepsilon$が成り立つという意味である．
+  たとえば，$a = 1$として$\varepsilon = 2$をとれば確かに$a < \varepsilon$となるが，これは仮定を満たすことを意味しない．実際，$\varepsilon = 1/2$とすれば$a < \varepsilon$は成り立たない．
+  このように，$a > 0$である限り，$a$より小さい正数$\varepsilon$をとれば必ず仮定に反する．
 \end{remark}
 
-ここまででは，実数どうしの大小関係について考えてきた．
+ここまでは，実数どうしの大小関係について考えてきた．
 次に，ある集合の中で「最も大きい元」や「最も小さい元」を考える．
 このような元を，それぞれ最大元・最小元という．
 
 \begin{definition}{最大元・最小元}{最大元・最小元}
-  \index{さいだいげん@最大元}\index{さいしょうげん@最小元}
   $A \subset \mathbb{R}$とする．
 
   $m \in \mathbb{R}$が
@@ -148,7 +144,7 @@ $\varepsilon \in \mathbb{R}$ が存在する．
       \textup{(2)}\ \lall{x \in A} \lst x \leqq m
     \end{cases}
   \]
-  を満たすとき，$m$を$A$の\emph{最大元}といい，
+  を満たすとき，$m$を$A$の\emph{最大元}\index{さいだいげん@最大元}といい，
   \[
     m = \max A
   \]
@@ -161,7 +157,7 @@ $\varepsilon \in \mathbb{R}$ が存在する．
       \textup{(2)}\ \lall{x \in A} \lst m \leqq x
     \end{cases}
   \]
-  を満たすとき，$m$を$A$の\emph{最小元}といい，
+  を満たすとき，$m$を$A$の\emph{最小元}\index{さいしょうげん@最小元}といい，
   \[
     m = \min A
   \]
@@ -172,8 +168,7 @@ $\varepsilon \in \mathbb{R}$ が存在する．
   「最大元」と似た言葉に「最大値」がある．
   これらは密接に関係しているが，何について述べているかが異なる．
   最大元は，集合そのものに対して定めた言葉である．
-  一方，関数$f \colon D \to \mathbb{R}$について「$f$の最大値」というときは，
-  $f$の値全体の集合
+  一方，関数$f \colon D \to \mathbb{R}$について「$f$の最大値」というときは，$f$の値全体の集合
   \[
     f(D) = \{f(x) \mid x \in D\}
   \]
@@ -184,18 +179,14 @@ $\varepsilon \in \mathbb{R}$ が存在する．
   \]
   であり，関数の最大値は，その値全体の集合の最大元として捉えることができる．
   この意味で，本書では，関数については最大値，集合については最大元という語を用いる\footnote{%
-    ただし，$\max A$，$\min A$を「$A$の最大値」「$A$の最小値」とよぶことも
-    広く行われており，これらが誤りというわけではない．%
+    ただし，$\max A,\min A$を「$A$の最大値」「$A$の最小値」とよぶことも広く行われており，これらが誤りというわけではない．%
   }．
   最小値と最小元についても同様である．
 
   なお，$\max_{x \in D} f(x)$は最大値であって，$D$の元ではない．
-  これに対し，$f(a) = \max f(D)$を満たす$a \in D$を，
-  $f$が最大値をとる点という．
-  最大値は存在すればただ一つに定まるのに対し，
-  最大値をとる点は複数存在しうる．
-  たとえば$f(x) = x^{2}$，$D = [-1,1]$のとき，
-  最大値は$1$であるが，これをとる点は$x = 1$と$x = -1$の2つである．
+  これに対し，$f(a) = \max f(D)$を満たす$a \in D$を，$f$が最大値をとる点という．
+  最大値は存在すればただひとつに定まるのに対し，最大値をとる点は複数存在しうる．
+  たとえば$f(x) = x^{2}$，$D = [-1,1]$のとき，最大値は$1$であるが，これをとる点は$x = 1$と$x = -1$の$2$つである．
 \end{remark}
 
 \begin{figure}[htbp]
@@ -210,13 +201,13 @@ $\varepsilon \in \mathbb{R}$ が存在する．
     \draw[->, thick, black] (-0.5,1.3) -- (5.2,1.3);
 
     % 集合 A
-    \draw[line width=2pt, magenta] (1,1.3) -- (4,1.3);
+    \draw[line width=2pt, figaccent] (1,1.3) -- (4,1.3);
 
     % 端点
     % 0: A に含まれない
-    \draw[thick, magenta, fill=white] (1,1.3) circle (2.5pt);
+    \draw[thick, figaccent, fill=white] (1,1.3) circle (2.5pt);
     % 1: A に含まれる
-    \filldraw[magenta] (4,1.3) circle (2.5pt);
+    \filldraw[figaccent] (4,1.3) circle (2.5pt);
 
     % 目盛り
     \node[below] at (1,1.15) {$0$};
@@ -226,7 +217,7 @@ $\varepsilon \in \mathbb{R}$ が存在する．
     \node[above left] at (-0.25,1.3) {$A$};
 
     % 最大元
-    \node[above, magenta] at (4,1.45) {最大元};
+    \node[above, figaccent] at (4,1.45) {最大元};
 
     % 補足
     \node[right, align=left] at (5.4,1.3)
@@ -240,13 +231,13 @@ $\varepsilon \in \mathbb{R}$ が存在する．
     \draw[->, thick, black] (-0.5,-0.2) -- (5.2,-0.2);
 
     % 集合 B
-    \draw[line width=2pt, magenta] (1,-0.2) -- (4,-0.2);
+    \draw[line width=2pt, figaccent] (1,-0.2) -- (4,-0.2);
 
     % 端点
     % 0: B に含まれる
-    \filldraw[magenta] (1,-0.2) circle (2.5pt);
+    \filldraw[figaccent] (1,-0.2) circle (2.5pt);
     % 1: B に含まれない
-    \draw[thick, magenta, fill=white] (4,-0.2) circle (2.5pt);
+    \draw[thick, figaccent, fill=white] (4,-0.2) circle (2.5pt);
 
     % 目盛り
     \node[below] at (1,-0.35) {$0$};
@@ -256,7 +247,7 @@ $\varepsilon \in \mathbb{R}$ が存在する．
     \node[above left] at (-0.25,-0.2) {$B$};
 
     % 最小元
-    \node[above, magenta] at (1,-0.05) {最小元};
+    \node[above, figaccent] at (1,-0.05) {最小元};
 
     % 補足
     \node[right, align=left] at (5.4,-0.2)
@@ -270,17 +261,17 @@ $\varepsilon \in \mathbb{R}$ が存在する．
 したがって，集合に上端や下端が見えていても，その点が集合に含まれていなければ最大元・最小元は存在しない．
 
 \begin{example}{最大元・最小元の例}{最大元・最小元の例}
-    集合$A=\{x \mid x \in \mathbb{R},0<x \leqq 1\}$に対して，$\max A=1$，$\min A$は存在しない．
-    集合$B=\{x \mid x \in \mathbb{R},0 \leqq x <1\}$に対して，$\min B=0$，$\max B$は存在しない．
+  集合$A = \{x \in \mathbb{R} \mid 0 < x \leqq 1\}$に対して，$\max A = 1$であり，$\min A$は存在しない．
+  また，集合$B = \{x \in \mathbb{R} \mid 0 \leqq x < 1\}$に対して，$\min B = 0$であり，$\max B$は存在しない．
 \end{example}
 
 \begin{prop}{最大元・最小元の一意性}{max_min_uniqueness}
-    任意の集合$A$に対し，その最大元・最小元は存在するとすればただひとつである．
+  $A \subset \mathbb{R}$とする．$A$の最大元・最小元は，存在すればただひとつである．
 \end{prop}
 
 \begin{tleftbar}
   \begin{proof}
-    $m, m'$がともに集合$A$の最大元であると仮定する．
+    $m,m'$がともに$A$の最大元であると仮定する．
     最大元の定義より，
     \[
       m = \max A
@@ -311,60 +302,64 @@ $\varepsilon \in \mathbb{R}$ が存在する．
     \]
     が成り立つ．したがって，$m = m'$である．
 
-    同様にして，最小元についても一意性が示される．これが証明すべきことであった．
+    最小元についても同様にして一意性が示される．これが証明すべきことであった．
   \end{proof}
 \end{tleftbar}
 
 \begin{remark}[一意性と記号の正当化]
   ところで，なぜわざわざ一意性を確認しなければならないのだろうか．
-  それは，我々が\deref{最大元・最小元}において $m = \max A$ という「記号」を導入したからである．
+  それは，\deref{最大元・最小元}において$m = \max A$という「記号」を導入したからである．
 
   一般に，数学において記号を定めるときは，その記号が指し示す対象がただひとつに定まっていなければならない．
-  たとえば，空集合を表す記号 $\varnothing$ は，「要素をもたない集合はただひとつしかない」という事実に支えられて初めて意味をもつ．
-  また，正則行列 $A$ の逆行列を $A^{-1}$ とかくのも，「$AB = BA = E$ を満たす行列 $B$ は存在すればただひとつである」ことが証明されているからこそ許される記法である．
-  もし条件を満たす対象が複数ありうるならば，記号がそのうちのどれを指しているのかが定まらず，たとえば $\max A = 1$ のような等式は意味をなさなくなってしまう．
-  \prref{max_min_uniqueness}は，記号 $\max A$，$\min A$ の使用を正当化するための命題なのである．
+  たとえば，空集合を表す記号$\varnothing$は，「元をもたない集合はただひとつしかない」という事実に支えられて初めて意味をもつ．
+  また，正則行列$A$の逆行列を$A^{-1}$とかくのも，「$AB = BA = E$を満たす行列$B$は存在すればただひとつである」ことが証明されているからこそ許される記法である．
+  もし条件を満たす対象が複数ありうるならば，記号がそのうちのどれを指しているのかが定まらず，たとえば$\max A = 1$のような等式は意味をなさなくなってしまう．
+  \prref{max_min_uniqueness}は，記号$\max A,\min A$の使用を正当化するための命題なのである．
 
-  別の見方をすれば，$\max$ は「集合 $A$ を入力すると実数 $\max A$ を返す対応」，すなわち一種の写像とみなすこともできる%
+  別の見方をすれば，$\max$は「集合$A$を入力すると実数$\max A$を返す対応」，すなわち一種の写像とみなすこともできる%
   \footnote{ただし，最大元が存在しない集合には値を定めないので，正確には「最大元をもつ集合全体」を定義域とする写像である．}．
-  写像とは，入力ひとつに対して出力を\emph{ただひとつ}定める対応のことであった．
-  したがって，$\max$ をこのような写像として扱うためにも，最大元の一意性が保証されていなければならない．
-  最小元 $\min$ についても同様である．
+  写像とは，入力ひとつに対して出力を\textbf{ただひとつ}定める対応のことであった．
+  したがって，$\max$をこのような写像として扱うためにも，最大元の一意性が保証されていなければならない．
+  最小元$\min$についても同様である．
 \end{remark}
 
-ただ，最大元および最小元は，$\mathbb{R}$の部分集合すべてに存在するとは限らない．そこで，$[0,1)$や$(0,1]$のような最大元（最小元）のない集合にも，似た概念を与えたい．「最大元」および「最小元」に似た概念として「上限」と「下限」を定義しよう．そのために，まず上界・下界を定義する．
+ただし，最大元や最小元は，$\mathbb{R}$の部分集合に対してつねに存在するとは限らない．
+そこで，$[0,1)$や$(0,1]$のような最大元（最小元）をもたない集合に対しても，似た概念を与えたい．
+「最大元」と「最小元」に似た概念として，「上限」と「下限」を定義しよう．
+そのために，まず上界・下界を定義する．
 
 \begin{definition}{上界・下界・有界}{上界・下界・有界}
-  \index{じょうかい@上界}\index{かかい@下界}\index{ゆうかい@有界}
   $A \subset \mathbb{R}$とする．
 
   $a \in \mathbb{R}$が
   \[
     \lall{x \in A} \lst x \leqq a
   \]
-  を満たすとき，$a$を$A$の\emph{上界}という．
+  を満たすとき，$a$を$A$の\emph{上界}\index{じょうかい@上界}という．
+  $A$の上界が存在するとき，$A$は\emph{上に有界}であるという．
   また，$A$の上界全体の集合を$U(A)$とかく．すなわち，
   \[
     U(A) = \{ a \in \mathbb{R} \mid \lall{x \in A} \lst x \leqq a \}
   \]
   である．
 
-  また，$a \in \mathbb{R}$が
+  同様に，$a \in \mathbb{R}$が
   \[
     \lall{x \in A} \lst a \leqq x
   \]
-  を満たすとき，$a$を$A$の\emph{下界}という．
+  を満たすとき，$a$を$A$の\emph{下界}\index{かかい@下界}という．
+  $A$の下界が存在するとき，$A$は\emph{下に有界}であるという．
   また，$A$の下界全体の集合を$L(A)$とかく．すなわち，
   \[
     L(A) = \{ a \in \mathbb{R} \mid \lall{x \in A} \lst a \leqq x \}
   \]
   である．
 
-  そして，$A$が上にも下にも有界であるとき，$A$は\emph{有界}であるという．
+  そして，$A$が上にも下にも有界であるとき，$A$は\emph{有界}\index{ゆうかい@有界}であるという．
 \end{definition}
 
-\deref{上界・下界・有界}は難解に思えるかもしれない．言わんとしていることは「$U(A)$は，$A$の中のどの要素よりも大きいかもしくは等しい数全体の集合」ということである．
-
+\deref{上界・下界・有界}は難解に思えるかもしれない．
+いわんとしていることは，「$U(A)$は，$A$のどの元よりも大きいかまたは等しい数全体の集合」ということである．
 具体例で説明しよう．
 
 \begin{example}{上界・下界の例}{上界・下界の例}
@@ -379,49 +374,47 @@ $\varepsilon \in \mathbb{R}$ が存在する．
     L(A) = (-\infty,0]
   \]
   である．
-
-  そして，集合$A$は有界である．
+  とくに，集合$A$は有界である．
 \end{example}
 
 \begin{prop}{有界であるための必要十分条件}{boundedness_characterization}
   $A \subset \mathbb{R}$とする．
-
-  $A$が上に有界であるための必要十分条件は，$U(A) \neq \varnothing$である．
-  また，$A$が下に有界であるための必要十分条件は，$L(A) \neq \varnothing$である．
+  $A$が上に有界であるための必要十分条件は，$U(A) \ne \varnothing$である．
+  また，$A$が下に有界であるための必要十分条件は，$L(A) \ne \varnothing$である．
 \end{prop}
 
-\begin{leftbar}
-\begin{proof}
-  まず，上に有界であることについて示す．
+\begin{tleftbar}
+  \begin{proof}
+    まず，上に有界であることについて示す．
 
-  $A$が上に有界であるとする．
-  このとき，$A$の上界が存在するので，$U(A) \neq \varnothing$である．
+    $A$が上に有界であるとする．
+    このとき，$A$の上界が存在するので，$U(A) \ne \varnothing$である．
 
-  逆に，$U(A) \neq \varnothing$であるとする．
-  このとき，ある$a \in U(A)$が存在する．
-  $U(A)$の定義より，すべての$x \in A$に対して$x \leqq a$である．
-  したがって，$a$は$A$の上界であるから，$A$は上に有界である．
+    逆に，$U(A) \ne \varnothing$であるとする．
+    このとき，ある$a \in U(A)$が存在する．
+    $U(A)$の定義より，すべての$x \in A$に対して$x \leqq a$である．
+    したがって，$a$は$A$の上界であるから，$A$は上に有界である．
 
-  下に有界であることについても同様に議論を進めると，$A$が下に有界であるための必要十分条件が$L(A) \neq \varnothing$であることがわかる．これが証明すべきことであった．
-\end{proof}
-\end{leftbar}
+    下に有界であることについても同様に議論すると，$A$が下に有界であるための必要十分条件が$L(A) \ne \varnothing$であることがわかる．これが証明すべきことであった．
+  \end{proof}
+\end{tleftbar}
 
-\begin{prop}{}{}
-  $A$が有界であることは，$U(A) \neq \varnothing$かつ$L(A) \neq \varnothing$であるための必要十分条件である．
+\begin{prop}{有界であるための必要十分条件（上下）}{boundedness_characterization_both}
+  $A \subset \mathbb{R}$とする．
+  $A$が有界であるための必要十分条件は，$U(A) \ne \varnothing$かつ$L(A) \ne \varnothing$である．
 \end{prop}
 
-\begin{leftbar}
-\begin{proof}
-  $A$が有界であるとする．
-  このとき，\deref{上界・下界・有界}により$A$は上に有界であるから，\prref{boundedness_characterization}により$U(A) \neq \varnothing$である．
+\begin{tleftbar}
+  \begin{proof}
+    $A$が有界であるとする．
+    このとき，\deref{上界・下界・有界}により$A$は上に有界であるから，\prref{boundedness_characterization}により$U(A) \ne \varnothing$である．
+    同様に，$A$は下に有界であるから，\prref{boundedness_characterization}により$L(A) \ne \varnothing$である．
 
-  また\deref{上界・下界・有界}により，$A$は下に有界であるから\prref{boundedness_characterization}により$L(A) \neq \varnothing$である．
-
-  逆に，$U(A) \neq \varnothing$かつ$L(A) \neq \varnothing$であるとする．
-  このとき，\prref{boundedness_characterization}により$A$は上に有界であり，下に有界である．
-  したがって，$A$は有界である．
-\end{proof}
-\end{leftbar}
+    逆に，$U(A) \ne \varnothing$かつ$L(A) \ne \varnothing$であるとする．
+    このとき，\prref{boundedness_characterization}により$A$は上にも下にも有界である．
+    したがって，$A$は有界である．これが証明すべきことであった．
+  \end{proof}
+\end{tleftbar}
 
 \begin{example}{有界な集合}{有界な集合}
   集合
@@ -444,13 +437,13 @@ $\varepsilon \in \mathbb{R}$ が存在する．
   \[
     \sup A = \min U(A)
   \]
-  と定める．このとき，$\sup A$を$A$の\emph{最小上界}または\emph{上限}という．
+  と定める．このとき，$\sup A$を$A$の\emph{最小上界}または\emph{上限}\index{じょうげん@上限}という．
 
   また，$A$が下に有界であるとき，
   \[
     \inf A = \max L(A)
   \]
-  と定める．このとき，$\inf A$を$A$の\emph{最大下界}または\emph{下限}という．
+  と定める．このとき，$\inf A$を$A$の\emph{最大下界}または\emph{下限}\index{かげん@下限}という．
 \end{definition}
 
 % --- TikZ による図解 ---
@@ -460,9 +453,9 @@ $\varepsilon \in \mathbb{R}$ が存在する．
     % ==================================================
     % 領域
     % ==================================================
-    % 下界・上界の領域を薄いマゼンタで表示
-    \fill[magenta!8] (-7,0) rectangle (-2,1);
-    \fill[magenta!8] (2,0) rectangle (7,1);
+    % 下界・上界の領域を薄いアクセント色で表示
+    \fill[figaccent!8] (-7,0) rectangle (-2,1);
+    \fill[figaccent!8] (2,0) rectangle (7,1);
     % 集合 A の領域
     \fill[black!7] (-2,0) rectangle (2,1);
     % ==================================================
@@ -475,16 +468,16 @@ $\varepsilon \in \mathbb{R}$ が存在する．
     % inf A, sup A
     % ==================================================
     % 下限
-    \draw[magenta, thick]
+    \draw[figaccent, thick]
       (-2,0) -- (-2,1.2)
       node[above] {$\inf A$};
     % 上限
-    \draw[magenta, thick]
+    \draw[figaccent, thick]
       (2,0) -- (2,1.2)
       node[above] {$\sup A$};
     % 境界点
-    \filldraw[magenta] (-2,0) circle (2pt);
-    \filldraw[magenta] ( 2,0) circle (2pt);
+    \filldraw[figaccent] (-2,0) circle (2pt);
+    \filldraw[figaccent] ( 2,0) circle (2pt);
     % ==================================================
     % 上界・下界を表す上辺
     % ==================================================
@@ -498,10 +491,10 @@ $\varepsilon \in \mathbb{R}$ が存在する．
     % 集合 A
     \node at (0,0.5) {$A$};
     % 下界全体
-    \node[magenta] at (-4.5,0.5)
+    \node[figaccent] at (-4.5,0.5)
       {$L(A)$（下界）};
     % 上界全体
-    \node[magenta] at (4.5,0.5)
+    \node[figaccent] at (4.5,0.5)
       {$U(A)$（上界）};
   \end{tikzpicture}
   \caption{上限・下限と上界・下界のイメージ}
@@ -509,11 +502,11 @@ $\varepsilon \in \mathbb{R}$ が存在する．
 
 \begin{remark}[上限・下限の一意性]
   ここで，上限・下限の一意性について確認しておこう．
-  \deref{sup_inf}によれば，$\sup A$ は上界集合 $U(A)$ の最小元として，$\inf A$ は下界集合 $L(A)$ の最大元として定義されている．
+  \deref{sup_inf}によれば，$\sup A$は上界全体の集合$U(A)$の最小元として，$\inf A$は下界全体の集合$L(A)$の最大元として定義されている．
   そして，\prref{max_min_uniqueness}により，最大元・最小元は存在すればただひとつであった．
-  したがって，$\sup A$ および $\inf A$ も存在すればただひとつである（上限・下限の一意性）．
+  したがって，$\sup A$および$\inf A$も存在すればただひとつである（上限・下限の一意性）．
   すなわち，上限・下限の一意性は，新たに証明し直すまでもなく，最大元・最小元の一意性から直ちに従う．
-  これにより，記号 $\sup A$，$\inf A$ の使用もまた正当化されるのである．
+  これにより，記号$\sup A,\inf A$の使用もまた正当化されるのである．
 \end{remark}
 
 \begin{theorem}{上限・下限の判定条件}{characterization}
@@ -543,111 +536,111 @@ $\varepsilon \in \mathbb{R}$ が存在する．
 \end{theorem}
 
 \begin{tleftbar}
-\begin{proof}
-  まず，上限の場合を示す．$A$の上界全体の集合を$U(A)$とする．
-  上限の定義より，
-  \[
-    m = \sup A
-    \quad\lequiv\quad
-    m = \min U(A)
-  \]
-  である．
+  \begin{proof}
+    まず，上限の場合を示す．$A$の上界全体の集合を$U(A)$とする．
+    上限の定義より，
+    \[
+      m = \sup A
+      \quad\lequiv\quad
+      m = \min U(A)
+    \]
+    である．
 
-  さらに，最小元の定義より，
-  \[
-    m = \min U(A)
-    \quad\lequiv\quad
-    \begin{cases}
-      \textup{(1)}\ m \in U(A),\\
-      \textup{(2)}\ \lall{a \in U(A)} \lst m \leqq a
-    \end{cases}
-  \]
-  である．ここで，(2)の対偶をとると，
-  \[
-    \lall{a \in U(A)} \lst m \leqq a
-    \quad\lequiv\quad
-    a < m \limp a \notin U(A)
-  \]
-  である．したがって，
-  \[
-    m = \sup A
-    \quad\lequiv\quad
-    \begin{cases}
-      \textup{(1)}\ m \in U(A),\\
-      \textup{(2)}\ a < m \limp a \notin U(A)
-    \end{cases}
-  \]
-  となる．
+    さらに，最小元の定義より，
+    \[
+      m = \min U(A)
+      \quad\lequiv\quad
+      \begin{cases}
+        \textup{(1)}\ m \in U(A),\\
+        \textup{(2)}\ \lall{a \in U(A)} \lst m \leqq a
+      \end{cases}
+    \]
+    である．ここで，(2)の対偶をとると，
+    \[
+      \lall{a \in U(A)} \lst m \leqq a
+      \quad\lequiv\quad
+      \lall{a \in \mathbb{R}} \lst (a < m \limp a \notin U(A))
+    \]
+    である．したがって，
+    \[
+      m = \sup A
+      \quad\lequiv\quad
+      \begin{cases}
+        \textup{(1)}\ m \in U(A),\\
+        \textup{(2)}\ \lall{a < m} \lst a \notin U(A)
+      \end{cases}
+    \]
+    となる．
 
-  最後に，上界の定義より，
-  \[
-    m \in U(A)
-    \quad\lequiv\quad
-    \lall{x \in A} \lst x \leqq m
-  \]
-  であり，また
-  \[
-    a \notin U(A)
-    \quad\lequiv\quad
-    \lex{x \in A} \lst a < x
-  \]
-  である．ゆえに，
-  \[
-    m = \sup A
-    \quad\lequiv\quad
-    \begin{cases}
-      \textup{(1)}\ \lall{x \in A} \lst x \leqq m,\\
-      \textup{(2)}\ a < m \limp \lex{x \in A} \lst a < x
-    \end{cases}
-  \]
-  が成り立つ．
+    最後に，上界の定義より，
+    \[
+      m \in U(A)
+      \quad\lequiv\quad
+      \lall{x \in A} \lst x \leqq m
+    \]
+    であり，また
+    \[
+      a \notin U(A)
+      \quad\lequiv\quad
+      \lex{x \in A} \lst a < x
+    \]
+    である．ゆえに，
+    \[
+      m = \sup A
+      \quad\lequiv\quad
+      \begin{cases}
+        \textup{(1)}\ \lall{x \in A} \lst x \leqq m,\\
+        \textup{(2)}\ \lall{a < m} \lsep \lex{x \in A} \lst a < x
+      \end{cases}
+    \]
+    が成り立つ．
 
-  下限の場合も同様である．$A$の下界全体の集合を$L(A)$とすると，
-  \[
-    m = \inf A
-    \quad\lequiv\quad
-    m = \max L(A)
-  \]
-  である．最大元の定義より，
-  \[
-    m = \max L(A)
-    \quad\lequiv\quad
-    \begin{cases}
-      \textup{(1)}\ m \in L(A),\\
-      \textup{(2)}\ \lall{a \in L(A)} \lst a \leqq m
-    \end{cases}
-  \]
-  である．(2)の対偶をとると，
-  \[
-    \lall{a \in L(A)} \lst a \leqq m
-    \quad\lequiv\quad
-    m < a \limp a \notin L(A)
-  \]
-  である．
+    下限の場合も同様である．$A$の下界全体の集合を$L(A)$とすると，
+    \[
+      m = \inf A
+      \quad\lequiv\quad
+      m = \max L(A)
+    \]
+    である．最大元の定義より，
+    \[
+      m = \max L(A)
+      \quad\lequiv\quad
+      \begin{cases}
+        \textup{(1)}\ m \in L(A),\\
+        \textup{(2)}\ \lall{a \in L(A)} \lst a \leqq m
+      \end{cases}
+    \]
+    である．(2)の対偶をとると，
+    \[
+      \lall{a \in L(A)} \lst a \leqq m
+      \quad\lequiv\quad
+      \lall{a \in \mathbb{R}} \lst (m < a \limp a \notin L(A))
+    \]
+    である．
 
-  ここで，下界の定義より，
-  \[
-    m \in L(A)
-    \quad\lequiv\quad
-    \lall{x \in A} \lst m \leqq x
-  \]
-  であり，また
-  \[
-    a \notin L(A)
-    \quad\lequiv\quad
-    \lex{x \in A} \lst x < a
-  \]
-  である．したがって，
-  \[
-    m = \inf A
-    \quad\lequiv\quad
-    \begin{cases}
-      \textup{(1)}\ \lall{x \in A} \lst m \leqq x,\\
-      \textup{(2)}\ \lall{a > m} \lsep \lex{x \in A} \lst x < a
-    \end{cases}
-  \]
-  が成り立つ．これが証明すべきことであった．
-\end{proof}
+    ここで，下界の定義より，
+    \[
+      m \in L(A)
+      \quad\lequiv\quad
+      \lall{x \in A} \lst m \leqq x
+    \]
+    であり，また
+    \[
+      a \notin L(A)
+      \quad\lequiv\quad
+      \lex{x \in A} \lst x < a
+    \]
+    である．したがって，
+    \[
+      m = \inf A
+      \quad\lequiv\quad
+      \begin{cases}
+        \textup{(1)}\ \lall{x \in A} \lst m \leqq x,\\
+        \textup{(2)}\ \lall{a > m} \lsep \lex{x \in A} \lst x < a
+      \end{cases}
+    \]
+    が成り立つ．これが証明すべきことであった．
+  \end{proof}
 \end{tleftbar}
 
 \begin{theorem}{$\varepsilon$を用いた特徴づけ}{epsilon_delta}
@@ -676,70 +669,49 @@ $\varepsilon \in \mathbb{R}$ が存在する．
   が成り立つ．
 \end{theorem}
 
-\begin{example}{集合 $A=[0,1)$ の上限・下限}{sup_inf_ex}
-集合 $A \coloneqq [0,1)$ の上限 $\sup A$ と下限 $\inf A$ を，本節で導入した3通りの視点から導く．
+\begin{example}{集合$A=[0,1)$の上限・下限}{sup_inf_ex}
+  集合$A \coloneqq [0,1)$の上限$\sup A$と下限$\inf A$を，本節で導入した$3$通りの視点から求めよう．
 
-\medskip
-\noindent\textbf{(1) 上界集合 $U(A)$・下界集合 $L(A)$ による定義（\deref{上界・下界・有界}，\deref{sup_inf}）に基づく導出}
+  \begin{description}
+    \item[(1) 上界・下界全体の集合による定義（\deref{上界・下界・有界}，\deref{sup_inf}）]\mbox{}\\
+      まず，上界全体の集合$U(A)$を求める．任意の$a \in A$に対して$a < 1$であるから，$1$は$A$の上界である．よって$1 \in U(A)$となる．
+      次に$x < 1$とし，$a \coloneqq \max\{0,(x+1)/2\}$とおく．このとき$a \in A$かつ$x < a$であるから，$x$は$A$の上界ではない．
+      これより$U(A) = [1, \infty)$であり，その最小元が上限であるから，$\sup A = \min U(A) = 1$を得る．
 
-\begin{description}[labelwidth=6\zw, leftmargin=6.5\zw]
-    \item[上限 $\sup A$：]
-    まず上界集合 $U(A)$ を特定する．任意の $a \in A$ に対して $a < 1$ であるから，$1$ は $A$ の上界である．よって $1 \in U(A)$ となる．
-    次に $x < 1$ とすると，$a \coloneqq (x+1)/2$ とおけば $x < a < 1$ より $a \in A$ かつ $a > x$ となるため，$x$ は上界ではない．
-    これより $U(A) = [1, \infty)$ であり，その最小元（定義 \deref{最大元・最小元}）が上限であるから，$\sup A = \min U(A) = 1$ を得る．
+      同様に，下界全体の集合$L(A)$を求める．任意の$a \in A$に対して$a \geqq 0$であるから，$0$は$A$の下界である．よって$0 \in L(A)$となる．
+      次に$y > 0$とし，$a \coloneqq \min\{y/2,1/2\}$とおく．このとき$a \in A$かつ$a < y$であるから，$y$は$A$の下界ではない．
+      これより$L(A) = (-\infty, 0]$であり，その最大元が下限であるから，$\inf A = \max L(A) = 0$を得る．
 
-    \item[下限 $\inf A$：]
-    同様に下界集合 $L(A)$ を特定する．任意の $a \in A$ に対して $a \geqq 0$ であるから，$0$ は $A$ の下界である．よって $0 \in L(A)$ となる．
-    次に $y > 0$ とすると，$a \coloneqq y/2$ とおけば $0 \leqq a < y$ より $a \in A$ かつ $a < y$ となるため，$y$ は下界ではない．
-    これより $L(A) = (-\infty, 0]$ であり，その最大元が下限であるから，$\inf A = \max L(A) = 0$ である．
-\end{description}
+    \item[(2) 上限・下限の判定条件（\thref{characterization}）]\mbox{}\\
+      $m = 1$とおく．任意の$a \in A$に対して$a < 1$であるから，\thref{characterization}の(1)が成り立つ．
+      また，$x < 1$とすると，$a \coloneqq \max\{0,(x+1)/2\}$は$a \in A$かつ$x < a$を満たすから，(2)も成り立つ．
+      よって，\thref{characterization}より$\sup A = 1$である．
 
-\medskip
-\noindent\textbf{(2) 「上限・下限の判定条件」（定理 \thref{characterization}）による証明}
+      $m = 0$とおく．任意の$a \in A$に対して$a \geqq 0$であるから，(1)が成り立つ．
+      また，$x > 0$とすると，$a \coloneqq \min\{x/2,1/2\}$は$a \in A$かつ$a < x$を満たすから，(2)も成り立つ．
+      よって，\thref{characterization}より$\inf A = 0$である．
 
-\begin{description}[labelwidth=6\zw, leftmargin=6.5\zw]
-    \item[上限 $\sup A$：] $m=1$ とおく．
-    \begin{itemize}
-        \item \textbf{上界の条件}：任意の $a \in A = [0, 1)$ に対して $a < 1 \leqq 1$ より成り立つ．
-        \item \textbf{最小性}：$x < 1$ とすると，$a \coloneqq (x+1)/2$ は $x < a < 1$ を満たし，$a \in A$ かつ $x < a$ となる要素が存在する．
-    \end{itemize}
-    よって，定理 \thref{characterization} より $1 = \sup A$ である．
+    \item[(3) $\varepsilon$を用いた特徴づけ（\thref{epsilon_delta}）]\mbox{}\\
+      $m = 1$とおく．任意の$a \in A$に対して$a \leqq 1$であるから，\thref{epsilon_delta}の(1)が成り立つ．
+      また，任意の$\varepsilon > 0$に対して，$a \in A$を
+      \[
+        a \coloneqq
+        \begin{cases}
+          1 - \dfrac{\varepsilon}{2} & (0 < \varepsilon \leqq 1), \\[6pt]
+          0 & (\varepsilon > 1)
+        \end{cases}
+      \]
+      と定めれば，いずれの場合も$1 - \varepsilon < a$が成り立つから，(2)も成り立つ．
+      よって，\thref{epsilon_delta}より$\sup A = 1$である．
 
-    \item[下限 $\inf A$：] $m=0$ とおく．
-    \begin{itemize}
-        \item \textbf{下界の条件}：任意の $a \in A = [0, 1)$ に対して $a \geqq 0$ より成り立つ．
-        \item \textbf{最大性}：$x > 0$ とすると，$a \coloneqq x/2$ は $0 \leqq a < x$ を満たし，$a \in A$ かつ $x > a$ となる要素が存在する．
-    \end{itemize}
-    よって，定理 \thref{characterization} より $0 = \inf A$ である．
-\end{description}
+      $m = 0$とおく．任意の$a \in A$に対して$a \geqq 0$であるから，(1)が成り立つ．
+      また，任意の$\varepsilon > 0$に対して$a \coloneqq \min\{\varepsilon/2,1/2\}$とおけば，$a \in A$かつ$a < 0 + \varepsilon$が成り立つから，(2)も成り立つ．
+      よって，\thref{epsilon_delta}より$\inf A = 0$である．
+  \end{description}
 
-\medskip
-\noindent\textbf{(3) 「$\varepsilon$ を用いた特徴づけ」（定理 \thref{epsilon_delta}）による証明}
-
-\begin{description}[labelwidth=6\zw, leftmargin=6.5\zw]
-    \item[上限 $\sup A$：] $m=1$ とおく．
-    \begin{enumerate}
-        \item 任意の $a \in A$ に対して $a \leqq 1$ である（上界の性質）．
-        \item 任意の $\varepsilon > 0$ に対して，$a \in A$ を以下のように選ぶ：
-        \[
-            a \coloneqq \begin{cases} 1 - \dfrac{\varepsilon}{2} & (0 < \varepsilon \leqq 1) \\[6pt] 0 & (\varepsilon > 1) \end{cases}
-        \]
-        このとき $a \in [0, 1)$ であり，いずれの場合も $1 - \varepsilon < a$ が成り立つ．
-    \end{enumerate}
-    よって，定理 \thref{epsilon_delta} より $\sup A = 1$ である．
-
-    \item[下限 $\inf A$：] $m=0$ とおく．
-    \begin{enumerate}
-        \setcounter{enumi}{2}
-        \item 任意の $a \in A$ に対して $a \geqq 0$ である（下界の性質）．
-        \item 任意の $\varepsilon > 0$ に対して，$a \coloneqq \min\{\varepsilon/2, 1/2\}$ とおけば，$a \in A$ かつ $a < 0 + \varepsilon$ が常に成り立つ．
-    \end{enumerate}
-    よって，定理 \thref{epsilon_delta} より $\inf A = 0$ である．
-\end{description}
-
-以上より，結論として
-\[
-\sup A = 1, \quad \inf A = 0
-\]
-を得る．どの視点から導いても同じ結論に到達することを確認してほしい．
+  以上より，
+  \[
+    \sup A = 1, \quad \inf A = 0
+  \]
+  を得る．どの視点から求めても同じ結論に到達することを確認してほしい．
 \end{example}
