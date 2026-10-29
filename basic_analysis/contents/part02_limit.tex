@@ -2,41 +2,46 @@
 \part{極限}
 
 \begin{abstract}
-この章では，実数列の極限を厳密に定義し，その基本性質を確認する．高校で「数列の極限」を定義する際に用いられた「限りなく近づく」という表現は，厳密な議論を行ううえでは曖昧さを残すものである．そこでまず，この曖昧な表現を論理的に厳格な形へと定義し直した $\varepsilon$--$N$ 論法を導入し，実数列の収束と発散を定義する．次に，数列を自然数から実数への「写像」として捉え直し，極限の一意性を証明する．そのうえで，極限の四則演算や，極限操作が順序関係を保存することを示し，未知の数列の収束を判定する強力な手法である「はさみうちの原理」を具体例とともに確認する．このような厳密な議論は，\partref{実数の連続性}において「実数の連続性」を数学的に記述するために不可欠である．
+この章では，実数列の極限を厳密に定義し，その基本性質を確認する．高校で数列の極限を定義する際に用いた「限りなく近づく」という表現は，厳密な議論を行ううえでは曖昧さを残すものである．そこでまず，この表現を論理的に厳密な形に定義し直した$\varepsilon$--$N$論法を導入し，実数列の収束と発散を定義する．次に，数列を自然数全体から実数全体への写像として捉え直し，極限の一意性を証明する．そのうえで，極限の四則演算や，極限操作が順序関係を保存することを示し，数列の収束を判定する強力な手法である「はさみうちの原理」を具体例とともに確認しよう．ここで扱う議論は，\partref{実数の連続性}で「実数の連続性」を数学的に記述するための準備にもなる．
 \end{abstract}
 
 \phantomsection
-\section{実数列の極限}\label{sec:実数列の極限} \index{きょくげん@極限}
+\section{実数列の極限}\label{sec:実数列の極限}
 
 \phantomsection
 \subsection{実数列の性質}
 
-高校数学において，数列の極限は次のように定義されていたはずである．
+高校数学において，数列の極限は次のように定義されていた．
 
 \begin{quotation}
-  数列 $(a_n)_{n \in \mathbb{N}}$ \footnote{高校数学では数列を $\{a_n\}$ と表記することが多いが，大学数学では $n$ が自然数であることを明示するために $(a_n)_{n \in \mathbb{N}}$ とかく．
-  また，$\{a_n\}$ という記法は集合 $\{ a_n \mid n \in \mathbb{N} \}$ と混同しやすく，たとえば $a_n \coloneqq (-1)^n$ のとき，数列としては各項が振動するが，
-  集合としては $\{ -1, 1 \}$ という2要素のみを持つ集合を指すことになる．}
-  において，番号 $n$ を限りなく大きくするとき，$a_n$ の値がある一定の値 $a$ に限りなく近づくならば，この数列は $a$ に\textbf{収束する}といい，
+  数列$(a_n)_{n \in \mathbb{N}}$\footnote{高校数学では数列を$\{a_n\}$と表記することが多いが，本書では$n$が自然数を動くことを明示するために$(a_n)_{n \in \mathbb{N}}$とかく．
+  また，$\{a_n\}$という記法は集合$\{ a_n \mid n \in \mathbb{N} \}$と混同しやすい．たとえば$a_n \coloneqq (-1)^n$のとき，数列としては各項が振動するが，集合としては$\{ -1, 1 \}$という$2$つの元からなる集合を指すことになる．}において，番号$n$を限りなく大きくするとき，$a_n$の値がある一定の値$a$に限りなく近づくならば，この数列は$a$に収束するといい，
   \[
     \lim_{n \to \infty} a_n = a
   \]
   とかく．
 \end{quotation}
 
-しかし，この「限りなく大きくする」「限りなく近づく」といった表現は直感的ではあるものの，数学的に厳密な定義とは言い難い．何をもって「限りなく」とするのか，その基準が曖昧だからである．
-こうした直感的な表現を排し，論理的に厳格な形で実数列\footnote{各項が実数である数列のこと．}の収束を再定義したものが，以下の $\varepsilon\text{--}N$ 論法である．
+しかし，この「限りなく大きくする」「限りなく近づく」といった表現は，直感的ではあるものの，数学的に厳密な定義とはいいがたい．何をもって「限りなく」とするのか，その基準が曖昧だからである．
+こうした直感的な表現を排し，論理的に厳密な形で実数列\footnote{各項が実数である数列のこと．}の収束を定義し直したものが，次の$\varepsilon$--$N$論法である．
 
-\begin{definition}{実数列の収束}{実数列の収束} \index{じっすうれつのしゅうそく@実数列の収束}
-  実数列 $(a_n)_{n \in \mathbb{N}}$ が $a \in \mathbb{R}$ に収束するとは，次が成り立つことである：
+\begin{definition}{実数列の収束}{実数列の収束}
+  実数列$(a_n)_{n \in \mathbb{N}}$が$a \in \mathbb{R}$に\emph{収束する}\index{じっすうれつのしゅうそく@実数列の収束}とは，次が成り立つことである：
 
-  任意の $\varepsilon > 0$ に対して，ある $n_0 \in \mathbb{N}$ が存在し，すべての $n \in \mathbb{N}$ に対して $n \geqq n_0$ ならば
+  任意の$\varepsilon > 0$に対して，ある$n_0 \in \mathbb{N}$が存在し，すべての$n \in \mathbb{N}$に対して$n \geqq n_0$ならば
   \[
     \abs*{a_n - a} < \varepsilon
   \]
-  が成立する．
+  が成り立つ．
+  このとき，$a$を$(a_n)_{n \in \mathbb{N}}$の\emph{極限}\index{きょくげん@極限}といい，
+  \[
+    \lim_{n \to \infty} a_n = a
+    \quad\text{または}\quad
+    a_n \to a~(n \to \infty)
+  \]
+  とかく．
 
-  これを論理記号で書けば，つぎのようになる：
+  これを論理記号でかけば，次のようになる：
   \[
     \lall{\varepsilon > 0} \lsep \lex{n_0 \in \mathbb{N}} \lsep \lall{n \in \mathbb{N}} \lst
     \bigl( n \geqq n_0 \limp \abs*{a_n - a} < \varepsilon \bigr)
@@ -44,7 +49,7 @@
 \end{definition}
 
 \begin{remark}[日本語の言い回しと論理式の対応]
-  \deref{実数列の収束}のふたつの表現は，つぎのように1対1に対応している．
+  \deref{実数列の収束}の$2$つの表現は，次のように$1$対$1$に対応している．
   \begin{center}
     \begin{tabular}{l|l}
       \hline
@@ -60,23 +65,23 @@
 
   とくに本質的なのは，$\lall{\varepsilon > 0}$が$\lex{n_0 \in \mathbb{N}}$より\textbf{前}にあることである．
   この順序は「どんなに小さな$\varepsilon$を指定されても，それに応じて$n_0$を選び直してよい」ことを表しており，$n_0$は$\varepsilon$に依存してよい．
-  順序を入れ替えて$\lex{n_0 \in \mathbb{N}} \lsep \lall{\varepsilon > 0}$としてしまうと，「$\varepsilon$によらないひとつの$n_0$がある」という，まったく別の（そしてはるかに強い）主張になってしまう．
+  順序を入れ替えて$\lex{n_0 \in \mathbb{N}} \lsep \lall{\varepsilon > 0}$としてしまうと，「$\varepsilon$によらない$1$つの$n_0$がある」という，まったく別の（そしてはるかに強い）主張になってしまう．
 \end{remark}
 
-この定義は，「いかに小さな誤差 $\varepsilon$ を指定したとしても，ある番号 $n_0$ を境に，それ以降のすべての項 $a_n$ が $a$ の $\varepsilon$ 近傍，すなわち開区間 $(a-\varepsilon, a+\varepsilon)$ に収まってしまう」ことを意味している．
+\deref{実数列の収束}は，「どんなに小さな誤差$\varepsilon$を指定しても，ある番号$n_0$から先のすべての項$a_n$が，開区間$(a-\varepsilon, a+\varepsilon)$に収まる」ことを意味している．
 
-\begin{definition}{実数列の発散}{実数列の発散} \index{じっすうれつのはっさん@実数列の発散}
-  実数列 $(a_n)_{n \in \mathbb{N}}$ が収束しないとき，その数列は\textbf{発散する}という\footnote{$a_n \coloneqq (-1)^n$ のように特定の定数に近づかず，かつ無限大にも行かない「振動」も，数学的には発散に含まれる．}．
+\begin{definition}{実数列の発散}{実数列の発散}
+  実数列$(a_n)_{n \in \mathbb{N}}$が収束しないとき，その数列は\emph{発散する}\index{じっすうれつのはっさん@実数列の発散}という\footnote{$a_n \coloneqq (-1)^n$のように，特定の値に近づかず，かつ無限大にも発散しない「振動」も，発散に含まれる．}．
 \end{definition}
 
-\begin{definition}{実数列の $+\infty$ への発散}{実数列の正の無限大への発散}
-  実数列 $(a_n)_{n \in \mathbb{N}}$ が $+\infty$ に発散するとは，任意の $M \in \mathbb{R}$ に対して，ある $n_0 \in \mathbb{N}$ が存在し，すべての $n \in \mathbb{N}$ に対して $n \geqq n_0$ ならば
+\begin{definition}{実数列の$+\infty$への発散}{実数列の正の無限大への発散}
+  実数列$(a_n)_{n \in \mathbb{N}}$が\emph{$+\infty$に発散する}とは，任意の$M \in \mathbb{R}$に対して，ある$n_0 \in \mathbb{N}$が存在し，すべての$n \in \mathbb{N}$に対して$n \geqq n_0$ならば
   \[
     a_n > M
   \]
-  が成立することである\footnote{$-\infty$ への発散の定義については，不等号の向きに注意して各自で考えてみてほしい．}．
+  が成り立つことである\footnote{$-\infty$への発散の定義については，不等号の向きに注意して各自で考えてみてほしい．}．
 
-  これを論理記号で書けば，つぎのようになる：
+  これを論理記号でかけば，次のようになる：
   \[
     \lall{M \in \mathbb{R}} \lsep \lex{n_0 \in \mathbb{N}} \lsep \lall{n \in \mathbb{N}} \lst
     \bigl( n \geqq n_0 \limp a_n > M \bigr)
@@ -84,7 +89,7 @@
 \end{definition}
 
 \begin{remark}[「収束しない」ことの論理式]
-  \deref{実数列の発散}にいう「収束しない」を，論理式の形で書いてみよう．
+  \deref{実数列の発散}にいう「収束しない」を，論理式の形でかいてみよう．
   量化子の否定の規則（$\lnot$が量化子を通過するたびに$\forall$と$\exists$が入れ替わる）を外側から順に適用し，最後に含意の否定$\lnot ( P \limp Q ) \equiv P \land \lnot Q$を用いると，「$(a_n)_{n \in \mathbb{N}}$が$a$に収束しない」ことは
   \[
     \lex{\varepsilon > 0} \lsep \lall{n_0 \in \mathbb{N}} \lsep \lex{n \in \mathbb{N}} \lst
@@ -98,78 +103,77 @@
 \phantomsection
 \subsection{実数列と極限の性質}
 
-ここで，実数列を集合論的な観点から再定義しておく．
-実数列は，自然数から実数への写像として捉えることができる．
+ここで，実数列を集合論的な観点から定義し直しておく．
+実数列は，自然数全体の集合から実数全体の集合への写像として捉えることができる．
 
 \begin{definition}{実数列}{実数列}
-写像 $a \colon \mathbb{N} \to \mathbb{R}$ を実数列とよぶ．
-自然数 $n \in \mathbb{N}$ による像 $a(n)$ を $a_n$ と書き，数列そのものを $(a_n)_{n \in \mathbb{N}}$ と表記する．
+  写像$a \colon \mathbb{N} \to \mathbb{R}$を\emph{実数列}\index{じっすうれつ@実数列}という．
+  $n \in \mathbb{N}$の像$a(n)$を$a_n$とかき，数列そのものを$(a_n)_{n \in \mathbb{N}}$と表す．
 \end{definition}
 
 \begin{prop}{実数列の極限の一意性}{実数列の極限の一意性}
-  数列 $(a_n)_{n \in \mathbb{N}}$ が収束するとき，その収束先（極限値）はただひとつに限る．
+  実数列$(a_n)_{n \in \mathbb{N}}$が収束するとき，その極限はただひとつである．
 \end{prop}
 
-\begin{leftbar}
-\begin{proof}
-  $a \ne b$ なる $a, b \in \mathbb{R}$ がともに数列 $(a_n)_{n \in \mathbb{N}}$ の収束先であると仮定し，矛盾を導く．
-  $\varepsilon \coloneqq \frac{\abs*{b-a}}{2}$ とおくと，$a \ne b$ より $\varepsilon > 0$ である．
-  収束の定義より，ある $n_0, n_1 \in \mathbb{N}$ が存在して，すべての $n \in \mathbb{N}$ に対して次が成り立つ：
-  \[
-    n \geqq n_0 \limp \abs{a_n - a} < \varepsilon, \quad n \geqq n_1 \limp \abs{a_n - b} < \varepsilon
-  \]
-  ここで $n \geqq \max\{n_0, n_1\}$ を満たす $n$ を任意にとると，三角不等式より
-  \[
-    \abs{b-a} = \abs{(b - a_n) + (a_n - a)} \leqq \abs{a_n - b} + \abs{a_n - a} < \varepsilon + \varepsilon = 2\varepsilon = \abs{b-a}
-  \]
-  となり，$\abs{b-a} < \abs{b-a}$ という矛盾が生じる．したがって，収束先はただひとつである．これが証明すべきことであった．
-\end{proof}
-\end{leftbar}
+\begin{tleftbar}
+  \begin{proof}
+    $a \ne b$を満たす$a,b \in \mathbb{R}$がともに$(a_n)_{n \in \mathbb{N}}$の極限であると仮定し，矛盾を導く．
+    $\varepsilon \coloneqq \abs*{b-a}/2$とおくと，$a \ne b$より$\varepsilon > 0$である．
+    収束の定義より，ある$n_0,n_1 \in \mathbb{N}$が存在して，すべての$n \in \mathbb{N}$に対して次が成り立つ：
+    \[
+      n \geqq n_0 \limp \abs{a_n - a} < \varepsilon, \quad n \geqq n_1 \limp \abs{a_n - b} < \varepsilon
+    \]
+    ここで$n \geqq \max\{n_0, n_1\}$を満たす$n$を$1$つとると，三角不等式より
+    \[
+      \abs{b-a} = \abs{(b - a_n) + (a_n - a)} \leqq \abs{a_n - b} + \abs{a_n - a} < \varepsilon + \varepsilon = 2\varepsilon = \abs{b-a}
+    \]
+    となり，$\abs{b-a} < \abs{b-a}$という矛盾が生じる．したがって，極限はただひとつである．これが証明すべきことであった．
+  \end{proof}
+\end{tleftbar}
 
 \begin{prop}{収束列の有界性}{収束列の有界性}
   収束する実数列は有界である．
 \end{prop}
 
 \begin{tleftbar}
-\begin{proof}
-  実数列$(a_n)_{n \in \mathbb{N}}$が$a \in \mathbb{R}$に収束するとする．
-  このとき，収束の定義より，$1>0$に対して，ある$n_0 \in \mathbb{N}$が存在して，
-  \[
-    n \geqq n_0
-    \limp
-    \abs{a_n-a}<1
-  \]
-  が成り立つ．したがって，$n \geqq n_0$ならば，
-  \[
-    \abs{a_n}
-    \leqq \abs{a_n-a}+\abs{a}
-    < 1+\abs{a}
-  \]
-  である．
+  \begin{proof}
+    実数列$(a_n)_{n \in \mathbb{N}}$が$a \in \mathbb{R}$に収束するとする．
+    このとき，収束の定義より，$\varepsilon = 1$に対して，ある$n_0 \in \mathbb{N}$が存在して，
+    \[
+      n \geqq n_0
+      \limp
+      \abs{a_n-a}<1
+    \]
+    が成り立つ．したがって，$n \geqq n_0$ならば，
+    \[
+      \abs{a_n}
+      \leqq \abs{a_n-a}+\abs{a}
+      < 1+\abs{a}
+    \]
+    である．
 
-  また，$\abs{a_1},\abs{a_2},\ldots,\abs{a_{n_0}}$は有限個の実数であるから，
-  \[
-    M_0=\max\{\abs{a_1},\abs{a_2},\ldots,\abs{a_{n_0}}\}
-  \]
-  とおくことができる．
+    また，$\abs{a_1},\abs{a_2},\ldots,\abs{a_{n_0}}$は有限個の実数であるから，
+    \[
+      M_0=\max\{\abs{a_1},\abs{a_2},\ldots,\abs{a_{n_0}}\}
+    \]
+    とおくことができる．
 
-  そこで，
-  \[
-    M=\max\{M_0,\ 1+\abs{a}\}
-  \]
-  とおく．このとき，$n<n_0$ならば$\abs{a_n}\leqq M_0\leqq M$であり，
-  $n\geqq n_0$ならば$\abs{a_n}<1+\abs{a}\leqq M$である．
+    そこで，
+    \[
+      M=\max\{M_0,\ 1+\abs{a}\}
+    \]
+    とおく．このとき，$n<n_0$ならば$\abs{a_n}\leqq M_0\leqq M$であり，$n\geqq n_0$ならば$\abs{a_n}<1+\abs{a}\leqq M$である．
 
-  よって，すべての$n\in\mathbb{N}$に対して
-  \[
-    \abs{a_n}\leqq M
-  \]
-  が成り立つ．したがって，実数列$(a_n)_{n \in \mathbb{N}}$は有界である．これが証明すべきことであった．
-\end{proof}
+    よって，すべての$n\in\mathbb{N}$に対して
+    \[
+      \abs{a_n}\leqq M
+    \]
+    が成り立つ．したがって，実数列$(a_n)_{n \in \mathbb{N}}$は有界である．これが証明すべきことであった．
+  \end{proof}
 \end{tleftbar}
 
 \begin{theorem}{極限の四則演算}{極限の四則演算}
-  実数列$(a_n)$，$(b_n)$がそれぞれ$a,b \in \mathbb{R}$に収束するとする．
+  実数列$(a_n),(b_n)$がそれぞれ$a,b \in \mathbb{R}$に収束するとする．
   このとき，
   \[
     \lim_{n\to\infty}(a_n+b_n)=a+b,
@@ -186,254 +190,297 @@
 \end{theorem}
 
 \begin{tleftbar}
-\begin{proof}
-  まず，和について示す．任意の$\varepsilon>0$をとる．
-  $a_n\to a$，$b_n\to b$であるから，ある$n_1,n_2\in\mathbb{N}$が存在して，
-  \[
-    n\geqq n_1
-    \limp
-    \abs{a_n-a}<\frac{\varepsilon}{2}
-  \]
-  かつ
-  \[
-    n\geqq n_2
-    \limp
-    \abs{b_n-b}<\frac{\varepsilon}{2}
-  \]
-  が成り立つ．そこで，
-  \[
-    n_0=\max\{n_1,n_2\}
-  \]
-  とおく．このとき，$n\geqq n_0$ならば，
-  \[
-    \abs{(a_n+b_n)-(a+b)}
-    =\abs{(a_n-a)+(b_n-b)}
-    \leqq \abs{a_n-a}+\abs{b_n-b}
-    <\frac{\varepsilon}{2}+\frac{\varepsilon}{2}
-    =\varepsilon
-  \]
-  である．したがって，$a_n+b_n\to a+b$である．
+  \begin{proof}
+    まず，和について示す．任意の$\varepsilon>0$をとる．
+    $a_n\to a$，$b_n\to b$であるから，ある$n_1,n_2\in\mathbb{N}$が存在して，
+    \[
+      n\geqq n_1
+      \limp
+      \abs{a_n-a}<\frac{\varepsilon}{2}
+    \]
+    かつ
+    \[
+      n\geqq n_2
+      \limp
+      \abs{b_n-b}<\frac{\varepsilon}{2}
+    \]
+    が成り立つ．そこで，
+    \[
+      n_0=\max\{n_1,n_2\}
+    \]
+    とおく．このとき，$n\geqq n_0$ならば，
+    \[
+      \abs{(a_n+b_n)-(a+b)}
+      =\abs{(a_n-a)+(b_n-b)}
+      \leqq \abs{a_n-a}+\abs{b_n-b}
+      <\frac{\varepsilon}{2}+\frac{\varepsilon}{2}
+      =\varepsilon
+    \]
+    である．したがって，$a_n+b_n\to a+b$である．
 
-  次に，積について示す．収束する実数列は有界であるから，$(b_n)$は有界である．
-  よって，ある$M>0$が存在して，すべての$n\in\mathbb{N}$に対して
-  \[
-    \abs{b_n}\leqq M
-  \]
-  が成り立つ．
+    次に，積について示す．\prref{収束列の有界性}より$(b_n)$は有界である．
+    よって，ある$M>0$が存在して，すべての$n\in\mathbb{N}$に対して
+    \[
+      \abs{b_n}\leqq M
+    \]
+    が成り立つ．
 
-  任意の$\varepsilon>0$をとる．$a_n\to a$，$b_n\to b$であるから，ある$n_1,n_2\in\mathbb{N}$が存在して，
-  \[
-    n\geqq n_1
-    \limp
-    \abs{a_n-a}<\frac{\varepsilon}{2M}
-  \]
-  かつ
-  \[
-    n\geqq n_2
-    \limp
-    \abs{b_n-b}<\frac{\varepsilon}{2(\abs{a}+1)}
-  \]
-  が成り立つ．ただし，$\abs{a}+1>0$である．
+    任意の$\varepsilon>0$をとる．$a_n\to a$，$b_n\to b$であるから，ある$n_1,n_2\in\mathbb{N}$が存在して，
+    \[
+      n\geqq n_1
+      \limp
+      \abs{a_n-a}<\frac{\varepsilon}{2M}
+    \]
+    かつ
+    \[
+      n\geqq n_2
+      \limp
+      \abs{b_n-b}<\frac{\varepsilon}{2(\abs{a}+1)}
+    \]
+    が成り立つ．ただし，$\abs{a}+1>0$である．
 
-  そこで，
-  \[
-    n_0=\max\{n_1,n_2\}
-  \]
-  とおく．このとき，$n\geqq n_0$ならば，
-  \begin{align*}
-    \abs{a_nb_n-ab}
-    &=\abs{a_nb_n-ab_n+ab_n-ab} \\
-    &\leqq \abs{b_n}\abs{a_n-a}+\abs{a}\abs{b_n-b} \\
-    &\leqq M\abs{a_n-a}+\abs{a}\abs{b_n-b} \\
-    &< M\cdot\frac{\varepsilon}{2M}
-      +\abs{a}\cdot\frac{\varepsilon}{2(\abs{a}+1)} \\
-    &\leqq \frac{\varepsilon}{2}+\frac{\varepsilon}{2}
-     =\varepsilon
-  \end{align*}
-  である．したがって，$a_nb_n\to ab$である．
+    そこで，
+    \[
+      n_0=\max\{n_1,n_2\}
+    \]
+    とおく．このとき，$n\geqq n_0$ならば，
+    \begin{align*}
+      \abs{a_nb_n-ab}
+      &=\abs{a_nb_n-ab_n+ab_n-ab} \\
+      &\leqq \abs{b_n}\abs{a_n-a}+\abs{a}\abs{b_n-b} \\
+      &\leqq M\abs{a_n-a}+\abs{a}\abs{b_n-b} \\
+      &< M\cdot\frac{\varepsilon}{2M}
+        +\abs{a}\cdot\frac{\varepsilon}{2(\abs{a}+1)} \\
+      &\leqq \frac{\varepsilon}{2}+\frac{\varepsilon}{2}
+       =\varepsilon
+    \end{align*}
+    である．したがって，$a_nb_n\to ab$である．
 
-  最後に，商について示す．$b\ne 0$とする．
-  まず，$b_n\to b$であるから，$\varepsilon=\dfrac{\abs{b}}{2}$に対して，
-  ある$n_1\in\mathbb{N}$が存在して，
-  \[
-    n\geqq n_1
-    \limp
-    \abs{b_n-b}<\frac{\abs{b}}{2}
-  \]
-  が成り立つ．このとき，$n\geqq n_1$ならば，
-  \[
-    \abs{b_n}
-    \geqq \abs{b}-\abs{b_n-b}
-    >\abs{b}-\frac{\abs{b}}{2}
-    =\frac{\abs{b}}{2}
-  \]
-  である．したがって，十分大きい$n$に対して$b_n\ne 0$である．
+    最後に，商について示す．$b\ne 0$とする．
+    まず，$b_n\to b$であるから，$\varepsilon=\abs{b}/2$に対して，ある$n_1\in\mathbb{N}$が存在して，
+    \[
+      n\geqq n_1
+      \limp
+      \abs{b_n-b}<\frac{\abs{b}}{2}
+    \]
+    が成り立つ．このとき，$n\geqq n_1$ならば，
+    \[
+      \abs{b_n}
+      \geqq \abs{b}-\abs{b_n-b}
+      >\abs{b}-\frac{\abs{b}}{2}
+      =\frac{\abs{b}}{2}
+    \]
+    である．とくに，$n \geqq n_1$ならば$b_n\ne 0$である．
 
-  任意の$\varepsilon>0$をとる．$a_n\to a$，$b_n\to b$であるから，ある$n_2,n_3\in\mathbb{N}$が存在して，
-  \[
-    n\geqq n_2
-    \limp
-    \abs{a_n-a}<\frac{\abs{b}}{2}\cdot \frac{\varepsilon}{2}
-  \]
-  かつ
-  \[
-    n\geqq n_3
-    \limp
-    \abs{b_n-b}<\frac{\abs{b}^2}{2(\abs{a}+1)}\cdot \frac{\varepsilon}{2}
-  \]
-  が成り立つ．
+    任意の$\varepsilon>0$をとる．$a_n\to a$，$b_n\to b$であるから，ある$n_2,n_3\in\mathbb{N}$が存在して，
+    \[
+      n\geqq n_2
+      \limp
+      \abs{a_n-a}<\frac{\abs{b}}{2}\cdot \frac{\varepsilon}{2}
+    \]
+    かつ
+    \[
+      n\geqq n_3
+      \limp
+      \abs{b_n-b}<\frac{\abs{b}^2}{2(\abs{a}+1)}\cdot \frac{\varepsilon}{2}
+    \]
+    が成り立つ．
 
-  そこで，
-  \[
-    n_0=\max\{n_1,n_2,n_3\}
-  \]
-  とおく．このとき，$n\geqq n_0$ならば，
-  \begin{align*}
-    \abs*{\frac{a_n}{b_n}-\frac{a}{b}}
-    &=\abs*{\frac{b(a_n-a)-a(b_n-b)}{bb_n}} \\
-    &\leqq \frac{\abs*{b}\abs*{a_n-a}+\abs*{a}\abs*{b_n-b}}
-                  {\abs*{b}\abs*{b_n}} \\
-    &< \frac{\abs*{b}\abs*{a_n-a}+\abs*{a}\abs*{b_n-b}}
-             {\abs*{b}\cdot \dfrac{\abs*{b}}{2}} \\
-    &= \frac{2}{\abs*{b}}\abs*{a_n-a}
-       +\frac{2\abs*{a}}{\abs*{b}^2}\abs*{b_n-b} \\
-    &< \frac{2}{\abs*{b}}\cdot\frac{\abs*{b}}{2}\cdot\frac{\varepsilon}{2}
-       +\frac{2\abs*{a}}{\abs*{b}^2}\cdot
-        \frac{\abs*{b}^2}{2(\abs*{a}+1)}\cdot\frac{\varepsilon}{2} \\
-    &\leqq \frac{\varepsilon}{2}+\frac{\varepsilon}{2}
-     =\varepsilon
-  \end{align*}
-  である．したがって，
-  \[
-    \frac{a_n}{b_n}\to\frac{a}{b}
-  \]
-  が成り立つ．これが証明すべきことであった．
-\end{proof}
+    そこで，
+    \[
+      n_0=\max\{n_1,n_2,n_3\}
+    \]
+    とおく．このとき，$n\geqq n_0$ならば，
+    \begin{align*}
+      \abs*{\frac{a_n}{b_n}-\frac{a}{b}}
+      &=\abs*{\frac{b(a_n-a)-a(b_n-b)}{bb_n}} \\
+      &\leqq \frac{\abs*{b}\abs*{a_n-a}+\abs*{a}\abs*{b_n-b}}
+                    {\abs*{b}\abs*{b_n}} \\
+      &< \frac{\abs*{b}\abs*{a_n-a}+\abs*{a}\abs*{b_n-b}}
+               {\abs*{b}\cdot \dfrac{\abs*{b}}{2}} \\
+      &= \frac{2}{\abs*{b}}\abs*{a_n-a}
+         +\frac{2\abs*{a}}{\abs*{b}^2}\abs*{b_n-b} \\
+      &< \frac{2}{\abs*{b}}\cdot\frac{\abs*{b}}{2}\cdot\frac{\varepsilon}{2}
+         +\frac{2\abs*{a}}{\abs*{b}^2}\cdot
+          \frac{\abs*{b}^2}{2(\abs*{a}+1)}\cdot\frac{\varepsilon}{2} \\
+      &\leqq \frac{\varepsilon}{2}+\frac{\varepsilon}{2}
+       =\varepsilon
+    \end{align*}
+    である．したがって，
+    \[
+      \frac{a_n}{b_n}\to\frac{a}{b}
+    \]
+    が成り立つ．これが証明すべきことであった．
+  \end{proof}
 \end{tleftbar}
 
 \begin{remark}[四則演算は収束列に限る]
-ここで，$(a_n)$と$(b_n)$がともに収束する場合に，上の定理が成り立つことに注意しよう．
-たとえば，
-\[
-a_n \coloneqq n+\sin^2 n,
-\qquad
-b_n \coloneqq -n+\cos^2 n+\frac{\sin n}{n}
-\]
-とすると，数列$(a_n)$と$(b_n)$はともに発散する．
-一方，
-\[
-a_n+b_n
-=\sin^2 n+\cos^2 n+\frac{\sin n}{n}
-=1+\frac{\sin n}{n}
-\to 1
-\]
-である．
+  \thref{極限の四則演算}は，$(a_n)$と$(b_n)$がともに収束する場合の主張であることに注意しよう．
+  たとえば，
+  \[
+    a_n \coloneqq 1+\frac12+\frac13+\cdots+\frac1n,
+    \qquad
+    b_n \coloneqq -\log n
+  \]
+  とすると，数列$(a_n),(b_n)$はともに発散するが，$(a_n+b_n)$は収束する．
+  このことを確かめよう．
 
-もっとも，このことはより簡単な例からも容易にわかる．
-実際，
-\[
-a_n\coloneqq n,
-\qquad
-b_n\coloneqq -n+1+\frac1n
-\]
-とすれば，$(a_n)$と$(b_n)$はともに発散するが，
-\[
-a_n+b_n=1+\frac1n\to 1
-\]
-である．
+  鍵となるのは，$x>-1$，$x\ne 0$に対して成り立つ不等式$\log(1+x)<x$である．
+  $x=1/k$とすれば$\log(1+1/k)<1/k$を得る．
+  また，$x=-1/(k+1)$とすれば$\log\bigl(k/(k+1)\bigr)<-1/(k+1)$，すなわち$\log(1+1/k)>1/(k+1)$を得る．
+  まとめると，任意の$k\in\mathbb{N}$に対して
+  \[
+    \frac{1}{k+1}<\log\left(1+\frac1k\right)<\frac1k
+  \]
+  が成り立つ．
 
-このように，数列$(a_n+b_n)$が収束するからといって，$(a_n)$と$(b_n)$がそれぞれ収束するとは限らない．
-極限の四則演算は，もとの数列が収束することを仮定して適用するものである．
+  まず，右側の不等式を$k=1,\dots,n$について足し合わせると，
+  \[
+    a_n
+    =\sum_{k=1}^{n}\frac1k
+    >\sum_{k=1}^{n}\log\left(1+\frac1k\right)
+    =\sum_{k=1}^{n}\bigl(\log(k+1)-\log k\bigr)
+    =\log(n+1)
+  \]
+  である．よって$a_n\to+\infty$である．また，$b_n\to-\infty$は明らかである．
+
+  次に，$c_n\coloneqq a_n+b_n$とおく．左側の不等式より，
+  \[
+    c_n-c_{n+1}
+    =\log\left(1+\frac1n\right)-\frac{1}{n+1}
+    >0
+  \]
+  であるから，$(c_n)$は単調減少である．
+  さらに，$\log n=\sum_{k=1}^{n-1}\log(1+1/k)$と右側の不等式より，
+  \[
+    c_n
+    =\sum_{k=1}^{n-1}\left(\frac1k-\log\left(1+\frac1k\right)\right)+\frac1n
+    >0
+  \]
+  であるから，$(c_n)$は下に有界である．
+  したがって，\thref{単調収束定理}より$(c_n)$は収束する．
+
+  この極限
+  \[
+    \gamma
+    \coloneqq\lim_{n\to\infty}\left(1+\frac12+\cdots+\frac1n-\log n\right)
+    =0.5772156649\cdots
+  \]
+  は\emph{Euler--Mascheroni定数}（オイラー定数）とよばれる．
+  $\gamma$は$\pi$や$e$と並んで数学のさまざまな場面に現れる定数であるが，
+  有理数であるか無理数であるかすら，いまだに知られていない．
+  発散する2つの数列の和が，このように正体の知れない有限の値に落ち着くこともあるのである．
+
+  もっとも，和が収束するのにもとの数列が発散するという現象そのものは，より簡単な例からもわかる．
+  実際，
+  \[
+    a_n\coloneqq n,
+    \qquad
+    b_n\coloneqq -n+1+\frac1n
+  \]
+  とすれば，$(a_n),(b_n)$はともに発散するが，
+  \[
+    a_n+b_n=1+\frac1n\to 1
+  \]
+  である．
+
+  このように，数列$(a_n+b_n)$が収束するからといって，$(a_n),(b_n)$がそれぞれ収束するとは限らない．
+  極限の四則演算は，もとの数列が収束することを仮定して適用するものである．
 \end{remark}
 
 次に，極限操作が順序関係を保存することを示す．
 
 \begin{theorem}{極限の不等式}{極限の不等式}
-  収束する実数列 $(a_n)_{n \in \mathbb{N}}, (b_n)_{n \in \mathbb{N}}$ について，その極限をそれぞれ $a, b$ とする．
-
-  すべての $n \in \mathbb{N}$ に対して $a_n \leqq b_n$ が成り立つならば，
+  実数列$(a_n)_{n \in \mathbb{N}},(b_n)_{n \in \mathbb{N}}$がそれぞれ$a,b \in \mathbb{R}$に収束するとする．
+  すべての$n \in \mathbb{N}$に対して$a_n \leqq b_n$が成り立つならば，
   \[
     a \leqq b
   \]
   である．
 \end{theorem}
 
-\begin{leftbar}
-\begin{proof}
-  背理法を用いる．$a > b$ と仮定し，$\varepsilon \coloneqq \frac{a-b}{2} > 0$ とおく．
-  収束の定義より，ある $n_0 \in \mathbb{N}$ が存在して，$n \geqq n_0$ ならば
-  \[
-    \abs{a_n - a} < \varepsilon \limp a - \varepsilon < a_n < a + \varepsilon
-  \]
-  \[
-    \abs{b_n - b} < \varepsilon \limp b - \varepsilon < b_n < b + \varepsilon
-  \]
-  がともに成立する．このとき，$b + \varepsilon = b + \frac{a-b}{2} = \frac{a+b}{2}$ および $a - \varepsilon = a - \frac{a-b}{2} = \frac{a+b}{2}$ であるから，
-  \[
-    b_n < b + \varepsilon = a - \varepsilon < a_n
-  \]
-  となり，すべての $n$ で $a_n \leqq b_n$ とした仮定に矛盾する．ゆえに $a \leqq b$ である．これが証明すべきことであった．
-\end{proof}
-\end{leftbar}
+\begin{tleftbar}
+  \begin{proof}
+    背理法で示す．$a > b$と仮定し，$\varepsilon \coloneqq (a-b)/2 > 0$とおく．
+    収束の定義より，ある$n_0 \in \mathbb{N}$が存在して，$n \geqq n_0$ならば
+    \[
+      a - \varepsilon < a_n < a + \varepsilon,
+      \qquad
+      b - \varepsilon < b_n < b + \varepsilon
+    \]
+    がともに成り立つ．ここで，
+    \[
+      b + \varepsilon = \frac{a+b}{2} = a - \varepsilon
+    \]
+    であるから，$n \geqq n_0$ならば
+    \[
+      b_n < b + \varepsilon = a - \varepsilon < a_n
+    \]
+    となり，すべての$n$で$a_n \leqq b_n$が成り立つという仮定に矛盾する．ゆえに$a \leqq b$である．これが証明すべきことであった．
+  \end{proof}
+\end{tleftbar}
 
 \begin{remark}[厳密な不等号は極限で保存されない]
-  注意すべき点は，元の数列の間に厳密な不等号 $a_n < b_n$ が成り立っていても，極限において不等号が維持されるとは限らないことである．
-  たとえば，$a_n \coloneqq 1 - \frac{1}{n}$ および $b_n \coloneqq 1 + \frac{1}{n}$ とすると，任意の $n \in \mathbb{N}$ において $a_n < b_n$ が成立するが，極限値はともに $1$ となり，$a = b$ が成立してしまう．このように，極限操作によって不等号の「ゆとり」が消滅し，等号が成立する可能性がある．
+  もとの数列の間に厳密な不等号$a_n < b_n$が成り立っていても，極限において厳密な不等号が保たれるとは限らない．
+  たとえば，$a_n \coloneqq 1 - 1/n$，$b_n \coloneqq 1 + 1/n$とすると，任意の$n \in \mathbb{N}$に対して$a_n < b_n$が成り立つが，極限はともに$1$となり，$a = b$となる．
+  このように，極限操作によって不等号の「ゆとり」が消え，等号が成り立つことがある．
 \end{remark}
 
-\begin{theorem}{はさみうちの原理}{はさみうちの原理} \index{はさみうちのげんり@はさみうちの原理}
-  実数列 $(a_n)_{n \in \mathbb{N}}, (b_n)_{n \in \mathbb{N}}$ がともに $a \in \mathbb{R}$ に収束するとする：
+\begin{theorem}{はさみうちの原理}{はさみうちの原理}
+  実数列$(a_n)_{n \in \mathbb{N}},(b_n)_{n \in \mathbb{N}}$がともに$a \in \mathbb{R}$に収束するとする：
   \[
     \lim_{n \to \infty} a_n = a, \quad \lim_{n \to \infty} b_n = a
   \]
-  このとき，別の数列 $(c_n)_{n \in \mathbb{N}}$ について，ある番号以上のすべての $n \in \mathbb{N}$ に対して
+  このとき，実数列$(c_n)_{n \in \mathbb{N}}$について，ある$N \in \mathbb{N}$が存在して，$n \geqq N$を満たすすべての$n \in \mathbb{N}$に対して
   \[
     a_n \leqq c_n \leqq b_n
   \]
-  が成り立つならば，数列 $(c_n)_{n \in \mathbb{N}}$ もまた $a$ に収束する．すなわち，$(c_n) \in \mathcal{C}$ であり\footnote{ここでの $\mathcal{C}$ は，収束する実数列全体の集合を表す}，$\lim_{n \to \infty} c_n = a$ が成立する．
+  が成り立つならば，$(c_n)_{n \in \mathbb{N}}$も$a$に収束する．
+  これを\emph{はさみうちの原理}\index{はさみうちのげんり@はさみうちの原理}という．
 \end{theorem}
 
-\begin{leftbar}
-\begin{proof}
-  任意の $\varepsilon > 0$ をとる．
-  仮定より $\lim_{n \to \infty} a_n = a$ および $\lim_{n \to \infty} b_n = a$ であるから，この $\varepsilon$ に対してある $n_1, n_2 \in \mathbb{N}$ が存在し，次を満たす：
-  \begin{align}
-    n \geqq n_1 &\limp a - \varepsilon < a_n < a + \varepsilon \\
-    n \geqq n_2 &\limp a - \varepsilon < b_n < a + \varepsilon
-  \end{align}
-  ここで $n_0 \coloneqq \max \{ n_1, n_2 \}$ と定めると，$n \geqq n_0$ においては上の 2 つの不等式が同時に成立する．
-  さらに，仮定 $a_n \leqq c_n \leqq b_n$ を合わせると， $n \geqq n_0$ において
-  \[
-    a - \varepsilon < a_n \leqq c_n \leqq b_n < a + \varepsilon
-  \]
-  が成り立つ．したがって，$n \geqq n_0$ ならば常に
-  \[
-    a - \varepsilon < c_n < a + \varepsilon \lequiv \abs{c_n - a} < \varepsilon
-  \]
-  が成立する．これは，数列 $(c_n)_{n \in \mathbb{N}}$ が $a$ に収束することの定義そのものである．これが証明すべきことであった．
-\end{proof}
-\end{leftbar}
+\begin{tleftbar}
+  \begin{proof}
+    任意の$\varepsilon > 0$をとる．
+    仮定より$\lim_{n \to \infty} a_n = a$かつ$\lim_{n \to \infty} b_n = a$であるから，この$\varepsilon$に対して，ある$n_1,n_2 \in \mathbb{N}$が存在し，次を満たす：
+    \begin{align*}
+      n \geqq n_1 &\limp a - \varepsilon < a_n < a + \varepsilon, \\
+      n \geqq n_2 &\limp a - \varepsilon < b_n < a + \varepsilon.
+    \end{align*}
+    ここで$n_0 \coloneqq \max \{ N, n_1, n_2 \}$と定めると，$n \geqq n_0$ならば上の$2$つの不等式と$a_n \leqq c_n \leqq b_n$が同時に成り立つ．
+    よって，$n \geqq n_0$ならば
+    \[
+      a - \varepsilon < a_n \leqq c_n \leqq b_n < a + \varepsilon
+    \]
+    であり，すなわち
+    \[
+      \abs{c_n - a} < \varepsilon
+    \]
+    が成り立つ．これは，$(c_n)_{n \in \mathbb{N}}$が$a$に収束することにほかならない．これが証明すべきことであった．
+  \end{proof}
+\end{tleftbar}
 
 \begin{remark}[はさみうちの原理の強み]
-  この原理の特筆すべき点は，数列 $(c_n)$ 自体の収束性をあらかじめ仮定する必要がないことにある．
-  上下から同じ値に収束する数列で「挟む」ことができれば，未知の数列 $(c_n)$ の収束先も同じ値であると結論づけることができる．このため，はさみうちの原理は数列の収束を判定する際の強力なツールとなる．
+  はさみうちの原理の特筆すべき点は，数列$(c_n)$自体の収束をあらかじめ仮定する必要がないことにある．
+  上下から同じ値に収束する数列で「挟む」ことができれば，$(c_n)$の極限も同じ値であると結論づけることができる．
+  このため，はさみうちの原理は，数列の収束を判定する際の強力な道具となる．
 \end{remark}
 
 \begin{example}{はさみうちの原理（三角関数の例）}{はさみうちの原理（三角関数の例）}
   \[
-  a_n \coloneqq \frac{\sin (\pi )}{n}
+    a_n \coloneqq \frac{\sin n}{n}
   \]
   とする．このとき，
   \[
-  - 1 \leqq \sin (\pi ) \leqq 1
+    -1 \leqq \sin n \leqq 1
   \]
   であるから，
   \[
-  -\frac{1}{n} \leqq a_n \leqq \frac{1}{n}
+    -\frac{1}{n} \leqq a_n \leqq \frac{1}{n}
   \]
-  となり，$\lim_{n \to \infty} (-1/n)=0$，$\lim_{n \to \infty} 1/n =0$であるから，はさみうちの原理により
+  となる．$\lim_{n \to \infty} (-1/n) = 0$，$\lim_{n \to \infty} 1/n = 0$であるから，はさみうちの原理により
   \[
-  \lim_{n \to \infty} a_n =0
+    \lim_{n \to \infty} a_n = 0
   \]
   を得る．
 \end{example}
@@ -442,15 +489,16 @@ a_n+b_n=1+\frac1n\to 1
   \[
     a_n \coloneqq \frac{\bigl[ \sqrt{n} \bigr]}{n}
   \]
-  とする．このとき，任意の実数 $x$ に対して
+  とする．ここで$[x]$は$x$を超えない最大の整数を表す．
+  任意の実数$x$に対して
   \[
     [x] \leqq x < [x] + 1
   \]
-  が成り立つから，$x=\sqrt{n}$ とおくと
+  が成り立つから，$x=\sqrt{n}$とおくと
   \[
     \sqrt{n}-1 < \bigl[\sqrt{n}\bigr] \leqq \sqrt{n}
   \]
-  となる．よって両辺を $n$ で割れば
+  となる．よって各辺を$n$で割れば
   \[
     \frac{\sqrt{n}-1}{n} < a_n \leqq \frac{\sqrt{n}}{n}
   \]
@@ -470,49 +518,49 @@ a_n+b_n=1+\frac1n\to 1
 \end{example}
 
 \begin{example}{はさみうちの原理（複雑な和の例）}{はさみうちの原理_複雑な和}
-\[
-a_n
-\coloneqq
-\sum_{k=1}^{n}\frac{\sin k}{n^2+k}
-=
-\frac{\sin 1}{n^2+1}
-+\frac{\sin 2}{n^2+2}
-+\cdots
-+\frac{\sin n}{n^2+n}
-\]
-とする．一見すると，この数列の極限を直接求めることは難しそうに見える．
+  \[
+    a_n
+    \coloneqq
+    \sum_{k=1}^{n}\frac{\sin k}{n^2+k}
+    =
+    \frac{\sin 1}{n^2+1}
+    +\frac{\sin 2}{n^2+2}
+    +\cdots
+    +\frac{\sin n}{n^2+n}
+  \]
+  とする．一見すると，この数列の極限を直接求めることは難しそうに見える．
 
-ここで，任意の $k\in\mathbb{N}$ に対して
-\[
-\abs{\sin k}\leqq 1
-\]
-であるから，
-\[
-\abs{a_n}
-\leqq
-\sum_{k=1}^{n}\frac{\abs{\sin k}}{n^2+k}
-\leqq
-\sum_{k=1}^{n}\frac{1}{n^2+k}
-<
-\sum_{k=1}^{n}\frac{1}{n^2}
-=
-\frac{1}{n}.
-\]
-したがって，
-\[
--\frac{1}{n} < a_n< \frac{1}{n}
-\]
-が成り立つ．
+  ここで，任意の$k\in\mathbb{N}$に対して
+  \[
+    \abs{\sin k}\leqq 1
+  \]
+  であるから，
+  \[
+    \abs{a_n}
+    \leqq
+    \sum_{k=1}^{n}\frac{\abs{\sin k}}{n^2+k}
+    \leqq
+    \sum_{k=1}^{n}\frac{1}{n^2+k}
+    <
+    \sum_{k=1}^{n}\frac{1}{n^2}
+    =
+    \frac{1}{n}
+  \]
+  である．したがって，
+  \[
+    -\frac{1}{n} < a_n < \frac{1}{n}
+  \]
+  が成り立つ．
 
-ここで
-\[
-\lim_{n\to\infty}\left(-\frac{1}{n}\right)=0,
-\qquad
-\lim_{n\to\infty}\frac{1}{n}=0
-\]
-であるから，はさみうちの原理により
-\[
-\lim_{n\to\infty}a_n=0
-\]
-を得る．
+  ここで
+  \[
+    \lim_{n\to\infty}\left(-\frac{1}{n}\right)=0,
+    \qquad
+    \lim_{n\to\infty}\frac{1}{n}=0
+  \]
+  であるから，はさみうちの原理により
+  \[
+    \lim_{n\to\infty}a_n=0
+  \]
+  を得る．
 \end{example}
