@@ -26,9 +26,9 @@
 \begin{example}{二項関係の例}{二項関係の例}
   \begin{enumerate}[(A)]
     \item 実数の大小関係$\leqq$は，$\{ (x, y) \in \mathbb{R} \times \mathbb{R} \mid x \leqq y \}$という$\mathbb{R}$上の関係である．
-    \item 自然数$a$，$b$について，ある$k \in \mathbb{N}$が存在して$b = ka$となるとき，$a$は$b$を\emph{割り切る}\index{わりきる@割り切る}といい，$a \mid b$とかく．$\mid$は$\mathbb{N}$上の関係である．
+    \item 自然数$a,b$について，ある$k \in \mathbb{N}$が存在して$b = ka$となるとき，$a$は$b$を\emph{割り切る}\index{わりきる@割り切る}といい，$a \mid b$とかく．$\mid$は$\mathbb{N}$上の関係である．
     \item 集合$X$に対して，包含関係$\subset$はべき集合$\mathcal{P}(X)$上の関係である．
-    \item $n \in \mathbb{N}$を固定する．整数$a$，$b$について，$a - b$が$n$の倍数であるとき，すなわちある整数$k$が存在して$a - b = nk$となるとき，$a$と$b$は$n$を法として\emph{合同}\index{ごうどう@合同}であるといい，
+    \item $n \in \mathbb{N}$を固定する．整数$a,b$について，$a - b$が$n$の倍数であるとき，すなわちある整数$k$が存在して$a - b = nk$となるとき，$a$と$b$は$n$を法として\emph{合同}\index{ごうどう@合同}であるといい，
           \[
             a \equiv b \pmod{n}
           \]
@@ -82,7 +82,7 @@
 \stepcounter{footnote}
 \footnotetext{$n \geqq 2$の場合．たとえば$0 \equiv n \pmod{n}$かつ$n \equiv 0 \pmod{n}$であるが$0 \ne n$である．}
 
-$<$が反対称律を満たすのは，「$a < b$かつ$b < a$」を満たす$a$，$b$が存在せず，仮定が偽となるためである（空虚な真）．
+$<$が反対称律を満たすのは，「$a < b$かつ$b < a$」を満たす$a,b$が存在せず，仮定が偽となるためである（空虚な真）．
 このように，$4$つの性質は互いに独立であり，どの組合せを満たすかによって関係の性格が決まる．とくに重要なのが，次節で扱う同値関係と，最後の節で扱う順序関係である．
 
 \phantomsection
@@ -334,7 +334,7 @@ $<$が反対称律を満たすのは，「$a < b$かつ$b < a$」を満たす$a$
   \[
     [a] + [b] \coloneqq [a + b] \qquad (a, b \in \mathbb{Z})
   \]
-  で定めたい．これがwell-definedであること，すなわち右辺が代表元$a$，$b$の選び方によらないことを確かめよう．
+  で定めたい．これがwell-definedであること，すなわち右辺が代表元$a,b$の選び方によらないことを確かめよう．
   $[a] = [a']$，$[b] = [b']$とすると，\prref{同値類の性質}(ii)より$a - a' = nk$，$b - b' = nl$（$k, l \in \mathbb{Z}$）と表せる．このとき
   \[
     (a + b) - (a' + b') = n(k + l)
