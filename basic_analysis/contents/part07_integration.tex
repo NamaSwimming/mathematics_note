@@ -65,7 +65,7 @@
 
 \begin{tleftbar}
     \begin{proof}
-        $1>0$に対して，どのような$\delta >0$をとっても，$\alpha \coloneqq 1/\delta$かつ$x \coloneqq \alpha + \delta/2$となるように$\alpha$，$x$をとると，
+        $1>0$に対して，どのような$\delta >0$をとっても，$\alpha \coloneqq 1/\delta$かつ$x \coloneqq \alpha + \delta/2$となるように$\alpha,x$をとると，
         \[
             \abs{x-\alpha} = \abs{ \left (\alpha +\frac{\delta}{2} \right)-\frac{1}{\delta}} =\abs{\frac{\delta}{2}}<\delta
         \]
@@ -124,7 +124,7 @@
     \begin{proof}
         背理法で示す．
 
-        ある$\varepsilon >0$に対して，どのような$\delta >0$をとっても，$I$の元$x$，$y$が存在し，
+        ある$\varepsilon >0$に対して，どのような$\delta >0$をとっても，$I$の元$x,y$が存在し，
         $\abs{x-y}<\delta$かつ$\abs{f(x)-f(y)} \geqq \varepsilon$であると仮定する．
         さらに数列$(x_n)_{n \in \mathbb{N}} , (y_n)_{n \in \mathbb{N}} \subset I$を$\abs{x_n -y_n}<1/n$かつ$\abs{f(x_n)-f(y_n)} \geqq \varepsilon$となるようにとる．
 
@@ -155,7 +155,7 @@
 \end{figure}
 
 \begin{prop}{}{}
-    区間$I$を点$c$で左右に分け，$c$を含む左右の区間をそれぞれ$I_1$，$I_2$とおく．
+    区間$I$を点$c$で左右に分け，$c$を含む左右の区間をそれぞれ$I_1,I_2$とおく．
     このとき，$f$が$I_1$かつ$I_2$で一様連続ならば，$f$は$I$でも一様連続である．
 \end{prop}
 \newpage
@@ -249,7 +249,7 @@
     に変わる点のみが異なる．ただしここで$M_i ' \coloneqq \sup_{x_{i-1} \leqq x \leqq x^{\ast}} f(x)$，
     $M_i '' \coloneqq \sup_{x^\ast \leqq x \leqq  x_i} f(x)$とした．
 
-    $M_i$，$M_i ' $，$M_i ''$の定義から
+    $M_i,M_i ',M_i ''$の定義から
     \[
       M_i ' \leqq M_i , \quad M_i '' \leqq M_i
     \]
@@ -304,7 +304,7 @@
 証明は省略する．
 
 \begin{prop}{線型性}{線型性}
-  連続関数$f$，$g$に対して，
+  連続関数$f,g$に対して，
   \[
     \int_{a}^{b} (kf(x)+lg(x))\, dx = k\int_{a}^{b} f(x)\, dx + l\int_{a}^{b} g(x)\, dx
   \]
