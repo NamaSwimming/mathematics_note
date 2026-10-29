@@ -1,0 +1,90 @@
+\documentclass{mathnote_cmyk}
+\usepackage{mathnote_cmyk}
+
+% 製本用：表紙の裏・裏表紙の裏は完全な白紙にする
+\MathNoteVersoLabelfalse
+% 製本用：総ページ数（表紙・裏表紙を含む）．4 の倍数にしておく
+\newcommand{\BookTotalPages}{36}
+
+\begin{document}
+
+% タイトルページの呼び出し
+\tituloum
+  {Analysis}
+  {Namachan}
+  {Mathematics Notes}
+  {An introduction to limits, differentiation, and integration}
+  {\today}
+
+%\include{Preambulo/Capa}
+
+\cleardoublepage
+\pagenumbering{arabic}
+\pagecolor{white}
+
+% 目次
+\localtableofcontents
+
+\input{contents/part01_number.tex}
+\input{contents/part02_limit.tex}
+\input{contents/part03_real_number.tex}
+\begin{comment}
+\newpage
+\input{contents/part04_complex_number.tex}
+\newpage
+\input{contents/part05_series.tex}
+\newpage
+\input{contents/part06_differentiation.tex}
+\newpage
+\input{contents/part07_integration.tex}
+\end{comment}
+\newpage
+\phantomsection
+
+\part*{参考文献}
+
+\noindent
+本書は\cite{sugiura}，\cite{matsuzaka}，\cite{saito}を参考にした．
+
+\medskip
+
+\printbibliography[heading=none]
+
+% 索引
+% 参考文献の次のページ（偶数ページ）から索引を開始する．
+% 通常の \part は右ページ開始だが，索引だけは右ページ送りを無効にする．
+
+\clearpage
+\thispagestyle{empty}
+\setcounter{section}{6}
+\renewcommand{\indexname}{索引}
+
+\begingroup
+  \makeatletter
+  \def\part@newpage{\clearpage\thispagestyle{empty}}
+  \makeatother
+  \let\section\part
+  \pagestyle{empty}
+  \printindex
+\endgroup
+
+% 裏表紙が \BookTotalPages ページ目（偶数ページ）に来るよう白紙を補充する．
+% 末尾 2 ページ＝裏表紙の裏（白紙）＋裏表紙．
+% \ReadonlyShipoutCounter は表紙を含めた出力済みの物理ページ数．
+\clearpage
+\pagestyle{empty}
+\makeatletter
+\@tempcnta=\numexpr\BookTotalPages-2-\ReadonlyShipoutCounter\relax
+\ifnum\@tempcnta<0
+  \PackageWarningNoLine{製本}{本文が \BookTotalPages\space ページを超えています}
+\fi
+\loop\ifnum\@tempcnta>0
+  \thispagestyle{empty}\null\clearpage
+  \advance\@tempcnta\m@ne
+\repeat
+\makeatother
+\MathNoteBackCoverBlankfalse
+
+\MathNoteBackCover{Analysis}{2026 Edition}
+
+\end{document}
