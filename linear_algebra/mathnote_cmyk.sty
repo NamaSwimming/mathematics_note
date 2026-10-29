@@ -725,24 +725,12 @@
   % ここから目次項目を2段組にする
   \setlength{\columnsep}{24\mnpt}%
   \setlength{\columnseprule}{0pt}%
-  \begin{multicols}{2}%
+  \begin{multicols*}{2}% 段を均等化せず，左段→右段の順に詰める
   \raggedcolumns
 }{%
   % ここで目次項目の2段組を終了
-  \end{multicols}%
-
-  \vspace{4\mnvpt}%
-  \noindent\hspace*{-\leftskip}%
-  \begingroup\mnnoscale% x=\linewidth のためスケール除外
-  \begin{tikzpicture}[x=\linewidth, baseline]
-    \draw[
-      line cap=round,
-      line width=0.5\mnpt,
-      color=appleLine
-    ] (0,0) -- (1,0);
-  \end{tikzpicture}%
-  \endgroup
-  \vspace{12\mnvpt}%
+  \end{multicols*}%
+  % 段はページ下端まで伸びるため，閉じ罫線は置かない（置くと次ページに押し出される）
 }
 
   % ---- Part エントリ（インデント=0，リーダー線あり） ----
@@ -758,7 +746,7 @@
         \etocname
       }%
       \nobreak\leaders\hbox to .5em{\hss.\hss}\hfill \etocpage\par
-      \vskip5.5\mnvpt
+      \nobreak\vskip5.5\mnvpt% 章見出しを段末に取り残さない
     }
     {}
     {}
@@ -777,7 +765,7 @@
         \etocname
       }%
       \nobreak\leaders\hbox to .5em{\hss.\hss}\hfill \etocpage\par
-      \vskip3.5\mnvpt
+      \nobreak\vskip3.5\mnvpt% 節見出しを段末に取り残さない
     }
     {}
     {}
@@ -790,12 +778,14 @@
     \leftskip=44\mnpt
     \rightskip=0pt
     \small
+    % 折り返した行は項目名の位置にそろえる
+    \hangindent=3.4em \hangafter=1
     \noindent
     \etoclink{%
       \makebox[3.4em][l]{\etocnumber}%
       \etocname
-      \hspace{0.35em}%
-      {(p.\etocpage)}%
+      \nobreak\hspace{0.35em}%
+      \mbox{(p.\etocpage)}%
     }%
     \par
   }
@@ -1231,6 +1221,8 @@
 
 \RequirePackage{tikz}
 \usetikzlibrary{intersections,calc,arrows.meta,calendar,shadows.blur,matrix,fit,positioning}
+% フローチャート用（diamond 等の図形ノード）
+\usetikzlibrary{shapes.geometric}
 \RequirePackage{tikz-3dplot}  % 3D 座標系の描画
 
 \RequirePackage{pgfplots}
@@ -1445,6 +1437,35 @@
 
 \setlength{\tabcolsep}{8\mnpt}  % 列間の水平余白
 
+% 表の罫線（\toprule / \midrule / \bottomrule）
+\RequirePackage{booktabs}
+
+% ---- フローチャート用の TikZ スタイル（本文の figure で使用） ----
+%   mathnote.sty（A4 版）と同じ定義．ノードの内側余白・角丸・矢じりは
+%   tikz の scale で縮まないため A4 換算単位 \mnpt で書く（矢じりは
+%   キー解析の都合で \mnmm が使えないので，A4 の 2mm を換算した実寸）．
+%   flowbox  … 処理・状態を表す角丸の箱
+%   flowbox* … 強調したい箱（薄灰の塗り＋太字）は flowbox,flowhl と併用
+%   flowq    … 判断（ひし形）
+%   flowlab  … 定理・補題などのラベル片
+%   flowarr  … 矢印
+\tikzset{
+  flowbox/.style={draw=appleGrayDark, rounded corners=3\mnpt, minimum height=1.6em,
+                  inner sep=5\mnpt, align=center, font=\small, text=appleInk},
+  flowhl/.style ={fill=appleGrayLight, font=\small\bfseries},
+  flowq/.style  ={draw=appleGrayDark, diamond, aspect=2.6, inner sep=1.5\mnpt,
+                  align=center, font=\small, text=appleInk},
+  flowlab/.style={draw=appleGrayDark, rounded corners=2\mnpt, fill=appleGrayLight,
+                  inner sep=4\mnpt, font=\small, text=appleInk},
+  flowarr/.style={-{Stealth[length=1.67mm]}, thick, draw=appleGrayDark},
+  flowtxt/.style={font=\scriptsize, text=appleGray},
+}
+
+% ---- 本文図版のアクセント色 ----
+% 図版は黒（灰）系とマゼンタ系の 2 系統のみで描く．
+% 強調したい部分（注目する元・部分集合・矢印など）にだけ figaccent を使う．
+\colorlet{figaccent}{magenta!85!black}
+
 % ==============================================================
 % § 14. ハイパーリンク・参考文献・索引
 % ==============================================================
@@ -1472,8 +1493,8 @@
 \DeclareDelimFormat{multinamedelim}{\addcomma\space}
 \DeclareDelimFormat{finalnamedelim}{\space and\space}
 \DeclareDelimFormat{andothersdelim}{\space and\space}
-% 本のタイトルを通常フォント（イタリックにしない）で表示
-\DeclareFieldFormat[book]{title}{\normalfont{#1}}
+% 本・講演資料などのタイトルを通常フォント（イタリックにしない）で表示
+\DeclareFieldFormat[book,misc,online]{title}{\normalfont{#1}}
 \addbibresource{bibliography.bib}
 
 % ---- 索引 ----
