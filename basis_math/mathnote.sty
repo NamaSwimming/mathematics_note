@@ -691,7 +691,7 @@
 \colorlet{appleCardTint}{white}
 
 % ---- 共通ベーススタイル ----
-% 寸法（余白・前後の空き・改ページ）の基準．見た目は § 9.1 の mytheo で上書きする
+% 寸法（余白・前後の空き・改ページ）の基準．見た目は § 9.1 の mn/xxx スタイルで上書きする
 \tcbset{
   theo-base/.style={
     enhanced, breakable, sharp corners,
@@ -726,72 +726,114 @@
         (title.south west) -- (title.south east);
     },
   },
-  % mytheo（各環境の見た目）は § 9.1 で定義する
+  % 各環境の見た目（mn/xxx）は § 9.1 で定義する
 }
 
 % ==============================================================
-% § 9.1 定理環境のデザイン（Card ＋ Pill）
+% § 9.1 定理環境のデザイン（環境ごとに振り分け）
 % --------------------------------------------------------------
-% apple.com の「白いカード＋ピル型ボタン」を写したデザイン．
-%   ・白カードの外周を角丸のヘアラインで囲む（下端の灰線・左の 2pt バーは廃止）
-%   ・各環境のアクセント色（acc@xx）は「ピル」に移す
-%       [ Theorem 1.2.3 ]  定理名
-%   ・見出し下の全幅ヘアラインは従来どおり
+%   Axiom              … Gradient Tab（塗りタブ＋淡いグラデーション帯．細枠カード）
+%   Definition         … Pill Header （ピル │ 定義名 ────── 行末まで細線）
+%   Theorem / Prop.    … Left Bar    （本文左端のカプセル＋右端の 3 ドット．細枠カード）
+%   Lemma / Corollary  … Left Rail   （枠なし．左端に丸端のレール）
+%   Example            … Editorial   （左右と下を細線で囲み，上端は細線＋短い太線．ラベル ─ 名前）
+%   Question           … Top Rule    （枠なし．上端の太線＋大文字の小見出し）
+%   ※ Remark・Column は変更していない．
+%   振り分けは末尾の \newtcbtheorem の行の mn/xxx を書き換えるだけで変えられる．
 %
-% 【縦の寸法を theo-base から一切変えない（改行・改ページ位置は従来と同一）】
-%   (1) mytheo は theo-base に「描画だけの指定」を足すのみ．toptitle /
-%       bottomtitle / top / bottom / before・after skip / boxrule / break 関係は
-%       theo-base のまま．
-%   (2) 外周線・仕切り線・ピルは borderline / overlay / 高さ 0 の tikz で，
-%       箱の寸法計算には入らない．
+% 【縦の寸法が変わらない理由】
+%   (1) どのスタイルも theo-base に「描画だけの指定」を足すのみ．toptitle /
+%       bottomtitle / top / bottom / before・after skip / boxrule / 左右の余白 /
+%       break 関係は theo-base のまま．
+%   (2) 枠線・レール・太線・タブ・影・ピル・カプセル・ドット・行末の細線は
+%       borderline / overlay / underlay / shadow，または高さも幅も 0 の箱で，
+%       箱の寸法計算にも行分割にも入らない．
 %   (3) 見出しのラベル部は，従来の「Theorem~1.2.3」と同じ幅・高さ・深さの
-%       箱に収める．→ 見出しの高さも，長い定理名の折り返し位置も従来と同一．
-%   (4) 長さは \mnsc{A4 実寸}，文字まわりは em / \footnotesize で指定．
-%       → mathnote.sty（A4）と mathnote_cmyk.sty（B5）で同一コードのまま
-%         B5 では自動的に相似に縮む．
+%       箱に収め，区切り記号も従来の「:」と同じ幅にする．
+%       → 見出しの高さも，長い定理名の折り返し位置も従来と同一．
+%   (4) 長さは \mnsc{A4 実寸}，文字まわりは em / \zw / \small などで指定．
+%       → mathnote.sty（A4）と mathnote_cmyk.sty（B5）で同一コード．
+%       見出し内の tikz は B5 版の自動縮小（§12.1）から除外してある．
 % ==============================================================
 
 \makeatletter
 
 % ---- 色（K 版だけで刷れるグレイ） ----
-\colorlet{mnCardLine}{black!20}   % カード外周のヘアライン
-\colorlet{mnCardRule}{black!12}   % 見出し下の仕切り線
+\colorlet{mnCardLine}{black!20}    % カードの外周ヘアライン
+\colorlet{mnCardRule}{black!12}    % 見出し下の仕切り線
+\colorlet{mnBandL}{black!8}        % Gradient Tab の帯（左）
+\colorlet{mnBandR}{black!1.5}      % 　　　　　　　　　（右）
+\colorlet{mnShadowA}{black!12}     % 影（不透明 3 段．透明度は使わない）
+\colorlet{mnShadowB}{black!7}
+\colorlet{mnShadowC}{black!3.5}
 
 % ---- 寸法（A4 実寸で書く．B5 では \mnsc が縮める） ----
 \newdimen\mn@cardarc
 \newdimen\mn@cardrule
+\newdimen\mn@railw
+\newdimen\mn@topw
+\newdimen\mn@shAy \newdimen\mn@shAo \newdimen\mn@shBy \newdimen\mn@shBo
+\newdimen\mn@shCy \newdimen\mn@shCo
 \AtBeginDocument{%
+  \global\mn@shCy=-\mnsc{2.1pt}\relax \global\mn@shCo=-\mnsc{.55pt}\relax
+  \global\mn@shBy=-\mnsc{1.2pt}\relax \global\mn@shBo=-\mnsc{.2pt}\relax
+  \global\mn@shAy=-\mnsc{.5pt}\relax  \global\mn@shAo=\mnsc{.1pt}\relax
   \global\mn@cardarc =\mnsc{2.6mm}\relax   % カードの角丸
-  \global\mn@cardrule=\mnsc{0.45pt}\relax  % 外周・仕切り線の太さ
-}
+  \global\mn@cardrule=\mnsc{0.45pt}\relax  % 外周・仕切りの細線
+  \global\mn@railw   =\mnsc{2.8pt}\relax   % レール・カプセルの太さ
+  \global\mn@topw    =\mnsc{1.5pt}\relax}  % Top Rule / Editorial の太線
 
-% ---- ピル（ラベルの描画） ----
-%   文字：見出し書体のまま \footnotesize（A4 / B5 とも相対的に同じ比）
-%   余白：em 単位なので文字サイズに追従する
-\newcommand{\mnPillFont}{\footnotesize}
-\newcommand{\mnPillPadX}{0.52em}
-\newcommand{\mnPillPadY}{0.42em}
+% Editorial の上端・下端の線
+\def\mn@ed@seg{%
+  \draw[mnLabelC, line width=\mn@topw]
+    ([yshift=-.5\mn@topw]frame.north west) -- ([xshift=2.6\zw, yshift=-.5\mn@topw]frame.north west);}
+\def\mn@ed@top{%
+  \draw[mnCardLine, line width=\mn@cardrule]
+    ([yshift=-.5\mn@cardrule]frame.north west) -- ([yshift=-.5\mn@cardrule]frame.north east);
+  \mn@ed@seg}
+\def\mn@ed@bottom{%
+  \draw[mnCardLine, line width=\mn@cardrule]
+    ([yshift=.5\mn@cardrule]frame.south west) -- ([yshift=.5\mn@cardrule]frame.south east);}
+
+% 見出し内の tikz を B5 版の自動縮小から外す（A4 版では何もしない）
+\def\mn@noscale{\ifdefined\mnnoscale\mnnoscale\fi}
+
+% ---- アクセント色：塗り用 mnTheoAccent と，文字・線用 mnLabelC ----
+%   Example（E5E5EA）など明るすぎる色は，読める濃さ（グレイ 0.5）まで沈める
+\def\mn@setaccent#1{%
+  \colorlet{mnTheoAccent}{#1}%
+  \extractcolorspec{#1}\mn@spec
+  \expandafter\convertcolorspec\mn@spec{gray}\mn@gray
+  \ifdim\mn@gray pt>0.5pt
+    \edef\mn@pct{\fpeval{round(100*0.5/\mn@gray)}}%
+    \colorlet{mnLabelC}{#1!\mn@pct!black}%
+  \else
+    \colorlet{mnLabelC}{#1}%
+  \fi}
+% \mn@iflight{色}{明るいとき}{暗いとき}（ピルの文字色の判定）
+\newcommand{\mn@iflight}[3]{%
+  \extractcolorspec{#1}\mn@spec
+  \expandafter\convertcolorspec\mn@spec{gray}\mn@gray
+  \ifdim\mn@gray pt>0.6pt #2\else #3\fi}
+
+% ==============================================================
+% ラベルの描き方（\mnTheoLabel{名前}{番号} → \mn@lab@<種類>）
+% ==============================================================
+\def\mn@labtext#1#2{#1\ifx\relax#2\relax\else~#2\fi}
+\newcommand{\mnTheoLabel}[2]{\csname mn@lab@\mn@labkind\endcsname{#1}{#2}}
+
+% (pill) 塗りのピル（Definition）
 \newsavebox{\mn@pillbox}
-\newdimen\mn@pillw
-\newdimen\mn@pillcap
-\newdimen\mn@pillpx
-\newdimen\mn@pillpy
-\newcommand{\mnTheoLabel}[1]{%
+\newdimen\mn@pillw \newdimen\mn@pillcap \newdimen\mn@pillpx \newdimen\mn@pillpy
+\def\mn@lab@pill#1#2{%
   \begingroup
-    \mnPillFont
-    \mn@pillpx=\mnPillPadX\relax
-    \mn@pillpy=\mnPillPadY\relax
+    \footnotesize
+    \mn@pillpx=.52em\relax \mn@pillpy=.42em\relax
     \mn@pillcap=\fontcharht\font`T\relax
-    % アクセントが明るい（Example 等）ときは文字を墨に，暗いときは白に
-    % （luacolor 環境では色が文字に焼き付くので，箱詰めの時点で色を付ける）
-    \mn@iflight{mnTheoAccent}%
-      {\colorlet{mnPillText}{appleInk}}%
-      {\colorlet{mnPillText}{white}}%
-    \sbox\mn@pillbox{\color{mnPillText}#1}%
+    \mn@iflight{mnTheoAccent}{\colorlet{mnPillText}{appleInk}}{\colorlet{mnPillText}{white}}%
+    \sbox\mn@pillbox{\color{mnPillText}\mn@labtext{#1}{#2}}%
     \mn@pillw=\dimexpr\wd\mn@pillbox+2\mn@pillpx\relax
-    % B5 版（mathnote_cmyk.sty）の tikzpicture 自動縮小（§12.1）から除外する．
-    % ピルの寸法は em 単位で既に文字サイズに比例しているため，縮めると二重に縮む．
-    \ifdefined\mnnoscale \mnnoscale \fi
+    \mn@noscale
     \begin{tikzpicture}[baseline=0pt]
       \path[use as bounding box] (0,0) rectangle (\mn@pillw,0);
       \fill[overlay, mnTheoAccent,
@@ -800,50 +842,118 @@
       \node[overlay, inner sep=0pt, outer sep=0pt, anchor=base west]
         at (\mn@pillpx,0) {\usebox\mn@pillbox};
     \end{tikzpicture}%
-  \endgroup
-}
+  \endgroup}
 
-% ラベルと定理名の区切り：従来の「:」と同じ幅の空白（文字は出さない）
-\newcommand{\mnTheoSep}{\hphantom{:}}
+% (bar) 左の余白にカプセル＋ラベル（Theorem / Prop.）
+% ラベルを少しだけ小さく組み，縦線の前後に余白をつくる（高さは支柱で固定）
+\def\mn@shrinkby#1{\fontsize{\the\dimexpr#1\dimexpr\f@size pt\relax\relax}{\f@baselineskip}\selectfont}
+\def\mn@shrink{\mn@shrinkby{.93}}
+% カプセルは本文の左端（＝カードの枠から 1\zw 内側）に置き，ラベルはその右へ．
+% 枠線とカプセルが近づかないよう，見出し行全体を右へ寄せる形にする．
+% （カプセル＋すき間＋ラベル 90% の幅は従来ラベルの幅の内側に収まる）
+\def\mn@lab@bar#1#2{%
+  \mn@capsule\hskip.4em
+  {\mn@shrinkby{.9}\color{mnLabelC}\mn@labtext{#1}{#2}}}
+\def\mn@capsule{\smash{\mn@noscale\tikz[baseline=0pt]
+  \fill[mnTheoAccent, rounded corners=.5\mn@railw]
+    (0,-.2em) rectangle (\mn@railw,.94em);}}
+
+% (plain) アクセント色のラベル（Lemma / Cor.）
+\def\mn@lab@plain#1#2{{\mn@shrink\color{mnLabelC}\mn@labtext{#1}{#2}}}
+
+% (eyebrow) 大文字・字間あけの小見出し（Question）
+\def\mn@lab@eyebrow#1#2{{\footnotesize\color{mnLabelC}%
+  \addfontfeature{LetterSpace=5}\MakeUppercase{#1}\ifx\relax#2\relax\else~#2\fi}}
+
+% (small) 一回り小さいラベル（Example）
+\def\mn@lab@small#1#2{{\small\color{mnLabelC}\mn@labtext{#1}{#2}}}
+
+% (tab) 塗りタブの白抜きラベル（Axiom）．タブの右端位置を記録
+\newdimen\mn@tabw
+\def\mn@lab@tab#1#2{%
+  \sbox\mn@pillbox{\small\color{white}\mn@labtext{#1}{#2}}%
+  \global\mn@tabw=\dimexpr1\zw+\wd\mn@pillbox+.42em\relax
+  \usebox\mn@pillbox}
 
 % ==============================================================
-% 見出しラベルの差し替え機構
+% 区切り（従来の「:」と同じ幅．\mnTheoSep → \mn@sep@<種類>）
+%   余白全体 G = 余り幅（\mn@theogap）+「:」の幅 + 空白の幅
 % ==============================================================
+\newdimen\mn@theogap
+\newcommand{\mnTheoSep}{\csname mn@sep@\mn@sepkind\endcsname}
+\def\mn@sepG{\setbox\z@\hbox{:}%
+  \dimen@=\dimexpr\mn@theogap+\wd\z@+\fontdimen2\font\relax}
+% (space) 空白のみ
+\def\mn@sep@space{\hphantom{:}}
+% (vsep) G の中央に細い縦線
+\def\mn@sep@vsep{\begingroup\mn@sepG
+  \dimen@=\dimexpr\dimen@/2-\mn@theogap-\mn@cardrule/2\relax
+  \rlap{\hspace*{\dimen@}\smash{\color{mnCardLine}\rule[-.1em]{\mn@cardrule}{.92em}}}%
+  \hphantom{:}\endgroup}
+% (dash) G の中央に短い横線
+\def\mn@sep@dash{\begingroup\mn@sepG
+  \dimen2=\dimexpr\dimen@-.7em\relax
+  \ifdim\dimen2>1.2em \dimen2=1.2em\fi
+  \ifdim\dimen2<.5em \dimen2=.5em\fi
+  \dimen@=\dimexpr(\dimen@-\dimen2)/2-\mn@theogap\relax
+  \rlap{\hspace*{\dimen@}\smash{\color{mnLabelC}\rule[.33em]{\dimen2}{\mn@cardrule}}}%
+  \hphantom{:}\endgroup}
 
-% \mn@iflight{色}{明るいとき}{暗いとき}
-\newcommand{\mn@iflight}[3]{%
-  \extractcolorspec{#1}\mn@spec
-  \expandafter\convertcolorspec\mn@spec{gray}\mn@gray
-  \ifdim\mn@gray pt>0.6pt #2\else #3\fi}
+% ==============================================================
+% 行末の飾り（terminator sign．幅 0 の箱なので行分割に影響しない）
+%   見出しが 1 行に収まり，右に十分な余白があるときだけ描く
+% ==============================================================
+\newdimen\mn@labwd
+\newdimen\mn@descwd
+\newif\ifmn@hasdesc
+\def\mn@theoend{%
+  \ifmn@hasdesc \dimen@=\dimexpr\hsize-\hangindent-\mn@descwd\relax
+  \else         \dimen@=\dimexpr\hsize-\mn@labwd\relax \fi
+  \csname mn@end@\mn@endkind\endcsname}
+\def\mn@end@none{}
+% (rule) 行末まで細線（Definition）
+\def\mn@end@rule{%
+  \ifdim\dimen@>2.6em
+    \rlap{\hskip.85em{\color{mnCardLine}%
+      \rule[\dimexpr.37em-.5\mn@cardrule\relax]{\dimexpr\dimen@-.85em\relax}{\mn@cardrule}}}%
+  \fi}
+% (dots) 右端に 3 つのドット（Theorem / Prop.）
+\def\mn@end@dots{%
+  \ifdim\dimen@>3.4em
+    \rlap{\hskip\dimexpr\dimen@-1.25em\relax\smash{\mn@noscale\tikz[baseline=0pt]{%
+      \fill[mnTheoAccent]          (.11em,.37em) circle[radius=.11em];
+      \fill[mnTheoAccent!50!white] (.53em,.37em) circle[radius=.11em];
+      \fill[mnTheoAccent!22!white] (.95em,.37em) circle[radius=.11em];}}}%
+  \fi}
 
-\newdimen\mn@theogap   % 新ラベルの右に残る余り幅（区切り記号の位置決め用）
+% ==============================================================
+% 見出しラベルの差し替え機構（tcolorbox 6.x の内部名で差し替え．
+% 内部が変わった将来版では何もしない＝従来の見出しのまま組まれる）
+% ==============================================================
 \ExplSyntaxOn
 \box_new:N \l__mn_theo_old_box
 \box_new:N \l__mn_theo_new_box
 
-% 従来どおりのラベル文字列（「Theorem~1.2.3」．番号なし版は「Theorem」）
 \cs_new_protected:Npn \__mn_theo_plain:nn #1#2
   {
     \tl_if_empty:nTF {#1} {#2}
       { #1 \tl_if_empty:nF {#2} { \nobreakspace #2 } }
   }
 
-% tcolorbox の見出しラベル整形の差し替え先
 \cs_new_protected:Npn \__mn_theo_format:nn #1#2
   {
     \bool_lazy_and:nnF { \tl_if_empty_p:n {#1} } { \tl_if_empty_p:n {#2} }
       {
         \bool_set_false:N \l__tcobox_theo_headempty_bool
         \mode_leave_vertical:
-        % 従来のラベルを従来の書体で組んで寸法だけ測る
         \hbox_set:Nn \l__mn_theo_old_box { \__mn_theo_plain:nn {#1} {#2} }
-        % 新しいラベル（高さ・深さは 0 にしておく＝描くだけ）
-        \hbox_set:Nn \l__mn_theo_new_box { \mnTheoLabel { \__mn_theo_plain:nn {#1} {#2} } }
+        \hbox_set:Nn \l__mn_theo_new_box { \mnTheoLabel {#1} {#2} }
         \dim_gset:Nn \mn@theogap
           { \box_wd:N \l__mn_theo_old_box - \box_wd:N \l__mn_theo_new_box }
+        \dim_gset:Nn \mn@labwd { \box_wd:N \l__mn_theo_old_box }
+        \global\mn@hasdescfalse
         \box_set_ht:Nn \l__mn_theo_new_box { \c_zero_dim }
         \box_set_dp:Nn \l__mn_theo_new_box { \c_zero_dim }
-        % 従来ラベルと同じ幅・高さ・深さの箱に収める
         \hbox_to_wd:nn { \box_wd:N \l__mn_theo_old_box }
           {
             \tex_vrule:D width \c_zero_dim
@@ -855,51 +965,160 @@
       }
   }
 
-% tcolorbox 6.x（2023〜2026 の全版で同じ内部名）でのみ差し替える．
-% 将来内部が変わった場合は何もしない（従来の見出しのまま組まれる）．
+% 定理名：幅を測ってから従来どおりに組む
+\cs_new_protected:Npn \mn@descfmt #1
+  {
+    \hbox_set:Nn \l_tmpa_box
+      {
+        \l__tcobox_theo_description_color_tl
+        \l__tcobox_theo_description_font_tl
+        \l__tcobox_theo_description_delimiter_left_tl
+        #1
+        \l__tcobox_theo_description_delimiter_right_tl
+      }
+    \dim_gset:Nn \mn@descwd { \box_wd:N \l_tmpa_box }
+    \global\mn@hasdesctrue
+    \__tcobox_theo_format_description_standard:n {#1}
+  }
+
 \tcbset
   {
     mn~theorem~label/.code =
       {
         \cs_if_exist:NT \__tcobox_theo_format_name_number:nn
-          { \cs_set_eq:NN \__tcobox_theo_format:nn \__mn_theo_format:nn }
+          {
+            \cs_set_eq:NN \__tcobox_theo_format:nn \__mn_theo_format:nn
+            \pgfkeysalso
+              {
+                /tcb/separator~sign  = {\mnTheoSep},
+                /tcb/terminator~sign = {\mn@theoend},
+                /tcb/description~formatter = \mn@descfmt
+              }
+          }
       },
-    mn@accent/.code = { \colorlet{mnTheoAccent}{#1} },
+    mn@accent/.code = { \mn@setaccent{#1} },
+    mn@look/.code~n~args = {3}
+      { \def\mn@labkind{#1} \def\mn@sepkind{#2} \def\mn@endkind{#3} },
   }
 \ExplSyntaxOff
 
 % ==============================================================
-% mytheo（Card ＋ Pill）
+% スタイル（いずれも theo-base ＋ 描画だけの指定）
 % ==============================================================
 \tcbset{
-  mytheo/.style n args={1}{
+  % 共通：見出しラベルの差し替え，下端の灰線を外す
+  mn@common/.style n args={4}{%
     theo-base,
     mn@accent={#1},
+    mn@look={#2}{#3}{#4},
     mn theorem label,
-    separator sign={\mnTheoSep},
-    % 下端の灰線を外し，外周を角丸ヘアラインで囲む（描画のみ）
     no borderline,
+    overlay unbroken and first={},
+  },
+  % 細枠の角丸カード（描画のみ）
+  mn@card/.style={
     rounded corners, arc=\mn@cardarc, outer arc=\mn@cardarc,
     borderline={\mn@cardrule}{0pt}{mnCardLine},
-    % 見出し下の全幅ヘアライン（従来と同じ位置）
+  },
+  % ---------------------------------------------------------------
+  % Pill Header ── ピル │ 定義名 ──────（行末まで細線）
+  % ---------------------------------------------------------------
+  mn/pillheader/.style={
+    mn@common={#1}{pill}{vsep}{rule}, mn@card,
+  },
+  % ---------------------------------------------------------------
+  % Left Bar ── 本文の左端にカプセル，ラベル │ 名前 …… 右端に 3 ドット．内側の仕切り線
+  % ---------------------------------------------------------------
+  mn/leftbar/.style={
+    mn@common={#1}{bar}{vsep}{dots}, mn@card,
     overlay unbroken and first={
+      \draw[mnCardRule, line width=\mn@cardrule]
+        ([xshift=1\zw]title.south west) -- ([xshift=-1\zw]title.south east);
+    },
+  },
+  % ---------------------------------------------------------------
+  % Left Rail ── 枠なし．左端に丸端のレール，見出し下に仕切り線
+  % ---------------------------------------------------------------
+  mn/leftrail/.style={
+    mn@common={#1}{plain}{vsep}{none},
+    underlay={
+      \draw[mnLabelC, line width=\mn@railw, line cap=round]
+        ([xshift=.5\mn@railw, yshift=-.5\mn@railw]frame.north west) --
+        ([xshift=.5\mn@railw, yshift=.5\mn@railw]frame.south west);
+    },
+    overlay unbroken and first={
+      \draw[mnCardRule, line width=\mn@cardrule]
+        ([xshift=1\zw]title.south west) -- (title.south east);
+    },
+  },
+  % ---------------------------------------------------------------
+  % Top Rule ── 枠なし．上端の太線，大文字の小見出し，見出し下に仕切り線
+  % ---------------------------------------------------------------
+  mn/toprule/.style={
+    mn@common={#1}{eyebrow}{space}{none},
+    overlay unbroken and first={
+      \draw[mnLabelC, line width=\mn@topw]
+        ([yshift=-.5\mn@topw]frame.north west) -- ([yshift=-.5\mn@topw]frame.north east);
       \draw[mnCardRule, line width=\mn@cardrule]
         (title.south west) -- (title.south east);
     },
   },
+  % ---------------------------------------------------------------
+  % Editorial ── 枠なし．上端の細線に短い太線，下端にも同じ細線．ラベル ─ 名前
+  % ---------------------------------------------------------------
+  mn/editorial/.style={
+    mn@common={#1}{small}{dash}{none},
+    overlay unbroken={\mn@ed@top\mn@ed@bottom},
+    overlay first={\mn@ed@top},
+    overlay last={\mn@ed@bottom},
+  },
+  % ---------------------------------------------------------------
+  % Editorial（枠つき）── 左右と下を細線で囲み，上端は細線＋短い太線
+  %   （上の角は直角，下の角は丸．mn/editorial の代わりに使える）
+  % ---------------------------------------------------------------
+  mn/editorialframe/.style={
+    mn@common={#1}{small}{dash}{none},
+    rounded corners=south, arc=\mn@cardarc, outer arc=\mn@cardarc,
+    borderline={\mn@cardrule}{0pt}{mnCardLine},
+    overlay unbroken and first={\mn@ed@seg},
+  },
+  % ---------------------------------------------------------------
+  % Gradient Tab ── 細枠カード＋柔らかい影．斜めに切った塗りタブ＋グラデーション帯
+  % ---------------------------------------------------------------
+  mn/gradienttab/.style={
+    mn@common={#1}{tab}{space}{none}, mn@card,
+    shadow={0pt}{\mn@shCy}{\mn@shCo}{fill=mnShadowC},
+    shadow={0pt}{\mn@shBy}{\mn@shBo}{fill=mnShadowB},
+    shadow={0pt}{\mn@shAy}{\mn@shAo}{fill=mnShadowA},
+    underlay unbroken and first={
+      \begin{tcbcliptitle}
+        \shade[left color=mnBandL, right color=mnBandR]
+          (title.south west) rectangle (title.north east);
+        \fill[mnTheoAccent] (title.south west) -- (title.north west)
+          -- ([xshift=\mn@tabw+.5em]title.north west)
+          -- ([xshift=\mn@tabw]title.south west) -- cycle;
+      \end{tcbcliptitle}
+      \foreach \mn@i in {0,1,2}
+        \draw[mnCardLine, line width=\mn@cardrule]
+          ([xshift=-1.5\zw-\mn@i*.42em]title.south east) --
+          ([xshift=-1.0\zw-\mn@i*.42em]title.north east);
+    },
+  },
+  % 後方互換：mytheo は Pill Header と同じ
+  mytheo/.style={mn/pillheader={#1}},
 }
 
 \makeatother
 
 % ---- 各定理環境（subsection 内で共通カウンタを使用） ----
-\newtcbtheorem[number within=subsection]{theorem}   {Theorem}    {mytheo={acc@th}}{th}
-\newtcbtheorem[use counter from=theorem]{prop}      {Proposition}{mytheo={acc@pr}}{pr}
-\newtcbtheorem[use counter from=theorem]{cor}       {Corollary}  {mytheo={acc@co}}{co}
-\newtcbtheorem[use counter from=theorem]{axiom}     {Axiom}      {mytheo={acc@ax}}{ax}
-\newtcbtheorem[use counter from=theorem]{definition}{Definition} {mytheo={acc@de}}{de}
-\newtcbtheorem[use counter from=theorem]{lemma}     {Lemma}      {mytheo={acc@le}}{le}
-\newtcbtheorem[use counter from=theorem]{example}   {Example}    {mytheo={acc@ex}}{ex}
-\newtcbtheorem[use counter from=theorem]{question}  {Question}   {mytheo={acc@qu}}{qu}
+\newtcbtheorem[number within=subsection]{theorem}   {Theorem}    {mn/leftbar={acc@th}}{th}
+\newtcbtheorem[use counter from=theorem]{prop}      {Proposition}{mn/leftbar={acc@pr}}{pr}
+\newtcbtheorem[use counter from=theorem]{cor}       {Corollary}  {mn/leftrail={acc@co}}{co}
+\newtcbtheorem[use counter from=theorem]{axiom}     {Axiom}      {mn/gradienttab={acc@ax}}{ax}
+\newtcbtheorem[use counter from=theorem]{definition}{Definition} {mn/pillheader={acc@de}}{de}
+\newtcbtheorem[use counter from=theorem]{lemma}     {Lemma}      {mn/leftrail={acc@le}}{le}
+\newtcbtheorem[use counter from=theorem]{example}   {Example}    {mn/editorialframe={acc@ex}}{ex}
+\newtcbtheorem[use counter from=theorem]{question}  {Question}   {mn/toprule={acc@qu}}{qu}
 
 % ---- 参照コマンド（\thref{ラベル} → 太字サンセリフの "Theorem 1.2"） ----
 \newcommand{\thref} [1]{\textsf{\bfseries Theorem~\ref{th:#1}}}
