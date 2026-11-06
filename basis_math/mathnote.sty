@@ -6,7 +6,7 @@
 %   \usepackage{mathnote_two}  % デザイン・マクロ・パッケージ追加
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{mathnote}[2026/08/11 math note style (dark hero cover): design, macros, packages]
+\ProvidesPackage{mathnote}[2026/11/06 math note style (dark hero cover): design, macros, packages]
 
 % ==============================================================
 % § 1. 基本パッケージ
@@ -691,7 +691,7 @@
 \colorlet{appleCardTint}{white}
 
 % ---- 共通ベーススタイル ----
-% 薄灰カード + 見出し下ヘアライン + 下端ヘアライン + 左に 2pt バー
+% 寸法（余白・前後の空き・改ページ）の基準．見た目は § 9.1 の mytheo で上書きする
 \tcbset{
   theo-base/.style={
     enhanced, breakable, sharp corners,
@@ -726,11 +726,170 @@
         (title.south west) -- (title.south east);
     },
   },
+  % mytheo（各環境の見た目）は § 9.1 で定義する
+}
+
+% ==============================================================
+% § 9.1 定理環境のデザイン（Card ＋ Pill）
+% --------------------------------------------------------------
+% apple.com の「白いカード＋ピル型ボタン」を写したデザイン．
+%   ・白カードの外周を角丸のヘアラインで囲む（下端の灰線・左の 2pt バーは廃止）
+%   ・各環境のアクセント色（acc@xx）は「ピル」に移す
+%       [ Theorem 1.2.3 ]  定理名
+%   ・見出し下の全幅ヘアラインは従来どおり
+%
+% 【縦の寸法を theo-base から一切変えない（改行・改ページ位置は従来と同一）】
+%   (1) mytheo は theo-base に「描画だけの指定」を足すのみ．toptitle /
+%       bottomtitle / top / bottom / before・after skip / boxrule / break 関係は
+%       theo-base のまま．
+%   (2) 外周線・仕切り線・ピルは borderline / overlay / 高さ 0 の tikz で，
+%       箱の寸法計算には入らない．
+%   (3) 見出しのラベル部は，従来の「Theorem~1.2.3」と同じ幅・高さ・深さの
+%       箱に収める．→ 見出しの高さも，長い定理名の折り返し位置も従来と同一．
+%   (4) 長さは \mnsc{A4 実寸}，文字まわりは em / \footnotesize で指定．
+%       → mathnote.sty（A4）と mathnote_cmyk.sty（B5）で同一コードのまま
+%         B5 では自動的に相似に縮む．
+% ==============================================================
+
+\makeatletter
+
+% ---- 色（K 版だけで刷れるグレイ） ----
+\colorlet{mnCardLine}{black!20}   % カード外周のヘアライン
+\colorlet{mnCardRule}{black!12}   % 見出し下の仕切り線
+
+% ---- 寸法（A4 実寸で書く．B5 では \mnsc が縮める） ----
+\newdimen\mn@cardarc
+\newdimen\mn@cardrule
+\AtBeginDocument{%
+  \global\mn@cardarc =\mnsc{2.6mm}\relax   % カードの角丸
+  \global\mn@cardrule=\mnsc{0.45pt}\relax  % 外周・仕切り線の太さ
+}
+
+% ---- ピル（ラベルの描画） ----
+%   文字：見出し書体のまま \footnotesize（A4 / B5 とも相対的に同じ比）
+%   余白：em 単位なので文字サイズに追従する
+\newcommand{\mnPillFont}{\footnotesize}
+\newcommand{\mnPillPadX}{0.52em}
+\newcommand{\mnPillPadY}{0.42em}
+\newsavebox{\mn@pillbox}
+\newdimen\mn@pillw
+\newdimen\mn@pillcap
+\newdimen\mn@pillpx
+\newdimen\mn@pillpy
+\newcommand{\mnTheoLabel}[1]{%
+  \begingroup
+    \mnPillFont
+    \mn@pillpx=\mnPillPadX\relax
+    \mn@pillpy=\mnPillPadY\relax
+    \mn@pillcap=\fontcharht\font`T\relax
+    % アクセントが明るい（Example 等）ときは文字を墨に，暗いときは白に
+    % （luacolor 環境では色が文字に焼き付くので，箱詰めの時点で色を付ける）
+    \mn@iflight{mnTheoAccent}%
+      {\colorlet{mnPillText}{appleInk}}%
+      {\colorlet{mnPillText}{white}}%
+    \sbox\mn@pillbox{\color{mnPillText}#1}%
+    \mn@pillw=\dimexpr\wd\mn@pillbox+2\mn@pillpx\relax
+    % B5 版（mathnote_cmyk.sty）の tikzpicture 自動縮小（§12.1）から除外する．
+    % ピルの寸法は em 単位で既に文字サイズに比例しているため，縮めると二重に縮む．
+    \ifdefined\mnnoscale \mnnoscale \fi
+    \begin{tikzpicture}[baseline=0pt]
+      \path[use as bounding box] (0,0) rectangle (\mn@pillw,0);
+      \fill[overlay, mnTheoAccent,
+            rounded corners=\dimexpr(\mn@pillcap+2\mn@pillpy)/2\relax]
+        (0,-\mn@pillpy) rectangle (\mn@pillw,\mn@pillcap+\mn@pillpy);
+      \node[overlay, inner sep=0pt, outer sep=0pt, anchor=base west]
+        at (\mn@pillpx,0) {\usebox\mn@pillbox};
+    \end{tikzpicture}%
+  \endgroup
+}
+
+% ラベルと定理名の区切り：従来の「:」と同じ幅の空白（文字は出さない）
+\newcommand{\mnTheoSep}{\hphantom{:}}
+
+% ==============================================================
+% 見出しラベルの差し替え機構
+% ==============================================================
+
+% \mn@iflight{色}{明るいとき}{暗いとき}
+\newcommand{\mn@iflight}[3]{%
+  \extractcolorspec{#1}\mn@spec
+  \expandafter\convertcolorspec\mn@spec{gray}\mn@gray
+  \ifdim\mn@gray pt>0.6pt #2\else #3\fi}
+
+\newdimen\mn@theogap   % 新ラベルの右に残る余り幅（区切り記号の位置決め用）
+\ExplSyntaxOn
+\box_new:N \l__mn_theo_old_box
+\box_new:N \l__mn_theo_new_box
+
+% 従来どおりのラベル文字列（「Theorem~1.2.3」．番号なし版は「Theorem」）
+\cs_new_protected:Npn \__mn_theo_plain:nn #1#2
+  {
+    \tl_if_empty:nTF {#1} {#2}
+      { #1 \tl_if_empty:nF {#2} { \nobreakspace #2 } }
+  }
+
+% tcolorbox の見出しラベル整形の差し替え先
+\cs_new_protected:Npn \__mn_theo_format:nn #1#2
+  {
+    \bool_lazy_and:nnF { \tl_if_empty_p:n {#1} } { \tl_if_empty_p:n {#2} }
+      {
+        \bool_set_false:N \l__tcobox_theo_headempty_bool
+        \mode_leave_vertical:
+        % 従来のラベルを従来の書体で組んで寸法だけ測る
+        \hbox_set:Nn \l__mn_theo_old_box { \__mn_theo_plain:nn {#1} {#2} }
+        % 新しいラベル（高さ・深さは 0 にしておく＝描くだけ）
+        \hbox_set:Nn \l__mn_theo_new_box { \mnTheoLabel { \__mn_theo_plain:nn {#1} {#2} } }
+        \dim_gset:Nn \mn@theogap
+          { \box_wd:N \l__mn_theo_old_box - \box_wd:N \l__mn_theo_new_box }
+        \box_set_ht:Nn \l__mn_theo_new_box { \c_zero_dim }
+        \box_set_dp:Nn \l__mn_theo_new_box { \c_zero_dim }
+        % 従来ラベルと同じ幅・高さ・深さの箱に収める
+        \hbox_to_wd:nn { \box_wd:N \l__mn_theo_old_box }
+          {
+            \tex_vrule:D width \c_zero_dim
+              height \box_ht:N \l__mn_theo_old_box
+              depth  \box_dp:N \l__mn_theo_old_box \scan_stop:
+            \box_use_drop:N \l__mn_theo_new_box
+            \tex_hss:D
+          }
+      }
+  }
+
+% tcolorbox 6.x（2023〜2026 の全版で同じ内部名）でのみ差し替える．
+% 将来内部が変わった場合は何もしない（従来の見出しのまま組まれる）．
+\tcbset
+  {
+    mn~theorem~label/.code =
+      {
+        \cs_if_exist:NT \__tcobox_theo_format_name_number:nn
+          { \cs_set_eq:NN \__tcobox_theo_format:nn \__mn_theo_format:nn }
+      },
+    mn@accent/.code = { \colorlet{mnTheoAccent}{#1} },
+  }
+\ExplSyntaxOff
+
+% ==============================================================
+% mytheo（Card ＋ Pill）
+% ==============================================================
+\tcbset{
   mytheo/.style n args={1}{
     theo-base,
-    borderline west={2pt}{0pt}{#1}
+    mn@accent={#1},
+    mn theorem label,
+    separator sign={\mnTheoSep},
+    % 下端の灰線を外し，外周を角丸ヘアラインで囲む（描画のみ）
+    no borderline,
+    rounded corners, arc=\mn@cardarc, outer arc=\mn@cardarc,
+    borderline={\mn@cardrule}{0pt}{mnCardLine},
+    % 見出し下の全幅ヘアライン（従来と同じ位置）
+    overlay unbroken and first={
+      \draw[mnCardRule, line width=\mn@cardrule]
+        (title.south west) -- (title.south east);
+    },
   },
 }
+
+\makeatother
 
 % ---- 各定理環境（subsection 内で共通カウンタを使用） ----
 \newtcbtheorem[number within=subsection]{theorem}   {Theorem}    {mytheo={acc@th}}{th}
