@@ -732,11 +732,11 @@
 % ==============================================================
 % § 9.1 定理環境のデザイン（環境ごとに振り分け）
 % --------------------------------------------------------------
-%   Axiom              … Gradient Tab（塗りタブ＋淡いグラデーション帯．細枠カード）
+%   Axiom              … Tab Strip   （二層：最上部に細いタブ＋帯，下段にラベル．細枠カード）
 %   Definition         … Pill Header （ピル │ 定義名 ────── 行末まで細線）
 %   Theorem / Prop.    … Left Bar    （本文左端のカプセル＋右端の 3 ドット．細枠カード）
 %   Lemma / Corollary  … Left Rail   （枠なし．左端に丸端のレール）
-%   Example            … Editorial   （左右と下を細線で囲み，上端は細線＋短い太線．ラベル ─ 名前）
+%   Example            … Editorial   （四辺を細線で囲む（角は直角）．上端に短い太線．ラベル ─ 名前）
 %   Question           … Top Rule    （枠なし．上端の太線＋大文字の小見出し）
 %   ※ Remark・Column は変更していない．
 %   振り分けは末尾の \newtcbtheorem の行の mn/xxx を書き換えるだけで変えられる．
@@ -772,6 +772,7 @@
 \newdimen\mn@cardrule
 \newdimen\mn@railw
 \newdimen\mn@topw
+\newdimen\mn@stripw \newdimen\mn@strip@t \newdimen\mn@strip@b
 \newdimen\mn@shAy \newdimen\mn@shAo \newdimen\mn@shBy \newdimen\mn@shBo
 \newdimen\mn@shCy \newdimen\mn@shCo
 \AtBeginDocument{%
@@ -781,7 +782,10 @@
   \global\mn@cardarc =\mnsc{2.6mm}\relax   % カードの角丸
   \global\mn@cardrule=\mnsc{0.45pt}\relax  % 外周・仕切りの細線
   \global\mn@railw   =\mnsc{2.8pt}\relax   % レール・カプセルの太さ
-  \global\mn@topw    =\mnsc{1.5pt}\relax}  % Top Rule / Editorial の太線
+  \global\mn@topw    =\mnsc{1.5pt}\relax   % Top Rule / Editorial の太線
+  \global\mn@stripw  =\mnsc{3.2pt}\relax   % Tab Strip の上の層の高さ
+  \global\mn@strip@t =\mnsc{6pt}\relax     % Tab Strip の斜線の上端（見出し上端から）
+  \global\mn@strip@b =\mnsc{4pt}\relax}    % 　　　　　　　　　下端（見出し下端から）
 
 % Editorial の上端・下端の線
 \def\mn@ed@seg{%
@@ -872,6 +876,12 @@
 \newdimen\mn@tabw
 \def\mn@lab@tab#1#2{%
   \sbox\mn@pillbox{\small\color{white}\mn@labtext{#1}{#2}}%
+  \global\mn@tabw=\dimexpr1\zw+\wd\mn@pillbox+.42em\relax
+  \usebox\mn@pillbox}
+
+% (smalltab) 一回り小さいアクセント色のラベル＋上の層のタブ幅を記録（Axiom）
+\def\mn@lab@smalltab#1#2{%
+  \sbox\mn@pillbox{\small\color{mnLabelC}\mn@labtext{#1}{#2}}%
   \global\mn@tabw=\dimexpr1\zw+\wd\mn@pillbox+.42em\relax
   \usebox\mn@pillbox}
 
@@ -1073,12 +1083,11 @@
     overlay last={\mn@ed@bottom},
   },
   % ---------------------------------------------------------------
-  % Editorial（枠つき）── 左右と下を細線で囲み，上端は細線＋短い太線
-  %   （上の角は直角，下の角は丸．mn/editorial の代わりに使える）
+  % Editorial（枠つき）── 四辺を細線で囲み（角は直角），上端に短い太線
+  %   （mn/editorial の代わりに使える）
   % ---------------------------------------------------------------
   mn/editorialframe/.style={
     mn@common={#1}{small}{dash}{none},
-    rounded corners=south, arc=\mn@cardarc, outer arc=\mn@cardarc,
     borderline={\mn@cardrule}{0pt}{mnCardLine},
     overlay unbroken and first={\mn@ed@seg},
   },
@@ -1104,6 +1113,31 @@
           ([xshift=-1.0\zw-\mn@i*.42em]title.north east);
     },
   },
+  % ---------------------------------------------------------------
+  % Tab Strip（二層）── 最上部に細いタブ＋グラデーション帯の層，
+  %   その下の段にラベル │ 名前（アクセント色の文字）．斜線 3 本と内側の仕切り線
+  % ---------------------------------------------------------------
+  mn/tabstrip/.style={
+    mn@common={#1}{smalltab}{vsep}{none}, mn@card,
+    shadow={0pt}{\mn@shCy}{\mn@shCo}{fill=mnShadowC},
+    shadow={0pt}{\mn@shBy}{\mn@shBo}{fill=mnShadowB},
+    shadow={0pt}{\mn@shAy}{\mn@shAo}{fill=mnShadowA},
+    underlay unbroken and first={
+      \begin{tcbcliptitle}
+        \shade[left color=mnBandL, right color=mnBandR]
+          ([yshift=-\mn@stripw]title.north west) rectangle (title.north east);
+        \fill[mnTheoAccent] ([yshift=-\mn@stripw]title.north west) -- (title.north west)
+          -- ([xshift=\mn@tabw+.25em]title.north west)
+          -- ([xshift=\mn@tabw, yshift=-\mn@stripw]title.north west) -- cycle;
+      \end{tcbcliptitle}
+      \foreach \mn@i in {0,1,2}
+        \draw[mnCardLine, line width=\mn@cardrule]
+          ([xshift=-1.45\zw-\mn@i*.42em, yshift=\mn@strip@b]title.south east) --
+          ([xshift=-1.05\zw-\mn@i*.42em, yshift=-\mn@strip@t]title.north east);
+      \draw[mnCardRule, line width=\mn@cardrule]
+        ([xshift=1\zw]title.south west) -- ([xshift=-1\zw]title.south east);
+    },
+  },
   % 後方互換：mytheo は Pill Header と同じ
   mytheo/.style={mn/pillheader={#1}},
 }
@@ -1114,7 +1148,7 @@
 \newtcbtheorem[number within=subsection]{theorem}   {Theorem}    {mn/leftbar={acc@th}}{th}
 \newtcbtheorem[use counter from=theorem]{prop}      {Proposition}{mn/leftbar={acc@pr}}{pr}
 \newtcbtheorem[use counter from=theorem]{cor}       {Corollary}  {mn/leftrail={acc@co}}{co}
-\newtcbtheorem[use counter from=theorem]{axiom}     {Axiom}      {mn/gradienttab={acc@ax}}{ax}
+\newtcbtheorem[use counter from=theorem]{axiom}     {Axiom}      {mn/tabstrip={acc@ax}}{ax}
 \newtcbtheorem[use counter from=theorem]{definition}{Definition} {mn/pillheader={acc@de}}{de}
 \newtcbtheorem[use counter from=theorem]{lemma}     {Lemma}      {mn/leftrail={acc@le}}{le}
 \newtcbtheorem[use counter from=theorem]{example}   {Example}    {mn/editorialframe={acc@ex}}{ex}
