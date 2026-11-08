@@ -677,14 +677,20 @@
 % § 9. 定理環境（Apple風・モノトーン）
 % ==============================================================
 
-% ---- 各環境のアクセント色（モノトーン） ----
-\colorlet{acc@th}{appleInkGray}     % Theorem：濃い灰
-\colorlet{acc@pr}{appleGrayDark}    % Proposition：やや濃い灰
-\colorlet{acc@co}{appleGray}        % Corollary：中間灰
-\colorlet{acc@ax}{appleInk}         % Axiom：ほぼ黒
-\colorlet{acc@de}{appleGrayDark}    % Definition：濃い灰
-\colorlet{acc@le}{appleGray}        % Lemma：中間灰
-\colorlet{acc@ex}{appleGrayLight}   % Example：薄い灰
+% ---- 各環境のアクセント色（案B：マゼンタは「目印」にだけ使う） ----
+%   マゼンタはコラム・Remark と同じ magenta!72!black（CMYK では M72+K28）．
+%   Definition / Axiom は塗り，Theorem / Prop. はカプセルとドットのみ．
+%   ラベル文字（Theorem 1.2.3 など）は墨（mnLabelInk）のまま．
+\colorlet{mnMagenta}{magenta!72!black}
+\colorlet{mnMagentaSoft}{magenta!45!black!55!white}
+\colorlet{mnLabelInk}{black}  % ラベル文字もスミ 100%
+\colorlet{acc@th}{mnMagenta}        % Theorem：カプセル・ドット
+\colorlet{acc@pr}{mnMagenta}        % Proposition：カプセル・ドット
+\colorlet{acc@co}{mnMagentaSoft}    % Corollary：淡いマゼンタの縦線
+\colorlet{acc@ax}{mnMagenta}        % Axiom：タブとストライプ
+\colorlet{acc@de}{mnMagenta}        % Definition：ピル（白抜き文字）
+\colorlet{acc@le}{mnMagentaSoft}    % Lemma：淡いマゼンタの縦線
+\colorlet{acc@ex}{appleGrayLight}   % Example：薄い灰（数が多いので色は入れない）
 \colorlet{acc@qu}{appleLineGray}    % Question：淡い灰（白は使わない）
 
 % ---- 追加：カードの薄い背景（Column 環境と同じ黒1%） ----
@@ -699,8 +705,8 @@
     colback=appleCardTint,          % 【変更】白 → 薄灰カード
     colframe=appleCardTint,
     colbacktitle=appleCardTint,
-    coltitle=appleInk,
-    coltext=appleInk,
+    coltitle=black,                 % 見出し・本文はスミ 100%（K88% の網だと印刷でにじむ）
+    coltext=black,
     fonttitle=\gtfamily\sffamily\bfseries\upshape,
     left*=1\zw,
     right*=1\zw,
@@ -857,13 +863,13 @@
 % （カプセル＋すき間＋ラベル 90% の幅は従来ラベルの幅の内側に収まる）
 \def\mn@lab@bar#1#2{%
   \mn@capsule\hskip.4em
-  {\mn@shrinkby{.9}\color{mnLabelC}\mn@labtext{#1}{#2}}}
+  {\mn@shrinkby{.9}\color{mnLabelInk}\mn@labtext{#1}{#2}}}
 \def\mn@capsule{\smash{\mn@noscale\tikz[baseline=0pt]
   \fill[mnTheoAccent, rounded corners=.5\mn@railw]
     (0,-.2em) rectangle (\mn@railw,.94em);}}
 
 % (plain) アクセント色のラベル（Lemma / Cor.）
-\def\mn@lab@plain#1#2{{\mn@shrink\color{mnLabelC}\mn@labtext{#1}{#2}}}
+\def\mn@lab@plain#1#2{{\mn@shrink\color{mnLabelInk}\mn@labtext{#1}{#2}}}
 
 % (eyebrow) 大文字・字間あけの小見出し（Question）
 \def\mn@lab@eyebrow#1#2{{\footnotesize\color{mnLabelC}%
@@ -1231,8 +1237,8 @@
 
 % ---- 色設定 ----
 \colorlet{columnMagenta}{magenta!72!black}
-\colorlet{columnInk}{black!88}
-\colorlet{columnBackground}{black!2.5}  % コラム背景（白地に近い薄灰）
+\colorlet{columnInk}{black}       % 文字はスミ 100%（網点にしない＝印刷でにじまない）
+\colorlet{columnBackground}{black!4}  % コラム背景（薄灰．2.5% → 4%：印刷で網が安定する濃さ）
 \colorlet{columnFrame}{black!45}   % 外枠・見出し枠のヘアライン（濃いめ）
 \colorlet{columnRule}{black!22}    % 見出し右の区切り線
 
@@ -1321,8 +1327,8 @@
 % ==============================================================
 
 \colorlet{remarkMagenta}{magenta!72!black}
-\colorlet{remarkInk}{black!88}
-\colorlet{remarkBackground}{black!2.0}
+\colorlet{remarkInk}{black}       % 文字はスミ 100%（網点にしない＝印刷でにじまない）
+\colorlet{remarkBackground}{black!3.5}  % 2.0% → 3.5%
 \colorlet{remarkRule}{black!18}
 \colorlet{remarkSubtitle}{black!52}
 
