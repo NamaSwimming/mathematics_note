@@ -170,10 +170,10 @@
 \definecolor{appleCard}     {HTML}{FFFFFF}  % 白カード
 \definecolor{appleInk}      {HTML}{1D1D1F}  % 本文インク（ほぼ黒）
 \definecolor{appleInkGray}  {HTML}{37373A}  % Ink 寄りのダークグレイ
-\definecolor{appleLine}     {HTML}{D2D2D7}  % 区切り線
-\definecolor{appleGrayLight}{HTML}{E5E5EA}  % 薄い灰（背景の差別化）
-\definecolor{appleGray}     {HTML}{8E8E93}  % 中間灰（注釈・副次情報）
-\definecolor{appleGrayDark} {HTML}{3A3A3C}  % 濃い灰（強めのUI線）
+\definecolor{appleLine}     {gray}{0.78}    % 区切り線（旧 D2D2D7≒K16＋CM．K22 の墨 1 色に）
+\definecolor{appleGrayLight}{gray}{0.88}    % 薄い灰（旧 E5E5EA≒K8＋CM．K12 の墨 1 色に）
+\definecolor{appleGray}     {gray}{0.52}    % 中間灰（旧 8E8E93≒K42＋CM．K48 の墨 1 色に）
+\definecolor{appleGrayDark} {gray}{0.22}    % 濃い灰（旧 3A3A3C≒K77＋CM．K78 の墨 1 色に）
 \definecolor{appleBlack}    {HTML}{1D1D1F}  % 黒系のエイリアス
 
 % ---- Apple アクセント色（Blue / Indigo / Purple / Magenta 系） ----
@@ -196,7 +196,7 @@
 
 % ---- 補助色 ----
 \definecolor{appleTitleGray}{RGB}{86, 86, 91}
-\definecolor{appleLineGray} {RGB}{134,134,139}
+\definecolor{appleLineGray} {gray}{0.48}    % 旧 RGB(134,134,139)≒K46＋CM．K52 の墨 1 色に
 
 % ---- グラフ塗りつぶし用（上側・下側の面積） ----
 \definecolor{CupertinoBlue}  {HTML}{D6006D}   % Magenta（旧 System Blue）
@@ -446,7 +446,6 @@
 
 % rule/caps color and bar fill/outline
 \colorlet{secrule}{appleLineGray}
-\colorlet{secdot}{magenta!72!black}   % 横罫線両端の小さい丸（定理類と同じマゼンタ）
 \colorlet{secbarfill}{appleGrayLight}
 \colorlet{secbaredge}{appleGray}
 
@@ -469,11 +468,11 @@
       (0,0) -- (\linewidth,0);
 
     % 横罫線の左端の円
-    \fill[secdot]
+    \fill[secrule]
       (0,0) circle[radius=1mm];
 
     % 横罫線の右端の円
-    \fill[secdot]
+    \fill[secrule]
       (\linewidth,0) circle[radius=1mm];
 
     \fill[secbarfill]
@@ -512,11 +511,11 @@
       (0,0) -- (\linewidth,0);
 
     % 横罫線の左端の円
-    \fill[secdot]
+    \fill[secrule]
       (0,0) circle[radius=1mm];
 
     % 横罫線の右端の円
-    \fill[secdot]
+    \fill[secrule]
       (\linewidth,0) circle[radius=1mm];
 
     \fill[secbarfill]
@@ -766,13 +765,13 @@
 \makeatletter
 
 % ---- 色（K 版だけで刷れるグレイ） ----
-\colorlet{mnCardLine}{black!20}    % カードの外周ヘアライン
-\colorlet{mnCardRule}{black!12}    % 見出し下の仕切り線
-\colorlet{mnBandL}{black!8}        % Gradient Tab の帯（左）
-\colorlet{mnBandR}{black!1.5}      % 　　　　　　　　　（右）
-\colorlet{mnShadowA}{black!12}     % 影（不透明 3 段．透明度は使わない）
-\colorlet{mnShadowB}{black!7}
-\colorlet{mnShadowC}{black!3.5}
+\colorlet{mnCardLine}{black!26}    % カードの外周ヘアライン（20→26）
+\colorlet{mnCardRule}{black!17}    % 見出し下の仕切り線（12→17）
+\colorlet{mnBandL}{black!11}       % Gradient Tab の帯（左）（8→11）
+\colorlet{mnBandR}{black!3}        % 　　　　　　　　　（右）（1.5→3：網が飛ばない濃さ）
+\colorlet{mnShadowA}{black!15}     % 影（不透明 3 段．透明度は使わない）（12/7/3.5→15/9/5）
+\colorlet{mnShadowB}{black!9}
+\colorlet{mnShadowC}{black!5}
 
 % ---- 寸法（A4 実寸で書く．B5 では \mnsc が縮める） ----
 \newdimen\mn@cardarc
@@ -810,13 +809,13 @@
 \def\mn@noscale{\ifdefined\mnnoscale\mnnoscale\fi}
 
 % ---- アクセント色：塗り用 mnTheoAccent と，文字・線用 mnLabelC ----
-%   Example（E5E5EA）など明るすぎる色は，読める濃さ（グレイ 0.5）まで沈める
+%   Example など明るすぎる色は，読める濃さ（グレイ 0.42＝K58）まで沈める（旧 0.5）
 \def\mn@setaccent#1{%
   \colorlet{mnTheoAccent}{#1}%
   \extractcolorspec{#1}\mn@spec
   \expandafter\convertcolorspec\mn@spec{gray}\mn@gray
-  \ifdim\mn@gray pt>0.5pt
-    \edef\mn@pct{\fpeval{round(100*0.5/\mn@gray)}}%
+  \ifdim\mn@gray pt>0.42pt
+    \edef\mn@pct{\fpeval{round(100*0.42/\mn@gray)}}%
     \colorlet{mnLabelC}{#1!\mn@pct!black}%
   \else
     \colorlet{mnLabelC}{#1}%
@@ -1239,9 +1238,9 @@
 % ---- 色設定 ----
 \colorlet{columnMagenta}{magenta!72!black}
 \colorlet{columnInk}{black}       % 文字はスミ 100%（網点にしない＝印刷でにじまない）
-\colorlet{columnBackground}{black!4}  % コラム背景（薄灰．2.5% → 4%：印刷で網が安定する濃さ）
-\colorlet{columnFrame}{black!45}   % 外枠・見出し枠のヘアライン（濃いめ）
-\colorlet{columnRule}{black!22}    % 見出し右の区切り線
+\colorlet{columnBackground}{black!5}  % コラム背景（薄灰．2.5% → 4% → 5%）
+\colorlet{columnFrame}{black!50}   % 外枠・見出し枠のヘアライン（45→50）
+\colorlet{columnRule}{black!28}    % 見出し右の区切り線（22→28）
 
 % ---- 見出し枠の中心を上辺から何mm下げるか（ここ1か所で調整） ----
 \newlength{\columnTitleDrop}
@@ -1329,9 +1328,9 @@
 
 \colorlet{remarkMagenta}{magenta!72!black}
 \colorlet{remarkInk}{black}       % 文字はスミ 100%（網点にしない＝印刷でにじまない）
-\colorlet{remarkBackground}{black!3.5}  % 2.0% → 3.5%
-\colorlet{remarkRule}{black!18}
-\colorlet{remarkSubtitle}{black!52}
+\colorlet{remarkBackground}{black!5}  % 2.0% → 3.5% → 5%
+\colorlet{remarkRule}{black!24}     % 18→24
+\colorlet{remarkSubtitle}{black!58} % 52→58
 
 % ---- 見出し帯の寸法（調整はここ1か所で） ----
 \newlength{\remarkPad}        \setlength{\remarkPad}{6mm}      % 左右の内側余白
@@ -1407,10 +1406,10 @@
 %   左上・右下はマゼンタ（コラム・Remark と同色），右上・左下は灰．
 %   余白・罫の太さは従来のまま（＝箱の高さは変わらない）．影は透明度を使うので廃止．
 \makeatletter
-\colorlet{reviewBack}{black!4}        % 面（コラムと同じ濃さ）
+\colorlet{reviewBack}{black!5}        % 面（コラムと同じ濃さ）
 \colorlet{reviewMark}{mnMagenta}      % L 字（左上・右下）
-\colorlet{reviewMarkSub}{black!38}    % L 字（右上・左下）
-\colorlet{reviewRule}{black!20}       % タイトル下の細線
+\colorlet{reviewMarkSub}{black!45}    % L 字（右上・左下）
+\colorlet{reviewRule}{black!26}       % タイトル下の細線
 \def\mn@rv@d{\mnsc{2.1mm}}  % 目印の，角からの距離
 \def\mn@rv@l{\mnsc{6.3mm}}  % 目印の先端の，角からの距離（＝距離＋長さ）
 \def\mn@rv@L#1#2#3#4{% #1=色  #2=角  #3,#4=x,y の向き（+ / -）
@@ -1433,9 +1432,6 @@
   left=7mm, right=7mm, top=4mm, bottom=4mm,
   before skip=0.9\baselineskip plus 6pt minus 2pt,
   after skip =0.9\baselineskip plus 6pt minus 2pt,
-  % 見出しは左上の L 字の内側に収める：上の腕（角から 2.1mm）より下，
-  % 縦の腕（同 2.1mm）より右に文字が来るよう，見出しの上下の余白を足す
-  toptitle=2.3mm, bottomtitle=1.3mm,
   fonttitle=\bfseries\sffamily,
   coltitle=black,
   title=#1,
