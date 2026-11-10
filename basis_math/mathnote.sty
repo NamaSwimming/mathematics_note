@@ -446,6 +446,7 @@
 
 % rule/caps color and bar fill/outline
 \colorlet{secrule}{appleLineGray}
+\colorlet{secdot}{magenta!72!black}   % 横罫線両端の小さい丸（定理類と同じマゼンタ）
 \colorlet{secbarfill}{appleGrayLight}
 \colorlet{secbaredge}{appleGray}
 
@@ -468,11 +469,11 @@
       (0,0) -- (\linewidth,0);
 
     % 横罫線の左端の円
-    \fill[secrule]
+    \fill[secdot]
       (0,0) circle[radius=1mm];
 
     % 横罫線の右端の円
-    \fill[secrule]
+    \fill[secdot]
       (\linewidth,0) circle[radius=1mm];
 
     \fill[secbarfill]
@@ -511,11 +512,11 @@
       (0,0) -- (\linewidth,0);
 
     % 横罫線の左端の円
-    \fill[secrule]
+    \fill[secdot]
       (0,0) circle[radius=1mm];
 
     % 横罫線の右端の円
-    \fill[secrule]
+    \fill[secdot]
       (\linewidth,0) circle[radius=1mm];
 
     \fill[secbarfill]
@@ -1401,19 +1402,51 @@
 }
 \makeatother
 
-% ---- reviewbox: 丸角・影付きの復習ボックス（オプションでタイトル） ----
+% ---- reviewbox: 復習ボックス（オプションでタイトル） ----
+%   淡い灰のタイルの四隅に，ファインダーのような L 字の目印（modernthm 49 viewfinder が元）．
+%   左上・右下はマゼンタ（コラム・Remark と同色），右上・左下は灰．
+%   余白・罫の太さは従来のまま（＝箱の高さは変わらない）．影は透明度を使うので廃止．
+\makeatletter
+\colorlet{reviewBack}{black!4}        % 面（コラムと同じ濃さ）
+\colorlet{reviewMark}{mnMagenta}      % L 字（左上・右下）
+\colorlet{reviewMarkSub}{black!38}    % L 字（右上・左下）
+\colorlet{reviewRule}{black!20}       % タイトル下の細線
+\def\mn@rv@d{\mnsc{2.1mm}}  % 目印の，角からの距離
+\def\mn@rv@l{\mnsc{6.3mm}}  % 目印の先端の，角からの距離（＝距離＋長さ）
+\def\mn@rv@L#1#2#3#4{% #1=色  #2=角  #3,#4=x,y の向き（+ / -）
+  \draw[#1, line width=\mnsc{1.15pt}]
+    ([xshift=#3\mn@rv@d, yshift=#4\mn@rv@l]#2) -- ([xshift=#3\mn@rv@d, yshift=#4\mn@rv@d]#2)
+    -- ([xshift=#3\mn@rv@l, yshift=#4\mn@rv@d]#2);}
+\def\mn@rv@top{\mn@rv@L{reviewMark}{frame.north west}{}{-}%
+  \mn@rv@L{reviewMarkSub}{frame.north east}{-}{-}}
+\def\mn@rv@bottom{\mn@rv@L{reviewMarkSub}{frame.south west}{}{}%
+  \mn@rv@L{reviewMark}{frame.south east}{-}{}}
+\def\mn@rv@titlerule{% タイトルがあるときだけ，その下に細線
+  \iftcb@hasTitle
+    \draw[reviewRule, line width=\mnsc{0.45pt}]
+      ([xshift=\mnsc{8mm}]title.south west) -- ([xshift=-\mnsc{8mm}]title.south east);
+  \fi}
 \newtcolorbox{reviewbox}[1][]{
   enhanced, breakable,
-  colback=white, colframe=appleLine,
-  boxrule=0.35pt, arc=4mm,
+  colback=reviewBack, colframe=reviewBack, colbacktitle=reviewBack,
+  boxrule=0.35pt, arc=1mm,
   left=7mm, right=7mm, top=4mm, bottom=4mm,
   before skip=0.9\baselineskip plus 6pt minus 2pt,
   after skip =0.9\baselineskip plus 6pt minus 2pt,
+  % 見出しは左上の L 字の内側に収める：上の腕（角から 2.1mm）より下，
+  % 縦の腕（同 2.1mm）より右に文字が来るよう，見出しの上下の余白を足す
+  toptitle=2.3mm, bottomtitle=1.3mm,
   fonttitle=\bfseries\sffamily,
-  coltitle=appleInk,
+  coltitle=black,
   title=#1,
-  drop fuzzy shadow
+  underlay unbroken={\mn@rv@top\mn@rv@bottom},
+  underlay first={\mn@rv@top},
+  underlay last={\mn@rv@bottom},
+  overlay unbroken and first={\mn@rv@titlerule},
 }
+\makeatother
+
+
 
 % ---- mondai: 問題・解答の上下分割ボックス ----
 \newcounter{mondaibangou}
