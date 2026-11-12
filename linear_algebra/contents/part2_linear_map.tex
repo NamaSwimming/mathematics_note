@@ -234,7 +234,7 @@ $\sin\theta \approx \theta$という近似によって単振動として扱う�
     f\begin{pmatrix} x \\ y \end{pmatrix}
     = \begin{pmatrix} x\cos\theta - y\sin\theta \\ x\sin\theta + y\cos\theta \end{pmatrix}
   \]
-  と表される\footnote{点$(x, y)$を極形式で$x = r\cos\varphi$，$y = r\sin\varphi$とかけば，回転後の点は$(r\cos(\varphi + \theta),\ r\sin(\varphi + \theta))$である．三角関数の加法定理を用いて展開すれば，上の式が得られる．}．
+  と表される\footnote{この式は次のようにして導ける．下で幾何的に説明するように，回転は和と定数倍を保つ（平行四辺形は平行四辺形に，$\alpha$倍に伸縮した矢印は同じく$\alpha$倍に伸縮した矢印にうつる）から，点$(x, y)$の行き先は，点$(1, 0)$の行き先の$x$倍と点$(0, 1)$の行き先の$y$倍の和である．三角関数の定義より，点$(1, 0)$の行き先は$(\cos\theta, \sin\theta)$である．また，点$(0, 1)$は点$(1, 0)$を$90^\circ$回転させた点であるから，その行き先は$(\cos\theta, \sin\theta)$を$90^\circ$回転させた点$(-\sin\theta, \cos\theta)$である（$90^\circ$の回転で点$(a, b)$は点$(-b, a)$にうつる）．これらを合わせれば上の式が得られる．三角関数の加法定理を用いて極形式から導くこともできるが，\exref{回転行列と加法定理}では逆にこの式から加法定理を導くので，ここでは加法定理を用いない導出を採った．}．
   この$f$は$\mathbb{R}^2$の線型変換である．実際，
   \[
     f\left( \begin{pmatrix} x_1 \\ x_2 \end{pmatrix} + \begin{pmatrix} y_1 \\ y_2 \end{pmatrix} \right)
@@ -489,7 +489,7 @@ $\sin\theta \approx \theta$という近似によって単振動として扱う�
   \[
     \Sigma \bm{a} = \begin{pmatrix} S_1 \\ S_2 \\ \vdots \\ S_n \end{pmatrix}
   \]
-  で定める．各$S_k$は$a_1, \dots, a_n$の線型結合であるから，$\Sigma$は線型変換である．
+  で定める．各$S_k$は$a_1, \dots, a_n$の線型結合（定数倍の和．\partref{線型独立性と階数}であらためて定義する）であるから，$\Sigma$は線型変換である．
   これは，和の記号についての性質
   \[
     \sum_{i=1}^{k} (a_i + b_i) = \sum_{i=1}^{k} a_i + \sum_{i=1}^{k} b_i, \qquad
@@ -498,8 +498,10 @@ $\sin\theta \approx \theta$という近似によって単振動として扱う�
   の言い換えである．
 
   なお，$\Delta$が微分の，$\Sigma$が積分の離散版にあたることに注意しよう．
-  高校で学ぶ関係式$a_n = S_n - S_{n-1}$は，「部分和をとってから階差をとると元に戻る」ことを述べており，
+  高校で学ぶ関係式$a_n = S_n - S_{n-1}$~$(n \ge 2)$は，「部分和をとってから階差をとると，初項を除いて元の数列に戻る」ことを述べており，
   微分積分学の基本定理の数列版とみることができる．
+  実際，$\Delta(\Sigma\bm{a})$は$a_2, \dots, a_n$を並べたベクトルである．
+  初項まで含めて元に戻るように$\Delta$を少し修正した写像は，\exref{階差行列と部分和行列}で扱う．
 \end{example}
 
 \begin{example}{等差数列を作る写像}{等差数列を作る写像}
@@ -686,10 +688,10 @@ $\alpha$倍すると各成分は$\alpha^2$倍になるので，$f(\alpha\bm{a}) 
   が成り立ち，さらに，
   \begin{align}
     T_A(\alpha\bm{x}) &= A(\alpha\bm{x}) \tag{$T_A$の定義} \\
-    &= \alpha(A\bm{x}) \tag{行列の積の性質} \\
+    &= \alpha(A\bm{x}) \tag{スカラー倍との両立} \\
     &= \alpha T_A(\bm{x}) \nonumber
   \end{align}
-  が成り立つ．
+  が成り立つ（いずれも\prref{行列の積の計算規則}による）．
   よって$T_A$は線型写像である．
 \end{proof}
 \end{tleftbar}
@@ -915,16 +917,17 @@ $T_A$は線型であるから，正方形の方眼はこの$2$本のベクトル
     \cos(\theta + \varphi) = \cos\theta\cos\varphi - \sin\theta\sin\varphi, \qquad
     \sin(\theta + \varphi) = \sin\theta\cos\varphi + \cos\theta\sin\varphi
   \]
-  が得られる．
+  が得られる\footnote{\exref{原点のまわりの回転}では，回転を表す式を加法定理を用いずに導いた．したがって，この議論は循環論法にはなっておらず，加法定理のひとつの証明になっている．}．
   行列の積という「一見複雑な定義」が，写像の合成という自然な操作を正確に写し取っていることの，ひとつの現れである．
 \end{example}
 
 \begin{example}{回転行列の逆行列}{回転行列の逆行列}
   角$\theta$の回転を打ち消すのは角$-\theta$の回転であるから，
   \[
-    R(\theta) R(-\theta) = R(0) = E_2
+    R(\theta) R(-\theta) = R(0) = E_2, \qquad
+    R(-\theta) R(\theta) = R(0) = E_2
   \]
-  が成り立つ．よって$R(\theta)$は正則であり，
+  が成り立つ（角$-\theta$の回転を打ち消すのは角$\theta$の回転である）．よって$R(\theta)$は正則であり，
   \[
     R(\theta)^{-1} = R(-\theta) = \begin{pmatrix} \cos\theta & \sin\theta \\ -\sin\theta & \cos\theta \end{pmatrix}
     = R(\theta)^\mathsf{T}
