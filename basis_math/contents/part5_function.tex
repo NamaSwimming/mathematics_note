@@ -165,7 +165,7 @@ $A=\{ 1,2 ,3 \}$， $B=\{ a, b,c \}$とする．$f(1) = a$，$f(2) = b$，$f(3) 
   \]
   と表す\index{いちいそんざい@一意存在}．これは，
   \[
-    \lex{y \in B} \lst \Bigl( P(y) \land \bigl( \lall{z \in B} \lst ( P(z) \limp z = y ) \bigr) \Bigr)
+    \lex{y \in B} \lst \biggl[ P(y) \land \Bigl( \lall{z \in B} \lst \bigl[ P(z) \limp z = y \bigr] \Bigr) \biggr]
   \]
   の略記である．
 \end{definition}

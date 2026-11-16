@@ -44,7 +44,7 @@
   これを論理記号でかけば，次のようになる：
   \[
     \lall{\varepsilon > 0} \lsep \lex{n_0 \in \mathbb{N}} \lsep \lall{n \in \mathbb{N}} \lst
-    \bigl( n \geqq n_0 \limp \abs*{a_n - a} < \varepsilon \bigr)
+    \bigl[ n \geqq n_0 \limp \abs*{a_n - a} < \varepsilon \bigr]
   \]
 \end{definition}
 
@@ -84,7 +84,7 @@
   これを論理記号でかけば，次のようになる：
   \[
     \lall{M \in \mathbb{R}} \lsep \lex{n_0 \in \mathbb{N}} \lsep \lall{n \in \mathbb{N}} \lst
-    \bigl( n \geqq n_0 \limp a_n > M \bigr)
+    \bigl[ n \geqq n_0 \limp a_n > M \bigr]
   \]
 \end{definition}
 
@@ -93,7 +93,7 @@
   量化子の否定の規則（$\lnot$が量化子を通過するたびに$\forall$と$\exists$が入れ替わる）を外側から順に適用し，最後に含意の否定$\lnot ( P \limp Q ) \equiv P \land \lnot Q$を用いると，「$(a_n)_{n \in \mathbb{N}}$が$a$に収束しない」ことは
   \[
     \lex{\varepsilon > 0} \lsep \lall{n_0 \in \mathbb{N}} \lsep \lex{n \in \mathbb{N}} \lst
-    \bigl( n \geqq n_0 \land \abs*{a_n - a} \geqq \varepsilon \bigr)
+    \bigl[ n \geqq n_0 \land \abs*{a_n - a} \geqq \varepsilon \bigr]
   \]
   と表される．すなわち「ある$\varepsilon$がうまくとれて，どんなに先の番号$n_0$を指定されても，それ以降に$a$から$\varepsilon$以上離れた項が現れる」ということである．
 
@@ -296,7 +296,7 @@
       &=\abs*{\frac{b(a_n-a)-a(b_n-b)}{bb_n}} \\
       &\leqq \frac{\abs*{b}\abs*{a_n-a}+\abs*{a}\abs*{b_n-b}}
                     {\abs*{b}\abs*{b_n}} \\
-      &< \frac{\abs*{b}\abs*{a_n-a}+\abs*{a}\abs*{b_n-b}}
+      &\leqq \frac{\abs*{b}\abs*{a_n-a}+\abs*{a}\abs*{b_n-b}}
                {\abs*{b}\cdot \dfrac{\abs*{b}}{2}} \\
       &= \frac{2}{\abs*{b}}\abs*{a_n-a}
          +\frac{2\abs*{a}}{\abs*{b}^2}\abs*{b_n-b} \\

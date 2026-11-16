@@ -605,7 +605,7 @@
   \]
   という記法は，厳密には
   \[
-    \lall{x} \bigl( x \in \mathbb{R} \limp P(x) \bigr)
+    \lall{x} \lst \bigl[ x \in \mathbb{R} \limp P(x) \bigr]
   \]
   の略記である．すなわち，「どの$x$についても，それが実数であるならば$P(x)$が成り立つ」という含意の形をしている．一方，
   \[
@@ -613,9 +613,9 @@
   \]
   は
   \[
-    \lex{x} \bigl( x \in \mathbb{R} \land P(x) \bigr)
+    \lex{x} \lst \bigl[ x \in \mathbb{R} \land P(x) \bigr]
   \]
-  の略記であり，こちらは含意ではなく「かつ」であることに注意したい．全称は$\limp$と，存在は$\land$と組になる，というこの対応は，のちに述べる量化子の否定の規則とも整合的である\footnote{実際，$\lnot \lall{x} ( x \in \mathbb{R} \limp P(x) ) \equiv \lex{x} \lnot ( x \in \mathbb{R} \limp P(x) ) \equiv \lex{x} ( x \in \mathbb{R} \land \lnot P(x) )$となり，「$P(x)$を満たさない実数$x$が存在する」という正しい否定が得られる（含意の否定$\lnot(P \limp Q) \equiv P \land \lnot Q$を用いた）．}．
+  の略記であり，こちらは含意ではなく「かつ」であることに注意したい．全称は$\limp$と，存在は$\land$と組になる，というこの対応は，のちに述べる量化子の否定の規則とも整合的である\footnote{実際，$\lnot \lall{x} \lst [ x \in \mathbb{R} \limp P(x) ] \equiv \lex{x} \lst \lnot [ x \in \mathbb{R} \limp P(x) ] \equiv \lex{x} \lst [ x \in \mathbb{R} \land \lnot P(x) ]$となり，「$P(x)$を満たさない実数$x$が存在する」という正しい否定が得られる（含意の否定$\lnot(P \limp Q) \equiv P \land \lnot Q$を用いた）．}．
 \end{remark}
 
 \phantomsection
@@ -792,6 +792,6 @@ $\delta$は選んだ$\varepsilon$に応じて決めてよいことを表して�
   \exref{数列が収束しないこと}の否定の操作について，いくつか注意しておこう．
   \begin{itemize}
     \item 不等式$\abs{a_n - \alpha} < \varepsilon$の否定は$\abs{a_n - \alpha} \geqq \varepsilon$であって，$\abs{a_n - \alpha} > \varepsilon$ではない．等号の扱いを誤りやすいので注意したい．
-    \item $\lall{\varepsilon > 0}$を否定して得られるのは$\lex{\varepsilon > 0}$であり，「$\varepsilon > 0$」という範囲の指定そのものは否定しない．これは，量化子つき記法の意味に関する注意で述べたとおり，$\lnot \lall{x} ( x \in \mathbb{R} \limp P(x) ) \equiv \lex{x} ( x \in \mathbb{R} \land \lnot P(x) )$となることによる．$\lall{n \geqq N}$についても同様である．
+    \item $\lall{\varepsilon > 0}$を否定して得られるのは$\lex{\varepsilon > 0}$であり，「$\varepsilon > 0$」という範囲の指定そのものは否定しない．これは，量化子つき記法の意味に関する注意で述べたとおり，$\lnot \lall{x} \lst [ x \in \mathbb{R} \limp P(x) ] \equiv \lex{x} \lst [ x \in \mathbb{R} \land \lnot P(x) ]$となることによる．$\lall{n \geqq N}$についても同様である．
   \end{itemize}
 \end{remark}

@@ -139,11 +139,22 @@
 \begin{tleftbar}
   \begin{proof}
     任意の$M > 0$に対して，$M$より大きい自然数が存在することを示す．
-    有理数の稠密性を開区間$( 0, 1/M )$に適用すると，
+    $a = \frac{1}{2M}$，$\varepsilon = \frac{1}{2M}$とおくと，$\varepsilon > 0$より$a - \varepsilon < a + \varepsilon$である．
+    そこで，有理数の稠密性を開区間$( a - \varepsilon, a + \varepsilon )$に適用すると，
+    \[
+      a - \varepsilon < r < a + \varepsilon
+    \]
+    を満たす有理数$r \in \mathbb{Q}$が存在する．ここで，
+    \[
+      a - \varepsilon = \frac{1}{2M} - \frac{1}{2M} = 0,
+      \qquad
+      a + \varepsilon = \frac{1}{2M} + \frac{1}{2M} = \frac{1}{M}
+    \]
+    であるから，
     \[
       0 < r < \frac{1}{M}
     \]
-    を満たす有理数$r \in \mathbb{Q}$が存在する．
+    である．
     $r$は正の有理数であるから，自然数$p,q$を用いて$r = q/p$と表せる．
     ここで，$q \geqq 1$であるから，
     \[

@@ -102,3 +102,6 @@ basis_math/basis_math_cmyk_B5.pdf
 *.snm
 *.vrb
 .DS_Store
+
+# B5版PDF (basic_analysis)
+basic_analysis/basic_analysis_cmyk_B5.pdf

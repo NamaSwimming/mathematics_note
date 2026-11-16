@@ -14,7 +14,7 @@
 \subsection{級数の定義}
 
 \begin{definition}{級数}{級数の定義}
-  実数列$(a_n)_{n \in \mathbb{N}}$から，数列$(s_n)_{n \in \mathbb{N}}$を
+  実数列$(a_n)_{n \in \mathbb{N}}$\footnote{級数では添字を$0$から始めることが多い．本章でもこれにならい，この章に限って，数列の添字$n$は$0$以上の整数を動くものとする．}から，数列$(s_n)_{n \in \mathbb{N}}$を
   \[
     s_0 =a_0 ,\quad s_1 =a_0+a_1,\ldots,s_n=a_0+a_1+\cdots+a_n,\ldots
   \]
@@ -32,7 +32,7 @@
 \begin{theorem}{級数に関するコーシーの収束条件}{級数に関するコーシーの収束条件}
   $\sum_{n=0}^{\infty} a_n$が収束することと，任意の$\varepsilon>0$に対し，ある$n_0 \in \mathbb{N}$が存在して，任意の$m,n \in \mathbb{N}$に対して，
   \[
-    m,n \geqq n_0 \limp \abs{a_{m+1}+a_{m+2}+\cdots+a_{n}}<\varepsilon
+    n > m \geqq n_0 \limp \abs{a_{m+1}+a_{m+2}+\cdots+a_{n}}<\varepsilon
   \]
   となることは同値である．
 \end{theorem}
@@ -54,7 +54,7 @@
 \end{leftbar}
 
 \begin{cor}{}{}
-  $\lim_{n \to \infty} a_n \ne 0$のとき，$\sum_{n=0}^{\infty} a_n$は発散する．
+  数列$(a_n)_{n \in \mathbb{N}}$が$0$に収束しないとき，$\sum_{n=0}^{\infty} a_n$は発散する．
 \end{cor}
 
 \begin{leftbar}
@@ -64,7 +64,7 @@
 \end{leftbar}
 
 \begin{example}{級数の収束・発散の判定}{級数の収束・発散の判定}
-  $\lim_{n \to \infty} (-1)^n \ne 0$であるから，$\sum_{n=0}^{\infty} (-1)^n$は発散する．
+  数列$((-1)^n)_{n \in \mathbb{N}}$は$0$に収束しないから，$\sum_{n=0}^{\infty} (-1)^n$は発散する．
 \end{example}
 
 \phantomsection
@@ -90,7 +90,7 @@
 \end{remark}
 
 \begin{definition}{絶対収束}{絶対収束}
-  $\sum_{n=0}^{\infty} \abs{a_n}$が収束するとき，$\sum_{n=0}^{\infty} a_n$は絶対収束するという．命題\prref{絶対収束}により，絶対収束する級数は収束する．
+  $\sum_{n=0}^{\infty} \abs{a_n}$が収束するとき，$\sum_{n=0}^{\infty} a_n$は絶対収束するという．\prref{絶対収束}により，絶対収束する級数は収束する．
 \end{definition}
 
 \phantomsection
@@ -113,7 +113,7 @@
     \end{align*}
     であるから，前半の主張が証明された．後半については，
     \begin{align*}
-      \sum_{k=0}^{n-1} ca_k & = c a_n \\
+      \sum_{k=0}^{n-1} ca_k & = c s_n \\
       & \to cs ~(n \to \infty)
     \end{align*}
     となり，これが証明すべきことであった．
@@ -128,7 +128,7 @@
   \begin{proof}
     $\sum_{n=0}^{\infty} \abs{a_n}$が収束するとき，\thref{級数に関するコーシーの収束条件}により，任意の$\varepsilon >0$に対して，ある$n_0 \in \mathbb{N}$が存在して，任意の$m,n \in \mathbb{N}$に対して，
     \[
-      m,n \geqq n_0 \limp \abs{a_{m+1}} +\abs{a_{m+2}} + \cdots + \abs{a_n}<\varepsilon
+      n > m \geqq n_0 \limp \abs{a_{m+1}} +\abs{a_{m+2}} + \cdots + \abs{a_n}<\varepsilon
     \]
     である．ここで，絶対値の性質により，
     \[
@@ -192,7 +192,7 @@
 
 \begin{leftbar}
 \begin{proof}
-  この新しい級数の部分和の列はもとの$\sum_{n=0}^{\infty} a_n$の部分和の数列$(s_n)_{n \in \mathbb{N}}$の部分列$(s_{n(k)})_{n \in \mathbb{N}}$であるから，この命題が成り立つ．
+  この新しい級数の部分和の列はもとの$\sum_{n=0}^{\infty} a_n$の部分和の数列$(s_n)_{n \in \mathbb{N}}$の部分列$(s_{n(k)})_{k \in \mathbb{N}}$であるから，この命題が成り立つ．
 \end{proof}
 \end{leftbar}
 
@@ -213,7 +213,7 @@
     \[
       s_n \leqq s_{n+1}
     \]
-    となり，$(s_n)_{n \in \mathbb{N}}$は単調増加列である．よって，$(s_n)_{n \in \mathbb{N}}$は\thref{単調収束定理}により$\sup \{s_n \mid n \in \mathbb{N}\}$に収束する．逆に$(s_n)_{n \in \mathbb{N}}$が収束すれば，$(s_n)_{n \in \mathbb{N}}$は有界である．
+    となり，$(s_n)_{n \in \mathbb{N}}$は単調増加列である．よって，$(s_n)_{n \in \mathbb{N}}$が上に有界ならば，$(s_n)_{n \in \mathbb{N}}$は\thref{単調収束定理}により$\sup \{s_n \mid n \in \mathbb{N}\}$に収束する．逆に$(s_n)_{n \in \mathbb{N}}$が収束すれば，$(s_n)_{n \in \mathbb{N}}$は有界である．
   \end{proof}
 \end{leftbar}
 
@@ -224,7 +224,7 @@
 
 \begin{tleftbar}
 \begin{proof}
-  $(a_n)_{n \in \mathbb{N}}$，$(c_n)_{n \in \mathbb{N}}$が収束するとき，部分和の数列$(A_n)_{n \in \mathbb{N}}$，$(C_n)_{n \in \mathbb{N}}$は上に有界な単調増加列である．
+  $\sum_{n=0}^{\infty} c_n$が収束するとき，$0 \leqq a_n \leqq c_n$より$A_n \leqq C_n$であるから，部分和の数列$(A_n)_{n \in \mathbb{N}}$，$(C_n)_{n \in \mathbb{N}}$はともに上に有界な単調増加列である．
   よって，
   \[
     a \coloneqq \sup \{ A_n \mid n \in \mathbb{N} \} ,\quad c \coloneqq \sup \{ C_n \mid n \in \mathbb{N} \}

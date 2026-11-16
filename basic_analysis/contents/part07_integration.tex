@@ -15,19 +15,19 @@
 
 区間$I=[a,b]$で定義された関数$f$が$I$上で連続であるとする．これを論理記号で表すと，
 \[
-   \lall{\alpha \in I} \lsep \lall{\varepsilon >0} \lsep \lex{\delta >0} \lsep \lall{x \in I} \lst (\abs{x-\alpha}<\delta \limp \abs{f(x)-f(\alpha)}<\varepsilon)
+   \lall{\alpha \in I} \lsep \lall{\varepsilon >0} \lsep \lex{\delta >0} \lsep \lall{x \in I} \lst \bigl[ \abs{x-\alpha}<\delta \limp \abs{f(x)-f(\alpha)}<\varepsilon \bigr]
 \]
 となる．つまり，\emph{$\alpha$の位置が変われば$\delta$も変化する．}ここで，一様連続という概念を導入する．
 
 \begin{definition}{一様連続}{一様連続}
   関数$f$が$I$上で\emph{一様連続}であるとは，つぎが成り立つことである：
   \[
-    \lall{\varepsilon >0} \lsep \lex{\delta >0} \lsep \lall{\alpha \in I} \lsep \lall{x \in I} \lst (\abs{x-\alpha}<\delta \limp \abs{f(x)-f(\alpha)}<\varepsilon)
+    \lall{\varepsilon >0} \lsep \lex{\delta >0} \lsep \lall{\alpha \in I} \lsep \lall{x \in I} \lst \bigl[ \abs{x-\alpha}<\delta \limp \abs{f(x)-f(\alpha)}<\varepsilon \bigr]
   \]
 \end{definition}
 
 \begin{remark}[連続と一様連続の違い]
-  一様連続の定義では，\emph{$\alpha$の位置にかかわらず$\abs{x-\alpha}<\delta$を満たす$\delta$をとることができる．}
+  一様連続の定義では，\emph{$\alpha$の位置にかかわらず共通の$\delta$をとることができる．}
   ふたつの定義を見比べると，連続では$\lall{\alpha}$が$\lex{\delta}$より前にあるのに対し，一様連続では$\lex{\delta}$が$\lall{\alpha}$より前に出ている．
   すなわち，量化子の順序の違いが，「$\delta$が$\alpha$に依存してよいかどうか」という違いを正確に表現しているのである．
 \end{remark}
@@ -100,7 +100,7 @@
 
 \begin{tleftbar}
     \begin{proof}
-       $x -y > 0$と仮定しても一般性を失わない．
+       $x \geqq y$と仮定しても一般性を失わない．
        $\varepsilon >0$を任意にとり，$\delta = \varepsilon ^2$とおく．
 
         このとき，$\abs{x-y}<\delta$とすると，
@@ -129,8 +129,8 @@
         さらに数列$(x_n)_{n \in \mathbb{N}} , (y_n)_{n \in \mathbb{N}} \subset I$を$\abs{x_n -y_n}<1/n$かつ$\abs{f(x_n)-f(y_n)} \geqq \varepsilon$となるようにとる．
 
         このときボルツァーノ・ワイヤストラスの定理により，収束する$(x_n)_{n \in \mathbb{N}}$の部分列$(x_{n(k)})_{k \in \mathbb{N}}$が存在する\footnote{ここで，$(x_{n(k)})_{k \in \mathbb{N}}$の第$k$項は，$(x_n)_{n \in \mathbb{N}}$の第$n(k)$項を表すとする．}．
-        そこで$\lim_{k \to \infty} x_{n(k)}=c$とする．このとき数列$(y_{n(k)})_{k \in \mathbb{N}}$も有界であるから，収束部分列$(y_{n(k_l)})_{k_l \in \mathbb{N}}$が存在し，その極限値を$d$とする．
-        このとき$(x_{n(k_l)})_{k_l \in \mathbb{N}}$は$c$に収束するから，$\abs{x_{n(k_l)}-y_{n(k_l)}}<1/n$より$c=d$である．
+        そこで$\lim_{k \to \infty} x_{n(k)}=c$とする．このとき数列$(y_{n(k)})_{k \in \mathbb{N}}$も有界であるから，収束部分列$(y_{n(k_l)})_{l \in \mathbb{N}}$が存在し，その極限値を$d$とする．
+        このとき$(x_{n(k_l)})_{l \in \mathbb{N}}$は$c$に収束するから，$\abs{x_{n(k_l)}-y_{n(k_l)}}<1/n(k_l)$より$c=d$である．
 
         さらに，$c$は$I$の点なので，$f$は点$c$で連続で，ある$N\in\mathbb{N}$について$\abs{f(x_N)-f(c)}<\varepsilon /2$かつ$\abs{f(y_N)-f(c)}<\varepsilon /2$となり，
         これは$\abs{f(x_n)-f(y_n)} \geqq \varepsilon$であることに矛盾する．よって背理法の仮定が誤りである．
@@ -224,7 +224,7 @@
 を得て，$L(f,P)$，$U(f,P)$はともに有界であることがわかった．
 
 \begin{definition}{細分}{細分}
-   区間$[a,b]$の分割$P^{\ast}$で，$P$の全ての分割が$P^{\ast}$の分割でもあるとき，$P^{\ast}$を$P$の細分という．
+   区間$[a,b]$の分割$P^{\ast}$で，$P$の全ての分点が$P^{\ast}$の分点でもあるとき，$P^{\ast}$を$P$の細分という．
 \end{definition}
 
 \begin{prop}{細分と上方和・下方和}{細分と上方和・下方和}
@@ -275,13 +275,13 @@
     $f$を$[a,b]$上で連続な関数とする．このとき，任意の$\varepsilon >0$に対して，ある$\delta >0$が存在して，任意の$x,y \in [a,b]$に対して，
     $\abs{x-y}<\delta$のとき$\abs{f(x)-f(y)}<\varepsilon$となる．
 
-    ここで，幅が$\delta$以下の分割$P=(a_i)_{i \in \{0,1,2,\ldots,n \}}$を考える．このとき，$[a_{i-1},a_i]$の点で
+    ここで，幅が$\delta$未満の分割$P=(a_i)_{i \in \{0,1,2,\ldots,n \}}$を考える．このとき，$[a_{i-1},a_i]$の点で
     \[
       f(x_i)=m_i (f,P),\quad f(y_i)=M_i (f,P)
     \]
     なるものが存在する．
 
-    $\abs{x_i-y_i}\leqq \delta$であるから，$f(y_i)-f(x_i)<\varepsilon$となる．よって
+    $\abs{x_i-y_i}< \delta$であるから，$f(y_i)-f(x_i)<\varepsilon$となる．よって
     \[
       U(f,P)-L(f,P) = \sum_{i=1}^{n} ( f(y_i)-f(x_i) ) (a_i-a_{i-1}) <(b-a)\varepsilon
     \]
@@ -381,7 +381,7 @@
       \[
       f((x_i)_{i \in \{0,1,\ldots,n\}})=(x_i)_{i \in \{1,\ldots,n-1 \}}
       \]
-      となる$(x_i)_{i \in \{1,\ldots,n-1 \}} \in D(I)$が存在し，$f$は全射である．
+      となる$(x_i)_{i \in \{0,1,\ldots,n \}} \in D(I)$が存在し，$f$は全射である．
     \end{description}
     以上の考察により，$f$は単射かつ全射，すなわち全単射である．これが証明すべきことであった．
   \end{proof}
